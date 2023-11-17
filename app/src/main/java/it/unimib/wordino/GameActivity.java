@@ -5,15 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
-public class MainActivity extends AppCompatActivity {
-
-    private static final String TAG = "MainActivity";
+public class GameActivity extends AppCompatActivity {
+    private static final String TAG = GameActivity.class.getSimpleName();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "Game");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_welcome);
+        setContentView(R.layout.activity_game);
 
-        Log.d(TAG, "onCreate():");
+        ;
     }
-    //TODO tutto il progetto
 }
