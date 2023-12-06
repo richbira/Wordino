@@ -2,4 +2,9 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="google_login_button">#eceff1</color>
+    <color name="google_login_text">#616161</color>
+    <color name="grey_separator">#585F65</color>
 </resources>

@@ -5,5 +5,13 @@
     <string name="Login">Login</string>
     <string name="Play">Gioca</string>
     <string name="game_short_description">Guess the 5-letter word.</string>
+    <string name="OR" >o</string>
     <string name="n_attempts">Number of attempts today</string>
+    <string name="Forgot_psw">Password dimenticata?</string>
+
+    <string name="logo">Logo Application</string>
+    <string name="txt_or">o</string>
+    <string name="google_login">Login con Google</string>
+    <string name="new_account">Nuovo su Wordino?</string>
+    <string name="register">Registrati</string>
 </resources>

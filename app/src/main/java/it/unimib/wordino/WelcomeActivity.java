@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import java.security.AccessController;
+
 public class WelcomeActivity extends AppCompatActivity {
 
     private static final String TAG = WelcomeActivity.class.getSimpleName();
@@ -22,10 +24,13 @@ public class WelcomeActivity extends AppCompatActivity {
                 Log.d(TAG, "how to play cliccato"));
 
         Button LoginButton = findViewById(R.id.LoginButton);
-        LoginButton.setOnClickListener(item ->
-                Log.d(TAG, "login cliccato")
-                //TODO implementare isEmailOk(email), isPasswordOK(password)
-        );
+        LoginButton.setOnClickListener(item -> {
+            Log.d(TAG, "login cliccato");
+
+            // TODO implementare isEmailOk(email), isPasswordOK(password)
+            Intent intent = new Intent(item.getContext(), LoginActivity.class);
+            item.getContext().startActivity(intent);
+        });
 
         Button PlayButton = findViewById(R.id.PlayButton);
         PlayButton.setOnClickListener(new View.OnClickListener() {

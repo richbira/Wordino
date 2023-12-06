@@ -180,12 +180,15 @@
             android:layout_toRightOf="@id/key_b"
             android:layout_below="@id/key_a"
             android:text="N" />
+
         <TextView
             android:id="@+id/key_m"
             android:layout_width="35dp"
             android:layout_height="30dp"
-            android:layout_toRightOf="@id/key_n"
             android:layout_below="@id/key_a"
+            android:layout_marginLeft="-3dp"
+            android:layout_marginTop="0dp"
+            android:layout_toRightOf="@id/key_n"
             android:text="M" />
     </RelativeLayout>
 
