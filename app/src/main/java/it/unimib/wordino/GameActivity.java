@@ -7,24 +7,52 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
-public class GameActivity extends AppCompatActivity {
+import org.w3c.dom.Text;
 
+public class GameActivity extends AppCompatActivity implements View.OnClickListener {
+
+
+    //Set il primo active box
+    public View activeBox;
     private static final String TAG = GameActivity.class.getSimpleName();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "Game");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        Button BackButton = findViewById(R.id.backButton);
-        BackButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "Play cliccato");
-                Intent intent = new Intent(view.getContext(), WelcomeActivity.class);
-                view.getContext().startActivity(intent);}
-        });
+        activeBox = findViewById(R.id.word_01);
+
+        //Bottone per tornare alla schermata principale
+        Button backButton = (Button) findViewById(R.id.backButton);
+        backButton.setOnClickListener(this);
+
+        Button qButton = (Button) findViewById(R.id.key_q);
+        qButton.setOnClickListener(this);
 
     }
+
+    @Override
+    public void onClick(View view) {
+
+        setContentView(R.layout.activity_game);
+
+        int id = view.getId();
+        if (id == R.id.backButton) {
+            Log.d(TAG, "Bottone Back cliccato");
+            Intent intent = new Intent(view.getContext(), WelcomeActivity.class);
+            view.getContext().startActivity(intent);
+        } else if (id == R.id.key_q) {
+            Log.d(TAG, "Bottone Q cliccato");
+            TextView wordBox = (TextView) findViewById(activeBox.getId());
+            wordBox.setText("Q");
+        }
+    }
+
+    //public String nextWordBox(String currentWordBox) {
+
+    //}
 }

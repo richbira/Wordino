@@ -298,237 +298,312 @@
 
     <RelativeLayout
         android:id="@+id/relativeLayoutKeyboard"
-        android:layout_width="350dp"
-        android:layout_height="90dp"
-        android:layout_marginBottom="36dp"
+        android:layout_width="390dp"
+        android:layout_height="151dp"
+        android:layout_marginBottom="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="30dp">
+        tools:layout_editor_absoluteX="10dp">
 
-        <TextView
+        <Button
             android:id="@+id/key_q"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="35dp"
-            android:layout_height="30dp"
+            android:layout_height="50dp"
             android:layout_alignParentTop="true"
+            android:layout_marginLeft="25dp"
             android:layout_marginTop="0dp"
+            android:layout_marginBottom="0dp"
+            android:backgroundTint="#B4B4B4"
             android:text="Q"
             android:textAlignment="center" />
 
-        <TextView
+        <Button
             android:id="@+id/key_w"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="35dp"
-            android:layout_height="30dp"
+            android:layout_height="50dp"
             android:layout_toRightOf="@id/key_q"
+            android:backgroundTint="#B4B4B4"
             android:text="W"
             android:textAlignment="center" />
 
-        <TextView
+        <Button
             android:id="@+id/key_e"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="35dp"
-            android:layout_height="30dp"
+            android:layout_height="50dp"
             android:layout_toRightOf="@id/key_w"
+            android:backgroundTint="#B4B4B4"
             android:text="E"
             android:textAlignment="center" />
 
-        <TextView
+        <Button
             android:id="@+id/key_r"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="35dp"
-            android:layout_height="30dp"
+            android:layout_height="50dp"
             android:layout_toRightOf="@id/key_e"
+            android:backgroundTint="#B4B4B4"
             android:text="R"
             android:textAlignment="center" />
 
-        <TextView
+        <Button
             android:id="@+id/key_t"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="35dp"
-            android:layout_height="30dp"
+            android:layout_height="50dp"
             android:layout_toRightOf="@id/key_r"
+            android:backgroundTint="#B4B4B4"
             android:text="T"
             android:textAlignment="center" />
 
-        <TextView
+        <Button
             android:id="@+id/key_y"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="35dp"
-            android:layout_height="30dp"
+            android:layout_height="50dp"
             android:layout_toRightOf="@id/key_t"
+            android:backgroundTint="#B4B4B4"
             android:text="Y"
             android:textAlignment="center" />
 
-        <TextView
+        <Button
             android:id="@+id/key_u"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="35dp"
-            android:layout_height="30dp"
+            android:layout_height="50dp"
             android:layout_toRightOf="@id/key_y"
+            android:backgroundTint="#B4B4B4"
             android:text="U"
             android:textAlignment="center" />
 
-        <TextView
+        <Button
             android:id="@+id/key_i"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="35dp"
-            android:layout_height="30dp"
+            android:layout_height="50dp"
             android:layout_toRightOf="@id/key_u"
+            android:backgroundTint="#B4B4B4"
             android:text="I"
             android:textAlignment="center" />
 
-        <TextView
+        <Button
             android:id="@+id/key_o"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="35dp"
-            android:layout_height="30dp"
+            android:layout_height="50dp"
             android:layout_toRightOf="@id/key_i"
+            android:backgroundTint="#B4B4B4"
             android:text="O"
             android:textAlignment="center" />
 
-        <TextView
+        <Button
             android:id="@+id/key_p"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="35dp"
-            android:layout_height="30dp"
+            android:layout_height="50dp"
             android:layout_toRightOf="@id/key_o"
+            android:backgroundTint="#B4B4B4"
             android:text="P"
             android:textAlignment="center" />
 
-        <TextView
+        <Button
             android:id="@+id/key_a"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="35dp"
-            android:layout_height="30dp"
+            android:layout_height="50dp"
             android:layout_below="@id/key_q"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="40dp"
+            android:backgroundTint="#B4B4B4"
             android:text="A"
             android:textAlignment="center" />
 
-        <TextView
+        <Button
             android:id="@+id/key_s"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="35dp"
-            android:layout_height="30dp"
+            android:layout_height="50dp"
             android:layout_below="@id/key_q"
             android:layout_toRightOf="@id/key_a"
+            android:backgroundTint="#B4B4B4"
             android:text="S"
             android:textAlignment="center" />
 
-        <TextView
+        <Button
             android:id="@+id/key_d"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="35dp"
-            android:layout_height="30dp"
+            android:layout_height="50dp"
             android:layout_below="@id/key_q"
             android:layout_toRightOf="@id/key_s"
+            android:backgroundTint="#B4B4B4"
             android:text="D"
             android:textAlignment="center" />
 
-        <TextView
+        <Button
             android:id="@+id/key_f"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="35dp"
-            android:layout_height="30dp"
+            android:layout_height="50dp"
             android:layout_below="@id/key_q"
             android:layout_toRightOf="@id/key_d"
+            android:backgroundTint="#B4B4B4"
             android:text="F"
             android:textAlignment="center" />
 
-        <TextView
+        <Button
             android:id="@+id/key_g"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="35dp"
-            android:layout_height="30dp"
+            android:layout_height="50dp"
             android:layout_below="@id/key_q"
             android:layout_toRightOf="@id/key_f"
+            android:backgroundTint="#B4B4B4"
             android:text="G"
             android:textAlignment="center" />
 
-        <TextView
+        <Button
             android:id="@+id/key_h"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="35dp"
-            android:layout_height="30dp"
+            android:layout_height="50dp"
             android:layout_below="@id/key_q"
             android:layout_toRightOf="@id/key_g"
+            android:backgroundTint="#B4B4B4"
             android:text="H"
             android:textAlignment="center" />
 
-        <TextView
+        <Button
             android:id="@+id/key_j"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="35dp"
-            android:layout_height="30dp"
+            android:layout_height="50dp"
             android:layout_below="@id/key_q"
             android:layout_toRightOf="@id/key_h"
+            android:backgroundTint="#B4B4B4"
             android:text="J"
             android:textAlignment="center" />
 
-        <TextView
+        <Button
             android:id="@+id/key_k"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="35dp"
-            android:layout_height="30dp"
+            android:layout_height="50dp"
             android:layout_below="@id/key_q"
             android:layout_toRightOf="@id/key_j"
+            android:backgroundTint="#B4B4B4"
             android:text="K"
             android:textAlignment="center" />
 
-        <TextView
+        <Button
             android:id="@+id/key_l"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="35dp"
-            android:layout_height="30dp"
+            android:layout_height="50dp"
             android:layout_below="@id/key_q"
             android:layout_toRightOf="@id/key_k"
+            android:backgroundTint="#B4B4B4"
             android:text="L"
             android:textAlignment="center" />
 
-        <TextView
-            android:id="@+id/key_z"
-            android:layout_width="35dp"
-            android:layout_height="30dp"
+        <Button
+            android:id="@+id/key_cancel"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
             android:layout_below="@id/key_a"
-            android:layout_marginLeft="20dp"
+            android:text="Canc"
+            android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/key_z"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="35dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/key_a"
+            android:layout_toRightOf="@id/key_cancel"
+            android:backgroundTint="#B4B4B4"
             android:text="Z"
             android:textAlignment="center" />
 
-        <TextView
+        <Button
             android:id="@+id/key_x"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="35dp"
-            android:layout_height="30dp"
+            android:layout_height="50dp"
             android:layout_below="@id/key_a"
             android:layout_toRightOf="@id/key_z"
+            android:backgroundTint="#B4B4B4"
             android:text="X"
             android:textAlignment="center" />
 
-        <TextView
+        <Button
             android:id="@+id/key_c"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="35dp"
-            android:layout_height="30dp"
+            android:layout_height="50dp"
             android:layout_below="@id/key_a"
             android:layout_toRightOf="@id/key_x"
+            android:backgroundTint="#B4B4B4"
             android:text="C"
             android:textAlignment="center" />
 
-        <TextView
+        <Button
             android:id="@+id/key_v"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="35dp"
-            android:layout_height="30dp"
+            android:layout_height="50dp"
             android:layout_below="@id/key_a"
             android:layout_toRightOf="@id/key_c"
+            android:backgroundTint="#B4B4B4"
             android:text="V"
             android:textAlignment="center" />
 
-        <TextView
+        <Button
             android:id="@+id/key_b"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="35dp"
-            android:layout_height="30dp"
+            android:layout_height="50dp"
             android:layout_below="@id/key_a"
             android:layout_toRightOf="@id/key_v"
+            android:backgroundTint="#B4B4B4"
             android:text="B"
             android:textAlignment="center" />
 
-        <TextView
+        <Button
             android:id="@+id/key_n"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="35dp"
-            android:layout_height="30dp"
+            android:layout_height="50dp"
             android:layout_below="@id/key_a"
             android:layout_toRightOf="@id/key_b"
+            android:backgroundTint="#B4B4B4"
             android:text="N"
             android:textAlignment="center" />
 
-        <TextView
+        <Button
             android:id="@+id/key_m"
+            style="@style/Widget.Material3.Button.TextButton"
             android:layout_width="35dp"
-            android:layout_height="30dp"
+            android:layout_height="50dp"
             android:layout_below="@id/key_a"
             android:layout_marginLeft="0dp"
             android:layout_marginTop="0dp"
             android:layout_toRightOf="@id/key_n"
+            android:backgroundTint="#B4B4B4"
             android:text="M"
+            android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/key_enter"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/key_a"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_toRightOf="@id/key_m"
+            android:text="Enter"
             android:textAlignment="center" />
     </RelativeLayout>
 
@@ -538,7 +613,7 @@
         android:layout_height="wrap_content"
         android:text="Back"
         tools:layout_editor_absoluteX="10dp"
-        tools:layout_editor_absoluteY="16dp" />
+        tools:layout_editor_absoluteY="10dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
