@@ -512,6 +512,7 @@
             android:layout_width="60dp"
             android:layout_height="50dp"
             android:layout_below="@id/key_a"
+            android:backgroundTint="#B4FFFF"
             android:text="Canc"
             android:textAlignment="center" />
 
@@ -603,6 +604,7 @@
             android:layout_marginLeft="0dp"
             android:layout_marginTop="0dp"
             android:layout_toRightOf="@id/key_m"
+            android:backgroundTint="#B4FFFF"
             android:text="Enter"
             android:textAlignment="center" />
     </RelativeLayout>
