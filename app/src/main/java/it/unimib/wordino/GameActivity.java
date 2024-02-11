@@ -35,22 +35,28 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    /*
+    Gestione bottoni cliccati
+     */
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        if (id == R.id.backButton) {
+        if (id == R.id.backButton) { // RR -> Forse conviene usare switch?
             Log.d(TAG, "Bottone Back cliccato");
             Intent intent = new Intent(view.getContext(), WelcomeActivity.class);
             startActivity(intent);
         } else if (id == R.id.key_q) {
             Log.d(TAG, "Bottone Q cliccato");
             TextView wordBox = (TextView) findViewById(activeBox.getId());
-            wordBox.setText("Q");
+            updateActiveBox("Q");
+        }
+    }
+    private void updateActiveBox(String text) {
+        if (activeBox instanceof TextView) {
+            ((TextView) activeBox).setText(text);
             nextWordBox();
         }
     }
-
-
     public void nextWordBox() {
         String fullName = getResources().getResourceName(activeBox.getId());
         String activeBoxName = fullName.substring(fullName.lastIndexOf("/") + 1);
