@@ -37,32 +37,32 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-
-        //NO SO PERCHè SI BUGGA DOPO AVER CLICCATO IL BOTTONE Q, SI BLOCCA E NON PRENDE PIU' BOTTONI
-        setContentView(R.layout.activity_game);
-
         int id = view.getId();
         if (id == R.id.backButton) {
             Log.d(TAG, "Bottone Back cliccato");
             Intent intent = new Intent(view.getContext(), WelcomeActivity.class);
-            view.getContext().startActivity(intent);
+            startActivity(intent);
         } else if (id == R.id.key_q) {
             Log.d(TAG, "Bottone Q cliccato");
             TextView wordBox = (TextView) findViewById(activeBox.getId());
             wordBox.setText("Q");
             nextWordBox();
         }
-        Log.d(TAG, "Fine if");
     }
+
 
     public void nextWordBox() {
         String fullName = getResources().getResourceName(activeBox.getId());
         String activeBoxName = fullName.substring(fullName.lastIndexOf("/") + 1);
-        Log.d(TAG, "activebox " + activeBoxName);
         int nextLetterNum = Integer.parseInt(activeBoxName.substring(activeBoxName.length() - 1)) + 1;
-        String nextActiveBoxName = activeBoxName.substring(0, activeBoxName.length() - 1) + Integer.toString(nextLetterNum);
+        String nextActiveBoxName = activeBoxName.substring(0, activeBoxName.length() - 1) + nextLetterNum;
         int nextActiveBoxId = getResources().getIdentifier(nextActiveBoxName, "id", getPackageName());
-        activeBox = findViewById(nextActiveBoxId);
-        Log.d(TAG, "nextactivebox " + nextActiveBoxName);
+        if (nextActiveBoxId != 0) { // Check if the next box exists
+            activeBox = findViewById(nextActiveBoxId);
+        } else {
+            // Handle the case when there's no next box (maybe reset to the first box or do nothing)
+            Log.d(TAG, "No next word box available.");
+        }
     }
+
 }
