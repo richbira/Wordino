@@ -10,7 +10,7 @@
 
 
     <Button
-        android:id="@+id/button3"
+        android:id="@+id/registerButton"
         style="@style/Widget.Material3.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -20,7 +20,7 @@
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/button_google_login" />
+        app:layout_constraintTop_toBottomOf="@+id/loginGoogleButton" />
 
     <RelativeLayout
         android:id="@+id/relative_layout"
@@ -28,11 +28,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:layout_marginBottom="21dp"
-        app:layout_constraintBottom_toTopOf="@+id/button_google_login"
+        app:layout_constraintBottom_toTopOf="@+id/loginGoogleButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2">
+        app:layout_constraintTop_toBottomOf="@+id/LoginButton">
 
         <View
             android:layout_width="wrap_content"
@@ -61,7 +61,7 @@
     </RelativeLayout>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/ForgotPasswordButton"
         style="@style/Widget.Material3.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -77,25 +77,25 @@
         android:layout_marginTop="50dp"
         android:text="@string/new_account"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button3"
+        app:layout_constraintEnd_toStartOf="@+id/registerButton"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_google_login" />
+        app:layout_constraintTop_toBottomOf="@+id/loginGoogleButton" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/LoginButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/Login"
         app:layout_constraintBottom_toTopOf="@+id/relative_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline4"
-        app:layout_constraintTop_toBottomOf="@+id/button"
+        app:layout_constraintTop_toBottomOf="@+id/ForgotPasswordButton"
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/button_google_login"
+        android:id="@+id/loginGoogleButton"
         style="@style/Widget.Material3.Button.ElevatedButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -153,6 +153,7 @@
         app:startIconDrawable="@drawable/baseline_alternate_email_24">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/emailTextInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/email"
@@ -169,6 +170,7 @@
         app:startIconDrawable="@drawable/baseline_lock_24">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/passwordTextInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/password"
