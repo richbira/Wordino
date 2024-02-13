@@ -10,8 +10,8 @@
     <string name="Forgot_psw">Password dimenticata?</string>
 
     <string name="logo">Logo Application</string>
-    <string name="txt_or">o</string>
     <string name="google_login">Login con Google</string>
     <string name="new_account">Nuovo su Wordino?</string>
     <string name="register">Registrati</string>
+    <string name="error_message">Dati non corretti</string>
 </resources>

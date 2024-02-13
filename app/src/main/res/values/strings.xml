@@ -14,4 +14,5 @@
     <string name="google_login">Login with Google</string>
     <string name="new_account">New to Wordino?</string>
     <string name="register">Register</string>
+    <string name="error_message">Data are not correct</string>
 </resources>
