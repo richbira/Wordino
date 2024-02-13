@@ -20,7 +20,9 @@
             android:layout_height="70dp"
             android:layout_alignParentTop="true"
             android:layout_marginTop="0dp"
-            android:background="#93E5EF" />
+            android:background="#93E5EF"
+            android:textAlignment="center"
+            android:textSize="48sp" />
 
         <TextView
             android:id="@+id/word_02"
@@ -28,7 +30,9 @@
             android:layout_height="70dp"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/word_01"
-            android:background="#93E5EF" />
+            android:background="#93E5EF"
+            android:textAlignment="center"
+            android:textSize="48sp" />
 
         <TextView
             android:id="@+id/word_03"
@@ -36,7 +40,9 @@
             android:layout_height="70dp"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/word_02"
-            android:background="#93E5EF" />
+            android:background="#93E5EF"
+            android:textAlignment="center"
+            android:textSize="48sp" />
 
         <TextView
             android:id="@+id/word_04"
@@ -44,7 +50,9 @@
             android:layout_height="70dp"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/word_03"
-            android:background="#93E5EF" />
+            android:background="#93E5EF"
+            android:textAlignment="center"
+            android:textSize="48sp" />
 
         <TextView
             android:id="@+id/word_05"
@@ -52,7 +60,9 @@
             android:layout_height="70dp"
             android:layout_marginLeft="10dp"
             android:layout_toRightOf="@id/word_04"
-            android:background="#93E5EF" />
+            android:background="#93E5EF"
+            android:textAlignment="center"
+            android:textSize="48sp" />
 
         <TextView
             android:id="@+id/word_11"
@@ -60,7 +70,9 @@
             android:layout_height="70dp"
             android:layout_below="@id/word_01"
             android:layout_marginTop="10dp"
-            android:background="#93E5EF" />
+            android:background="#93E5EF"
+            android:textAlignment="center"
+            android:textSize="48sp" />
 
         <TextView
             android:id="@+id/word_12"
@@ -70,7 +82,9 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@id/word_11"
-            android:background="#93E5EF" />
+            android:background="#93E5EF"
+            android:textAlignment="center"
+            android:textSize="48sp" />
 
         <TextView
             android:id="@+id/word_13"
@@ -80,7 +94,9 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@id/word_12"
-            android:background="#93E5EF" />
+            android:background="#93E5EF"
+            android:textAlignment="center"
+            android:textSize="48sp" />
 
         <TextView
             android:id="@+id/word_14"
@@ -90,7 +106,9 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@id/word_13"
-            android:background="#93E5EF" />
+            android:background="#93E5EF"
+            android:textAlignment="center"
+            android:textSize="48sp" />
 
         <TextView
             android:id="@+id/word_15"
@@ -100,7 +118,9 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@id/word_14"
-            android:background="#93E5EF" />
+            android:background="#93E5EF"
+            android:textAlignment="center"
+            android:textSize="48sp" />
 
         <TextView
             android:id="@+id/word_21"
@@ -108,7 +128,9 @@
             android:layout_height="70dp"
             android:layout_below="@id/word_11"
             android:layout_marginTop="10dp"
-            android:background="#93E5EF" />
+            android:background="#93E5EF"
+            android:textAlignment="center"
+            android:textSize="48sp" />
 
         <TextView
             android:id="@+id/word_22"
@@ -118,7 +140,9 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@id/word_21"
-            android:background="#93E5EF" />
+            android:background="#93E5EF"
+            android:textAlignment="center"
+            android:textSize="48sp" />
 
         <TextView
             android:id="@+id/word_23"
@@ -128,7 +152,9 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@id/word_22"
-            android:background="#93E5EF" />
+            android:background="#93E5EF"
+            android:textAlignment="center"
+            android:textSize="48sp" />
 
         <TextView
             android:id="@+id/word_24"
@@ -138,7 +164,9 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@id/word_23"
-            android:background="#93E5EF" />
+            android:background="#93E5EF"
+            android:textAlignment="center"
+            android:textSize="48sp" />
 
         <TextView
             android:id="@+id/word_25"
@@ -148,7 +176,9 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@id/word_24"
-            android:background="#93E5EF" />
+            android:background="#93E5EF"
+            android:textAlignment="center"
+            android:textSize="48sp" />
 
         <TextView
             android:id="@+id/word_31"
@@ -156,7 +186,9 @@
             android:layout_height="70dp"
             android:layout_below="@id/word_21"
             android:layout_marginTop="10dp"
-            android:background="#93E5EF" />
+            android:background="#93E5EF"
+            android:textAlignment="center"
+            android:textSize="48sp" />
 
         <TextView
             android:id="@+id/word_32"
@@ -166,7 +198,9 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@id/word_31"
-            android:background="#93E5EF" />
+            android:background="#93E5EF"
+            android:textAlignment="center"
+            android:textSize="48sp" />
 
         <TextView
             android:id="@+id/word_33"
@@ -176,7 +210,9 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@id/word_32"
-            android:background="#93E5EF" />
+            android:background="#93E5EF"
+            android:textAlignment="center"
+            android:textSize="48sp" />
 
         <TextView
             android:id="@+id/word_34"
@@ -186,7 +222,9 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@id/word_33"
-            android:background="#93E5EF" />
+            android:background="#93E5EF"
+            android:textAlignment="center"
+            android:textSize="48sp" />
 
         <TextView
             android:id="@+id/word_35"
@@ -196,7 +234,9 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@id/word_34"
-            android:background="#93E5EF" />
+            android:background="#93E5EF"
+            android:textAlignment="center"
+            android:textSize="48sp" />
 
         <TextView
             android:id="@+id/word_41"
@@ -204,7 +244,9 @@
             android:layout_height="70dp"
             android:layout_below="@id/word_31"
             android:layout_marginTop="10dp"
-            android:background="#93E5EF" />
+            android:background="#93E5EF"
+            android:textAlignment="center"
+            android:textSize="48sp" />
 
         <TextView
             android:id="@+id/word_42"
@@ -214,7 +256,9 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@id/word_41"
-            android:background="#93E5EF" />
+            android:background="#93E5EF"
+            android:textAlignment="center"
+            android:textSize="48sp" />
 
         <TextView
             android:id="@+id/word_43"
@@ -224,7 +268,9 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@id/word_42"
-            android:background="#93E5EF" />
+            android:background="#93E5EF"
+            android:textAlignment="center"
+            android:textSize="48sp" />
 
         <TextView
             android:id="@+id/word_44"
@@ -234,7 +280,9 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@id/word_43"
-            android:background="#93E5EF" />
+            android:background="#93E5EF"
+            android:textAlignment="center"
+            android:textSize="48sp" />
 
         <TextView
             android:id="@+id/word_45"
@@ -244,7 +292,9 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@id/word_44"
-            android:background="#93E5EF" />
+            android:background="#93E5EF"
+            android:textAlignment="center"
+            android:textSize="48sp" />
 
         <TextView
             android:id="@+id/word_51"
@@ -252,7 +302,9 @@
             android:layout_height="70dp"
             android:layout_below="@id/word_41"
             android:layout_marginTop="10dp"
-            android:background="#93E5EF" />
+            android:background="#93E5EF"
+            android:textAlignment="center"
+            android:textSize="48sp" />
 
         <TextView
             android:id="@+id/word_52"
@@ -262,7 +314,9 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@id/word_51"
-            android:background="#93E5EF" />
+            android:background="#93E5EF"
+            android:textAlignment="center"
+            android:textSize="48sp" />
 
         <TextView
             android:id="@+id/word_53"
@@ -272,7 +326,9 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@id/word_52"
-            android:background="#93E5EF" />
+            android:background="#93E5EF"
+            android:textAlignment="center"
+            android:textSize="48sp" />
 
         <TextView
             android:id="@+id/word_54"
@@ -292,7 +348,9 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@id/word_54"
-            android:background="#93E5EF" />
+            android:background="#93E5EF"
+            android:textAlignment="center"
+            android:textSize="48sp" />
 
     </RelativeLayout>
 
