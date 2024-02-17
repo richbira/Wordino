@@ -357,7 +357,7 @@
 
     <RelativeLayout
         android:id="@+id/relativeLayoutKeyboard"
-        android:layout_width="390dp"
+        android:layout_width="match_parent"
         android:layout_height="151dp"
         android:layout_marginBottom="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -667,13 +667,5 @@
             android:text="Enter"
             android:textAlignment="center" />
     </RelativeLayout>
-
-    <Button
-        android:id="@+id/backButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Back"
-        tools:layout_editor_absoluteX="10dp"
-        tools:layout_editor_absoluteY="10dp" />
 
 </FrameLayout>

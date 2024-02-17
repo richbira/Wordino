@@ -1,6 +1,7 @@
 package it.unimib.wordino.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,7 +18,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     //Set il primo active box
     public View activeBox;
     private static final String TAG = GameActivity.class.getSimpleName();
-
+    private String mode = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "Game");
@@ -28,9 +29,16 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             boolean unlimitedPlayIsChecked = getIntent().getBooleanExtra("switchUnlimited", false);
-            String mode = getIntent().getStringExtra("mode");
+            mode = getIntent().getStringExtra("mode");
             Log.d(TAG, "unlimitedPlay: " + unlimitedPlayIsChecked);
             Log.d(TAG, "mode: " + mode); // Se questo flag è true mostro Fragment con le regole
+        }
+
+        if (mode.equals("PLAY")) {
+            // Load the GameFragment since the mode is Play
+            loadGameFragment();
+        }else if(mode.equals("HOW_TO_PLAY")){
+            loadHowToPlayFragment();
         }
 
 
@@ -40,9 +48,21 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         Button backButton = (Button) findViewById(R.id.backButton);
         backButton.setOnClickListener(this);
 
-        //Button qButton = (Button) findViewById(R.id.key_q);
+        //Button Button = (Button) findViewById(R.id.key_q);
         //Button.setOnClickListener(this);
 
+    }
+    private void loadGameFragment() {
+        GameFragment gameFragment = new GameFragment();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, gameFragment)
+                .commit();
+    }
+    private void loadHowToPlayFragment() {
+        HowToPlayFragment howToPlayFragment = new HowToPlayFragment();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragmentContainerView, howToPlayFragment)
+                .commit();
     }
     /*
     Gestione bottoni cliccati
