@@ -24,6 +24,7 @@ public class WelcomeActivity extends AppCompatActivity {
         howToPlayButton.setOnClickListener(view -> {
             Log.d(TAG, "how to play clicked");
             startGame("HOW_TO_PLAY");
+
         });
 
         Button loginButton = findViewById(R.id.LoginButton);

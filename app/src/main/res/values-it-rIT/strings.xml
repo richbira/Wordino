@@ -15,4 +15,6 @@
     <string name="register">Registrati</string>
     <string name="error_message">Dati non corretti</string>
     <string name="Unlimited">Gioca illimitatamente</string>
+    <string name="Back">Indietro</string>
+    <string name="Rules">REGOLE DEL GIOCO</string>
 </resources>

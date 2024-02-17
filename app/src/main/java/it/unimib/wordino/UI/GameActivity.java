@@ -34,14 +34,14 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         }
 
 
-        activeBox = findViewById(R.id.word_01);
+        //activeBox = findViewById(R.id.word_01);
 
         //Bottone per tornare alla schermata principale
         Button backButton = (Button) findViewById(R.id.backButton);
         backButton.setOnClickListener(this);
 
-        Button qButton = (Button) findViewById(R.id.key_q);
-        qButton.setOnClickListener(this);
+        //Button qButton = (Button) findViewById(R.id.key_q);
+        //Button.setOnClickListener(this);
 
     }
     /*

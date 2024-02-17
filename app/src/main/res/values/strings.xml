@@ -16,6 +16,6 @@
     <string name="register">Register</string>
     <string name="error_message">Data are not correct</string>
     <string name="Unlimited">Play Unlimited</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="Back">Back</string>
+    <string name="Rules">Rules</string>
 </resources>
