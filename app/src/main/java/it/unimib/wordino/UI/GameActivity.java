@@ -26,10 +26,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         //Aggiungo flag "Unlimited" che gli passo dalla schermata home
         Bundle bundle = getIntent().getExtras();
-        if (bundle != null){
-            boolean unlimitedPlayIsChecked = getIntent().getBooleanExtra("switchUnlimited",false);
+        if (bundle != null) {
+            boolean unlimitedPlayIsChecked = getIntent().getBooleanExtra("switchUnlimited", false);
+            String mode = getIntent().getStringExtra("mode");
             Log.d(TAG, "unlimitedPlay: " + unlimitedPlayIsChecked);
+            Log.d(TAG, "mode: " + mode); // Se questo flag è true mostro Fragment con le regole
         }
+
 
         activeBox = findViewById(R.id.word_01);
 
@@ -41,7 +44,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         qButton.setOnClickListener(this);
 
     }
-
     /*
     Gestione bottoni cliccati
      */

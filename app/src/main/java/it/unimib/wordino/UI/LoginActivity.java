@@ -27,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
         emailTextInputLayout = findViewById(R.id.emailTextInput);
         passwordTextInputLayout = findViewById(R.id.passwordTextInput);
 
-        Button loginButton = findViewById(R.id.LoginButton);
+        Button loginButton = findViewById(R.id.loginButton);
 
         loginButton.setOnClickListener(item -> {
             // Inizialmente al onCreate questi valori saranno x forza blank, quindi posso farli scattare anche dopo quando viene premuto login

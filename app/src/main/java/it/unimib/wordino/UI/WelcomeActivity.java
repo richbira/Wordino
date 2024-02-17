@@ -14,41 +14,38 @@ import it.unimib.wordino.R;
 public class WelcomeActivity extends AppCompatActivity {
 
     private static final String TAG = WelcomeActivity.class.getSimpleName();
-    private static boolean unlimitedPlay = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.d(TAG, "WelcomeActivity");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
         Button howToPlayButton = findViewById(R.id.howToPlayButton);
-        howToPlayButton.setOnClickListener(item ->
-                Log.d(TAG, "how to play cliccato"));
-        //TODO: Apre il game activity però ci mettiamo la schermata con le regole - penso si debba usare i fragments
-
-        Button LoginButton = findViewById(R.id.LoginButton);
-        LoginButton.setOnClickListener(item -> {
-            Log.d(TAG, "login cliccato");
-
-            Intent LoginIntent = new Intent(this, LoginActivity.class);
-            startActivity(LoginIntent);
+        howToPlayButton.setOnClickListener(view -> {
+            Log.d(TAG, "how to play clicked");
+            startGame("HOW_TO_PLAY");
         });
 
-        Button PlayButton = findViewById(R.id.PlayButton);
-        PlayButton.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Log.d(TAG, "Play cliccato");
-
-            Switch unlimitedSwitch = findViewById(R.id.unlimitedSwitch);
-
-            Intent PlayIntent = new Intent(view.getContext(), GameActivity.class);
-            PlayIntent.putExtra("switchUnlimited", unlimitedSwitch.isChecked());
-            view.getContext().startActivity(PlayIntent);}
+        Button loginButton = findViewById(R.id.LoginButton);
+        loginButton.setOnClickListener(view -> {
+            Log.d(TAG, "login clicked");
+            Intent loginIntent = new Intent(WelcomeActivity.this, LoginActivity.class);
+            startActivity(loginIntent);
         });
-        //TODO implementare bottoni
-        // TODO Se la parola del giorno è già stata indovinata e si prova a giocare senza unlimited -> ci deve essere un blocco
 
+        Button playButton = findViewById(R.id.PlayButton);
+        playButton.setOnClickListener(view -> {
+            Log.d(TAG, "Play clicked");
+            startGame("PLAY");
+        });
     }
-    //TODO fix orientation preview
+
+    public void startGame(String mode) {
+        Switch unlimitedSwitch = findViewById(R.id.unlimitedSwitch);
+        Intent playIntent = new Intent(WelcomeActivity.this, GameActivity.class);
+        playIntent.putExtra("switchUnlimited", unlimitedSwitch.isChecked());
+        playIntent.putExtra("mode", mode);
+        startActivity(playIntent);
+    }
+    //TODO: Implement functionality for unlimited play and orientation fix
 }
