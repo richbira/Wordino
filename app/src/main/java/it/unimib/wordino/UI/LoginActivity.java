@@ -1,4 +1,4 @@
-package it.unimib.wordino;
+package it.unimib.wordino.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,6 +10,8 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.apache.commons.validator.routines.EmailValidator;
+
+import it.unimib.wordino.R;
 
 public class LoginActivity extends AppCompatActivity {
 

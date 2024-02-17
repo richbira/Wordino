@@ -1,4 +1,4 @@
-package it.unimib.wordino;
+package it.unimib.wordino.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import it.unimib.wordino.R;
 
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -23,6 +23,13 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         Log.d(TAG, "Game");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        //Aggiungo flag "Unlimited" che gli passo dalla schermata home
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null){
+            boolean unlimitedPlayIsChecked = getIntent().getBooleanExtra("switchUnlimited",false);
+            Log.d(TAG, "unlimitedPlay: " + unlimitedPlayIsChecked);
+        }
 
         activeBox = findViewById(R.id.word_01);
 

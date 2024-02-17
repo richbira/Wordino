@@ -15,4 +15,5 @@
     <string name="new_account">New to Wordino?</string>
     <string name="register">Register</string>
     <string name="error_message">Data are not correct</string>
+    <string name="Unlimited">Play Unlimited</string>
 </resources>
