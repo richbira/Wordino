@@ -69,16 +69,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
      */
     @Override
     public void onClick(View view) {
-        int id = view.getId();
-        if (id == R.id.backButton) { // RR -> Forse conviene usare switch?
-            Log.d(TAG, "Bottone Back cliccato");
-            Intent intent = new Intent(view.getContext(), WelcomeActivity.class);
-            startActivity(intent);
-        } else if (id == R.id.key_q) {
-            Log.d(TAG, "Bottone Q cliccato");
-            TextView wordBox = (TextView) findViewById(activeBox.getId());
-            updateActiveBox("Q");
-        }
     }
     private void updateActiveBox(String text) {
         if (activeBox instanceof TextView) {
