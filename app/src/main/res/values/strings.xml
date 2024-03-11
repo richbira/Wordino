@@ -4,7 +4,7 @@
     <string name="Login">Login</string>
     <string name="Play">Play</string>
     <string name="game_short_description">Guess the 5-letter word.</string>
-    <string name="OR" >OR</string>
+    <string name="OR">OR</string>
     <string name="n_attempts">Number of attempts today</string>
     <string name="Forgot_psw">Forgot password?</string>
     <string name="logo">Logo Application</string>
@@ -14,4 +14,8 @@
     <string name="google_login">Login with Google</string>
     <string name="new_account">New to Wordino?</string>
     <string name="register">Register</string>
+    <string name="error_message">Data are not correct</string>
+    <string name="Unlimited">Play Unlimited</string>
+    <string name="Back">Back</string>
+    <string name="Rules">Rules</string>
 </resources>

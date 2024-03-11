@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UI.GameFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Text Boxes-->
+        <androidx.gridlayout.widget.GridLayout
+            android:id="@+id/textBoxGridLayout"
+            android:layout_width="match_parent"
+            android:layout_height="388dp"
+            android:padding="16dp"
+            app:alignmentMode="alignMargins"
+            app:columnCount="5"
+            app:layout_constraintBottom_toTopOf="@+id/keyboardGridLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:rowCount="6">
+
+            <!-- Esempio di EditText nella griglia. Ripetere questo per ogni cella necessaria -->
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:ems="10"
+                android:inputType="text"
+                android:text="B"
+                app:layout_columnWeight="1"
+                app:layout_gravity="fill"
+                app:layout_rowWeight="1"
+                android:background="@color/green_textbox"
+                />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:ems="10"
+                android:inputType="text"
+                android:text="E"
+                app:layout_columnWeight="1"
+                app:layout_gravity="fill"
+                app:layout_rowWeight="1"
+                android:background="@color/yellow_textbox"/>
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:ems="10"
+                android:inputType="text"
+                android:text="A"
+                app:layout_columnWeight="1"
+                app:layout_gravity="fill"
+                app:layout_rowWeight="1"
+                android:background="@color/grey_textbox"/>
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:ems="10"
+                android:inputType="text"
+                android:text="C"
+                app:layout_columnWeight="1"
+                app:layout_gravity="fill"
+                app:layout_rowWeight="1" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:ems="10"
+                android:inputType="text"
+                android:text="H"
+                app:layout_columnWeight="1"
+                app:layout_gravity="fill"
+                app:layout_rowWeight="1" />
+
+            <!-- Aggiungi altre EditText qui con lo stesso layout -->
+            <!-- RIGA 2 -->
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:ems="10"
+                android:inputType="text"
+                android:text="B"
+                app:layout_columnWeight="1"
+                app:layout_gravity="fill"
+                app:layout_rowWeight="1" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:ems="10"
+                android:inputType="text"
+                android:text="E"
+                app:layout_columnWeight="1"
+                app:layout_gravity="fill"
+                app:layout_rowWeight="1" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:ems="10"
+                android:inputType="text"
+                android:text="A"
+                app:layout_columnWeight="1"
+                app:layout_gravity="fill"
+                app:layout_rowWeight="1" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:ems="10"
+                android:inputType="text"
+                android:text="C"
+                app:layout_columnWeight="1"
+                app:layout_gravity="fill"
+                app:layout_rowWeight="1" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:ems="10"
+                android:inputType="text"
+                android:text="H"
+                app:layout_columnWeight="1"
+                app:layout_gravity="fill"
+                app:layout_rowWeight="1" />
+
+            <!-- RIGA 3 -->
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:ems="10"
+                android:inputType="text"
+                android:text="B"
+                app:layout_columnWeight="1"
+                app:layout_gravity="fill"
+                app:layout_rowWeight="1" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:ems="10"
+                android:inputType="text"
+                android:text="E"
+                app:layout_columnWeight="1"
+                app:layout_gravity="fill"
+                app:layout_rowWeight="1" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:ems="10"
+                android:inputType="text"
+                android:text="A"
+                app:layout_columnWeight="1"
+                app:layout_gravity="fill"
+                app:layout_rowWeight="1" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:ems="10"
+                android:inputType="text"
+                android:text="C"
+                app:layout_columnWeight="1"
+                app:layout_gravity="fill"
+                app:layout_rowWeight="1" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:ems="10"
+                android:inputType="text"
+                android:text="H"
+                app:layout_columnWeight="1"
+                app:layout_gravity="fill"
+                app:layout_rowWeight="1" />
+
+            <!-- RIGA 5 -->
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:ems="10"
+                android:inputType="text"
+                android:text="B"
+                app:layout_columnWeight="1"
+                app:layout_gravity="fill"
+                app:layout_rowWeight="1" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:ems="10"
+                android:inputType="text"
+                android:text="E"
+                app:layout_columnWeight="1"
+                app:layout_gravity="fill"
+                app:layout_rowWeight="1" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:ems="10"
+                android:inputType="text"
+                android:text="A"
+                app:layout_columnWeight="1"
+                app:layout_gravity="fill"
+                app:layout_rowWeight="1" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:ems="10"
+                android:inputType="text"
+                android:text="C"
+                app:layout_columnWeight="1"
+                app:layout_gravity="fill"
+                app:layout_rowWeight="1" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:ems="10"
+                android:inputType="text"
+                android:text="H"
+                app:layout_columnWeight="1"
+                app:layout_gravity="fill"
+                app:layout_rowWeight="1" />
+
+            <!-- RIGA 6 -->
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:ems="10"
+                android:inputType="text"
+                android:text="B"
+                app:layout_columnWeight="1"
+                app:layout_gravity="fill"
+                app:layout_rowWeight="1" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:ems="10"
+                android:inputType="text"
+                android:text="E"
+                app:layout_columnWeight="1"
+                app:layout_gravity="fill"
+                app:layout_rowWeight="1" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:ems="10"
+                android:inputType="text"
+                android:text="A"
+                app:layout_columnWeight="1"
+                app:layout_gravity="fill"
+                app:layout_rowWeight="1" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:ems="10"
+                android:inputType="text"
+                android:text="C"
+                app:layout_columnWeight="1"
+                app:layout_gravity="fill"
+                app:layout_rowWeight="1" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:ems="10"
+                android:inputType="text"
+                android:text="H"
+                app:layout_columnWeight="1"
+                app:layout_gravity="fill"
+                app:layout_rowWeight="1" />
+
+            <!-- RIGA 2 -->
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:ems="10"
+                android:inputType="text"
+                android:text="B"
+                app:layout_columnWeight="1"
+                app:layout_gravity="fill"
+                app:layout_rowWeight="1" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:ems="10"
+                android:inputType="text"
+                android:text="E"
+                app:layout_columnWeight="1"
+                app:layout_gravity="fill"
+                app:layout_rowWeight="1" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:ems="10"
+                android:inputType="text"
+                android:text="A"
+                app:layout_columnWeight="1"
+                app:layout_gravity="fill"
+                app:layout_rowWeight="1" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:ems="10"
+                android:inputType="text"
+                android:text="C"
+                app:layout_columnWeight="1"
+                app:layout_gravity="fill"
+                app:layout_rowWeight="1" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:ems="10"
+                android:inputType="text"
+                android:text="H"
+                app:layout_columnWeight="1"
+                app:layout_gravity="fill"
+                app:layout_rowWeight="1" />
+
+
+        </androidx.gridlayout.widget.GridLayout>
+
+        <!-- Keyboard -->
+        <androidx.gridlayout.widget.GridLayout
+            android:id="@+id/keyboardGridLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:columnCount="10"
+            app:rowCount="3"
+            app:columnOrderPreserved="false"
+            app:layout_constraintTop_toBottomOf="@id/textBoxGridLayout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <!-- Row 1 -->
+            <Button android:id="@+id/Q_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="Q" android:padding="0dp" android:textSize="12sp" />
+            <Button android:id="@+id/W_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="W" android:padding="0dp" android:textSize="12sp" />
+            <Button android:id="@+id/E_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="E" android:padding="0dp" android:textSize="12sp" />
+            <Button android:id="@+id/R_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="R" android:padding="0dp" android:textSize="12sp" />
+            <Button android:id="@+id/T_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="T" android:padding="0dp" android:textSize="12sp" />
+            <Button android:id="@+id/Y_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="Y" android:padding="0dp" android:textSize="12sp" />
+            <Button android:id="@+id/U_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="U" android:padding="0dp" android:textSize="12sp" />
+            <Button android:id="@+id/I_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="I" android:padding="0dp" android:textSize="12sp" />
+            <Button android:id="@+id/O_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="O" android:padding="0dp" android:textSize="12sp" />
+            <Button android:id="@+id/P_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="P" android:padding="0dp" android:textSize="12sp" />
+
+            <!-- Row 2 -->
+            <Button android:id="@+id/A_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="A" android:padding="0dp" android:textSize="12sp" />
+            <Button android:id="@+id/S_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="S" android:padding="0dp" android:textSize="12sp" />
+            <Button android:id="@+id/D_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="D" android:padding="0dp" android:textSize="12sp" />
+            <Button android:id="@+id/F_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="F" android:padding="0dp" android:textSize="12sp" />
+            <Button android:id="@+id/G_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="G" android:padding="0dp" android:textSize="12sp" />
+            <Button android:id="@+id/H_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="H" android:padding="0dp" android:textSize="12sp" />
+            <Button android:id="@+id/J_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="J" android:padding="0dp" android:textSize="12sp" />
+            <Button android:id="@+id/K_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="K" android:padding="0dp" android:textSize="12sp" />
+            <Button android:id="@+id/L_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="L" android:padding="0dp" android:textSize="12sp" />
+
+            <!-- Row 3 -->
+            <Button android:id="@+id/Z_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="Z" android:padding="0dp" android:textSize="12sp" />
+            <Button android:id="@+id/X_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="X" android:padding="0dp" android:textSize="12sp" />
+            <Button android:id="@+id/C_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="C" android:padding="0dp" android:textSize="12sp" />
+            <Button android:id="@+id/V_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="V" android:padding="0dp" android:textSize="12sp" />
+            <Button android:id="@+id/B_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="B" android:padding="0dp" android:textSize="12sp" />
+            <Button android:id="@+id/N_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="N" android:padding="0dp" android:textSize="12sp" />
+            <Button android:id="@+id/M_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="M" android:padding="0dp" android:textSize="12sp" />
+
+        </androidx.gridlayout.widget.GridLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
