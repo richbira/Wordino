@@ -33,6 +33,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         Button qButton = (Button) findViewById(R.id.key_q);
         qButton.setOnClickListener(this);
 
+        Button cancButton = (Button) findViewById(R.id.key_cancel);
+        cancButton.setOnClickListener(this);
+
     }
 
     /*
@@ -47,20 +50,26 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
         } else if (id == R.id.key_q) {
             Log.d(TAG, "Bottone Q cliccato");
-            TextView wordBox = (TextView) findViewById(activeBox.getId());
-            updateActiveBox("Q");
+            //TextView wordBox = (TextView) findViewById(activeBox.getId());
+            updateActiveBox("Q", 1);
+        } else if (id == R.id.key_cancel) {
+            Log.d(TAG, "Bottone cancel cliccato");
+            //TextView wordBox = (TextView) findViewById(activeBox.getId());
+            updateActiveBox("", 1);
         }
+
     }
-    private void updateActiveBox(String text) {
+    private void updateActiveBox(String text, int i) {
         if (activeBox instanceof TextView) {
             ((TextView) activeBox).setText(text);
-            nextWordBox();
+            nextWordBox(i);
         }
     }
-    public void nextWordBox() {
+    public void nextWordBox(int i) {
         String fullName = getResources().getResourceName(activeBox.getId());
         String activeBoxName = fullName.substring(fullName.lastIndexOf("/") + 1);
-        int nextLetterNum = Integer.parseInt(activeBoxName.substring(activeBoxName.length() - 1)) + 1;
+        int nextLetterNum = Integer.parseInt(activeBoxName.substring(activeBoxName.length() - 1)) + i;
+        Log.d(TAG, String.valueOf(nextLetterNum));
         String nextActiveBoxName = activeBoxName.substring(0, activeBoxName.length() - 1) + nextLetterNum;
         int nextActiveBoxId = getResources().getIdentifier(nextActiveBoxName, "id", getPackageName());
         if (nextActiveBoxId != 0) { // Check if the next box exists
