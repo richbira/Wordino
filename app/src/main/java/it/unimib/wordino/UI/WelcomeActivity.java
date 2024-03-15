@@ -42,9 +42,7 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     public void startGame(String mode) {
-        Switch unlimitedSwitch = findViewById(R.id.unlimitedSwitch);
         Intent playIntent = new Intent(WelcomeActivity.this, GameActivity.class);
-        playIntent.putExtra("switchUnlimited", unlimitedSwitch.isChecked());
         playIntent.putExtra("mode", mode);
         startActivity(playIntent);
     }

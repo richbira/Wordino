@@ -1,7 +1,12 @@
 package it.unimib.wordino.UI;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +14,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import it.unimib.wordino.R;
 
@@ -24,6 +31,26 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         Log.d(TAG, "Game");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        //Toolbar toolbar = findViewById(R.id.top_appbar);
+        //setSupportActionBar(toolbar);
+
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().
+                findFragmentById(R.id.bottom_nav_menu_graph);
+        assert navHostFragment != null;
+        NavController navController = navHostFragment.getNavController();
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
+
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.accountFragment, R.id.dailyFragment,
+                R.id.settingsFragment, R.id.socialFragment, R.id.trainingFragment).build();
+
+        // For the Toolbar
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+
+        // For the BottomNavigationView
+        NavigationUI.setupWithNavController(bottomNav, navController);
+
 
         //Aggiungo flag "Unlimited" che gli passo dalla schermata home
         Bundle bundle = getIntent().getExtras();
@@ -44,9 +71,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
         //activeBox = findViewById(R.id.word_01);
 
-        //Bottone per tornare alla schermata principale
-        Button backButton = (Button) findViewById(R.id.backButton);
-        backButton.setOnClickListener(this);
+
 
         //Button Button = (Button) findViewById(R.id.key_q);
         //Button.setOnClickListener(this);

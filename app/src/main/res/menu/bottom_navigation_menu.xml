@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/accountFragment"
+        android:enabled="true"
+        android:icon="@drawable/baseline_account_circle_24"
+        android:title="@string/account"
+        />
+    <item
+        android:id="@+id/socialFragment"
+        android:enabled="true"
+        android:icon="@drawable/baseline_people_24"
+        android:title="@string/social"
+        />
+    <item
+        android:id="@+id/dailyFragment"
+        android:enabled="true"
+        android:icon="@drawable/baseline_menu_book_24"
+        android:title="@string/daily"
+        />
+    <item
+        android:id="@+id/trainingFragment"
+        android:enabled="true"
+        android:icon="@drawable/baseline_lock_open_24"
+        android:title="@string/training"
+        />
+    <item
+        android:id="@+id/settingsFragment"
+        android:enabled="true"
+        android:icon="@drawable/baseline_settings_24"
+        android:title="@string/settings"
+        />
+</menu>

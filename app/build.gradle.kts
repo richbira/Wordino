@@ -4,12 +4,12 @@ plugins {
 
 android {
     namespace = "it.unimib.wordino"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "it.unimib.wordino"
         minSdk = 24
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -30,8 +30,13 @@ android {
 
 dependencies {
 
+    val nav_version = "2.7.7"
+
+    implementation("androidx.navigation:navigation-fragment:$nav_version")
+    implementation("androidx.navigation:navigation-ui:$nav_version")
+
     implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.8.0")
+    implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("commons-validator:commons-validator:1.8.0")
     implementation("androidx.gridlayout:gridlayout:1.0.0")
