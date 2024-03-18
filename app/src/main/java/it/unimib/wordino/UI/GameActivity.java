@@ -36,9 +36,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         //setSupportActionBar(toolbar);
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().
-                findFragmentById(R.id.bottom_nav_menu_graph);
-        assert navHostFragment != null;
+                findFragmentById(R.id.bottom_nav);
         NavController navController = navHostFragment.getNavController();
+
         BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
 
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
