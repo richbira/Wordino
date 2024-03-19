@@ -36,7 +36,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         //setSupportActionBar(toolbar);
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().
-                findFragmentById(R.id.bottom_nav);
+                findFragmentById(R.id.fragmentContainerView);
         NavController navController = navHostFragment.getNavController();
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
@@ -44,9 +44,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.accountFragment, R.id.dailyFragment,
                 R.id.settingsFragment, R.id.socialFragment, R.id.trainingFragment).build();
-
-        // For the Toolbar
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
         // For the BottomNavigationView
         NavigationUI.setupWithNavController(bottomNav, navController);
@@ -60,34 +57,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
             Log.d(TAG, "unlimitedPlay: " + unlimitedPlayIsChecked);
             Log.d(TAG, "mode: " + mode); // Se questo flag è true mostro Fragment con le regole
         }
-
-        if (mode.equals("PLAY")) {
-            // Load the GameFragment since the mode is Play
-            loadGameFragment();
-        }else if(mode.equals("HOW_TO_PLAY")){
-            loadHowToPlayFragment();
-        }
-
-
-        //activeBox = findViewById(R.id.word_01);
-
-
-
-        //Button Button = (Button) findViewById(R.id.key_q);
-        //Button.setOnClickListener(this);
-
-    }
-    private void loadGameFragment() {
-        GameFragment gameFragment = new GameFragment();
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentContainerView, gameFragment)
-                .commit();
-    }
-    private void loadHowToPlayFragment() {
-        HowToPlayFragment howToPlayFragment = new HowToPlayFragment();
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragmentContainerView, howToPlayFragment)
-                .commit();
     }
     /*
     Gestione bottoni cliccati
