@@ -11,526 +11,674 @@
         android:layout_height="match_parent">
 
         <!-- Text Boxes-->
-        <androidx.gridlayout.widget.GridLayout
-            android:id="@+id/textBoxGridLayout"
-            android:layout_width="400dp"
-            android:layout_height="480dp"
-            android:padding="10dp"
-            app:alignmentMode="alignMargins"
-            app:columnCount="5"
-            app:layout_constraintBottom_toTopOf="@+id/keyboardGridLayout"
+        <RelativeLayout
+            android:id="@+id/relativeLayoutWord"
+            android:layout_width="390dp"
+            android:layout_height="470dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="11dp"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toTopOf="@+id/relativeLayoutKeyboard"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:rowCount="6">
+            app:layout_constraintStart_toStartOf="parent">
 
-            <!-- Esempio di EditText nella griglia. Ripetere questo per ogni cella necessaria -->
-            <EditText
-                style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:ems="10"
-                android:gravity="center"
-                android:inputType="text"
-                android:outlineProvider="none"
-                android:text="A"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_columnWeight="1"
+            <TextView
+                android:id="@+id/word_01"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="0dp"
+                android:background="#93E5EF"
+                android:textAlignment="center"
+                android:textSize="48sp" />
 
-                app:layout_gravity="fill"
-                app:layout_rowWeight="1" />
+            <TextView
+                android:id="@+id/word_02"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/word_01"
+                android:background="#93E5EF"
+                android:textAlignment="center"
+                android:textSize="48sp" />
 
-            <EditText
-                style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:ems="10"
-                android:gravity="center"
-                android:inputType="text"
-                android:outlineProvider="none"
-                android:text="B"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_columnWeight="1"
-                app:layout_gravity="fill"
-                app:layout_rowWeight="1" />
+            <TextView
+                android:id="@+id/word_03"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/word_02"
+                android:background="#93E5EF"
+                android:textAlignment="center"
+                android:textSize="48sp" />
 
-            <EditText
-                style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:ems="10"
-                android:gravity="center"
-                android:inputType="text"
-                android:outlineProvider="none"
-                android:text="A"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_columnWeight="1"
-                app:layout_gravity="fill"
-                app:layout_rowWeight="1" />
+            <TextView
+                android:id="@+id/word_04"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/word_03"
+                android:background="#93E5EF"
+                android:textAlignment="center"
+                android:textSize="48sp" />
 
-            <EditText
-                style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:ems="10"
-                android:gravity="center"
-                android:inputType="text"
-                android:outlineProvider="none"
-                android:text="C"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_columnWeight="1"
-                app:layout_gravity="fill"
-                app:layout_rowWeight="1" />
+            <TextView
+                android:id="@+id/word_05"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/word_04"
+                android:background="#93E5EF"
+                android:textAlignment="center"
+                android:textSize="48sp" />
 
-            <EditText
-                style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:ems="10"
-                android:gravity="center"
-                android:inputType="text"
-                android:outlineProvider="none"
-                android:text="O"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_columnWeight="1"
-                app:layout_gravity="fill"
-                app:layout_rowWeight="1" />
+            <TextView
+                android:id="@+id/word_11"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_01"
+                android:layout_marginTop="10dp"
+                android:background="#93E5EF"
+                android:textAlignment="center"
+                android:textSize="48sp" />
 
-            <!-- Aggiungi altre EditText qui con lo stesso layout -->
-            <!-- RIGA 2 -->
-            <EditText
-                style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:ems="10"
-                android:gravity="center"
-                android:inputType="text"
-                android:outlineProvider="none"
-                android:text=""
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_columnWeight="1"
-                app:layout_gravity="fill"
-                app:layout_rowWeight="1" />
+            <TextView
+                android:id="@+id/word_12"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_01"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_11"
+                android:background="#93E5EF"
+                android:textAlignment="center"
+                android:textSize="48sp" />
 
-            <EditText
-                style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:ems="10"
-                android:gravity="center"
-                android:inputType="text"
-                android:outlineProvider="none"
-                android:text=""
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_columnWeight="1"
-                app:layout_gravity="fill"
-                app:layout_rowWeight="1" />
+            <TextView
+                android:id="@+id/word_13"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_01"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_12"
+                android:background="#93E5EF"
+                android:textAlignment="center"
+                android:textSize="48sp" />
 
-            <EditText
-                style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:ems="10"
-                android:gravity="center"
-                android:inputType="text"
-                android:outlineProvider="none"
-                android:text=""
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_columnWeight="1"
-                app:layout_gravity="fill"
-                app:layout_rowWeight="1" />
+            <TextView
+                android:id="@+id/word_14"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_01"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_13"
+                android:background="#93E5EF"
+                android:textAlignment="center"
+                android:textSize="48sp" />
 
-            <EditText
-                style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:ems="10"
-                android:gravity="center"
-                android:inputType="text"
-                android:outlineProvider="none"
-                android:text=""
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_columnWeight="1"
-                app:layout_gravity="fill"
-                app:layout_rowWeight="1" />
+            <TextView
+                android:id="@+id/word_15"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_01"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_14"
+                android:background="#93E5EF"
+                android:textAlignment="center"
+                android:textSize="48sp" />
 
-            <EditText
-                style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:ems="10"
-                android:gravity="center"
-                android:inputType="text"
-                android:outlineProvider="none"
-                android:text=""
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_columnWeight="1"
-                app:layout_gravity="fill"
-                app:layout_rowWeight="1" />
+            <TextView
+                android:id="@+id/word_21"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_11"
+                android:layout_marginTop="10dp"
+                android:background="#93E5EF"
+                android:textAlignment="center"
+                android:textSize="48sp" />
 
-            <!-- RIGA 3 -->
-            <EditText
-                style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:ems="10"
-                android:gravity="center"
-                android:inputType="text"
-                android:outlineProvider="none"
-                android:text=""
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_columnWeight="1"
-                app:layout_gravity="fill"
-                app:layout_rowWeight="1" />
+            <TextView
+                android:id="@+id/word_22"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_11"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_21"
+                android:background="#93E5EF"
+                android:textAlignment="center"
+                android:textSize="48sp" />
 
-            <EditText
-                style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:ems="10"
-                android:gravity="center"
-                android:inputType="text"
-                android:outlineProvider="none"
-                android:text=""
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_columnWeight="1"
-                app:layout_gravity="fill"
-                app:layout_rowWeight="1" />
+            <TextView
+                android:id="@+id/word_23"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_11"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_22"
+                android:background="#93E5EF"
+                android:textAlignment="center"
+                android:textSize="48sp" />
 
-            <EditText
-                style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:ems="10"
-                android:gravity="center"
-                android:inputType="text"
-                android:outlineProvider="none"
-                android:text=""
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_columnWeight="1"
-                app:layout_gravity="fill"
-                app:layout_rowWeight="1" />
+            <TextView
+                android:id="@+id/word_24"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_11"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_23"
+                android:background="#93E5EF"
+                android:textAlignment="center"
+                android:textSize="48sp" />
 
-            <EditText
-                style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:ems="10"
-                android:gravity="center"
-                android:inputType="text"
-                android:outlineProvider="none"
-                android:text=""
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_columnWeight="1"
-                app:layout_gravity="fill"
-                app:layout_rowWeight="1" />
+            <TextView
+                android:id="@+id/word_25"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_11"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_24"
+                android:background="#93E5EF"
+                android:textAlignment="center"
+                android:textSize="48sp" />
 
-            <EditText
-                style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:ems="10"
-                android:gravity="center"
-                android:inputType="text"
-                android:outlineProvider="none"
-                android:text=""
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_columnWeight="1"
-                app:layout_gravity="fill"
-                app:layout_rowWeight="1" />
+            <TextView
+                android:id="@+id/word_31"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_21"
+                android:layout_marginTop="10dp"
+                android:background="#93E5EF"
+                android:textAlignment="center"
+                android:textSize="48sp" />
 
-            <!-- RIGA 4 -->
-            <EditText
-                style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:ems="10"
-                android:gravity="center"
-                android:inputType="text"
-                android:outlineProvider="none"
-                android:text=""
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_columnWeight="1"
-                app:layout_gravity="fill"
-                app:layout_rowWeight="1" />
+            <TextView
+                android:id="@+id/word_32"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_21"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_31"
+                android:background="#93E5EF"
+                android:textAlignment="center"
+                android:textSize="48sp" />
 
-            <EditText
-                style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:ems="10"
-                android:gravity="center"
-                android:inputType="text"
-                android:outlineProvider="none"
-                android:text=""
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_columnWeight="1"
-                app:layout_gravity="fill"
-                app:layout_rowWeight="1" />
+            <TextView
+                android:id="@+id/word_33"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_21"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_32"
+                android:background="#93E5EF"
+                android:textAlignment="center"
+                android:textSize="48sp" />
 
-            <EditText
-                style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:ems="10"
-                android:gravity="center"
-                android:inputType="text"
-                android:outlineProvider="none"
-                android:text=""
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_columnWeight="1"
-                app:layout_gravity="fill"
-                app:layout_rowWeight="1" />
+            <TextView
+                android:id="@+id/word_34"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_21"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_33"
+                android:background="#93E5EF"
+                android:textAlignment="center"
+                android:textSize="48sp" />
 
-            <EditText
-                style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:ems="10"
-                android:gravity="center"
-                android:inputType="text"
-                android:outlineProvider="none"
-                android:text=""
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_columnWeight="1"
-                app:layout_gravity="fill"
-                app:layout_rowWeight="1" />
+            <TextView
+                android:id="@+id/word_35"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_21"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_34"
+                android:background="#93E5EF"
+                android:textAlignment="center"
+                android:textSize="48sp" />
 
-            <EditText
-                style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:ems="10"
-                android:gravity="center"
-                android:inputType="text"
-                android:outlineProvider="none"
-                android:text=""
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_columnWeight="1"
-                app:layout_gravity="fill"
-                app:layout_rowWeight="1" />
+            <TextView
+                android:id="@+id/word_41"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_31"
+                android:layout_marginTop="10dp"
+                android:background="#93E5EF"
+                android:textAlignment="center"
+                android:textSize="48sp" />
 
-            <!-- RIGA 5 -->
-            <EditText
-                style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:ems="10"
-                android:gravity="center"
-                android:inputType="text"
-                android:outlineProvider="none"
-                android:text=""
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_columnWeight="1"
-                app:layout_gravity="fill"
-                app:layout_rowWeight="1" />
+            <TextView
+                android:id="@+id/word_42"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_31"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_41"
+                android:background="#93E5EF"
+                android:textAlignment="center"
+                android:textSize="48sp" />
 
-            <EditText
-                style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:ems="10"
-                android:gravity="center"
-                android:inputType="text"
-                android:outlineProvider="none"
-                android:text=""
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_columnWeight="1"
-                app:layout_gravity="fill"
-                app:layout_rowWeight="1" />
+            <TextView
+                android:id="@+id/word_43"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_31"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_42"
+                android:background="#93E5EF"
+                android:textAlignment="center"
+                android:textSize="48sp" />
 
-            <EditText
-                style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:ems="10"
-                android:gravity="center"
-                android:inputType="text"
-                android:outlineProvider="none"
-                android:text=""
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_columnWeight="1"
-                app:layout_gravity="fill"
-                app:layout_rowWeight="1" />
+            <TextView
+                android:id="@+id/word_44"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_31"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_43"
+                android:background="#93E5EF"
+                android:textAlignment="center"
+                android:textSize="48sp" />
 
-            <EditText
-                style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:ems="10"
-                android:gravity="center"
-                android:inputType="text"
-                android:outlineProvider="none"
-                android:text=""
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_columnWeight="1"
-                app:layout_gravity="fill"
-                app:layout_rowWeight="1" />
+            <TextView
+                android:id="@+id/word_45"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_31"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_44"
+                android:background="#93E5EF"
+                android:textAlignment="center"
+                android:textSize="48sp" />
 
-            <EditText
-                style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:ems="10"
-                android:gravity="center"
-                android:inputType="text"
-                android:outlineProvider="none"
-                android:text=""
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_columnWeight="1"
-                app:layout_gravity="fill"
-                app:layout_rowWeight="1" />
+            <TextView
+                android:id="@+id/word_51"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_41"
+                android:layout_marginTop="10dp"
+                android:background="#93E5EF"
+                android:textAlignment="center"
+                android:textSize="48sp" />
 
-            <!-- RIGA 6 -->
-            <EditText
-                style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:ems="10"
-                android:gravity="center"
-                android:inputType="text"
-                android:outlineProvider="none"
-                android:text=""
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_columnWeight="1"
-                app:layout_gravity="fill"
-                app:layout_rowWeight="1" />
+            <TextView
+                android:id="@+id/word_52"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_41"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_51"
+                android:background="#93E5EF"
+                android:textAlignment="center"
+                android:textSize="48sp" />
 
-            <EditText
-                style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:ems="10"
-                android:gravity="center"
-                android:inputType="text"
-                android:outlineProvider="none"
-                android:text=""
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_columnWeight="1"
-                app:layout_gravity="fill"
-                app:layout_rowWeight="1" />
+            <TextView
+                android:id="@+id/word_53"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_41"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_52"
+                android:background="#93E5EF"
+                android:textAlignment="center"
+                android:textSize="48sp" />
 
-            <EditText
-                style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:ems="10"
-                android:gravity="center"
-                android:inputType="text"
-                android:outlineProvider="none"
-                android:text=""
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_columnWeight="1"
-                app:layout_gravity="fill"
-                app:layout_rowWeight="1" />
+            <TextView
+                android:id="@+id/word_54"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_41"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_53"
+                android:background="#93E5EF" />
 
-            <EditText
-                style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:ems="10"
-                android:gravity="center"
-                android:inputType="text"
-                android:outlineProvider="none"
-                android:text=""
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_columnWeight="1"
-                app:layout_gravity="fill"
-                app:layout_rowWeight="1" />
+            <TextView
+                android:id="@+id/word_55"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_41"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_54"
+                android:background="#93E5EF"
+                android:textAlignment="center"
+                android:textSize="48sp" />
 
-            <EditText
-                style="@style/Widget.Material3.AutoCompleteTextView.OutlinedBox"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:ems="10"
-                android:gravity="center"
-                android:inputType="text"
-                android:outlineProvider="none"
-                android:text=""
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_columnWeight="1"
-                app:layout_gravity="fill"
-                app:layout_rowWeight="1" />
-
-
-        </androidx.gridlayout.widget.GridLayout>
+        </RelativeLayout>
 
         <!-- Keyboard -->
-        <androidx.gridlayout.widget.GridLayout
-            android:id="@+id/keyboardGridLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:columnCount="10"
-            app:rowCount="3"
-            app:columnOrderPreserved="false"
-            app:layout_constraintTop_toBottomOf="@id/textBoxGridLayout"
+        <RelativeLayout
+            android:id="@+id/relativeLayoutKeyboard"
+            android:layout_width="390dp"
+            android:layout_height="151dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="11dp"
+            android:layout_marginBottom="24dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
-            <!-- Row 1 -->
-            <Button android:id="@+id/Q_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="@string/q" android:padding="0dp" android:textSize="12sp" />
-            <Button android:id="@+id/W_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="@string/w" android:padding="0dp" android:textSize="12sp" />
-            <Button android:id="@+id/E_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="@string/e" android:padding="0dp" android:textSize="12sp" />
-            <Button android:id="@+id/R_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="@string/r" android:padding="0dp" android:textSize="12sp" />
-            <Button android:id="@+id/T_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="@string/t" android:padding="0dp" android:textSize="12sp" />
-            <Button android:id="@+id/Y_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="@string/y" android:padding="0dp" android:textSize="12sp" />
-            <Button android:id="@+id/U_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="@string/u" android:padding="0dp" android:textSize="12sp" />
-            <Button android:id="@+id/I_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="@string/i" android:padding="0dp" android:textSize="12sp" />
-            <Button android:id="@+id/O_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="@string/o" android:padding="0dp" android:textSize="12sp" />
-            <Button android:id="@+id/P_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="@string/p" android:padding="0dp" android:textSize="12sp" />
+            <Button
+                android:id="@+id/key_q"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="35dp"
+                android:layout_height="50dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="0dp"
+                android:backgroundTint="#B4B4B4"
+                android:text="@string/q"
+                android:textAlignment="center" />
 
-            <!-- Row 2 -->
-            <Button android:id="@+id/A_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="@string/a" android:padding="0dp" android:textSize="12sp" />
-            <Button android:id="@+id/S_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="@string/s" android:padding="0dp" android:textSize="12sp" />
-            <Button android:id="@+id/D_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="@string/d" android:padding="0dp" android:textSize="12sp" />
-            <Button android:id="@+id/F_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="@string/f" android:padding="0dp" android:textSize="12sp" />
-            <Button android:id="@+id/G_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="@string/g" android:padding="0dp" android:textSize="12sp" />
-            <Button android:id="@+id/H_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="@string/h" android:padding="0dp" android:textSize="12sp" />
-            <Button android:id="@+id/J_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="@string/j" android:padding="0dp" android:textSize="12sp" />
-            <Button android:id="@+id/K_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="@string/k" android:padding="0dp" android:textSize="12sp" />
-            <Button android:id="@+id/L_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="@string/l" android:padding="0dp" android:textSize="12sp" />
+            <Button
+                android:id="@+id/key_w"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="35dp"
+                android:layout_height="50dp"
+                android:layout_toEndOf="@id/key_q"
+                android:backgroundTint="#B4B4B4"
+                android:text="@string/w"
+                android:textAlignment="center" />
 
-            <!-- Row 3 -->
-            <Button android:id="@+id/Z_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="@string/z" android:padding="0dp" android:textSize="12sp" />
-            <Button android:id="@+id/X_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="@string/x" android:padding="0dp" android:textSize="12sp" />
-            <Button android:id="@+id/C_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="@string/c" android:padding="0dp" android:textSize="12sp" />
-            <Button android:id="@+id/V_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="@string/v" android:padding="0dp" android:textSize="12sp" />
-            <Button android:id="@+id/B_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="@string/b" android:padding="0dp" android:textSize="12sp" />
-            <Button android:id="@+id/N_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="@string/n" android:padding="0dp" android:textSize="12sp" />
-            <Button android:id="@+id/M_Button" android:layout_width="36dp" android:layout_height="wrap_content" android:text="@string/m" android:padding="0dp" android:textSize="12sp" />
+            <Button
 
-        </androidx.gridlayout.widget.GridLayout>
+                android:id="@+id/key_e"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="35dp"
+                android:layout_height="50dp"
+                android:layout_toEndOf="@id/key_w"
+                android:backgroundTint="#B4B4B4"
+                android:text="@string/e"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/key_r"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="35dp"
+                android:layout_height="50dp"
+                android:layout_toEndOf="@id/key_e"
+                android:backgroundTint="#B4B4B4"
+                android:text="@string/r"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/key_t"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="35dp"
+                android:layout_height="50dp"
+                android:layout_toEndOf="@id/key_r"
+                android:backgroundTint="#B4B4B4"
+                android:text="@string/t"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/key_y"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="35dp"
+                android:layout_height="50dp"
+                android:layout_toEndOf="@id/key_t"
+                android:backgroundTint="#B4B4B4"
+                android:text="@string/y"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/key_u"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="35dp"
+                android:layout_height="50dp"
+                android:layout_toEndOf="@id/key_y"
+                android:backgroundTint="#B4B4B4"
+                android:text="@string/u"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/key_i"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="35dp"
+                android:layout_height="50dp"
+                android:layout_toEndOf="@id/key_u"
+                android:backgroundTint="#B4B4B4"
+                android:text="@string/i"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/key_o"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="35dp"
+                android:layout_height="50dp"
+                android:layout_toEndOf="@id/key_i"
+                android:backgroundTint="#B4B4B4"
+                android:text="@string/o"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/key_p"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="35dp"
+                android:layout_height="50dp"
+                android:layout_toEndOf="@id/key_o"
+                android:backgroundTint="#B4B4B4"
+                android:text="@string/p"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/key_a"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="35dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_q"
+                android:layout_marginStart="40dp"
+                android:backgroundTint="#B4B4B4"
+                android:text="@string/a"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/key_s"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="35dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_q"
+                android:layout_toEndOf="@id/key_a"
+                android:backgroundTint="#B4B4B4"
+                android:text="@string/s"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/key_d"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="35dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_q"
+                android:layout_toEndOf="@id/key_s"
+                android:backgroundTint="#B4B4B4"
+                android:text="@string/d"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/key_f"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="35dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_q"
+                android:layout_toEndOf="@id/key_d"
+                android:backgroundTint="#B4B4B4"
+                android:text="@string/f"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/key_g"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="35dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_q"
+                android:layout_toEndOf="@id/key_f"
+                android:backgroundTint="#B4B4B4"
+                android:text="@string/g"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/key_h"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="35dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_q"
+                android:layout_toEndOf="@id/key_g"
+                android:backgroundTint="#B4B4B4"
+                android:text="@string/h"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/key_j"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="35dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_q"
+                android:layout_toEndOf="@id/key_h"
+                android:backgroundTint="#B4B4B4"
+                android:text="@string/j"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/key_k"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="35dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_q"
+                android:layout_toEndOf="@id/key_j"
+                android:backgroundTint="#B4B4B4"
+                android:text="@string/k"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/key_l"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="35dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_q"
+                android:layout_toEndOf="@id/key_k"
+                android:backgroundTint="#B4B4B4"
+                android:text="@string/l"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/key_cancel"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="60dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_a"
+                android:backgroundTint="#B4FFFF"
+                android:text="@string/canc"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/key_z"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="35dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_a"
+                android:layout_toEndOf="@id/key_cancel"
+                android:backgroundTint="#B4B4B4"
+                android:text="@string/z"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/key_x"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="35dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_a"
+                android:layout_toEndOf="@id/key_z"
+                android:backgroundTint="#B4B4B4"
+                android:text="@string/x"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/key_c"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="35dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_a"
+                android:layout_toEndOf="@id/key_x"
+                android:backgroundTint="#B4B4B4"
+                android:text="@string/c"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/key_v"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="35dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_a"
+                android:layout_toEndOf="@id/key_c"
+                android:backgroundTint="#B4B4B4"
+                android:text="@string/v"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/key_b"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="35dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_a"
+                android:layout_toEndOf="@id/key_v"
+                android:backgroundTint="#B4B4B4"
+                android:text="@string/b"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/key_n"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="35dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_a"
+                android:layout_toEndOf="@id/key_b"
+                android:backgroundTint="#B4B4B4"
+                android:text="@string/n"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/key_m"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="35dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_a"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_toEndOf="@id/key_n"
+                android:backgroundTint="#B4B4B4"
+                android:text="@string/m"
+                android:textAlignment="center" />
+
+            <Button
+                android:id="@+id/key_enter"
+                style="@style/Widget.Material3.Button.TextButton"
+                android:layout_width="60dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_a"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_toEndOf="@id/key_m"
+                android:backgroundTint="#B4FFFF"
+                android:text="@string/enter"
+                android:textAlignment="center" />
+        </RelativeLayout>
 
 
 

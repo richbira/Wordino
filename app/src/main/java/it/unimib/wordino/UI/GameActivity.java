@@ -18,7 +18,6 @@ import android.widget.TextView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import it.unimib.wordino.R;
-
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
 
 

@@ -54,4 +54,6 @@
     <string name="v">V</string>
     <string name="n">N</string>
     <string name="m">M</string>
+    <string name="canc">Canc</string>
+    <string name="enter">Enter</string>
 </resources>
