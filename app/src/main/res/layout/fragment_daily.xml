@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".DailyFragment">
+    tools:context=".UI.DailyFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -28,7 +28,7 @@
                 android:layout_height="70dp"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="0dp"
-                android:background="#93E5EF"
+                android:background="@drawable/border_white"
                 android:textAlignment="center"
                 android:textSize="48sp" />
 
@@ -38,7 +38,7 @@
                 android:layout_height="70dp"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@id/word_01"
-                android:background="#93E5EF"
+                android:background="@drawable/border_white"
                 android:textAlignment="center"
                 android:textSize="48sp" />
 
@@ -346,7 +346,9 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/word_53"
-                android:background="#93E5EF" />
+                android:background="#93E5EF"
+                android:textAlignment="center"
+                android:textSize="48sp" />
 
             <TextView
                 android:id="@+id/word_55"

@@ -1,24 +1,21 @@
 package it.unimib.wordino.UI;
 
 import android.os.Bundle;
-import android.util.Log;
+
+import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
 import it.unimib.wordino.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link GameFragment#newInstance} factory method to
+ * Use the {@link AccountFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class GameFragment extends Fragment {
+public class AccountFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,7 +26,7 @@ public class GameFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public GameFragment() {
+    public AccountFragment() {
         // Required empty public constructor
     }
 
@@ -39,11 +36,11 @@ public class GameFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment GameFragment.
+     * @return A new instance of fragment AccountFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static GameFragment newInstance(String param1, String param2) {
-        GameFragment fragment = new GameFragment();
+    public static AccountFragment newInstance(String param1, String param2) {
+        AccountFragment fragment = new AccountFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -64,14 +61,6 @@ public class GameFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_game, container, false);
+        return inflater.inflate(R.layout.fragment_account, container, false);
     }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState){
-        super.onViewCreated(view, savedInstanceState);
-
-
-    }
-
 }
