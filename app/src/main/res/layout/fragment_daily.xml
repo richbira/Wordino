@@ -48,7 +48,7 @@
                 android:layout_height="70dp"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@id/word_02"
-                android:background="#93E5EF"
+                android:background="@drawable/border_white"
                 android:textAlignment="center"
                 android:textSize="48sp" />
 
@@ -58,7 +58,7 @@
                 android:layout_height="70dp"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@id/word_03"
-                android:background="#93E5EF"
+                android:background="@drawable/border_white"
                 android:textAlignment="center"
                 android:textSize="48sp" />
 
@@ -68,7 +68,7 @@
                 android:layout_height="70dp"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@id/word_04"
-                android:background="#93E5EF"
+                android:background="@drawable/border_white"
                 android:textAlignment="center"
                 android:textSize="48sp" />
 
@@ -78,7 +78,7 @@
                 android:layout_height="70dp"
                 android:layout_below="@id/word_01"
                 android:layout_marginTop="10dp"
-                android:background="#93E5EF"
+                android:background="@drawable/border_white"
                 android:textAlignment="center"
                 android:textSize="48sp" />
 
@@ -90,7 +90,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/word_11"
-                android:background="#93E5EF"
+                android:background="@drawable/border_white"
                 android:textAlignment="center"
                 android:textSize="48sp" />
 
@@ -102,7 +102,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/word_12"
-                android:background="#93E5EF"
+                android:background="@drawable/border_white"
                 android:textAlignment="center"
                 android:textSize="48sp" />
 
@@ -114,7 +114,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/word_13"
-                android:background="#93E5EF"
+                android:background="@drawable/border_white"
                 android:textAlignment="center"
                 android:textSize="48sp" />
 
@@ -126,7 +126,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/word_14"
-                android:background="#93E5EF"
+                android:background="@drawable/border_white"
                 android:textAlignment="center"
                 android:textSize="48sp" />
 
@@ -136,7 +136,7 @@
                 android:layout_height="70dp"
                 android:layout_below="@id/word_11"
                 android:layout_marginTop="10dp"
-                android:background="#93E5EF"
+                android:background="@drawable/border_white"
                 android:textAlignment="center"
                 android:textSize="48sp" />
 
@@ -148,7 +148,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/word_21"
-                android:background="#93E5EF"
+                android:background="@drawable/border_white"
                 android:textAlignment="center"
                 android:textSize="48sp" />
 
@@ -160,7 +160,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/word_22"
-                android:background="#93E5EF"
+                android:background="@drawable/border_white"
                 android:textAlignment="center"
                 android:textSize="48sp" />
 
@@ -172,7 +172,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/word_23"
-                android:background="#93E5EF"
+                android:background="@drawable/border_white"
                 android:textAlignment="center"
                 android:textSize="48sp" />
 
@@ -184,7 +184,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/word_24"
-                android:background="#93E5EF"
+                android:background="@drawable/border_white"
                 android:textAlignment="center"
                 android:textSize="48sp" />
 
@@ -194,7 +194,7 @@
                 android:layout_height="70dp"
                 android:layout_below="@id/word_21"
                 android:layout_marginTop="10dp"
-                android:background="#93E5EF"
+                android:background="@drawable/border_white"
                 android:textAlignment="center"
                 android:textSize="48sp" />
 
@@ -206,7 +206,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/word_31"
-                android:background="#93E5EF"
+                android:background="@drawable/border_white"
                 android:textAlignment="center"
                 android:textSize="48sp" />
 
@@ -218,7 +218,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/word_32"
-                android:background="#93E5EF"
+                android:background="@drawable/border_white"
                 android:textAlignment="center"
                 android:textSize="48sp" />
 
@@ -230,7 +230,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/word_33"
-                android:background="#93E5EF"
+                android:background="@drawable/border_white"
                 android:textAlignment="center"
                 android:textSize="48sp" />
 
@@ -242,7 +242,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/word_34"
-                android:background="#93E5EF"
+                android:background="@drawable/border_white"
                 android:textAlignment="center"
                 android:textSize="48sp" />
 
@@ -252,7 +252,7 @@
                 android:layout_height="70dp"
                 android:layout_below="@id/word_31"
                 android:layout_marginTop="10dp"
-                android:background="#93E5EF"
+                android:background="@drawable/border_white"
                 android:textAlignment="center"
                 android:textSize="48sp" />
 
@@ -264,7 +264,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/word_41"
-                android:background="#93E5EF"
+                android:background="@drawable/border_white"
                 android:textAlignment="center"
                 android:textSize="48sp" />
 
@@ -276,7 +276,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/word_42"
-                android:background="#93E5EF"
+                android:background="@drawable/border_white"
                 android:textAlignment="center"
                 android:textSize="48sp" />
 
@@ -288,7 +288,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/word_43"
-                android:background="#93E5EF"
+                android:background="@drawable/border_white"
                 android:textAlignment="center"
                 android:textSize="48sp" />
 
@@ -300,7 +300,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/word_44"
-                android:background="#93E5EF"
+                android:background="@drawable/border_white"
                 android:textAlignment="center"
                 android:textSize="48sp" />
 
@@ -310,7 +310,7 @@
                 android:layout_height="70dp"
                 android:layout_below="@id/word_41"
                 android:layout_marginTop="10dp"
-                android:background="#93E5EF"
+                android:background="@drawable/border_white"
                 android:textAlignment="center"
                 android:textSize="48sp" />
 
@@ -322,7 +322,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/word_51"
-                android:background="#93E5EF"
+                android:background="@drawable/border_white"
                 android:textAlignment="center"
                 android:textSize="48sp" />
 
@@ -334,7 +334,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/word_52"
-                android:background="#93E5EF"
+                android:background="@drawable/border_white"
                 android:textAlignment="center"
                 android:textSize="48sp" />
 
@@ -346,7 +346,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/word_53"
-                android:background="#93E5EF"
+                android:background="@drawable/border_white"
                 android:textAlignment="center"
                 android:textSize="48sp" />
 
@@ -358,7 +358,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/word_54"
-                android:background="#93E5EF"
+                android:background="@drawable/border_white"
                 android:textAlignment="center"
                 android:textSize="48sp" />
 
