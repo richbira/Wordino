@@ -2,7 +2,6 @@ package it.unimib.wordino.UI;
 
 import android.os.Bundle;
 
-import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -12,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.Locale;
 import java.util.Objects;
 
 import it.unimib.wordino.R;
@@ -27,7 +27,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = DailyFragment.class.getSimpleName();
     public View activeBox;
     public int currentLine;
-    public String tempWord = "SPARK";
+    public String tempWord = "spark";
 
     public DailyFragment() {
         // Required empty public constructor
@@ -175,21 +175,23 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
              boxIndex = "word_" + currentLine + i;
              guessedWord += ((TextView) getView().findViewById(getResources().getIdentifier(boxIndex, "id", "it.unimib.wordino"))).getText(); //TODO defpackage
          }
-         Log.d(TAG, "Word: " + guessedWord);
-         String code = checkWord(guessedWord);
-         Log.d(TAG, "Code: " + code);
 
-         changeLettersColor(code);
+         guessedWord = guessedWord.toLowerCase();
+         String code = checkWord(guessedWord);
+         changeBoxColor(code);
+         changeKeyColor(code, guessedWord);
+
+
+         if (code.equals("ggggg")) Log.d(TAG, "Hai vinto!"); //TODO alert window o qualcosa di simile
 
          String nextLineBoxName = "word_" + ++currentLine + "1";
          activeBox = getView().findViewById(getResources().getIdentifier(nextLineBoxName, "id", "it.unimib.wordino"));  //TODO defpackage
-         Log.d(TAG, "Nuova Riga");
      }
      
      private String checkWord(String guess) {
         String colorCodes = "";
         for (int i = 0; i < 5; i++) {
-            Log.d(TAG, "Iterazione " + i + ": " + guess.charAt(i) + " - " + tempWord.charAt(i));
+            Log.d(TAG, "Check: " + guess.charAt(i) + " - " + tempWord.charAt(i));
             if (guess.charAt(i) == tempWord.charAt(i)) {
                 colorCodes += "g";
             } else if (!(tempWord.indexOf(guess.charAt(i)) < 0)) {
@@ -201,24 +203,32 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
         return colorCodes;
      }
 
-     private void changeLettersColor(String code) {
+     private void changeBoxColor(String code) {
         String boxId;
-        String gyb = "gyb";
-        char g = gyb.charAt(0);
-        char y = gyb.charAt(1); //TODO BRUTTO TROVARE ALTRO MODO
-        char b = gyb.charAt(2);
+
         for (int i = 1; i < 6; i++){
             boxId = "word_" + currentLine + i;
-            if (code.charAt(i-1) == g) {
-                ((TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", "it.unimib.wordino"))).setBackgroundResource(R.drawable.border_green);  //TODO defpackage e deprecated getcolor
-                Log.d(TAG, "green");
-            }else if (code.charAt(i-1) == y) {
-                ((TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", "it.unimib.wordino"))).setBackgroundResource(R.drawable.border_yellow);  //TODO defpackage e deprecated getcolor
-                Log.d(TAG, "yellow");
-            }else if (code.charAt(i-1) == b) {
-                ((TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", "it.unimib.wordino"))).setBackgroundResource(R.drawable.border_grey);  //TODO defpackage e deprecated getcolor
-                Log.d(TAG, "grey");
+            if (code.charAt(i-1) == 'g') {
+                ((TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", "it.unimib.wordino"))).setBackgroundResource(R.drawable.border_green);  //TODO defpackage
+            }else if (code.charAt(i-1) == 'y') {
+                ((TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", "it.unimib.wordino"))).setBackgroundResource(R.drawable.border_yellow);  //TODO defpackage
+            }else if (code.charAt(i-1) == 'b') {
+                ((TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", "it.unimib.wordino"))).setBackgroundResource(R.drawable.border_grey);  //TODO defpackage
             }
+        }
+     }
+
+     private void changeKeyColor(String code, String word) {
+        String keyId;
+        for (int i = 0; i < 5; i++) {
+             keyId = "key_" + word.charAt(i);
+             if (code.charAt(i) == 'g') {
+                 ((Button) getView().findViewById(getResources().getIdentifier(keyId, "id", "it.unimib.wordino"))).setBackgroundColor(getResources().getColor(R.color.mygreen));  //TODO defpackage e deprecated getcolor
+             } else if (code.charAt(i) == 'y') {
+                 ((Button) getView().findViewById(getResources().getIdentifier(keyId, "id", "it.unimib.wordino"))).setBackgroundColor(getResources().getColor(R.color.myyellow));  //TODO defpackage e deprecated getcolor
+             } else if (code.charAt(i) == 'b') {
+                 ((Button) getView().findViewById(getResources().getIdentifier(keyId, "id", "it.unimib.wordino"))).setBackgroundColor(getResources().getColor(R.color.mygrey));  //TODO defpackage e deprecated getcolor
+             }
         }
      }
 

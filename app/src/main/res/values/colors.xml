@@ -10,5 +10,8 @@
     <color name="mygreen">#4CAF50</color>
     <color name="myyellow">#ffbf00</color>
     <color name="mygrey">#a0a0a0</color>
+    <color name="mywhite">#EDEDED</color>
+
+
 
 </resources>
