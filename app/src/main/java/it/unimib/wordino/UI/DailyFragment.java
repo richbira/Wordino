@@ -1,5 +1,6 @@
 package it.unimib.wordino.UI;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -182,10 +183,15 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
          changeKeyColor(code, guessedWord);
 
 
-         if (code.equals("ggggg")) Log.d(TAG, "Hai vinto!"); //TODO alert window o qualcosa di simile
-
-         String nextLineBoxName = "word_" + ++currentLine + "1";
-         activeBox = getView().findViewById(getResources().getIdentifier(nextLineBoxName, "id", "it.unimib.wordino"));  //TODO defpackage
+         if (code.equals("ggggg")) {
+             winAlert();
+             Log.d(TAG, "Hai vinto!"); //TODO alert window o qualcosa di simile
+             resetGame();
+         }
+         else {
+             String nextLineBoxName = "word_" + ++currentLine + "1";
+             activeBox = getView().findViewById(getResources().getIdentifier(nextLineBoxName, "id", "it.unimib.wordino"));  //TODO defpackage
+         }
      }
      
      private String checkWord(String guess) {
@@ -231,6 +237,27 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
              }
         }
      }
+
+    private void resetGame() {
+        String boxId;
+        for (int i = 0; i < currentLine + 1; i++){
+            for (int j = 1; j < 6; j++){
+                boxId = "word_" + i + j;
+                ((TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", "it.unimib.wordino"))).setBackgroundResource(R.drawable.border_white);  //TODO defpackage
+                ((TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", "it.unimib.wordino"))).setText("");  //TODO defpackage
+            }
+        }
+        activeBox = getView().findViewById(R.id.word_01);
+        currentLine = 0;
+    }
+
+    private void winAlert(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("You won!");
+        builder.setMessage("You're a winner bro!");
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
 
 }
 

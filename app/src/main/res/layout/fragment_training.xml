@@ -3,12 +3,784 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".UI.TrainingFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
+
+        <!-- Text Boxes-->
+        <RelativeLayout
+            android:id="@+id/relativeLayoutWord"
+            android:layout_width="390dp"
+            android:layout_height="470dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="11dp"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toTopOf="@+id/relativeLayoutKeyboard"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/word_01"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="0dp"
+                android:background="@drawable/border_white"
+                android:textAlignment="center"
+                android:textSize="48sp" />
+
+            <TextView
+                android:id="@+id/word_02"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/word_01"
+                android:background="@drawable/border_white"
+                android:textAlignment="center"
+                android:textSize="48sp" />
+
+            <TextView
+                android:id="@+id/word_03"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/word_02"
+                android:background="@drawable/border_white"
+                android:textAlignment="center"
+                android:textSize="48sp" />
+
+            <TextView
+                android:id="@+id/word_04"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/word_03"
+                android:background="@drawable/border_white"
+                android:textAlignment="center"
+                android:textSize="48sp" />
+
+            <TextView
+                android:id="@+id/word_05"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/word_04"
+                android:background="@drawable/border_white"
+                android:textAlignment="center"
+                android:textSize="48sp" />
+
+            <TextView
+                android:id="@+id/word_11"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_01"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/border_white"
+                android:textAlignment="center"
+                android:textSize="48sp" />
+
+            <TextView
+                android:id="@+id/word_12"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_01"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_11"
+                android:background="@drawable/border_white"
+                android:textAlignment="center"
+                android:textSize="48sp" />
+
+            <TextView
+                android:id="@+id/word_13"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_01"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_12"
+                android:background="@drawable/border_white"
+                android:textAlignment="center"
+                android:textSize="48sp" />
+
+            <TextView
+                android:id="@+id/word_14"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_01"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_13"
+                android:background="@drawable/border_white"
+                android:textAlignment="center"
+                android:textSize="48sp" />
+
+            <TextView
+                android:id="@+id/word_15"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_01"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_14"
+                android:background="@drawable/border_white"
+                android:textAlignment="center"
+                android:textSize="48sp" />
+
+            <TextView
+                android:id="@+id/word_21"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_11"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/border_white"
+                android:textAlignment="center"
+                android:textSize="48sp" />
+
+            <TextView
+                android:id="@+id/word_22"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_11"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_21"
+                android:background="@drawable/border_white"
+                android:textAlignment="center"
+                android:textSize="48sp" />
+
+            <TextView
+                android:id="@+id/word_23"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_11"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_22"
+                android:background="@drawable/border_white"
+                android:textAlignment="center"
+                android:textSize="48sp" />
+
+            <TextView
+                android:id="@+id/word_24"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_11"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_23"
+                android:background="@drawable/border_white"
+                android:textAlignment="center"
+                android:textSize="48sp" />
+
+            <TextView
+                android:id="@+id/word_25"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_11"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_24"
+                android:background="@drawable/border_white"
+                android:textAlignment="center"
+                android:textSize="48sp" />
+
+            <TextView
+                android:id="@+id/word_31"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_21"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/border_white"
+                android:textAlignment="center"
+                android:textSize="48sp" />
+
+            <TextView
+                android:id="@+id/word_32"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_21"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_31"
+                android:background="@drawable/border_white"
+                android:textAlignment="center"
+                android:textSize="48sp" />
+
+            <TextView
+                android:id="@+id/word_33"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_21"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_32"
+                android:background="@drawable/border_white"
+                android:textAlignment="center"
+                android:textSize="48sp" />
+
+            <TextView
+                android:id="@+id/word_34"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_21"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_33"
+                android:background="@drawable/border_white"
+                android:textAlignment="center"
+                android:textSize="48sp" />
+
+            <TextView
+                android:id="@+id/word_35"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_21"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_34"
+                android:background="@drawable/border_white"
+                android:textAlignment="center"
+                android:textSize="48sp" />
+
+            <TextView
+                android:id="@+id/word_41"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_31"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/border_white"
+                android:textAlignment="center"
+                android:textSize="48sp" />
+
+            <TextView
+                android:id="@+id/word_42"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_31"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_41"
+                android:background="@drawable/border_white"
+                android:textAlignment="center"
+                android:textSize="48sp" />
+
+            <TextView
+                android:id="@+id/word_43"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_31"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_42"
+                android:background="@drawable/border_white"
+                android:textAlignment="center"
+                android:textSize="48sp" />
+
+            <TextView
+                android:id="@+id/word_44"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_31"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_43"
+                android:background="@drawable/border_white"
+                android:textAlignment="center"
+                android:textSize="48sp" />
+
+            <TextView
+                android:id="@+id/word_45"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_31"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_44"
+                android:background="@drawable/border_white"
+                android:textAlignment="center"
+                android:textSize="48sp" />
+
+            <TextView
+                android:id="@+id/word_51"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_41"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/border_white"
+                android:textAlignment="center"
+                android:textSize="48sp" />
+
+            <TextView
+                android:id="@+id/word_52"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_41"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_51"
+                android:background="@drawable/border_white"
+                android:textAlignment="center"
+                android:textSize="48sp" />
+
+            <TextView
+                android:id="@+id/word_53"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_41"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_52"
+                android:background="@drawable/border_white"
+                android:textAlignment="center"
+                android:textSize="48sp" />
+
+            <TextView
+                android:id="@+id/word_54"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_41"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_53"
+                android:background="@drawable/border_white"
+                android:textAlignment="center"
+                android:textSize="48sp" />
+
+            <TextView
+                android:id="@+id/word_55"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_below="@id/word_41"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_54"
+                android:background="@drawable/border_white"
+                android:textAlignment="center"
+                android:textSize="48sp" />
+
+        </RelativeLayout>
+
+        <!-- Keyboard -->
+        <RelativeLayout
+            android:id="@+id/relativeLayoutKeyboard"
+            android:layout_width="390dp"
+            android:layout_height="151dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="11dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <Button
+                android:id="@+id/key_q"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="0dp"
+                android:backgroundTint="#EDEDED"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/q"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_w"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_toEndOf="@id/key_q"
+                android:backgroundTint="#EDEDED"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/w"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+
+                android:id="@+id/key_e"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_toEndOf="@id/key_w"
+                android:backgroundTint="#EDEDED"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/e"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_r"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_toEndOf="@id/key_e"
+                android:backgroundTint="#EDEDED"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/r"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_t"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_toEndOf="@id/key_r"
+                android:backgroundTint="#EDEDED"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/t"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_y"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_toEndOf="@id/key_t"
+                android:backgroundTint="#EDEDED"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/y"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_u"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_toEndOf="@id/key_y"
+                android:backgroundTint="#EDEDED"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/u"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_i"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_toEndOf="@id/key_u"
+                android:backgroundTint="#EDEDED"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/i"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_o"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_toEndOf="@id/key_i"
+                android:backgroundTint="#EDEDED"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/o"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_p"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_toEndOf="@id/key_o"
+                android:backgroundTint="#EDEDED"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/p"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_a"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_q"
+                android:layout_marginStart="23dp"
+                android:backgroundTint="#EDEDED"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/a"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_s"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_q"
+                android:layout_toEndOf="@id/key_a"
+                android:backgroundTint="#EDEDED"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/s"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_d"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_q"
+                android:layout_toEndOf="@id/key_s"
+                android:backgroundTint="#EDEDED"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/d"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_f"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_q"
+                android:layout_toEndOf="@id/key_d"
+                android:backgroundTint="#EDEDED"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/f"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_g"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_q"
+                android:layout_toEndOf="@id/key_f"
+                android:backgroundTint="#EDEDED"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/g"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_h"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_q"
+                android:layout_toEndOf="@id/key_g"
+                android:backgroundTint="#EDEDED"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/h"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_j"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_q"
+                android:layout_toEndOf="@id/key_h"
+                android:backgroundTint="#EDEDED"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/j"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_k"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_q"
+                android:layout_toEndOf="@id/key_j"
+                android:backgroundTint="#EDEDED"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/k"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_l"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_q"
+                android:layout_toEndOf="@id/key_k"
+                android:backgroundTint="#EDEDED"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/l"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_cancel"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="60dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_a"
+                android:backgroundTint="#B4FFFF"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/canc"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_z"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_a"
+                android:layout_toEndOf="@id/key_cancel"
+                android:backgroundTint="#EDEDED"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/z"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_x"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_a"
+                android:layout_toEndOf="@id/key_z"
+                android:backgroundTint="#EDEDED"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/x"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_c"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_a"
+                android:layout_toEndOf="@id/key_x"
+                android:backgroundTint="#EDEDED"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/c"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_v"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_a"
+                android:layout_toEndOf="@id/key_c"
+                android:backgroundTint="#EDEDED"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/v"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_b"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_a"
+                android:layout_toEndOf="@id/key_v"
+                android:backgroundTint="#EDEDED"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/b"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_n"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_a"
+                android:layout_toEndOf="@id/key_b"
+                android:backgroundTint="#EDEDED"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/n"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_m"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_a"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_toEndOf="@id/key_n"
+                android:backgroundTint="#EDEDED"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/m"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_enter"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="60dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_a"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_toEndOf="@id/key_m"
+                android:backgroundTint="#B4FFFF"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/enter"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/score"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/relativeLayoutKeyboard"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.03"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/relativeLayoutWord" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
