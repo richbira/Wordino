@@ -29,6 +29,8 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
     public View activeBox;
     public int currentLine;
     public String tempWord = "spark";
+    public Boolean fiveLetterWord = false;
+
 
     public DailyFragment() {
         // Required empty public constructor
@@ -150,11 +152,17 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
         int currentLetterNum = Integer.parseInt(activeBoxName.substring(activeBoxName.length() - 1));
         //Check che serve per far funzionare il cancel sull'ultima box
         if (currentLetterNum == 5
+            && i == 1){
+            fiveLetterWord = true;
+            Log.d(TAG, "fiveletterword!");
+        } else if (currentLetterNum == 5
                 && i == -1
                 && !(((TextView) activeBox).getText().toString().isEmpty())) {
 
             ((TextView) activeBox).setText("");
             i = 0;
+            fiveLetterWord = false;
+            Log.d(TAG, "not fiveletterword!");
         }
 
         nextLetterNum = currentLetterNum + i;
@@ -170,27 +178,40 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
 
      private void enterPressed(){
         //TODO METTERE CHECK SE LA PAROLA ESISTE O MENO
+         //TODO Comportamento dopo aver finito l'ultima riga
+
          String boxIndex;
          String guessedWord = "";
-         for (int i = 1; i < 6; i++){
-             boxIndex = "word_" + currentLine + i;
-             guessedWord += ((TextView) getView().findViewById(getResources().getIdentifier(boxIndex, "id", "it.unimib.wordino"))).getText(); //TODO defpackage
-         }
 
-         guessedWord = guessedWord.toLowerCase();
-         String code = checkWord(guessedWord);
-         changeBoxColor(code);
-         changeKeyColor(code, guessedWord);
+         if (fiveLetterWord) {
 
 
-         if (code.equals("ggggg")) {
-             winAlert();
-             Log.d(TAG, "Hai vinto!"); //TODO alert window o qualcosa di simile
-             resetGame();
+             for (int i = 1; i < 6; i++) {
+                 boxIndex = "word_" + currentLine + i;
+                 guessedWord += ((TextView) getView().findViewById(getResources().getIdentifier(boxIndex, "id", "it.unimib.wordino"))).getText(); //TODO defpackage
+             }
+
+             guessedWord = guessedWord.toLowerCase();
+             String code = checkWord(guessedWord);
+             changeBoxColor(code);
+             changeKeyColor(code, guessedWord);
+
+
+             if (code.equals("ggggg")) {
+                 winAlert();
+                 Log.d(TAG, "Hai vinto!"); //TODO alert window o qualcosa di simile
+                 resetGame();
+             }else {
+                 String nextLineBoxName = "word_" + ++currentLine + "1";
+                 activeBox = getView().findViewById(getResources().getIdentifier(nextLineBoxName, "id", "it.unimib.wordino"));  //TODO defpackage
+                 fiveLetterWord = false;
+             }
+
+
+
          }
          else {
-             String nextLineBoxName = "word_" + ++currentLine + "1";
-             activeBox = getView().findViewById(getResources().getIdentifier(nextLineBoxName, "id", "it.unimib.wordino"));  //TODO defpackage
+             Log.d(TAG, "La parola non è di cinque lettere!");
          }
      }
      
