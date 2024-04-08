@@ -1,4 +1,4 @@
-package it.unimib.wordino.UI.ui.login;
+package it.unimib.wordino.main.ui.login;
 
 /**
  * Class exposing authenticated user details to the UI.

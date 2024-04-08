@@ -1,4 +1,4 @@
-package it.unimib.wordino.UI.ui.login;
+package it.unimib.wordino.main.ui.login;
 
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -20,8 +20,6 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import it.unimib.wordino.databinding.FragmentLoginBinding;
 
 import it.unimib.wordino.R;
 

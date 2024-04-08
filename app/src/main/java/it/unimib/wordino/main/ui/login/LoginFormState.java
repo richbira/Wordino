@@ -1,4 +1,4 @@
-package it.unimib.wordino.UI.ui.login;
+package it.unimib.wordino.main.ui.login;
 
 import androidx.annotation.Nullable;
 

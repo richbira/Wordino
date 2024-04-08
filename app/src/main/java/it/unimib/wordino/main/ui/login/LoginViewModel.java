@@ -1,4 +1,4 @@
-package it.unimib.wordino.UI.ui.login;
+package it.unimib.wordino.main.ui.login;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -6,9 +6,9 @@ import androidx.lifecycle.ViewModel;
 
 import android.util.Patterns;
 
-import it.unimib.wordino.UI.data.LoginRepository;
-import it.unimib.wordino.UI.data.Result;
-import it.unimib.wordino.UI.data.model.LoggedInUser;
+import it.unimib.wordino.main.data.LoginRepository;
+import it.unimib.wordino.main.data.Result;
+import it.unimib.wordino.main.data.model.LoggedInUser;
 import it.unimib.wordino.R;
 
 public class LoginViewModel extends ViewModel {

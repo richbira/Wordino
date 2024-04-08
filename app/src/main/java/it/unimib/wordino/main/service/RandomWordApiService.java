@@ -1,4 +1,4 @@
-package it.unimib.wordino.UI.service;
+package it.unimib.wordino.main.service;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

@@ -16,13 +16,13 @@
         android:theme="@style/Theme.Wordino"
         tools:targetApi="31">
         <activity
-            android:name=".UI.LoginActivity"
+            android:name=".main.ui.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".UI.GameActivity"
+            android:name=".main.ui.GameActivity"
             android:exported="false" />
         <activity
-            android:name=".UI.WelcomeActivity"
+            android:name=".main.ui.WelcomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

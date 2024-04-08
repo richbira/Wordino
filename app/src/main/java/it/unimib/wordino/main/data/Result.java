@@ -1,4 +1,4 @@
-package it.unimib.wordino.UI.data;
+package it.unimib.wordino.main.data;
 
 /**
  * A generic class that holds a result success w/ data or an error exception.

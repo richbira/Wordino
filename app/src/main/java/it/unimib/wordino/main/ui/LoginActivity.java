@@ -1,4 +1,4 @@
-package it.unimib.wordino.UI;
+package it.unimib.wordino.main.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 

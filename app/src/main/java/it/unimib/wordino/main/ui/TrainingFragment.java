@@ -1,4 +1,4 @@
-package it.unimib.wordino.UI;
+package it.unimib.wordino.main.ui;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.Locale;
 import java.util.Objects;
 
 import it.unimib.wordino.R;
@@ -20,24 +19,23 @@ import it.unimib.wordino.R;
 /**
  * A simple {@link Fragment} subclass.
  * ù
- * Use the {@link DailyFragment#newInstance} factory method to
+ * Use the {@link TrainingFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DailyFragment extends Fragment implements View.OnClickListener {
+public class TrainingFragment extends Fragment implements View.OnClickListener {
 
-    private static final String TAG = DailyFragment.class.getSimpleName();
+    private static final String TAG = TrainingFragment.class.getSimpleName();
     public View activeBox;
     public int currentLine;
     public String tempWord = "spark";
-    public Boolean fiveLetterWord = false;
+    public int score;
 
-
-    public DailyFragment() {
+    public TrainingFragment() {
         // Required empty public constructor
     }
 
-    public static DailyFragment newInstance(String param1, String param2) {
-        DailyFragment fragment = new DailyFragment();
+    public static TrainingFragment newInstance(String param1, String param2) {
+        TrainingFragment fragment = new TrainingFragment();
         return fragment;
     }
 
@@ -51,7 +49,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_daily, container, false);
+        return inflater.inflate(R.layout.fragment_training, container, false);
 
     }
 
@@ -61,6 +59,9 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
 
         activeBox = view.findViewById(R.id.word_01);
         currentLine = 0;
+        score = 0;
+        ((TextView) getView().findViewById(R.id.score)).setText("Score : " + score);
+
 
         Button qButton = view.findViewById(R.id.key_q); qButton.setOnClickListener(this);
         Button wButton = view.findViewById(R.id.key_w); wButton.setOnClickListener(this);
@@ -152,17 +153,11 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
         int currentLetterNum = Integer.parseInt(activeBoxName.substring(activeBoxName.length() - 1));
         //Check che serve per far funzionare il cancel sull'ultima box
         if (currentLetterNum == 5
-            && i == 1){
-            fiveLetterWord = true;
-            Log.d(TAG, "fiveletterword!");
-        } else if (currentLetterNum == 5
                 && i == -1
                 && !(((TextView) activeBox).getText().toString().isEmpty())) {
 
             ((TextView) activeBox).setText("");
             i = 0;
-            fiveLetterWord = false;
-            Log.d(TAG, "not fiveletterword!");
         }
 
         nextLetterNum = currentLetterNum + i;
@@ -176,46 +171,36 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
         }
     }
 
-     private void enterPressed(){
+    private void enterPressed(){
         //TODO METTERE CHECK SE LA PAROLA ESISTE O MENO
-         //TODO Comportamento dopo aver finito l'ultima riga
+        String boxIndex;
+        String guessedWord = "";
+        for (int i = 1; i < 6; i++){
+            boxIndex = "word_" + currentLine + i;
+            guessedWord += ((TextView) getView().findViewById(getResources().getIdentifier(boxIndex, "id", "it.unimib.wordino"))).getText(); //TODO defpackage
+        }
 
-         String boxIndex;
-         String guessedWord = "";
-
-         if (fiveLetterWord) {
-
-
-             for (int i = 1; i < 6; i++) {
-                 boxIndex = "word_" + currentLine + i;
-                 guessedWord += ((TextView) getView().findViewById(getResources().getIdentifier(boxIndex, "id", "it.unimib.wordino"))).getText(); //TODO defpackage
-             }
-
-             guessedWord = guessedWord.toLowerCase();
-             String code = checkWord(guessedWord);
-             changeBoxColor(code);
-             changeKeyColor(code, guessedWord);
+        guessedWord = guessedWord.toLowerCase();
+        String code = checkWord(guessedWord);
+        changeBoxColor(code);
+        changeKeyColor(code, guessedWord);
 
 
-             if (code.equals("ggggg")) {
-                 winAlert();
-                 Log.d(TAG, "Hai vinto!"); //TODO alert window o qualcosa di simile
-                 resetGame();
-             }else {
-                 String nextLineBoxName = "word_" + ++currentLine + "1";
-                 activeBox = getView().findViewById(getResources().getIdentifier(nextLineBoxName, "id", "it.unimib.wordino"));  //TODO defpackage
-                 fiveLetterWord = false;
-             }
+        if (code.equals("ggggg")) {
+            score++;
+            winAlert();
+            ((TextView) getView().findViewById(R.id.score)).setText("Score : " + score);
+            resetGame();
+        }
+        else {
+            String nextLineBoxName = "word_" + ++currentLine + "1";
+            activeBox = getView().findViewById(getResources().getIdentifier(nextLineBoxName, "id", "it.unimib.wordino"));  //TODO defpackage
+        }
 
 
+    }
 
-         }
-         else {
-             Log.d(TAG, "La parola non è di cinque lettere!");
-         }
-     }
-     
-     private String checkWord(String guess) {
+    private String checkWord(String guess) {
         String colorCodes = "";
         for (int i = 0; i < 5; i++) {
             Log.d(TAG, "Check: " + guess.charAt(i) + " - " + tempWord.charAt(i));
@@ -228,9 +213,9 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
             }
         }
         return colorCodes;
-     }
+    }
 
-     private void changeBoxColor(String code) {
+    private void changeBoxColor(String code) {
         String boxId;
 
         for (int i = 1; i < 6; i++){
@@ -243,21 +228,21 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
                 ((TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", "it.unimib.wordino"))).setBackgroundResource(R.drawable.border_grey);  //TODO defpackage
             }
         }
-     }
+    }
 
-     private void changeKeyColor(String code, String word) {
+    private void changeKeyColor(String code, String word) {
         String keyId;
         for (int i = 0; i < 5; i++) {
-             keyId = "key_" + word.charAt(i);
-             if (code.charAt(i) == 'g') {
-                 ((Button) getView().findViewById(getResources().getIdentifier(keyId, "id", "it.unimib.wordino"))).setBackgroundColor(getResources().getColor(R.color.mygreen));  //TODO defpackage e deprecated getcolor
-             } else if (code.charAt(i) == 'y') {
-                 ((Button) getView().findViewById(getResources().getIdentifier(keyId, "id", "it.unimib.wordino"))).setBackgroundColor(getResources().getColor(R.color.myyellow));  //TODO defpackage e deprecated getcolor
-             } else if (code.charAt(i) == 'b') {
-                 ((Button) getView().findViewById(getResources().getIdentifier(keyId, "id", "it.unimib.wordino"))).setBackgroundColor(getResources().getColor(R.color.mygrey));  //TODO defpackage e deprecated getcolor
-             }
+            keyId = "key_" + word.charAt(i);
+            if (code.charAt(i) == 'g') {
+                ((Button) getView().findViewById(getResources().getIdentifier(keyId, "id", "it.unimib.wordino"))).setBackgroundColor(getResources().getColor(R.color.mygreen));  //TODO defpackage e deprecated getcolor
+            } else if (code.charAt(i) == 'y') {
+                ((Button) getView().findViewById(getResources().getIdentifier(keyId, "id", "it.unimib.wordino"))).setBackgroundColor(getResources().getColor(R.color.myyellow));  //TODO defpackage e deprecated getcolor
+            } else if (code.charAt(i) == 'b') {
+                ((Button) getView().findViewById(getResources().getIdentifier(keyId, "id", "it.unimib.wordino"))).setBackgroundColor(getResources().getColor(R.color.mygrey));  //TODO defpackage e deprecated getcolor
+            }
         }
-     }
+    }
 
     private void resetGame() {
         String boxId;
@@ -275,10 +260,11 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
     private void winAlert(){
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("You won!");
-        builder.setMessage("You're a winner bro!");
+        builder.setMessage("Your score: " + score);
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
+
 
 }
 

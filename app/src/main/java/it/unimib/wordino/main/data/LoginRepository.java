@@ -1,6 +1,6 @@
-package it.unimib.wordino.UI.data;
+package it.unimib.wordino.main.data;
 
-import it.unimib.wordino.UI.data.model.LoggedInUser;
+import it.unimib.wordino.main.data.model.LoggedInUser;
 
 /**
  * Class that requests authentication and user information from the remote data source and

@@ -1,4 +1,4 @@
-package it.unimib.wordino.UI.data.model;
+package it.unimib.wordino.main.data.model;
 
 /**
  * Data class that captures user information for logged in users retrieved from LoginRepository

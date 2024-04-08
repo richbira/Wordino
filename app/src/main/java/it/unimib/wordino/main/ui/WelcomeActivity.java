@@ -1,13 +1,11 @@
-package it.unimib.wordino.UI;
+package it.unimib.wordino.main.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
-import android.widget.Switch;
 
 import it.unimib.wordino.R;
 

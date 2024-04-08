@@ -7,27 +7,27 @@
 
     <fragment
         android:id="@+id/accountFragment"
-        android:name="it.unimib.wordino.UI.AccountFragment"
+        android:name="it.unimib.wordino.main.ui.AccountFragment"
         android:label="fragment_account"
         tools:layout="@layout/fragment_account" />
     <fragment
         android:id="@+id/dailyFragment"
-        android:name="it.unimib.wordino.UI.DailyFragment"
+        android:name="it.unimib.wordino.main.ui.DailyFragment"
         android:label="fragment_daily"
         tools:layout="@layout/fragment_daily" />
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="it.unimib.wordino.UI.SettingsFragment"
+        android:name="it.unimib.wordino.main.ui.SettingsFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" />
     <fragment
         android:id="@+id/socialFragment"
-        android:name="it.unimib.wordino.UI.SocialFragment"
+        android:name="it.unimib.wordino.main.ui.SocialFragment"
         android:label="fragment_social"
         tools:layout="@layout/fragment_social" />
     <fragment
         android:id="@+id/trainingFragment"
-        android:name="it.unimib.wordino.UI.TrainingFragment"
+        android:name="it.unimib.wordino.main.ui.TrainingFragment"
         android:label="fragment_training"
         tools:layout="@layout/fragment_training" />
 </navigation>

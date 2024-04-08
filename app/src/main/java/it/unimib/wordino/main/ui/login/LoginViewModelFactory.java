@@ -1,11 +1,11 @@
-package it.unimib.wordino.UI.ui.login;
+package it.unimib.wordino.main.ui.login;
 
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.annotation.NonNull;
 
-import it.unimib.wordino.UI.data.LoginDataSource;
-import it.unimib.wordino.UI.data.LoginRepository;
+import it.unimib.wordino.main.data.LoginDataSource;
+import it.unimib.wordino.main.data.LoginRepository;
 
 /**
  * ViewModel provider factory to instantiate LoginViewModel.
