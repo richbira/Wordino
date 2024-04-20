@@ -1,5 +1,7 @@
 package it.unimib.wordino.main.ui;
 
+import static it.unimib.wordino.main.util.Constants.PACKAGE_NAME;
+
 import android.app.AlertDialog;
 import android.os.Bundle;
 
@@ -29,6 +31,8 @@ public class TrainingFragment extends Fragment implements View.OnClickListener {
     public int currentLine;
     public String tempWord = "spark";
     public int score;
+    public Boolean fiveLetterWord = false;
+
 
     public TrainingFragment() {
         // Required empty public constructor
@@ -153,16 +157,22 @@ public class TrainingFragment extends Fragment implements View.OnClickListener {
         int currentLetterNum = Integer.parseInt(activeBoxName.substring(activeBoxName.length() - 1));
         //Check che serve per far funzionare il cancel sull'ultima box
         if (currentLetterNum == 5
+                && i == 1){
+            fiveLetterWord = true;
+            Log.d(TAG, "fiveletterword!");
+        } else if (currentLetterNum == 5
                 && i == -1
                 && !(((TextView) activeBox).getText().toString().isEmpty())) {
 
             ((TextView) activeBox).setText("");
             i = 0;
+            fiveLetterWord = false;
+            Log.d(TAG, "not fiveletterword!");
         }
 
         nextLetterNum = currentLetterNum + i;
         String nextActiveBoxName = activeBoxName.substring(0, activeBoxName.length() - 1) + nextLetterNum;
-        int nextActiveBoxId = getResources().getIdentifier(nextActiveBoxName, "id", "it.unimib.wordino"); //TODO defpackage non fisso ma fare funzionare il getpackage o buildconfig
+        int nextActiveBoxId = getResources().getIdentifier(nextActiveBoxName, "id", PACKAGE_NAME);
         if (nextActiveBoxId != 0) { // Check if the next box exist
             activeBox = getView().findViewById(nextActiveBoxId);
         } else {
@@ -173,28 +183,40 @@ public class TrainingFragment extends Fragment implements View.OnClickListener {
 
     private void enterPressed(){
         //TODO METTERE CHECK SE LA PAROLA ESISTE O MENO
+        //TODO Comportamento dopo aver finito l'ultima riga
+
         String boxIndex;
         String guessedWord = "";
-        for (int i = 1; i < 6; i++){
-            boxIndex = "word_" + currentLine + i;
-            guessedWord += ((TextView) getView().findViewById(getResources().getIdentifier(boxIndex, "id", "it.unimib.wordino"))).getText(); //TODO defpackage
-        }
 
-        guessedWord = guessedWord.toLowerCase();
-        String code = checkWord(guessedWord);
-        changeBoxColor(code);
-        changeKeyColor(code, guessedWord);
+        if (fiveLetterWord) {
 
 
-        if (code.equals("ggggg")) {
-            score++;
-            winAlert();
-            ((TextView) getView().findViewById(R.id.score)).setText("Score : " + score);
-            resetGame();
+            for (int i = 1; i < 6; i++){
+                boxIndex = "word_" + currentLine + i;
+                guessedWord += ((TextView) getView().findViewById(getResources().getIdentifier(boxIndex, "id", PACKAGE_NAME))).getText();
+            }
+
+            guessedWord = guessedWord.toLowerCase();
+            String code = checkWord(guessedWord);
+            changeBoxColor(code);
+            changeKeyColor(code, guessedWord);
+
+
+            if (code.equals("ggggg")) {
+                score++;
+                winAlert();
+                ((TextView) getView().findViewById(R.id.score)).setText("Score : " + score);
+                resetGame();
+            }
+            else {
+                String nextLineBoxName = "word_" + ++currentLine + "1";
+                activeBox = getView().findViewById(getResources().getIdentifier(nextLineBoxName, "id", PACKAGE_NAME));
+                fiveLetterWord = false;
+            }
+
         }
         else {
-            String nextLineBoxName = "word_" + ++currentLine + "1";
-            activeBox = getView().findViewById(getResources().getIdentifier(nextLineBoxName, "id", "it.unimib.wordino"));  //TODO defpackage
+            Log.d(TAG, "La parola non è di cinque lettere!");
         }
 
 
@@ -221,11 +243,11 @@ public class TrainingFragment extends Fragment implements View.OnClickListener {
         for (int i = 1; i < 6; i++){
             boxId = "word_" + currentLine + i;
             if (code.charAt(i-1) == 'g') {
-                ((TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", "it.unimib.wordino"))).setBackgroundResource(R.drawable.border_green);  //TODO defpackage
+                ((TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", PACKAGE_NAME))).setBackgroundResource(R.drawable.border_green);
             }else if (code.charAt(i-1) == 'y') {
-                ((TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", "it.unimib.wordino"))).setBackgroundResource(R.drawable.border_yellow);  //TODO defpackage
+                ((TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", PACKAGE_NAME))).setBackgroundResource(R.drawable.border_yellow);
             }else if (code.charAt(i-1) == 'b') {
-                ((TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", "it.unimib.wordino"))).setBackgroundResource(R.drawable.border_grey);  //TODO defpackage
+                ((TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", PACKAGE_NAME))).setBackgroundResource(R.drawable.border_grey);
             }
         }
     }
@@ -235,11 +257,11 @@ public class TrainingFragment extends Fragment implements View.OnClickListener {
         for (int i = 0; i < 5; i++) {
             keyId = "key_" + word.charAt(i);
             if (code.charAt(i) == 'g') {
-                ((Button) getView().findViewById(getResources().getIdentifier(keyId, "id", "it.unimib.wordino"))).setBackgroundColor(getResources().getColor(R.color.mygreen));  //TODO defpackage e deprecated getcolor
+                ((Button) getView().findViewById(getResources().getIdentifier(keyId, "id", PACKAGE_NAME))).setBackgroundColor(getResources().getColor(R.color.mygreen));  //TODO deprecated getcolor
             } else if (code.charAt(i) == 'y') {
-                ((Button) getView().findViewById(getResources().getIdentifier(keyId, "id", "it.unimib.wordino"))).setBackgroundColor(getResources().getColor(R.color.myyellow));  //TODO defpackage e deprecated getcolor
+                ((Button) getView().findViewById(getResources().getIdentifier(keyId, "id", PACKAGE_NAME))).setBackgroundColor(getResources().getColor(R.color.myyellow));  //TODO deprecated getcolor
             } else if (code.charAt(i) == 'b') {
-                ((Button) getView().findViewById(getResources().getIdentifier(keyId, "id", "it.unimib.wordino"))).setBackgroundColor(getResources().getColor(R.color.mygrey));  //TODO defpackage e deprecated getcolor
+                ((Button) getView().findViewById(getResources().getIdentifier(keyId, "id", PACKAGE_NAME))).setBackgroundColor(getResources().getColor(R.color.mygrey));  //TODO deprecated getcolor
             }
         }
     }
@@ -249,12 +271,13 @@ public class TrainingFragment extends Fragment implements View.OnClickListener {
         for (int i = 0; i < currentLine + 1; i++){
             for (int j = 1; j < 6; j++){
                 boxId = "word_" + i + j;
-                ((TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", "it.unimib.wordino"))).setBackgroundResource(R.drawable.border_white);  //TODO defpackage
-                ((TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", "it.unimib.wordino"))).setText("");  //TODO defpackage
+                ((TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", PACKAGE_NAME))).setBackgroundResource(R.drawable.border_white);
+                ((TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", PACKAGE_NAME))).setText("");
             }
         }
         activeBox = getView().findViewById(R.id.word_01);
         currentLine = 0;
+        fiveLetterWord = false;
     }
 
     private void winAlert(){

@@ -1,5 +1,7 @@
 package it.unimib.wordino.main.ui;
 
+import static it.unimib.wordino.main.util.Constants.PACKAGE_NAME;
+
 import android.app.AlertDialog;
 import android.os.Bundle;
 
@@ -15,6 +17,10 @@ import android.widget.TextView;
 import java.util.Objects;
 
 import it.unimib.wordino.R;
+import it.unimib.wordino.main.model.WordApiResponse;
+import it.unimib.wordino.main.repository.IWordRepository;
+import it.unimib.wordino.main.repository.WordRepository;
+import it.unimib.wordino.main.util.ResponseCallBack;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,13 +28,16 @@ import it.unimib.wordino.R;
  * Use the {@link DailyFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DailyFragment extends Fragment implements View.OnClickListener {
+public class DailyFragment extends Fragment implements ResponseCallBack, View.OnClickListener {
 
     private static final String TAG = DailyFragment.class.getSimpleName();
     public View activeBox;
     public int currentLine;
     public String tempWord = "spark";
     public Boolean fiveLetterWord = false;
+    private IWordRepository iWordRepository;
+
+
 
 
     public DailyFragment() {
@@ -43,6 +52,8 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        iWordRepository = new WordRepository(requireActivity().getApplication(), this);
 
     }
 
@@ -60,6 +71,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
 
         activeBox = view.findViewById(R.id.word_01);
         currentLine = 0;
+        iWordRepository.fetchWord(5, "en");
 
         Button qButton = view.findViewById(R.id.key_q); qButton.setOnClickListener(this);
         Button wButton = view.findViewById(R.id.key_w); wButton.setOnClickListener(this);
@@ -166,7 +178,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
 
         nextLetterNum = currentLetterNum + i;
         String nextActiveBoxName = activeBoxName.substring(0, activeBoxName.length() - 1) + nextLetterNum;
-        int nextActiveBoxId = getResources().getIdentifier(nextActiveBoxName, "id", "it.unimib.wordino"); //TODO defpackage non fisso ma fare funzionare il getpackage o buildconfig
+        int nextActiveBoxId = getResources().getIdentifier(nextActiveBoxName, "id", PACKAGE_NAME);
         if (nextActiveBoxId != 0) { // Check if the next box exist
             activeBox = getView().findViewById(nextActiveBoxId);
         } else {
@@ -187,7 +199,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
 
              for (int i = 1; i < 6; i++) {
                  boxIndex = "word_" + currentLine + i;
-                 guessedWord += ((TextView) getView().findViewById(getResources().getIdentifier(boxIndex, "id", "it.unimib.wordino"))).getText(); //TODO defpackage
+                 guessedWord += ((TextView) getView().findViewById(getResources().getIdentifier(boxIndex, "id", PACKAGE_NAME))).getText();
              }
 
              guessedWord = guessedWord.toLowerCase();
@@ -198,11 +210,11 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
 
              if (code.equals("ggggg")) {
                  winAlert();
-                 Log.d(TAG, "Hai vinto!"); //TODO alert window o qualcosa di simile
                  resetGame();
-             }else {
+             }
+             else {
                  String nextLineBoxName = "word_" + ++currentLine + "1";
-                 activeBox = getView().findViewById(getResources().getIdentifier(nextLineBoxName, "id", "it.unimib.wordino"));  //TODO defpackage
+                 activeBox = getView().findViewById(getResources().getIdentifier(nextLineBoxName, "id", PACKAGE_NAME));
                  fiveLetterWord = false;
              }
 
@@ -235,11 +247,11 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
         for (int i = 1; i < 6; i++){
             boxId = "word_" + currentLine + i;
             if (code.charAt(i-1) == 'g') {
-                ((TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", "it.unimib.wordino"))).setBackgroundResource(R.drawable.border_green);  //TODO defpackage
+                ((TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", PACKAGE_NAME))).setBackgroundResource(R.drawable.border_green);
             }else if (code.charAt(i-1) == 'y') {
-                ((TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", "it.unimib.wordino"))).setBackgroundResource(R.drawable.border_yellow);  //TODO defpackage
+                ((TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", PACKAGE_NAME))).setBackgroundResource(R.drawable.border_yellow);
             }else if (code.charAt(i-1) == 'b') {
-                ((TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", "it.unimib.wordino"))).setBackgroundResource(R.drawable.border_grey);  //TODO defpackage
+                ((TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", PACKAGE_NAME))).setBackgroundResource(R.drawable.border_grey);
             }
         }
      }
@@ -249,11 +261,11 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
         for (int i = 0; i < 5; i++) {
              keyId = "key_" + word.charAt(i);
              if (code.charAt(i) == 'g') {
-                 ((Button) getView().findViewById(getResources().getIdentifier(keyId, "id", "it.unimib.wordino"))).setBackgroundColor(getResources().getColor(R.color.mygreen));  //TODO defpackage e deprecated getcolor
+                 ((Button) getView().findViewById(getResources().getIdentifier(keyId, "id", PACKAGE_NAME))).setBackgroundColor(getResources().getColor(R.color.mygreen));  //TODO deprecated getcolor
              } else if (code.charAt(i) == 'y') {
-                 ((Button) getView().findViewById(getResources().getIdentifier(keyId, "id", "it.unimib.wordino"))).setBackgroundColor(getResources().getColor(R.color.myyellow));  //TODO defpackage e deprecated getcolor
+                 ((Button) getView().findViewById(getResources().getIdentifier(keyId, "id", PACKAGE_NAME))).setBackgroundColor(getResources().getColor(R.color.myyellow));  //TODO deprecated getcolor
              } else if (code.charAt(i) == 'b') {
-                 ((Button) getView().findViewById(getResources().getIdentifier(keyId, "id", "it.unimib.wordino"))).setBackgroundColor(getResources().getColor(R.color.mygrey));  //TODO defpackage e deprecated getcolor
+                 ((Button) getView().findViewById(getResources().getIdentifier(keyId, "id", PACKAGE_NAME))).setBackgroundColor(getResources().getColor(R.color.mygrey));  //TODO deprecated getcolor
              }
         }
      }
@@ -263,12 +275,13 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
         for (int i = 0; i < currentLine + 1; i++){
             for (int j = 1; j < 6; j++){
                 boxId = "word_" + i + j;
-                ((TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", "it.unimib.wordino"))).setBackgroundResource(R.drawable.border_white);  //TODO defpackage
-                ((TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", "it.unimib.wordino"))).setText("");  //TODO defpackage
+                ((TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", PACKAGE_NAME))).setBackgroundResource(R.drawable.border_white);
+                ((TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", PACKAGE_NAME))).setText("");
             }
         }
         activeBox = getView().findViewById(R.id.word_01);
         currentLine = 0;
+        fiveLetterWord = false;
     }
 
     private void winAlert(){
@@ -277,6 +290,22 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
         builder.setMessage("You're a winner bro!");
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    @Override
+    public void onSuccess(String word) {
+        tempWord = word;
+        Log.d(TAG, "La parola è : " + tempWord);
+    }
+
+    @Override
+    public void onFailure(String errorMessage){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Error");
+        builder.setMessage(errorMessage);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
     }
 
 }
