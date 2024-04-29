@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "799788431910",
+    "project_id": "wordino-6452d",
+    "storage_bucket": "wordino-6452d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:799788431910:android:a3a7d187a4bd18375284e7",
+        "android_client_info": {
+          "package_name": "it.unimib.wordino"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdBLbNMBXKUK438t6sO9UVrQocL5HOKf4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
