@@ -17,7 +17,6 @@ import android.widget.TextView;
 import java.util.Objects;
 
 import it.unimib.wordino.R;
-import it.unimib.wordino.main.model.WordApiResponse;
 import it.unimib.wordino.main.repository.IWordRepository;
 import it.unimib.wordino.main.repository.WordRepository;
 import it.unimib.wordino.main.util.ResponseCallBack;
@@ -296,6 +295,7 @@ public class DailyFragment extends Fragment implements ResponseCallBack, View.On
     public void onSuccess(String word) {
         tempWord = word;
         Log.d(TAG, "La parola è : " + tempWord);
+
     }
 
     @Override

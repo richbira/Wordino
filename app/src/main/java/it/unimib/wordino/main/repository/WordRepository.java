@@ -1,10 +1,13 @@
 package it.unimib.wordino.main.repository;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import it.unimib.wordino.main.model.WordApiResponse;
+import java.util.List;
+
+import it.unimib.wordino.main.ui.DailyFragment;
 import it.unimib.wordino.main.util.ResponseCallBack;
 
 import it.unimib.wordino.main.service.RandomWordApiService;
@@ -14,6 +17,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class WordRepository implements IWordRepository {
+
+    private static final String TAG = DailyFragment.class.getSimpleName();
 
     private final ResponseCallBack responseCallback;
     private final Application application;
@@ -29,25 +34,31 @@ public class WordRepository implements IWordRepository {
 
     @Override
     public void fetchWord(int length, String lang){
+        Log.d(TAG, "Fetch start");
+        Call<List<String>> wordResponseCall = randomWordApiService.getWord(length, lang); //HERE
 
-        Call<WordApiResponse> wordResponseCall = randomWordApiService.getWord(length, lang);
+        wordResponseCall.enqueue(new Callback<List<String>>() {
 
-        wordResponseCall.enqueue(new Callback<WordApiResponse>() {
             @Override
-            public void onResponse(@NonNull Call<WordApiResponse> call, @NonNull Response<WordApiResponse> response) {
+            public void onResponse(@NonNull Call<List<String>> call, @NonNull Response<List<String>> response) {
                 if (response.body() != null && response.isSuccessful()) {
-                    String newWord = response.body().getWord();
-                    responseCallback.onSuccess(newWord);
+                    Log.d(TAG, "OnResponse: + " + response.isSuccessful());
+                    List<String> newWord = response.body();
+                    responseCallback.onSuccess(newWord.get(0)); //TODO fare meglio!
                 } else {
                     responseCallback.onFailure("Errore nella chiamata API 1 " + (response.body() != null) + response.isSuccessful());
                 }
             }
 
             @Override
-            public void onFailure(@NonNull Call<WordApiResponse> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<List<String>> call, @NonNull Throwable t) {
+                Log.d(TAG, "OnFailure: + " + call.isExecuted());
                 responseCallback.onFailure("Errore nella chiamata API 2" + t);
             }
         });
+        Log.d(TAG, "wordResponseCall canceled? " + wordResponseCall.isCanceled());
+        Log.d(TAG, "wordResponseCall executed? " + wordResponseCall.isExecuted());
+
     }
 
 }
