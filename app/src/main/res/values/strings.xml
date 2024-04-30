@@ -57,6 +57,14 @@
     <string name="canc">Canc</string>
     <string name="enter">Enter</string>
     <string name="score">Score :</string>
+    <!-- Strings related to languages -->
+    <string-array name="language_array">
+        <item>English</item>
+        <item>Italian</item>
+        <item>Spanish</item>
+        <item>German</item>
+        <item>French</item>
+    </string-array>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>

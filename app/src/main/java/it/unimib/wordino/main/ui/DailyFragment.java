@@ -1,6 +1,11 @@
 package it.unimib.wordino.main.ui;
 
+import static it.unimib.wordino.main.util.Constants.ENGLISH;
+import static it.unimib.wordino.main.util.Constants.FRENCH;
+import static it.unimib.wordino.main.util.Constants.GERMAN;
+import static it.unimib.wordino.main.util.Constants.ITALIAN;
 import static it.unimib.wordino.main.util.Constants.PACKAGE_NAME;
+import static it.unimib.wordino.main.util.Constants.SPANISH;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
@@ -27,6 +32,7 @@ import it.unimib.wordino.main.util.ResponseCallBack;
  * Use the {@link DailyFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
+//TODO MANTENERE STATO DOPO SWITCH DI FRAGMENT
 public class DailyFragment extends Fragment implements ResponseCallBack, View.OnClickListener {
 
     private static final String TAG = DailyFragment.class.getSimpleName();
@@ -35,6 +41,9 @@ public class DailyFragment extends Fragment implements ResponseCallBack, View.On
     public String tempWord = "spark";
     public Boolean fiveLetterWord = false;
     private IWordRepository iWordRepository;
+    private String lang = "";
+
+    private String winloss;
 
 
 
@@ -70,7 +79,27 @@ public class DailyFragment extends Fragment implements ResponseCallBack, View.On
 
         activeBox = view.findViewById(R.id.word_01);
         currentLine = 0;
-        iWordRepository.fetchWord(5, "en");
+        lang = GameActivity.lang;
+        switch (lang) {
+            case "English":
+                iWordRepository.fetchWord(5, ENGLISH);
+                break;
+            case "Italian":
+                iWordRepository.fetchWord(5, ITALIAN);
+                break;
+            case "French":
+                iWordRepository.fetchWord(5, FRENCH);
+                break;
+            case "Spanish":
+                iWordRepository.fetchWord(5, SPANISH);
+                break;
+            case "German":
+                iWordRepository.fetchWord(5, GERMAN);
+                break;
+        }
+
+
+
 
         Button qButton = view.findViewById(R.id.key_q); qButton.setOnClickListener(this);
         Button wButton = view.findViewById(R.id.key_w); wButton.setOnClickListener(this);
@@ -107,35 +136,40 @@ public class DailyFragment extends Fragment implements ResponseCallBack, View.On
     @Override
     public void onClick(View v) {
 
-        int id = v.getId();
-        if (id == R.id.key_q) updateActiveBox("Q");
-        else if (id == R.id.key_w) updateActiveBox("W");
-        else if (id == R.id.key_e) updateActiveBox("E");
-        else if (id == R.id.key_r) updateActiveBox("R");
-        else if (id == R.id.key_t) updateActiveBox("T");
-        else if (id == R.id.key_y) updateActiveBox("Y");
-        else if (id == R.id.key_u) updateActiveBox("U");
-        else if (id == R.id.key_i) updateActiveBox("I");
-        else if (id == R.id.key_o) updateActiveBox("O");
-        else if (id == R.id.key_p) updateActiveBox("P");
-        else if (id == R.id.key_a) updateActiveBox("A");
-        else if (id == R.id.key_s) updateActiveBox("S");
-        else if (id == R.id.key_d) updateActiveBox("D");
-        else if (id == R.id.key_f) updateActiveBox("F");
-        else if (id == R.id.key_g) updateActiveBox("G");
-        else if (id == R.id.key_h) updateActiveBox("H");
-        else if (id == R.id.key_j) updateActiveBox("J");
-        else if (id == R.id.key_k) updateActiveBox("K");
-        else if (id == R.id.key_l) updateActiveBox("L");
-        else if (id == R.id.key_z) updateActiveBox("Z");
-        else if (id == R.id.key_x) updateActiveBox("X");
-        else if (id == R.id.key_c) updateActiveBox("C");
-        else if (id == R.id.key_v) updateActiveBox("V");
-        else if (id == R.id.key_b) updateActiveBox("B");
-        else if (id == R.id.key_n) updateActiveBox("N");
-        else if (id == R.id.key_m) updateActiveBox("M");
-        else if (id == R.id.key_cancel) updateActiveBox("CANC");
-        else if (id == R.id.key_enter) updateActiveBox("ENTER");
+        if (winloss == null) {
+            int id = v.getId();
+            if (id == R.id.key_q) updateActiveBox("Q");
+            else if (id == R.id.key_w) updateActiveBox("W");
+            else if (id == R.id.key_e) updateActiveBox("E");
+            else if (id == R.id.key_r) updateActiveBox("R");
+            else if (id == R.id.key_t) updateActiveBox("T");
+            else if (id == R.id.key_y) updateActiveBox("Y");
+            else if (id == R.id.key_u) updateActiveBox("U");
+            else if (id == R.id.key_i) updateActiveBox("I");
+            else if (id == R.id.key_o) updateActiveBox("O");
+            else if (id == R.id.key_p) updateActiveBox("P");
+            else if (id == R.id.key_a) updateActiveBox("A");
+            else if (id == R.id.key_s) updateActiveBox("S");
+            else if (id == R.id.key_d) updateActiveBox("D");
+            else if (id == R.id.key_f) updateActiveBox("F");
+            else if (id == R.id.key_g) updateActiveBox("G");
+            else if (id == R.id.key_h) updateActiveBox("H");
+            else if (id == R.id.key_j) updateActiveBox("J");
+            else if (id == R.id.key_k) updateActiveBox("K");
+            else if (id == R.id.key_l) updateActiveBox("L");
+            else if (id == R.id.key_z) updateActiveBox("Z");
+            else if (id == R.id.key_x) updateActiveBox("X");
+            else if (id == R.id.key_c) updateActiveBox("C");
+            else if (id == R.id.key_v) updateActiveBox("V");
+            else if (id == R.id.key_b) updateActiveBox("B");
+            else if (id == R.id.key_n) updateActiveBox("N");
+            else if (id == R.id.key_m) updateActiveBox("M");
+            else if (id == R.id.key_cancel) updateActiveBox("CANC");
+            else if (id == R.id.key_enter) updateActiveBox("ENTER");
+        }
+        else {
+            gameoverAlert(winloss);
+        }
     }
 
     private void updateActiveBox(String text) {
@@ -164,7 +198,6 @@ public class DailyFragment extends Fragment implements ResponseCallBack, View.On
         if (currentLetterNum == 5
             && i == 1){
             fiveLetterWord = true;
-            Log.d(TAG, "fiveletterword!");
         } else if (currentLetterNum == 5
                 && i == -1
                 && !(((TextView) activeBox).getText().toString().isEmpty())) {
@@ -172,7 +205,6 @@ public class DailyFragment extends Fragment implements ResponseCallBack, View.On
             ((TextView) activeBox).setText("");
             i = 0;
             fiveLetterWord = false;
-            Log.d(TAG, "not fiveletterword!");
         }
 
         nextLetterNum = currentLetterNum + i;
@@ -188,7 +220,6 @@ public class DailyFragment extends Fragment implements ResponseCallBack, View.On
 
      private void enterPressed(){
         //TODO METTERE CHECK SE LA PAROLA ESISTE O MENO
-         //TODO Comportamento dopo aver finito l'ultima riga
 
          String boxIndex;
          String guessedWord = "";
@@ -206,18 +237,21 @@ public class DailyFragment extends Fragment implements ResponseCallBack, View.On
              changeBoxColor(code);
              changeKeyColor(code, guessedWord);
 
-
+             //Check se la parola è corretta
              if (code.equals("ggggg")) {
-                 winAlert();
-                 resetGame();
+                 winloss = "win";
+                 gameoverAlert(winloss);
+
              }
-             else {
+             else if (currentLine != 5){
                  String nextLineBoxName = "word_" + ++currentLine + "1";
                  activeBox = getView().findViewById(getResources().getIdentifier(nextLineBoxName, "id", PACKAGE_NAME));
                  fiveLetterWord = false;
              }
-
-
+             else {
+                 winloss = "loss";
+                 gameoverAlert(winloss);
+             }
 
          }
          else {
@@ -283,13 +317,21 @@ public class DailyFragment extends Fragment implements ResponseCallBack, View.On
         fiveLetterWord = false;
     }
 
-    private void winAlert(){
+    private void gameoverAlert(String winloss){
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("You won!");
-        builder.setMessage("You're a winner bro!");
+        switch(winloss){
+            case "win":
+                builder.setTitle("You Win!");
+                builder.setMessage("You're a winner bro!");
+                break;
+            case "loss":
+                builder.setTitle("You Lose!");
+                builder.setMessage("You're a loser bro!");
+        }
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
+
 
     @Override
     public void onSuccess(String word) {

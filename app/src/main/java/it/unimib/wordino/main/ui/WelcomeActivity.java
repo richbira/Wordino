@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.Spinner;
 
 import it.unimib.wordino.R;
 
@@ -21,7 +22,7 @@ public class WelcomeActivity extends AppCompatActivity {
         Button howToPlayButton = findViewById(R.id.howToPlayButton);
         howToPlayButton.setOnClickListener(view -> {
             Log.d(TAG, "how to play clicked");
-            startGame("HOW_TO_PLAY");
+            startGame("How to play");
 
         });
 
@@ -34,14 +35,15 @@ public class WelcomeActivity extends AppCompatActivity {
 
         Button playButton = findViewById(R.id.PlayButton);
         playButton.setOnClickListener(view -> {
-            Log.d(TAG, "Play clicked");
-            startGame("PLAY");
+            Spinner mySpinner = (Spinner) findViewById(R.id.languageSpinner);
+            String lang = mySpinner.getSelectedItem().toString();
+            startGame(lang);
         });
     }
 
-    public void startGame(String mode) {
+    public void startGame(String lang) {
         Intent playIntent = new Intent(WelcomeActivity.this, GameActivity.class);
-        playIntent.putExtra("mode", mode);
+        playIntent.putExtra("language", lang);
         startActivity(playIntent);
     }
     //TODO: Implement functionality for unlimited play and orientation fix

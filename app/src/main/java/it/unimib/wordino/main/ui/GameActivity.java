@@ -19,8 +19,9 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
 
     //Set il primo active box
     public View activeBox;
+
+    public static String lang;
     private static final String TAG = GameActivity.class.getSimpleName();
-    private String mode = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "Game");
@@ -44,13 +45,11 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         NavigationUI.setupWithNavController(bottomNav, navController);
 
 
-        //Aggiungo flag "Unlimited" che gli passo dalla schermata home
+        //Aggiungo flag "language" che gli passo dalla schermata home
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
-            boolean unlimitedPlayIsChecked = getIntent().getBooleanExtra("switchUnlimited", false);
-            mode = getIntent().getStringExtra("mode");
-            Log.d(TAG, "unlimitedPlay: " + unlimitedPlayIsChecked);
-            Log.d(TAG, "mode: " + mode); // Se questo flag è true mostro Fragment con le regole
+            lang = getIntent().getStringExtra("language");
+            Log.d(TAG, "Language: " + lang);
         }
     }
     /*

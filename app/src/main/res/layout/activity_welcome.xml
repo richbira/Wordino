@@ -85,18 +85,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/PlayButton" />
 
-    <!--
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="88dp"
-            android:layout_height="27dp"
-            android:layout_marginTop="41dp"
-            app:layout_constraintBottom_toTopOf="@+id/textView3"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.548"
-            app:layout_constraintStart_toEndOf="@+id/PlayButton"
-            app:layout_constraintTop_toBottomOf="@+id/PlayButton"
-            app:layout_constraintVertical_bias="0.0" />
-    -->
+    <Spinner
+        android:id="@+id/languageSpinner"
+        android:layout_width="130dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="1dp"
+        android:entries="@array/language_array"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PlayButton" />
+
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>

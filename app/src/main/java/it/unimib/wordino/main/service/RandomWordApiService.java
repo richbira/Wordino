@@ -8,7 +8,7 @@ import retrofit2.http.Query;
 
 public interface RandomWordApiService { //TODO esportare i parametri
     @GET("word")
-    Call <List<String>> getWord( //HERE
+    Call <List<String>> getWord(
             @Query("length") int length,
             @Query("lang") String language
     );

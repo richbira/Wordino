@@ -3,9 +3,11 @@ package it.unimib.wordino.main.util;
 public class Constants {
 
     //Costanti per le lingue
-    public static final String FRANCE = "fr";
-    public static final String ITALY = "it";
-    public static final String GERMANY = "de";
+    public static final String ENGLISH = "en";
+
+    public static final String FRENCH = "fr";
+    public static final String ITALIAN = "it";
+    public static final String GERMAN = "de";
     public static final String SPANISH = "es";
 
     public static final String PACKAGE_NAME = "it.unimib.wordino";

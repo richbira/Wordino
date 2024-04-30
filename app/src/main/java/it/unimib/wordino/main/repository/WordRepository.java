@@ -34,8 +34,8 @@ public class WordRepository implements IWordRepository {
 
     @Override
     public void fetchWord(int length, String lang){
-        Log.d(TAG, "Fetch start");
-        Call<List<String>> wordResponseCall = randomWordApiService.getWord(length, lang); //HERE
+        Log.d(TAG, lang + "Fetch start");
+        Call<List<String>> wordResponseCall = randomWordApiService.getWord(length, lang);
 
         wordResponseCall.enqueue(new Callback<List<String>>() {
 
