@@ -46,5 +46,5 @@ public class WelcomeActivity extends AppCompatActivity {
         playIntent.putExtra("language", lang);
         startActivity(playIntent);
     }
-    //TODO: Implement functionality for unlimited play and orientation fix
+    //TODO: Implement functionality for orientation fix
 }

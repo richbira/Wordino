@@ -16,26 +16,24 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class WordRepository implements IWordRepository {
+public class RandomWordRepository implements IRandomWordRepository {
 
     private static final String TAG = DailyFragment.class.getSimpleName();
-
     private final ResponseCallBack responseCallback;
     private final Application application;
-
     private final RandomWordApiService randomWordApiService;
 
 
-    public WordRepository(Application application, ResponseCallBack responseCallBack){
+    public RandomWordRepository(Application application, ResponseCallBack responseCallBack){
         this.application = application;
         this.responseCallback = responseCallBack;
-        this.randomWordApiService = ServiceLocator.getInstance().getWordApiService();
+        this.randomWordApiService = ServiceLocator.getInstance().getRandomWordApiService();
     }
 
     @Override
-    public void fetchWord(int length, String lang){
+    public void fetchRandomWord(int length, String lang){
         Log.d(TAG, lang + "Fetch start");
-        Call<List<String>> wordResponseCall = randomWordApiService.getWord(length, lang);
+        Call<List<String>> wordResponseCall = randomWordApiService.getRandomWord(length, lang);
 
         wordResponseCall.enqueue(new Callback<List<String>>() {
 
@@ -44,7 +42,7 @@ public class WordRepository implements IWordRepository {
                 if (response.body() != null && response.isSuccessful()) {
                     Log.d(TAG, "OnResponse: + " + response.isSuccessful());
                     List<String> newWord = response.body();
-                    responseCallback.onSuccess(newWord.get(0)); //TODO fare meglio!
+                    responseCallback.onSuccess(newWord.get(0));
                 } else {
                     responseCallback.onFailure("Errore nella chiamata API 1 " + (response.body() != null) + response.isSuccessful());
                 }

@@ -1,6 +1,11 @@
 package it.unimib.wordino.main.ui;
 
+import static it.unimib.wordino.main.util.Constants.ENGLISH;
+import static it.unimib.wordino.main.util.Constants.FRENCH;
+import static it.unimib.wordino.main.util.Constants.GERMAN;
+import static it.unimib.wordino.main.util.Constants.ITALIAN;
 import static it.unimib.wordino.main.util.Constants.PACKAGE_NAME;
+import static it.unimib.wordino.main.util.Constants.SPANISH;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
@@ -17,6 +22,9 @@ import android.widget.TextView;
 import java.util.Objects;
 
 import it.unimib.wordino.R;
+import it.unimib.wordino.main.repository.IRandomWordRepository;
+import it.unimib.wordino.main.repository.RandomWordRepository;
+import it.unimib.wordino.main.util.ResponseCallBack;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,7 +32,7 @@ import it.unimib.wordino.R;
  * Use the {@link TrainingFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TrainingFragment extends Fragment implements View.OnClickListener {
+public class TrainingFragment extends Fragment implements ResponseCallBack, View.OnClickListener {
 
     private static final String TAG = TrainingFragment.class.getSimpleName();
     public View activeBox;
@@ -32,6 +40,9 @@ public class TrainingFragment extends Fragment implements View.OnClickListener {
     public String tempWord = "spark";
     public int score;
     public Boolean fiveLetterWord = false;
+    private IRandomWordRepository iRandomWordRepository;
+    private String lang = "";
+    private String winloss;
 
 
     public TrainingFragment() {
@@ -46,6 +57,8 @@ public class TrainingFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        iRandomWordRepository = new RandomWordRepository(requireActivity().getApplication(), this);
 
     }
 
@@ -63,6 +76,24 @@ public class TrainingFragment extends Fragment implements View.OnClickListener {
 
         activeBox = view.findViewById(R.id.word_01);
         currentLine = 0;
+        lang = GameActivity.lang;
+        switch (lang) {
+            case "English":
+                iRandomWordRepository.fetchRandomWord(5, ENGLISH);
+                break;
+            case "Italian":
+                iRandomWordRepository.fetchRandomWord(5, ITALIAN);
+                break;
+            case "French":
+                iRandomWordRepository.fetchRandomWord(5, FRENCH);
+                break;
+            case "Spanish":
+                iRandomWordRepository.fetchRandomWord(5, SPANISH);
+                break;
+            case "German":
+                iRandomWordRepository.fetchRandomWord(5, GERMAN);
+                break;
+        }
         score = 0;
         ((TextView) getView().findViewById(R.id.score)).setText("Score : " + score);
 
@@ -159,7 +190,6 @@ public class TrainingFragment extends Fragment implements View.OnClickListener {
         if (currentLetterNum == 5
                 && i == 1){
             fiveLetterWord = true;
-            Log.d(TAG, "fiveletterword!");
         } else if (currentLetterNum == 5
                 && i == -1
                 && !(((TextView) activeBox).getText().toString().isEmpty())) {
@@ -167,7 +197,6 @@ public class TrainingFragment extends Fragment implements View.OnClickListener {
             ((TextView) activeBox).setText("");
             i = 0;
             fiveLetterWord = false;
-            Log.d(TAG, "not fiveletterword!");
         }
 
         nextLetterNum = currentLetterNum + i;
@@ -201,25 +230,27 @@ public class TrainingFragment extends Fragment implements View.OnClickListener {
             changeBoxColor(code);
             changeKeyColor(code, guessedWord);
 
-
+            //Check se la parola è corretta
             if (code.equals("ggggg")) {
                 score++;
-                winAlert();
+                winAlert(); //TODO aggiustare winalert -> winlossalert
                 ((TextView) getView().findViewById(R.id.score)).setText("Score : " + score);
                 resetGame();
             }
-            else {
+            else if (currentLine != 5){
                 String nextLineBoxName = "word_" + ++currentLine + "1";
                 activeBox = getView().findViewById(getResources().getIdentifier(nextLineBoxName, "id", PACKAGE_NAME));
                 fiveLetterWord = false;
+            }
+            else {
+                winAlert(); //TODO aggiustare winalert -> winlossalert
+                resetGame();
             }
 
         }
         else {
             Log.d(TAG, "La parola non è di cinque lettere!");
         }
-
-
     }
 
     private String checkWord(String guess) {
@@ -268,8 +299,8 @@ public class TrainingFragment extends Fragment implements View.OnClickListener {
 
     private void resetGame() {
         String boxId;
-        for (int i = 0; i < currentLine + 1; i++){
-            for (int j = 1; j < 6; j++){
+        for (int i = 0; i < currentLine + 1; i++) {
+            for (int j = 1; j < 6; j++) {
                 boxId = "word_" + i + j;
                 ((TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", PACKAGE_NAME))).setBackgroundResource(R.drawable.border_white);
                 ((TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", PACKAGE_NAME))).setText("");
@@ -278,6 +309,24 @@ public class TrainingFragment extends Fragment implements View.OnClickListener {
         activeBox = getView().findViewById(R.id.word_01);
         currentLine = 0;
         fiveLetterWord = false;
+
+        switch (lang) { //TODO cambiare switch con fetch in switch con variabile, fetch fuori
+            case "English":
+                iRandomWordRepository.fetchRandomWord(5, ENGLISH);
+                break;
+            case "Italian":
+                iRandomWordRepository.fetchRandomWord(5, ITALIAN);
+                break;
+            case "French":
+                iRandomWordRepository.fetchRandomWord(5, FRENCH);
+                break;
+            case "Spanish":
+                iRandomWordRepository.fetchRandomWord(5, SPANISH);
+                break;
+            case "German":
+                iRandomWordRepository.fetchRandomWord(5, GERMAN);
+                break;
+        }
     }
 
     private void winAlert(){
@@ -287,6 +336,23 @@ public class TrainingFragment extends Fragment implements View.OnClickListener {
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
+
+        @Override
+        public void onSuccess(String word) {
+            tempWord = word;
+            Log.d(TAG, "La parola è : " + tempWord);
+
+        }
+
+        @Override
+        public void onFailure(String errorMessage){
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setTitle("Error");
+            builder.setMessage(errorMessage);
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+
+        }
 
 
 }

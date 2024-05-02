@@ -22,8 +22,8 @@ import android.widget.TextView;
 import java.util.Objects;
 
 import it.unimib.wordino.R;
-import it.unimib.wordino.main.repository.IWordRepository;
-import it.unimib.wordino.main.repository.WordRepository;
+import it.unimib.wordino.main.repository.IRandomWordRepository;
+import it.unimib.wordino.main.repository.RandomWordRepository;
 import it.unimib.wordino.main.util.ResponseCallBack;
 
 /**
@@ -40,7 +40,7 @@ public class DailyFragment extends Fragment implements ResponseCallBack, View.On
     public int currentLine;
     public String tempWord = "spark";
     public Boolean fiveLetterWord = false;
-    private IWordRepository iWordRepository;
+    private IRandomWordRepository iRandomWordRepository;
     private String lang = "";
 
     private String winloss;
@@ -61,7 +61,7 @@ public class DailyFragment extends Fragment implements ResponseCallBack, View.On
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        iWordRepository = new WordRepository(requireActivity().getApplication(), this);
+        iRandomWordRepository = new RandomWordRepository(requireActivity().getApplication(), this);
 
     }
 
@@ -80,21 +80,21 @@ public class DailyFragment extends Fragment implements ResponseCallBack, View.On
         activeBox = view.findViewById(R.id.word_01);
         currentLine = 0;
         lang = GameActivity.lang;
-        switch (lang) {
+        switch (lang) { //TODO cambiare switch con fetch in switch con variabile, fetch fuori
             case "English":
-                iWordRepository.fetchWord(5, ENGLISH);
+                iRandomWordRepository.fetchRandomWord(5, ENGLISH);
                 break;
             case "Italian":
-                iWordRepository.fetchWord(5, ITALIAN);
+                iRandomWordRepository.fetchRandomWord(5, ITALIAN);
                 break;
             case "French":
-                iWordRepository.fetchWord(5, FRENCH);
+                iRandomWordRepository.fetchRandomWord(5, FRENCH);
                 break;
             case "Spanish":
-                iWordRepository.fetchWord(5, SPANISH);
+                iRandomWordRepository.fetchRandomWord(5, SPANISH);
                 break;
             case "German":
-                iWordRepository.fetchWord(5, GERMAN);
+                iRandomWordRepository.fetchRandomWord(5, GERMAN);
                 break;
         }
 
@@ -220,6 +220,7 @@ public class DailyFragment extends Fragment implements ResponseCallBack, View.On
 
      private void enterPressed(){
         //TODO METTERE CHECK SE LA PAROLA ESISTE O MENO
+         //TODO resettare colori tastiera a bianco dopo una win
 
          String boxIndex;
          String guessedWord = "";

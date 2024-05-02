@@ -6,9 +6,9 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
-public interface RandomWordApiService { //TODO esportare i parametri
+public interface RandomWordApiService {
     @GET("word")
-    Call <List<String>> getWord(
+    Call <List<String>> getRandomWord(
             @Query("length") int length,
             @Query("lang") String language
     );
