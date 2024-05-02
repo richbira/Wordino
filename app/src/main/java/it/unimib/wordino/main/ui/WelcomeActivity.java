@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.Button;
 
 import it.unimib.wordino.R;
+import it.unimib.wordino.main.ui.welcome.LoginActivity;
 
 public class WelcomeActivity extends AppCompatActivity {
 

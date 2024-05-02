@@ -32,12 +32,13 @@ android {
 }
 
 dependencies {
-
+    val nav_version = "2.7.7"
+    implementation ("com.github.mkhan9047:Easy-Checker:1.0.2")
     implementation("androidx.annotation:annotation:1.7.1")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
-    val nav_version = "2.7.7"
-
+    implementation(platform("com.google.firebase:firebase-bom:32.8.1"))
+    implementation("com.google.firebase:firebase-auth")
     implementation("androidx.navigation:navigation-fragment:$nav_version")
     implementation("androidx.navigation:navigation-ui:$nav_version")
     implementation("androidx.fragment:fragment:1.2.5")

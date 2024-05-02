@@ -16,7 +16,7 @@
         android:theme="@style/Theme.Wordino"
         tools:targetApi="31">
         <activity
-            android:name=".main.ui.LoginActivity"
+            android:name=".main.ui.welcome.LoginActivity"
             android:exported="false" />
         <activity
             android:name=".main.ui.GameActivity"

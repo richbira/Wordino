@@ -17,4 +17,6 @@
     <string name="Unlimited">Gioca illimitatamente</string>
     <string name="Back">Indietro</string>
     <string name="Rules">REGOLE DEL GIOCO</string>
+    <string name="forgot_password">forgot password</string>
+    <string name="reset_password">reset passsowrd</string>
 </resources>
