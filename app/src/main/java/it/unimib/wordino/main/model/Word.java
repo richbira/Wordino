@@ -1,6 +1,8 @@
 package it.unimib.wordino.main.model;
 
 import java.util.List;
+
+import android.os.Parcel;
 import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -9,27 +11,20 @@ public class Word implements Parcelable
 {
 
     @SerializedName("word")
-    @Expose
     private String word;
     @SerializedName("phonetic")
-    @Expose
     private String phonetic;
     @SerializedName("phonetics")
-    @Expose
-    private List<Phonetic> phonetics; //todo secondo me è sbagliato, da fixare con una nuova classe phonetics
+    private List<Phonetic> phonetics;
     @SerializedName("meanings")
-    @Expose
     private List<Meaning> meanings;
     @SerializedName("license")
-    @Expose
     private License license;
     @SerializedName("sourceUrls")
-    @Expose
     private List<String> sourceUrls;
+
     public final static Creator<Word> CREATOR = new Creator<Word>() {
-
-
-        public Word createFromParcel(android.os.Parcel in) {
+        public Word createFromParcel(Parcel in) {
             return new Word(in);
         }
 
@@ -37,13 +32,14 @@ public class Word implements Parcelable
             return (new Word[size]);
         }
 
-    }
-            ;
+    };
+
+    public Word() {}
 
     @SuppressWarnings({
             "unchecked"
     })
-    protected Word(android.os.Parcel in) {
+    protected Word(Parcel in) {
         this.word = ((String) in.readValue((String.class.getClassLoader())));
         this.phonetic = ((String) in.readValue((String.class.getClassLoader())));
         in.readList(this.phonetics, (it.unimib.wordino.main.model.Phonetic.class.getClassLoader()));
@@ -52,86 +48,58 @@ public class Word implements Parcelable
         in.readList(this.sourceUrls, (java.lang.String.class.getClassLoader()));
     }
 
-    public Word() {
+    public Word(String word, String phonetic, List<Phonetic> phonetics, List<Meaning> meanings, License license, List<String> sourceUrls ) {
+        this.word = word;
+        this.phonetic = phonetic;
+        this.phonetics = phonetics;
+        this.meanings = meanings;
+        this.license = license;
+        this.sourceUrls = sourceUrls;
     }
 
     public String getWord() {
         return word;
     }
-
     public void setWord(String word) {
         this.word = word;
     }
 
-    public Word withWord(String word) {
-        this.word = word;
-        return this;
-    }
 
     public String getPhonetic() {
         return phonetic;
     }
-
     public void setPhonetic(String phonetic) {
         this.phonetic = phonetic;
-    }
-
-    public Word withPhonetic(String phonetic) {
-        this.phonetic = phonetic;
-        return this;
     }
 
     public List<Phonetic> getPhonetics() {
         return phonetics;
     }
-
     public void setPhonetics(List<Phonetic> phonetics) {
         this.phonetics = phonetics;
-    }
-
-    public Word withPhonetics(List<Phonetic> phonetics) {
-        this.phonetics = phonetics;
-        return this;
     }
 
     public List<Meaning> getMeanings() {
         return meanings;
     }
-
     public void setMeanings(List<Meaning> meanings) {
         this.meanings = meanings;
-    }
-
-    public Word withMeanings(List<Meaning> meanings) {
-        this.meanings = meanings;
-        return this;
     }
 
     public License getLicense() {
         return license;
     }
-
     public void setLicense(License license) {
         this.license = license;
-    }
-
-    public Word withLicense(License license) {
-        this.license = license;
-        return this;
     }
 
     public List<String> getSourceUrls() {
         return sourceUrls;
     }
-
     public void setSourceUrls(List<String> sourceUrls) {
         this.sourceUrls = sourceUrls;
     }
 
-    public Word withSourceUrls(List<String> sourceUrls) {
-        this.sourceUrls = sourceUrls;
-        return this;
-    }
 
     @Override
     public String toString() {
@@ -168,15 +136,26 @@ public class Word implements Parcelable
         }
         return sb.toString();
     }
-
-    public void writeToParcel(android.os.Parcel dest, int flags) {
-        dest.writeValue(word);
-        dest.writeValue(phonetic);
-        dest.writeList(phonetics);
-        dest.writeList(meanings);
-        dest.writeValue(license);
-        dest.writeList(sourceUrls);
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(this.word);
+        dest.writeValue(this.phonetic);
+        dest.writeList(this.phonetics);
+        dest.writeList(this.meanings);
+        dest.writeValue(this.license);
+        dest.writeList(this.sourceUrls);
     }
+
+    public void readFromParcel(Parcel source){
+        this.word = source.readString();
+        this.phonetic = source.readString();
+        this.phonetics = source.createTypedArrayList(Phonetic.CREATOR);
+        this.meanings = source.createTypedArrayList(Meaning.CREATOR);
+        this.license = source.readParcelable(License.class.getClassLoader());
+        this.sourceUrls = source.createStringArrayList();
+    }
+
+
 
     public int describeContents() {
         return 0;

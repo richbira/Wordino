@@ -1,6 +1,8 @@
 package it.unimib.wordino.main.model;
 
 import java.util.List;
+
+import android.os.Parcel;
 import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -9,21 +11,16 @@ public class Definition implements Parcelable
 {
 
     @SerializedName("definition")
-    @Expose
     private String definition;
     @SerializedName("synonyms")
-    @Expose
-    private List<Object> synonyms;
+    private List<String> synonyms;
     @SerializedName("antonyms")
-    @Expose
-    private List<Object> antonyms;
+    private List<String> antonyms;
     @SerializedName("example")
-    @Expose
     private String example;
+
     public final static Creator<Definition> CREATOR = new Creator<Definition>() {
-
-
-        public Definition createFromParcel(android.os.Parcel in) {
+        public Definition createFromParcel(Parcel in) {
             return new Definition(in);
         }
 
@@ -31,21 +28,19 @@ public class Definition implements Parcelable
             return (new Definition[size]);
         }
 
-    }
-            ;
+    };
 
     @SuppressWarnings({
             "unchecked"
     })
-    protected Definition(android.os.Parcel in) {
+    protected Definition(Parcel in) {
         this.definition = ((String) in.readValue((String.class.getClassLoader())));
-        in.readList(this.synonyms, (java.lang.Object.class.getClassLoader()));
-        in.readList(this.antonyms, (java.lang.Object.class.getClassLoader()));
+        in.readList(this.synonyms, String.class.getClassLoader()); //not sure
+        in.readList(this.antonyms, String.class.getClassLoader()); //not sure
         this.example = ((String) in.readValue((String.class.getClassLoader())));
     }
 
-    public Definition() {
-    }
+    public Definition() {}
 
     public String getDefinition() {
         return definition;
@@ -55,35 +50,20 @@ public class Definition implements Parcelable
         this.definition = definition;
     }
 
-    public Definition withDefinition(String definition) {
-        this.definition = definition;
-        return this;
-    }
-
-    public List<Object> getSynonyms() {
+    public List<String> getSynonyms() {
         return synonyms;
     }
 
-    public void setSynonyms(List<Object> synonyms) {
+    public void setSynonyms(List<String> synonyms) {
         this.synonyms = synonyms;
     }
 
-    public Definition withSynonyms(List<Object> synonyms) {
-        this.synonyms = synonyms;
-        return this;
-    }
-
-    public List<Object> getAntonyms() {
+    public List<String> getAntonyms() {
         return antonyms;
     }
 
-    public void setAntonyms(List<Object> antonyms) {
+    public void setAntonyms(List<String> antonyms) {
         this.antonyms = antonyms;
-    }
-
-    public Definition withAntonyms(List<Object> antonyms) {
-        this.antonyms = antonyms;
-        return this;
     }
 
     public String getExample() {
@@ -92,11 +72,6 @@ public class Definition implements Parcelable
 
     public void setExample(String example) {
         this.example = example;
-    }
-
-    public Definition withExample(String example) {
-        this.example = example;
-        return this;
     }
 
     @Override
@@ -127,12 +102,20 @@ public class Definition implements Parcelable
         return sb.toString();
     }
 
-    public void writeToParcel(android.os.Parcel dest, int flags) {
+    public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(definition);
         dest.writeList(synonyms);
         dest.writeList(antonyms);
         dest.writeValue(example);
     }
+
+    public void readFromParcel(Parcel source){
+        this.definition = source.readString();
+        this.synonyms = source.createStringArrayList();
+        this.antonyms = source.createStringArrayList();
+        this.example = source.readString();
+    }
+
 
     public int describeContents() {
         return 0;

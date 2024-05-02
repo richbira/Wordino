@@ -1,5 +1,6 @@
 package it.unimib.wordino.main.model;
 
+import android.os.Parcel;
 import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -8,24 +9,20 @@ public class Phonetic implements Parcelable
 {
 
     @SerializedName("text")
-    @Expose
     private String text;
     @SerializedName("audio")
-    @Expose
     private String audio;
     @SerializedName("sourceUrl")
-    @Expose
     private String sourceUrl;
     @SerializedName("license")
-    @Expose
     private License license;
-    public final static Creator<Phonetic> CREATOR = new Creator<Phonetic>() {
+    public final static Parcelable.Creator<Phonetic> CREATOR = new Parcelable.Creator<Phonetic>() {
 
-
-        public Phonetic createFromParcel(android.os.Parcel in) {
+        @Override
+        public Phonetic createFromParcel(Parcel in) {
             return new Phonetic(in);
         }
-
+        @Override
         public Phonetic[] newArray(int size) {
             return (new Phonetic[size]);
         }
@@ -36,7 +33,7 @@ public class Phonetic implements Parcelable
     @SuppressWarnings({
             "unchecked"
     })
-    protected Phonetic(android.os.Parcel in) {
+    protected Phonetic(Parcel in) {
         this.text = ((String) in.readValue((String.class.getClassLoader())));
         this.audio = ((String) in.readValue((String.class.getClassLoader())));
         this.sourceUrl = ((String) in.readValue((String.class.getClassLoader())));
@@ -49,53 +46,29 @@ public class Phonetic implements Parcelable
     public String getText() {
         return text;
     }
-
     public void setText(String text) {
         this.text = text;
-    }
-
-    public Phonetic withText(String text) {
-        this.text = text;
-        return this;
     }
 
     public String getAudio() {
         return audio;
     }
-
     public void setAudio(String audio) {
         this.audio = audio;
-    }
-
-    public Phonetic withAudio(String audio) {
-        this.audio = audio;
-        return this;
     }
 
     public String getSourceUrl() {
         return sourceUrl;
     }
-
     public void setSourceUrl(String sourceUrl) {
         this.sourceUrl = sourceUrl;
-    }
-
-    public Phonetic withSourceUrl(String sourceUrl) {
-        this.sourceUrl = sourceUrl;
-        return this;
     }
 
     public License getLicense() {
         return license;
     }
-
     public void setLicense(License license) {
         this.license = license;
-    }
-
-    public Phonetic withLicense(License license) {
-        this.license = license;
-        return this;
     }
 
     @Override
@@ -126,11 +99,18 @@ public class Phonetic implements Parcelable
         return sb.toString();
     }
 
-    public void writeToParcel(android.os.Parcel dest, int flags) {
+    public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(text);
         dest.writeValue(audio);
         dest.writeValue(sourceUrl);
         dest.writeValue(license);
+    }
+
+    public void readFromParcel(Parcel source){
+        this.text = source.readString();
+        this.audio = source.readString();
+        this.sourceUrl = source.readString();
+        this.license = source.readParcelable(License.class.getClassLoader());
     }
 
     public int describeContents() {

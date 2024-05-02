@@ -1,4 +1,5 @@
 package it.unimib.wordino.main.model;
+import android.os.Parcel;
 import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -7,15 +8,11 @@ public class License implements Parcelable
 {
 
     @SerializedName("name")
-    @Expose
     private String name;
     @SerializedName("url")
-    @Expose
     private String url;
     public final static Creator<License> CREATOR = new Creator<License>() {
-
-
-        public License createFromParcel(android.os.Parcel in) {
+        public License createFromParcel(Parcel in) {
             return new License(in);
         }
 
@@ -29,13 +26,12 @@ public class License implements Parcelable
     @SuppressWarnings({
             "unchecked"
     })
-    protected License(android.os.Parcel in) {
+    protected License(Parcel in) {
         this.name = ((String) in.readValue((String.class.getClassLoader())));
         this.url = ((String) in.readValue((String.class.getClassLoader())));
     }
 
-    public License() {
-    }
+    public License() {}
 
     public String getName() {
         return name;
@@ -45,10 +41,6 @@ public class License implements Parcelable
         this.name = name;
     }
 
-    public License withName(String name) {
-        this.name = name;
-        return this;
-    }
 
     public String getUrl() {
         return url;
@@ -56,11 +48,6 @@ public class License implements Parcelable
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    public License withUrl(String url) {
-        this.url = url;
-        return this;
     }
 
     @Override
@@ -83,9 +70,14 @@ public class License implements Parcelable
         return sb.toString();
     }
 
-    public void writeToParcel(android.os.Parcel dest, int flags) {
+    public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(name);
         dest.writeValue(url);
+    }
+
+    public void readFromParcel(Parcel source){
+        this.name = source.readString();
+        this.url = source.readString();
     }
 
     public int describeContents() {

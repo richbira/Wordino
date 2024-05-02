@@ -1,6 +1,8 @@
 package it.unimib.wordino.main.model;
 
 import java.util.List;
+
+import android.os.Parcel;
 import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -9,21 +11,15 @@ public class Meaning implements Parcelable
 {
 
     @SerializedName("partOfSpeech")
-    @Expose
     private String partOfSpeech;
     @SerializedName("definitions")
-    @Expose
     private List<Definition> definitions;
     @SerializedName("synonyms")
-    @Expose
-    private List<Object> synonyms;
+    private List<String> synonyms;
     @SerializedName("antonyms")
-    @Expose
-    private List<Object> antonyms;
+    private List<String> antonyms;
     public final static Creator<Meaning> CREATOR = new Creator<Meaning>() {
-
-
-        public Meaning createFromParcel(android.os.Parcel in) {
+        public Meaning createFromParcel(Parcel in) {
             return new Meaning(in);
         }
 
@@ -37,11 +33,11 @@ public class Meaning implements Parcelable
     @SuppressWarnings({
             "unchecked"
     })
-    protected Meaning(android.os.Parcel in) {
+    protected Meaning(Parcel in) {
         this.partOfSpeech = ((String) in.readValue((String.class.getClassLoader())));
         in.readList(this.definitions, (it.unimib.wordino.main.model.Definition.class.getClassLoader()));
-        in.readList(this.synonyms, (java.lang.Object.class.getClassLoader()));
-        in.readList(this.antonyms, (java.lang.Object.class.getClassLoader()));
+        in.readList(this.synonyms, String.class.getClassLoader()); //NOT SURE
+        in.readList(this.antonyms, String.class.getClassLoader()); //NOT SURE
     }
 
     public Meaning() {
@@ -55,11 +51,6 @@ public class Meaning implements Parcelable
         this.partOfSpeech = partOfSpeech;
     }
 
-    public Meaning withPartOfSpeech(String partOfSpeech) {
-        this.partOfSpeech = partOfSpeech;
-        return this;
-    }
-
     public List<Definition> getDefinitions() {
         return definitions;
     }
@@ -68,35 +59,20 @@ public class Meaning implements Parcelable
         this.definitions = definitions;
     }
 
-    public Meaning withDefinitions(List<Definition> definitions) {
-        this.definitions = definitions;
-        return this;
-    }
-
-    public List<Object> getSynonyms() {
+    public List<String> getSynonyms() {
         return synonyms;
     }
 
-    public void setSynonyms(List<Object> synonyms) {
+    public void setSynonyms(List<String> synonyms) {
         this.synonyms = synonyms;
     }
 
-    public Meaning withSynonyms(List<Object> synonyms) {
-        this.synonyms = synonyms;
-        return this;
-    }
-
-    public List<Object> getAntonyms() {
+    public List<String> getAntonyms() {
         return antonyms;
     }
 
-    public void setAntonyms(List<Object> antonyms) {
+    public void setAntonyms(List<String> antonyms) {
         this.antonyms = antonyms;
-    }
-
-    public Meaning withAntonyms(List<Object> antonyms) {
-        this.antonyms = antonyms;
-        return this;
     }
 
     @Override
@@ -127,11 +103,18 @@ public class Meaning implements Parcelable
         return sb.toString();
     }
 
-    public void writeToParcel(android.os.Parcel dest, int flags) {
+    public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(partOfSpeech);
         dest.writeList(definitions);
         dest.writeList(synonyms);
         dest.writeList(antonyms);
+    }
+
+    public void readFromParcel(Parcel source){
+        this.partOfSpeech = source.readString();
+        this.definitions = source.createTypedArrayList(Definition.CREATOR);
+        this.synonyms = source.createStringArrayList();
+        this.antonyms = source.createStringArrayList();
     }
 
     public int describeContents() {
