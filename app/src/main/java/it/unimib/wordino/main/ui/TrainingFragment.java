@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.Objects;
@@ -322,6 +323,15 @@ public class TrainingFragment extends Fragment implements ResponseCallBack, View
                 ((TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", PACKAGE_NAME))).setText("");
             }
         }
+        RelativeLayout keyboardLayout = (RelativeLayout) getView().findViewById(R.id.relativeLayoutKeyboard);
+        final int childCount = keyboardLayout.getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            View v = keyboardLayout.getChildAt(i);
+            if (!(v.getId() == R.id.key_cancel) && !(v.getId() == R.id.key_enter)) {
+                v.setBackgroundColor(getResources().getColor(R.color.mywhite));  //TODO deprecated getcolor
+            }
+        }
+
         activeBox = getView().findViewById(R.id.word_01);
         currentLine = 0;
         fiveLetterWord = false;
@@ -380,7 +390,7 @@ public class TrainingFragment extends Fragment implements ResponseCallBack, View
     }
 
     @Override
-    public void onFailureSpecific(String errorMessage){
+    public void onFailureSpecific(String errorMessage){//TODO CASO IN CUI NON TROVA LA PAROLA, RIPETERE CHIAMATA
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Error");
         builder.setMessage(errorMessage);

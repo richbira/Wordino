@@ -35,6 +35,7 @@ import it.unimib.wordino.main.util.ResponseCallBack;
  * create an instance of this fragment.
  */
 //TODO MANTENERE STATO DOPO SWITCH DI FRAGMENT
+    //todo rotellina di loading fino a quando non viene confermata la tempword
 public class DailyFragment extends Fragment implements ResponseCallBack, View.OnClickListener {
 
     private static final String TAG = DailyFragment.class.getSimpleName();
@@ -46,6 +47,7 @@ public class DailyFragment extends Fragment implements ResponseCallBack, View.On
     private IRandomWordRepository iRandomWordRepository;
     private ISpecificWordRepository iSpecificWordRepository;
     private String lang = "";
+    private String langConst = "";
 
     private String winloss;
 
@@ -88,7 +90,6 @@ public class DailyFragment extends Fragment implements ResponseCallBack, View.On
         activeBox = view.findViewById(R.id.word_01);
         currentLine = 0;
         lang = GameActivity.lang;
-        String langConst = "";
 
         switch (lang) {
             case "English":
@@ -348,7 +349,10 @@ public class DailyFragment extends Fragment implements ResponseCallBack, View.On
     public void onSuccessRandom(String word) {
         tempWord = word;
         Log.d(TAG, "tempWord settato a: " + tempWord);
-        iSpecificWordRepository.fetchSpecificWord(word);
+        if (Objects.equals(langConst, ENGLISH)){
+            iSpecificWordRepository.fetchSpecificWord(word);
+        }
+
 
     }
 
@@ -372,7 +376,7 @@ public class DailyFragment extends Fragment implements ResponseCallBack, View.On
     }
 
     @Override
-    public void onFailureSpecific(String errorMessage){
+    public void onFailureSpecific(String errorMessage){ //TODO CASO IN CUI NON TROVA LA PAROLA, RIPETERE CHIAMATA
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Error");
         builder.setMessage(errorMessage);
