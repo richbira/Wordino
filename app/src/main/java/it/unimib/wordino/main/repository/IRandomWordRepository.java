@@ -4,4 +4,6 @@ public interface IRandomWordRepository {
 
     void fetchRandomWord(int length, String lang);
 
+    String getRandomWord();
+
 }

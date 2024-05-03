@@ -23,7 +23,9 @@ import java.util.Objects;
 
 import it.unimib.wordino.R;
 import it.unimib.wordino.main.repository.IRandomWordRepository;
+import it.unimib.wordino.main.repository.ISpecificWordRepository;
 import it.unimib.wordino.main.repository.RandomWordRepository;
+import it.unimib.wordino.main.repository.SpecificWordRepository;
 import it.unimib.wordino.main.util.ResponseCallBack;
 
 /**
@@ -41,8 +43,12 @@ public class TrainingFragment extends Fragment implements ResponseCallBack, View
     public int score;
     public Boolean fiveLetterWord = false;
     private IRandomWordRepository iRandomWordRepository;
+    private ISpecificWordRepository iSpecificWordRepository;
+
     private String lang = "";
     private String winloss;
+
+    private boolean goodWordFlag = false;
 
 
     public TrainingFragment() {
@@ -59,6 +65,8 @@ public class TrainingFragment extends Fragment implements ResponseCallBack, View
         super.onCreate(savedInstanceState);
 
         iRandomWordRepository = new RandomWordRepository(requireActivity().getApplication(), this);
+        iSpecificWordRepository = new SpecificWordRepository(requireActivity().getApplication(), this);
+
 
     }
 
@@ -77,23 +85,31 @@ public class TrainingFragment extends Fragment implements ResponseCallBack, View
         activeBox = view.findViewById(R.id.word_01);
         currentLine = 0;
         lang = GameActivity.lang;
+        String langConst = "";
+
         switch (lang) {
             case "English":
-                iRandomWordRepository.fetchRandomWord(5, ENGLISH);
+                langConst = ENGLISH;
                 break;
             case "Italian":
-                iRandomWordRepository.fetchRandomWord(5, ITALIAN);
+                langConst = ITALIAN;
                 break;
             case "French":
-                iRandomWordRepository.fetchRandomWord(5, FRENCH);
+                langConst = FRENCH;
                 break;
             case "Spanish":
-                iRandomWordRepository.fetchRandomWord(5, SPANISH);
+                langConst = SPANISH;
                 break;
             case "German":
-                iRandomWordRepository.fetchRandomWord(5, GERMAN);
+                langConst = GERMAN;
                 break;
+
         }
+
+        iRandomWordRepository.fetchRandomWord(5, langConst); //todo trovare modo di sincronizzare le due chiamate api E QUI C'E' SOLO ENG
+
+
+
         score = 0;
         ((TextView) getView().findViewById(R.id.score)).setText("Score : " + score);
 
@@ -337,15 +353,16 @@ public class TrainingFragment extends Fragment implements ResponseCallBack, View
         alertDialog.show();
     }
 
-        @Override
-        public void onSuccess(String word) {
-            tempWord = word;
-            Log.d(TAG, "La parola è : " + tempWord);
 
+        @Override
+        public void onSuccessRandom(String word) {
+            tempWord = word;
+            Log.d(TAG, "tempWord settato a: " + tempWord);
+            iSpecificWordRepository.fetchSpecificWord(word);
         }
 
         @Override
-        public void onFailure(String errorMessage){
+        public void onFailureRandom(String errorMessage){
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
             builder.setTitle("Error");
             builder.setMessage(errorMessage);
@@ -353,6 +370,24 @@ public class TrainingFragment extends Fragment implements ResponseCallBack, View
             alertDialog.show();
 
         }
+
+    @Override
+    public void onSuccessSpecific(String word) {
+        Log.d(TAG, "checkedWord settato a: " + word);
+        if (!(Objects.equals(word, tempWord))) {
+            iRandomWordRepository.fetchRandomWord(5, "en"); //ATTENZIONE SOLO INGLESE
+        }
+    }
+
+    @Override
+    public void onFailureSpecific(String errorMessage){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Error");
+        builder.setMessage(errorMessage);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+    }
 
 
 }

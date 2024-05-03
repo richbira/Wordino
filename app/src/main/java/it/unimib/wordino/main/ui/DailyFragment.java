@@ -23,7 +23,9 @@ import java.util.Objects;
 
 import it.unimib.wordino.R;
 import it.unimib.wordino.main.repository.IRandomWordRepository;
+import it.unimib.wordino.main.repository.ISpecificWordRepository;
 import it.unimib.wordino.main.repository.RandomWordRepository;
+import it.unimib.wordino.main.repository.SpecificWordRepository;
 import it.unimib.wordino.main.util.ResponseCallBack;
 
 /**
@@ -39,11 +41,16 @@ public class DailyFragment extends Fragment implements ResponseCallBack, View.On
     public View activeBox;
     public int currentLine;
     public String tempWord = "spark";
+    public String checkedWord = "";
     public Boolean fiveLetterWord = false;
     private IRandomWordRepository iRandomWordRepository;
+    private ISpecificWordRepository iSpecificWordRepository;
     private String lang = "";
 
     private String winloss;
+
+    private boolean goodWordFlag = false;
+
 
 
 
@@ -62,6 +69,7 @@ public class DailyFragment extends Fragment implements ResponseCallBack, View.On
         super.onCreate(savedInstanceState);
 
         iRandomWordRepository = new RandomWordRepository(requireActivity().getApplication(), this);
+        iSpecificWordRepository = new SpecificWordRepository(requireActivity().getApplication(), this);
 
     }
 
@@ -80,24 +88,27 @@ public class DailyFragment extends Fragment implements ResponseCallBack, View.On
         activeBox = view.findViewById(R.id.word_01);
         currentLine = 0;
         lang = GameActivity.lang;
-        switch (lang) { //TODO cambiare switch con fetch in switch con variabile, fetch fuori
+        String langConst = "";
+
+        switch (lang) {
             case "English":
-                iRandomWordRepository.fetchRandomWord(5, ENGLISH);
+                langConst = ENGLISH;
                 break;
             case "Italian":
-                iRandomWordRepository.fetchRandomWord(5, ITALIAN);
+                langConst = ITALIAN;
                 break;
             case "French":
-                iRandomWordRepository.fetchRandomWord(5, FRENCH);
+                langConst = FRENCH;
                 break;
             case "Spanish":
-                iRandomWordRepository.fetchRandomWord(5, SPANISH);
+                langConst = SPANISH;
                 break;
             case "German":
-                iRandomWordRepository.fetchRandomWord(5, GERMAN);
+                langConst = GERMAN;
                 break;
-        }
 
+        }
+        iRandomWordRepository.fetchRandomWord(5, langConst); //E QUI C'E' SOLO ENG
 
 
 
@@ -333,16 +344,35 @@ public class DailyFragment extends Fragment implements ResponseCallBack, View.On
         alertDialog.show();
     }
 
-
     @Override
-    public void onSuccess(String word) {
+    public void onSuccessRandom(String word) {
         tempWord = word;
-        Log.d(TAG, "La parola è : " + tempWord);
+        Log.d(TAG, "tempWord settato a: " + tempWord);
+        iSpecificWordRepository.fetchSpecificWord(word);
 
     }
 
     @Override
-    public void onFailure(String errorMessage){
+    public void onFailureRandom(String errorMessage){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Error");
+        builder.setMessage(errorMessage);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+    }
+
+    @Override
+    public void onSuccessSpecific(String word) { //todo FARE DUE ONSUCCESS E ONFAILURE PER LA RESPONSECALLBACK
+        Log.d(TAG, "checkedWord settato a: " + word);
+        if (!(Objects.equals(word, tempWord))) {
+            iRandomWordRepository.fetchRandomWord(5, "en"); //ATTENZIONE SOLO INGLESE
+        }
+
+    }
+
+    @Override
+    public void onFailureSpecific(String errorMessage){
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Error");
         builder.setMessage(errorMessage);

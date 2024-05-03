@@ -23,6 +23,8 @@ public class RandomWordRepository implements IRandomWordRepository {
     private final Application application;
     private final RandomWordApiService randomWordApiService;
 
+    private String randomWord;
+
 
     public RandomWordRepository(Application application, ResponseCallBack responseCallBack){
         this.application = application;
@@ -30,9 +32,31 @@ public class RandomWordRepository implements IRandomWordRepository {
         this.randomWordApiService = ServiceLocator.getInstance().getRandomWordApiService();
     }
 
+    public String getRandomWord(){
+        return this.randomWord;
+    }
+
+    /*@Override
+    public void fetchRandomWord(int length, String lang){
+        Log.d(TAG, lang + "Random word fetch start");
+        Call<List<String>> wordResponseCall = randomWordApiService.getRandomWord(length, lang);
+        try
+        {
+            Response<List<String>> response = wordResponseCall.execute();
+            List<String> newWord = response.body();
+            randomWord = newWord.get(0);
+            Log.d(TAG, "Successful fetch of random word " + newWord.get(0)); //TODO FINIRE QUI
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+
+    }*/
+
     @Override
     public void fetchRandomWord(int length, String lang){
-        Log.d(TAG, lang + "Fetch start");
+        Log.d(TAG, lang + "Random word fetch start");
         Call<List<String>> wordResponseCall = randomWordApiService.getRandomWord(length, lang);
 
         wordResponseCall.enqueue(new Callback<List<String>>() {
@@ -42,21 +66,19 @@ public class RandomWordRepository implements IRandomWordRepository {
                 if (response.body() != null && response.isSuccessful()) {
                     Log.d(TAG, "OnResponse: + " + response.isSuccessful());
                     List<String> newWord = response.body();
-                    responseCallback.onSuccess(newWord.get(0));
+                    Log.d(TAG, "Successful fetch of random word " + newWord.get(0));
+                    responseCallback.onSuccessRandom(newWord.get(0));
                 } else {
-                    responseCallback.onFailure("Errore nella chiamata API 1 " + (response.body() != null) + response.isSuccessful());
+                    responseCallback.onFailureRandom("Errore nella chiamata API 1 ");
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<List<String>> call, @NonNull Throwable t) {
                 Log.d(TAG, "OnFailure: + " + call.isExecuted());
-                responseCallback.onFailure("Errore nella chiamata API 2" + t);
+                responseCallback.onFailureRandom("Errore nella chiamata API 2" + t);
             }
         });
-        Log.d(TAG, "wordResponseCall canceled? " + wordResponseCall.isCanceled());
-        Log.d(TAG, "wordResponseCall executed? " + wordResponseCall.isExecuted());
-
     }
 
 }
