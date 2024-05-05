@@ -32,6 +32,7 @@ android {
 }
 
 dependencies {
+    implementation("com.google.firebase:firebase-database:21.0.0")
     val nav_version = "2.7.7"
     implementation ("com.github.mkhan9047:Easy-Checker:1.0.2")
     implementation("androidx.annotation:annotation:1.7.1")

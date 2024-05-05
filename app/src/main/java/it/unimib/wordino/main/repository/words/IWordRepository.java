@@ -1,4 +1,4 @@
-package it.unimib.wordino.main.repository;
+package it.unimib.wordino.main.repository.words;
 
 public interface IWordRepository {
 

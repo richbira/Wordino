@@ -17,8 +17,8 @@ import android.widget.TextView;
 import java.util.Objects;
 
 import it.unimib.wordino.R;
-import it.unimib.wordino.main.repository.IWordRepository;
-import it.unimib.wordino.main.repository.WordRepository;
+import it.unimib.wordino.main.repository.words.IWordRepository;
+import it.unimib.wordino.main.repository.words.WordRepository;
 import it.unimib.wordino.main.util.ResponseCallBack;
 
 /**

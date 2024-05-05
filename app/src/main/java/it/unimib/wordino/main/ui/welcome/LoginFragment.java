@@ -99,7 +99,7 @@ public class LoginFragment extends Fragment {
                 Log.d(TAG, "Email validation completed: " + isValidEmail);
 
                 Log.d(TAG, "Starting password validation");
-                isValidPassword = EasyChecker.Instance.validateInput(this.getContext(), 8, PasswordPattern.PASSWORD_PATTERN_TWO , passwordEditText); //Non funziona
+                isValidPassword = EasyChecker.Instance.validateInput(this.getContext(), 8, PasswordPattern.PASSWORD_PATTERN_THREE , passwordEditText);
                 Log.d(TAG, "Password validation completed: " + isValidPassword);
 
                 if (isValidEmail && isValidPassword) {
@@ -111,15 +111,16 @@ public class LoginFragment extends Fragment {
                     Log.d(TAG, "Validation failed");
                     Log.d(TAG, "isValidEmail: " + isValidEmail);
                     Log.d(TAG, "isValidPassword: " + isValidPassword);
-                    if (!isValidEmail) {
-                        emailEditText.setError("Invalid email");
-                    }
-                    if (!isValidPassword) {
-                        passwordEditText.setError("Invalid password");
-                    }
+
                 }
             } catch (InputErrorException | DeveloperErrorException e) {
                 Log.e(TAG, "Validation error: ", e);
+                if (!isValidEmail) {
+                    emailEditText.setError("Invalid email");
+                }
+                if (!isValidPassword) {
+                    passwordEditText.setError("Invalid password");
+                }
                 if (e instanceof InputErrorException) {
                     // Specific error handling for input issues
                 } else if (e instanceof DeveloperErrorException) {
