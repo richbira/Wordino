@@ -45,11 +45,10 @@ public class TrainingFragment extends Fragment implements ResponseCallBack, View
     public Boolean fiveLetterWord = false;
     private IRandomWordRepository iRandomWordRepository;
     private ISpecificWordRepository iSpecificWordRepository;
-
     private String lang = "";
+    private String langConst = "";
     private String winloss;
-
-    private boolean goodWordFlag = false;
+    private boolean goodFetchedWordFlag = false;
 
 
     public TrainingFragment() {
@@ -86,7 +85,7 @@ public class TrainingFragment extends Fragment implements ResponseCallBack, View
         activeBox = view.findViewById(R.id.word_01);
         currentLine = 0;
         lang = GameActivity.lang;
-        String langConst = "";
+        goodFetchedWordFlag = false;
 
         switch (lang) {
             case "English":
@@ -106,8 +105,7 @@ public class TrainingFragment extends Fragment implements ResponseCallBack, View
                 break;
 
         }
-
-        iRandomWordRepository.fetchRandomWord(5, langConst); //todo trovare modo di sincronizzare le due chiamate api E QUI C'E' SOLO ENG
+        iRandomWordRepository.fetchRandomWord(5, langConst); //QUI C'E' SOLO ENG
 
 
 
@@ -181,6 +179,62 @@ public class TrainingFragment extends Fragment implements ResponseCallBack, View
         else if (id == R.id.key_enter) updateActiveBox("ENTER");
     }
 
+
+
+
+    @Override
+    public void onSuccessRandom(String word) {
+        tempWord = word;
+        Log.d(TAG, "tempWord settato a: " + tempWord);
+        iSpecificWordRepository.fetchSpecificWord(word);
+    }
+
+    @Override
+    public void onFailureRandom(String errorMessage){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Error");
+        builder.setMessage(errorMessage);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+    }
+
+    @Override
+    public void onSuccessSpecific(String word) {
+        Log.d(TAG, "checkedWord settato a: " + word);
+        if (!goodFetchedWordFlag) {//Ramo per la chiamata api per trovare la parola da guessare
+            if (!(Objects.equals(word, tempWord))) {//Caso in cui la parola fetchata dalla prima api non è valida todo fare rotellina che non si ferma finchè non è trovata una buona parola
+                iRandomWordRepository.fetchRandomWord(5, langConst);
+            } else {// Caso in cui la parola viene convalidata dalla seconda api, la flag serve per far si che la seconda chiamata possa essere utilizzata per il check delle parole immesse.
+                goodFetchedWordFlag = true;
+            }
+        }
+        else { //Ramo per la chiamata api per checkare se la parola immessa esiste o meno
+            Log.d(TAG, "La parola " + word + " esiste");
+            tryWord(word);
+        }
+    }
+
+    @Override
+    public void onFailureSpecific(String errorMessage){
+        Log.d(TAG, errorMessage);
+        Log.d(TAG, "Parola non trovata nel check");
+        if (!goodFetchedWordFlag){ //Ramo per la chiamata api per trovare la parola da guessare
+            iRandomWordRepository.fetchRandomWord(5, langConst);
+        } else { //Ramo per la chiamata api per checkare se la parola immessa esiste o meno
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setTitle("Whooops");
+            builder.setMessage("La parola immessa non esiste!");
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+        }
+
+    }
+
+    /*  ----------------------------------------------------------------------------------------FUNZIONI DI LOGICA  ----------------------------------------------------------------------------------------*/
+    /*  ----------------------------------------------------------------------------------------FUNZIONI DI LOGICA  ----------------------------------------------------------------------------------------*/
+    /*  ----------------------------------------------------------------------------------------FUNZIONI DI LOGICA  ----------------------------------------------------------------------------------------*/
+
     private void updateActiveBox(String text) {
         if (activeBox instanceof TextView) {
             if (Objects.equals(text, "CANC")) {
@@ -228,8 +282,6 @@ public class TrainingFragment extends Fragment implements ResponseCallBack, View
     }
 
     private void enterPressed(){
-        //TODO METTERE CHECK SE LA PAROLA ESISTE O MENO
-        //TODO Comportamento dopo aver finito l'ultima riga
 
         String boxIndex;
         String guessedWord = "";
@@ -243,34 +295,20 @@ public class TrainingFragment extends Fragment implements ResponseCallBack, View
             }
 
             guessedWord = guessedWord.toLowerCase();
-            String code = checkWord(guessedWord);
-            changeBoxColor(code);
-            changeKeyColor(code, guessedWord);
 
-            //Check se la parola è corretta
-            if (code.equals("ggggg")) {
-                score++;
-                winAlert(); //TODO aggiustare winalert -> winlossalert
-                ((TextView) getView().findViewById(R.id.score)).setText("Score : " + score);
-                resetGame();
-            }
-            else if (currentLine != 5){
-                String nextLineBoxName = "word_" + ++currentLine + "1";
-                activeBox = getView().findViewById(getResources().getIdentifier(nextLineBoxName, "id", PACKAGE_NAME));
-                fiveLetterWord = false;
-            }
-            else {
-                winAlert(); //TODO aggiustare winalert -> winlossalert
-                resetGame();
-            }
+            iSpecificWordRepository.fetchSpecificWord(guessedWord); //chiamata api se la parola è valida
 
         }
         else {
-            Log.d(TAG, "La parola non è di cinque lettere!");
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setTitle("Whooops");
+            builder.setMessage("La parola non è di cinque lettere!");
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
         }
     }
 
-    private String checkWord(String guess) {
+    private String stringToCode(String guess) {
         String colorCodes = "";
         for (int i = 0; i < 5; i++) {
             Log.d(TAG, "Check: " + guess.charAt(i) + " - " + tempWord.charAt(i));
@@ -283,6 +321,31 @@ public class TrainingFragment extends Fragment implements ResponseCallBack, View
             }
         }
         return colorCodes;
+    }
+
+    private void tryWord(String guessedWord) {
+        String code = stringToCode(guessedWord);
+        changeBoxColor(code);
+        changeKeyColor(code, guessedWord);
+
+        //Check se la parola è corretta
+        if (code.equals("ggggg")) {
+            score++;
+            winloss = "win";
+            gameoverAlert(winloss);
+            ((TextView) getView().findViewById(R.id.score)).setText("Score : " + score);
+            resetGame();
+        }
+        else if (currentLine != 5){
+            String nextLineBoxName = "word_" + ++currentLine + "1";
+            activeBox = getView().findViewById(getResources().getIdentifier(nextLineBoxName, "id", PACKAGE_NAME));
+            fiveLetterWord = false;
+        }
+        else {
+            winloss = "loss";
+            gameoverAlert(winloss);
+            resetGame();
+        }
     }
 
     private void changeBoxColor(String code) {
@@ -335,68 +398,24 @@ public class TrainingFragment extends Fragment implements ResponseCallBack, View
         activeBox = getView().findViewById(R.id.word_01);
         currentLine = 0;
         fiveLetterWord = false;
+        goodFetchedWordFlag = false;
 
-        switch (lang) { //TODO cambiare switch con fetch in switch con variabile, fetch fuori
-            case "English":
-                iRandomWordRepository.fetchRandomWord(5, ENGLISH);
-                break;
-            case "Italian":
-                iRandomWordRepository.fetchRandomWord(5, ITALIAN);
-                break;
-            case "French":
-                iRandomWordRepository.fetchRandomWord(5, FRENCH);
-                break;
-            case "Spanish":
-                iRandomWordRepository.fetchRandomWord(5, SPANISH);
-                break;
-            case "German":
-                iRandomWordRepository.fetchRandomWord(5, GERMAN);
-                break;
-        }
+        iRandomWordRepository.fetchRandomWord(5, langConst);
     }
 
-    private void winAlert(){
+    private void gameoverAlert(String winloss){
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("You won!");
-        builder.setMessage("Your score: " + score);
+        switch(winloss){
+            case "win":
+                builder.setTitle("You Win!");
+                builder.setMessage("Your score: " + score);
+                break;
+            case "loss":
+                builder.setTitle("You Lose!");
+                builder.setMessage("Your score: " + score);
+        }
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
-    }
-
-
-        @Override
-        public void onSuccessRandom(String word) {
-            tempWord = word;
-            Log.d(TAG, "tempWord settato a: " + tempWord);
-            iSpecificWordRepository.fetchSpecificWord(word);
-        }
-
-        @Override
-        public void onFailureRandom(String errorMessage){
-            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-            builder.setTitle("Error");
-            builder.setMessage(errorMessage);
-            AlertDialog alertDialog = builder.create();
-            alertDialog.show();
-
-        }
-
-    @Override
-    public void onSuccessSpecific(String word) {
-        Log.d(TAG, "checkedWord settato a: " + word);
-        if (!(Objects.equals(word, tempWord))) {
-            iRandomWordRepository.fetchRandomWord(5, "en"); //ATTENZIONE SOLO INGLESE
-        }
-    }
-
-    @Override
-    public void onFailureSpecific(String errorMessage){//TODO CASO IN CUI NON TROVA LA PAROLA, RIPETERE CHIAMATA
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Error");
-        builder.setMessage(errorMessage);
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-
     }
 
 

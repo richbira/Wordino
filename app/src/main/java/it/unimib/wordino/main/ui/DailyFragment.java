@@ -51,10 +51,7 @@ public class DailyFragment extends Fragment implements ResponseCallBack, View.On
 
     private String winloss;
 
-    private boolean goodWordFlag = false;
-
-
-
+    private boolean goodFetchedWordFlag = false;
 
 
     public DailyFragment() {
@@ -90,6 +87,7 @@ public class DailyFragment extends Fragment implements ResponseCallBack, View.On
         activeBox = view.findViewById(R.id.word_01);
         currentLine = 0;
         lang = GameActivity.lang;
+        goodFetchedWordFlag = false;
 
         switch (lang) {
             case "English":
@@ -109,7 +107,7 @@ public class DailyFragment extends Fragment implements ResponseCallBack, View.On
                 break;
 
         }
-        iRandomWordRepository.fetchRandomWord(5, langConst); //E QUI C'E' SOLO ENG
+        iRandomWordRepository.fetchRandomWord(5, langConst); //QUI C'E' SOLO ENG
 
 
 
@@ -184,6 +182,64 @@ public class DailyFragment extends Fragment implements ResponseCallBack, View.On
         }
     }
 
+
+    @Override
+    public void onSuccessRandom(String word) {
+        tempWord = word;
+        Log.d(TAG, "tempWord settato a: " + tempWord);
+        if (Objects.equals(langConst, ENGLISH)){
+            iSpecificWordRepository.fetchSpecificWord(word);
+        }
+
+
+    }
+
+    @Override
+    public void onFailureRandom(String errorMessage){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Error");
+        builder.setMessage(errorMessage);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+
+    }
+
+    @Override
+    public void onSuccessSpecific(String word) {
+        Log.d(TAG, "checkedWord settato a: " + word);
+        if (!goodFetchedWordFlag) {//Ramo per la chiamata api per trovare la parola da guessare
+            if (!(Objects.equals(word, tempWord))) {//Caso in cui la parola fetchata dalla prima api non è valida todo fare rotellina che non si ferma finchè non è trovata una buona parola
+                iRandomWordRepository.fetchRandomWord(5, langConst);
+            } else {// Caso in cui la parola viene convalidata dalla seconda api, la flag serve per far si che la seconda chiamata possa essere utilizzata per il check delle parole immesse.
+                goodFetchedWordFlag = true;
+            }
+        }
+        else { //Ramo per la chiamata api per checkare se la parola immessa esiste o meno
+            Log.d(TAG, "La parola " + word + " esiste");
+            tryWord(word);
+        }
+    }
+
+    @Override
+    public void onFailureSpecific(String errorMessage){
+        Log.d(TAG, errorMessage);
+        Log.d(TAG, "Parola non trovata nel check");
+        if (!goodFetchedWordFlag){ //Ramo per la chiamata api per trovare la parola da guessare
+            iRandomWordRepository.fetchRandomWord(5, langConst);
+        } else { //Ramo per la chiamata api per checkare se la parola immessa esiste o meno
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setTitle("Whooops");
+            builder.setMessage("La parola immessa non esiste!");
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+        }
+
+    }
+
+    /*  ----------------------------------------------------------------------------------------FUNZIONI DI LOGICA  ----------------------------------------------------------------------------------------*/
+    /*  ----------------------------------------------------------------------------------------FUNZIONI DI LOGICA  ----------------------------------------------------------------------------------------*/
+    /*  ----------------------------------------------------------------------------------------FUNZIONI DI LOGICA  ----------------------------------------------------------------------------------------*/
+
     private void updateActiveBox(String text) {
         if (activeBox instanceof TextView) {
             if (Objects.equals(text, "CANC")) {
@@ -208,7 +264,7 @@ public class DailyFragment extends Fragment implements ResponseCallBack, View.On
         int currentLetterNum = Integer.parseInt(activeBoxName.substring(activeBoxName.length() - 1));
         //Check che serve per far funzionare il cancel sull'ultima box
         if (currentLetterNum == 5
-            && i == 1){
+                && i == 1){
             fiveLetterWord = true;
         } else if (currentLetterNum == 5
                 && i == -1
@@ -230,49 +286,31 @@ public class DailyFragment extends Fragment implements ResponseCallBack, View.On
         }
     }
 
-     private void enterPressed(){
-        //TODO METTERE CHECK SE LA PAROLA ESISTE O MENO
-         //TODO resettare colori tastiera a bianco dopo una win
+    private void enterPressed(){
 
-         String boxIndex;
-         String guessedWord = "";
+        String boxIndex;
+        String guessedWord = "";
 
-         if (fiveLetterWord) {
+        if (fiveLetterWord) {
 
+            for (int i = 1; i < 6; i++) {
+                boxIndex = "word_" + currentLine + i;
+                guessedWord += ((TextView) getView().findViewById(getResources().getIdentifier(boxIndex, "id", PACKAGE_NAME))).getText();
+            }
 
-             for (int i = 1; i < 6; i++) {
-                 boxIndex = "word_" + currentLine + i;
-                 guessedWord += ((TextView) getView().findViewById(getResources().getIdentifier(boxIndex, "id", PACKAGE_NAME))).getText();
-             }
+            guessedWord = guessedWord.toLowerCase();
 
-             guessedWord = guessedWord.toLowerCase();
-             String code = checkWord(guessedWord);
-             changeBoxColor(code);
-             changeKeyColor(code, guessedWord);
-
-             //Check se la parola è corretta
-             if (code.equals("ggggg")) {
-                 winloss = "win";
-                 gameoverAlert(winloss);
-
-             }
-             else if (currentLine != 5){
-                 String nextLineBoxName = "word_" + ++currentLine + "1";
-                 activeBox = getView().findViewById(getResources().getIdentifier(nextLineBoxName, "id", PACKAGE_NAME));
-                 fiveLetterWord = false;
-             }
-             else {
-                 winloss = "loss";
-                 gameoverAlert(winloss);
-             }
-
-         }
-         else {
-             Log.d(TAG, "La parola non è di cinque lettere!");
-         }
-     }
-     
-     private String checkWord(String guess) {
+            iSpecificWordRepository.fetchSpecificWord(guessedWord); //chiamata api se la parola è valida
+        }
+        else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setTitle("Whooops");
+            builder.setMessage("La parola non è di cinque lettere!");
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+        }
+    }
+    private String stringToCode(String guess) {
         String colorCodes = "";
         for (int i = 0; i < 5; i++) {
             Log.d(TAG, "Check: " + guess.charAt(i) + " - " + tempWord.charAt(i));
@@ -285,9 +323,29 @@ public class DailyFragment extends Fragment implements ResponseCallBack, View.On
             }
         }
         return colorCodes;
-     }
+    }
 
-     private void changeBoxColor(String code) {
+    private void tryWord(String guessedWord) {
+        String code = stringToCode(guessedWord);
+        changeBoxColor(code);
+        changeKeyColor(code, guessedWord);
+
+        //Check se la parola è corretta
+        if (code.equals("ggggg")) {
+            winloss = "win";
+            gameoverAlert(winloss);
+
+        } else if (currentLine != 5) {
+            String nextLineBoxName = "word_" + ++currentLine + "1";
+            activeBox = getView().findViewById(getResources().getIdentifier(nextLineBoxName, "id", PACKAGE_NAME));
+            fiveLetterWord = false;
+        } else {
+            winloss = "loss";
+            gameoverAlert(winloss);
+        }
+    }
+
+    private void changeBoxColor(String code) {
         String boxId;
 
         for (int i = 1; i < 6; i++){
@@ -300,21 +358,21 @@ public class DailyFragment extends Fragment implements ResponseCallBack, View.On
                 ((TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", PACKAGE_NAME))).setBackgroundResource(R.drawable.border_grey);
             }
         }
-     }
+    }
 
-     private void changeKeyColor(String code, String word) {
+    private void changeKeyColor(String code, String word) {
         String keyId;
         for (int i = 0; i < 5; i++) {
-             keyId = "key_" + word.charAt(i);
-             if (code.charAt(i) == 'g') {
-                 ((Button) getView().findViewById(getResources().getIdentifier(keyId, "id", PACKAGE_NAME))).setBackgroundColor(getResources().getColor(R.color.mygreen));  //TODO deprecated getcolor
-             } else if (code.charAt(i) == 'y') {
-                 ((Button) getView().findViewById(getResources().getIdentifier(keyId, "id", PACKAGE_NAME))).setBackgroundColor(getResources().getColor(R.color.myyellow));  //TODO deprecated getcolor
-             } else if (code.charAt(i) == 'b') {
-                 ((Button) getView().findViewById(getResources().getIdentifier(keyId, "id", PACKAGE_NAME))).setBackgroundColor(getResources().getColor(R.color.mygrey));  //TODO deprecated getcolor
-             }
+            keyId = "key_" + word.charAt(i);
+            if (code.charAt(i) == 'g') {
+                ((Button) getView().findViewById(getResources().getIdentifier(keyId, "id", PACKAGE_NAME))).setBackgroundColor(getResources().getColor(R.color.mygreen));  //TODO deprecated getcolor
+            } else if (code.charAt(i) == 'y') {
+                ((Button) getView().findViewById(getResources().getIdentifier(keyId, "id", PACKAGE_NAME))).setBackgroundColor(getResources().getColor(R.color.myyellow));  //TODO deprecated getcolor
+            } else if (code.charAt(i) == 'b') {
+                ((Button) getView().findViewById(getResources().getIdentifier(keyId, "id", PACKAGE_NAME))).setBackgroundColor(getResources().getColor(R.color.mygrey));  //TODO deprecated getcolor
+            }
         }
-     }
+    }
 
     private void resetGame() {
         String boxId;
@@ -343,46 +401,6 @@ public class DailyFragment extends Fragment implements ResponseCallBack, View.On
         }
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
-    }
-
-    @Override
-    public void onSuccessRandom(String word) {
-        tempWord = word;
-        Log.d(TAG, "tempWord settato a: " + tempWord);
-        if (Objects.equals(langConst, ENGLISH)){
-            iSpecificWordRepository.fetchSpecificWord(word);
-        }
-
-
-    }
-
-    @Override
-    public void onFailureRandom(String errorMessage){
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Error");
-        builder.setMessage(errorMessage);
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-
-    }
-
-    @Override
-    public void onSuccessSpecific(String word) { //todo FARE DUE ONSUCCESS E ONFAILURE PER LA RESPONSECALLBACK
-        Log.d(TAG, "checkedWord settato a: " + word);
-        if (!(Objects.equals(word, tempWord))) {
-            iRandomWordRepository.fetchRandomWord(5, "en"); //ATTENZIONE SOLO INGLESE
-        }
-
-    }
-
-    @Override
-    public void onFailureSpecific(String errorMessage){ //TODO CASO IN CUI NON TROVA LA PAROLA, RIPETERE CHIAMATA
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Error");
-        builder.setMessage(errorMessage);
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-
     }
 
 }
