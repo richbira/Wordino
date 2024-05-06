@@ -1,14 +1,39 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".main.ui.SettingsFragment">
+    android:orientation="vertical"
+    tools:context=".main.ui.GameActivity">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:id="@+id/app_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/settings"
+        android:textSize="34sp"
+        android:textStyle="bold"
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+    <Button
+        android:id="@+id/exit_account"
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="Exit Account" />
+
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/dark_mode_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dark Mode" />
+
+
+</LinearLayout>

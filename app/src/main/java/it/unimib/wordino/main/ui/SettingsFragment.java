@@ -2,49 +2,40 @@ package it.unimib.wordino.main.ui;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
+
+import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import it.unimib.wordino.R;
+import it.unimib.wordino.main.util.ResponseCallBack;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link SettingsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SettingsFragment extends Fragment {
+public class SettingsFragment extends Fragment implements View.OnClickListener{
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String TAG = TrainingFragment.class.getSimpleName();
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public SettingsFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SettingsFragment.
-     */
+
     // TODO: Rename and change types and number of parameters
     public static SettingsFragment newInstance(String param1, String param2) {
         SettingsFragment fragment = new SettingsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -52,8 +43,6 @@ public class SettingsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -63,4 +52,40 @@ public class SettingsFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_settings, container, false);
     }
+
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        Button exitButton = view.findViewById(R.id.exit_account); exitButton.setOnClickListener(this);
+        SwitchMaterial darkModeSwitch = view.findViewById(R.id.dark_mode_switch); darkModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) { //todo fare la darktheme
+
+                // checking if the switch is turned on
+                if (isChecked) {
+
+                    // setting theme to night mode
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                }
+
+                // if the above condition turns false
+                // it means switch is turned off
+                // by-default the switch will be off
+                else {
+
+                    // setting theme to light theme
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onClick(View v) {
+
+        int id = v.getId();
+        if (id == R.id.exit_account) Log.d(TAG, "Hai cliccato exit acc");
+    }
+
+
 }

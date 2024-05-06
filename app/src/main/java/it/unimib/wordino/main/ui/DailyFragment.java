@@ -1,11 +1,8 @@
 package it.unimib.wordino.main.ui;
 
 import static it.unimib.wordino.main.util.Constants.ENGLISH;
-import static it.unimib.wordino.main.util.Constants.FRENCH;
-import static it.unimib.wordino.main.util.Constants.GERMAN;
-import static it.unimib.wordino.main.util.Constants.ITALIAN;
 import static it.unimib.wordino.main.util.Constants.PACKAGE_NAME;
-import static it.unimib.wordino.main.util.Constants.SPANISH;
+
 
 import android.app.AlertDialog;
 import android.os.Bundle;
@@ -42,12 +39,10 @@ public class DailyFragment extends Fragment implements ResponseCallBack, View.On
     public View activeBox;
     public int currentLine;
     public String tempWord = "spark";
-    public String checkedWord = "";
     public Boolean fiveLetterWord = false;
     private IRandomWordRepository iRandomWordRepository;
     private ISpecificWordRepository iSpecificWordRepository;
-    private String lang = "";
-    private String langConst = "";
+    final String langConst = ENGLISH;
 
     private String winloss;
 
@@ -86,27 +81,8 @@ public class DailyFragment extends Fragment implements ResponseCallBack, View.On
 
         activeBox = view.findViewById(R.id.word_01);
         currentLine = 0;
-        lang = GameActivity.lang;
         goodFetchedWordFlag = false;
 
-        switch (lang) {
-            case "English":
-                langConst = ENGLISH;
-                break;
-            case "Italian":
-                langConst = ITALIAN;
-                break;
-            case "French":
-                langConst = FRENCH;
-                break;
-            case "Spanish":
-                langConst = SPANISH;
-                break;
-            case "German":
-                langConst = GERMAN;
-                break;
-
-        }
         iRandomWordRepository.fetchRandomWord(5, langConst); //QUI C'E' SOLO ENG
 
 
@@ -187,11 +163,7 @@ public class DailyFragment extends Fragment implements ResponseCallBack, View.On
     public void onSuccessRandom(String word) {
         tempWord = word;
         Log.d(TAG, "tempWord settato a: " + tempWord);
-        if (Objects.equals(langConst, ENGLISH)){
             iSpecificWordRepository.fetchSpecificWord(word);
-        }
-
-
     }
 
     @Override

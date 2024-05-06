@@ -75,27 +75,7 @@
         app:layout_constraintTop_toBottomOf="@+id/app_name"
         app:layout_constraintVertical_bias="0.19999999" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="96dp"
-        android:text="@string/n_attempts"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PlayButton" />
 
-    <Spinner
-        android:id="@+id/languageSpinner"
-        android:layout_width="130dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="1dp"
-        android:entries="@array/language_array"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PlayButton" />
 
 
 

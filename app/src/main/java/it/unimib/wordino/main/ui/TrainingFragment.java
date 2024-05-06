@@ -1,11 +1,8 @@
 package it.unimib.wordino.main.ui;
 
 import static it.unimib.wordino.main.util.Constants.ENGLISH;
-import static it.unimib.wordino.main.util.Constants.FRENCH;
-import static it.unimib.wordino.main.util.Constants.GERMAN;
-import static it.unimib.wordino.main.util.Constants.ITALIAN;
 import static it.unimib.wordino.main.util.Constants.PACKAGE_NAME;
-import static it.unimib.wordino.main.util.Constants.SPANISH;
+
 
 import android.app.AlertDialog;
 import android.os.Bundle;
@@ -45,8 +42,7 @@ public class TrainingFragment extends Fragment implements ResponseCallBack, View
     public Boolean fiveLetterWord = false;
     private IRandomWordRepository iRandomWordRepository;
     private ISpecificWordRepository iSpecificWordRepository;
-    private String lang = "";
-    private String langConst = "";
+    private String langConst = ENGLISH;
     private String winloss;
     private boolean goodFetchedWordFlag = false;
 
@@ -84,27 +80,8 @@ public class TrainingFragment extends Fragment implements ResponseCallBack, View
 
         activeBox = view.findViewById(R.id.word_01);
         currentLine = 0;
-        lang = GameActivity.lang;
         goodFetchedWordFlag = false;
 
-        switch (lang) {
-            case "English":
-                langConst = ENGLISH;
-                break;
-            case "Italian":
-                langConst = ITALIAN;
-                break;
-            case "French":
-                langConst = FRENCH;
-                break;
-            case "Spanish":
-                langConst = SPANISH;
-                break;
-            case "German":
-                langConst = GERMAN;
-                break;
-
-        }
         iRandomWordRepository.fetchRandomWord(5, langConst); //QUI C'E' SOLO ENG
 
 

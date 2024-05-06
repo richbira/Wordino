@@ -22,7 +22,7 @@ public class WelcomeActivity extends AppCompatActivity {
         Button howToPlayButton = findViewById(R.id.howToPlayButton);
         howToPlayButton.setOnClickListener(view -> {
             Log.d(TAG, "how to play clicked");
-            startGame("How to play");
+            startGame();
 
         });
 
@@ -35,15 +35,12 @@ public class WelcomeActivity extends AppCompatActivity {
 
         Button playButton = findViewById(R.id.PlayButton);
         playButton.setOnClickListener(view -> {
-            Spinner mySpinner = (Spinner) findViewById(R.id.languageSpinner);
-            String lang = mySpinner.getSelectedItem().toString();
-            startGame(lang);
+            startGame();
         });
     }
 
-    public void startGame(String lang) {
+    public void startGame() {
         Intent playIntent = new Intent(WelcomeActivity.this, GameActivity.class);
-        playIntent.putExtra("language", lang);
         startActivity(playIntent);
     }
     //TODO: Implement functionality for orientation fix

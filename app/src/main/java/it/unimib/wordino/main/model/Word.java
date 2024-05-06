@@ -4,18 +4,26 @@ import java.util.List;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
+@Entity
 public class Word implements Parcelable
 {
-
+    @PrimaryKey(autoGenerate = true)
+    private long id;
+    @ColumnInfo(name = "word")
     @SerializedName("word")
     private String word;
     @SerializedName("phonetic")
     private String phonetic;
     @SerializedName("phonetics")
     private List<Phonetic> phonetics;
+    @ColumnInfo(name = "meanings")
     @SerializedName("meanings")
     private List<Meaning> meanings;
     @SerializedName("license")

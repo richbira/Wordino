@@ -2,6 +2,7 @@ package it.unimib.wordino.main.util;
 
 import android.app.Application;
 
+import it.unimib.wordino.main.database.WordinoRoomDatabase;
 import it.unimib.wordino.main.service.DictionaryWordApiService;
 import it.unimib.wordino.main.service.RandomWordApiService;
 import retrofit2.Retrofit;
@@ -45,10 +46,10 @@ public class ServiceLocator {
                 .build();
         return retrofit.create(DictionaryWordApiService.class);
     }
-/*
-    public NewsRoomDatabase getNewsDao(Application application) {
-        return NewsRoomDatabase.getDatabase(application);
+
+    public WordinoRoomDatabase getNewsDao(Application application) {
+        return WordinoRoomDatabase.getDatabase(application);
     }
 
- */
+
 }
