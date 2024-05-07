@@ -47,7 +47,7 @@ public class ServiceLocator {
         return retrofit.create(DictionaryWordApiService.class);
     }
 
-    public WordinoRoomDatabase getNewsDao(Application application) {
+    public WordinoRoomDatabase getWordinoDao(Application application) {
         return WordinoRoomDatabase.getDatabase(application);
     }
 

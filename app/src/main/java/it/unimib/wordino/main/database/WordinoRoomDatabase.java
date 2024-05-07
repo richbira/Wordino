@@ -13,10 +13,9 @@ import java.util.concurrent.Executors;
 
 import it.unimib.wordino.main.model.Word;
 
-@Database(entities = {Word.class}, version = 1)
+@Database(entities = {Word.class}, version = 1, exportSchema = false)
 public abstract class WordinoRoomDatabase extends RoomDatabase {
     public abstract WordinoDao wordinoDao();
-
     private static volatile WordinoRoomDatabase INSTANCE;
 
     private static final int NUMBER_OF_THREADS = Runtime.getRuntime().availableProcessors();

@@ -1,9 +1,13 @@
 package it.unimib.wordino.main.model;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import androidx.room.Entity;
+import androidx.room.Ignore;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
+@Entity
 public class License implements Parcelable
 {
 
@@ -30,7 +34,6 @@ public class License implements Parcelable
         this.name = ((String) in.readValue((String.class.getClassLoader())));
         this.url = ((String) in.readValue((String.class.getClassLoader())));
     }
-
     public License() {}
 
     public String getName() {

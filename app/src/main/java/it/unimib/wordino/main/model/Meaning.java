@@ -4,18 +4,26 @@ import java.util.List;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import androidx.room.Embedded;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
+@Entity
 public class Meaning implements Parcelable
 {
 
     @SerializedName("partOfSpeech")
     private String partOfSpeech;
+    @Embedded(prefix = "definitions_")
     @SerializedName("definitions")
     private List<Definition> definitions;
+    @Embedded(prefix = "synonyms_")
     @SerializedName("synonyms")
     private List<String> synonyms;
+    @Embedded(prefix = "antonyms_")
     @SerializedName("antonyms")
     private List<String> antonyms;
     public final static Creator<Meaning> CREATOR = new Creator<Meaning>() {
@@ -39,7 +47,6 @@ public class Meaning implements Parcelable
         in.readList(this.synonyms, String.class.getClassLoader()); //NOT SURE
         in.readList(this.antonyms, String.class.getClassLoader()); //NOT SURE
     }
-
     public Meaning() {
     }
 

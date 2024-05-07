@@ -6,7 +6,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.room.ColumnInfo;
+import androidx.room.Embedded;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.Expose;
@@ -21,13 +23,17 @@ public class Word implements Parcelable
     private String word;
     @SerializedName("phonetic")
     private String phonetic;
+    @Embedded(prefix = "phonetics_")
     @SerializedName("phonetics")
     private List<Phonetic> phonetics;
-    @ColumnInfo(name = "meanings")
+
+    @Embedded(prefix = "meanings_")
     @SerializedName("meanings")
     private List<Meaning> meanings;
+    @Embedded(prefix = "license_")
     @SerializedName("license")
     private License license;
+    @Embedded(prefix = "source_urls_")
     @SerializedName("sourceUrls")
     private List<String> sourceUrls;
 
@@ -41,7 +47,7 @@ public class Word implements Parcelable
         }
 
     };
-
+    @Ignore
     public Word() {}
 
     @SuppressWarnings({
@@ -70,6 +76,14 @@ public class Word implements Parcelable
     }
     public void setWord(String word) {
         this.word = word;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
 

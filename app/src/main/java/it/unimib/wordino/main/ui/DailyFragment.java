@@ -16,9 +16,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.List;
 import java.util.Objects;
 
 import it.unimib.wordino.R;
+import it.unimib.wordino.main.model.Word;
 import it.unimib.wordino.main.repository.IRandomWordRepository;
 import it.unimib.wordino.main.repository.ISpecificWordRepository;
 import it.unimib.wordino.main.repository.RandomWordRepository;
@@ -177,18 +179,20 @@ public class DailyFragment extends Fragment implements ResponseCallBack, View.On
     }
 
     @Override
-    public void onSuccessSpecific(String word) {
-        Log.d(TAG, "checkedWord settato a: " + word);
+    public void onSuccessSpecific(List<Word> word) {
+        String wordString = word.get(0).getWord();
+        Log.d(TAG, "checkedWord settato a: " + wordString);
         if (!goodFetchedWordFlag) {//Ramo per la chiamata api per trovare la parola da guessare
-            if (!(Objects.equals(word, tempWord))) {//Caso in cui la parola fetchata dalla prima api non è valida todo fare rotellina che non si ferma finchè non è trovata una buona parola
+            if (!(Objects.equals(wordString, tempWord))) {//Caso in cui la parola fetchata dalla prima api non è valida todo fare rotellina che non si ferma finchè non è trovata una buona parola
                 iRandomWordRepository.fetchRandomWord(5, langConst);
             } else {// Caso in cui la parola viene convalidata dalla seconda api, la flag serve per far si che la seconda chiamata possa essere utilizzata per il check delle parole immesse.
+                iSpecificWordRepository.saveDataInDatabase(word);
                 goodFetchedWordFlag = true;
             }
         }
         else { //Ramo per la chiamata api per checkare se la parola immessa esiste o meno
             Log.d(TAG, "La parola " + word + " esiste");
-            tryWord(word);
+            tryWord(wordString);
         }
     }
 

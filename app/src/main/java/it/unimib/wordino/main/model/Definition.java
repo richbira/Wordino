@@ -4,16 +4,23 @@ import java.util.List;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import androidx.room.Embedded;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
+@Entity
 public class Definition implements Parcelable
 {
 
     @SerializedName("definition")
     private String definition;
+    @Embedded(prefix = "synonyms_")
     @SerializedName("synonyms")
     private List<String> synonyms;
+    @Embedded(prefix = "antonyms_")
     @SerializedName("antonyms")
     private List<String> antonyms;
     @SerializedName("example")
@@ -39,7 +46,6 @@ public class Definition implements Parcelable
         in.readList(this.antonyms, String.class.getClassLoader()); //not sure
         this.example = ((String) in.readValue((String.class.getClassLoader())));
     }
-
     public Definition() {}
 
     public String getDefinition() {

@@ -2,9 +2,17 @@ package it.unimib.wordino.main.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import androidx.room.Embedded;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
+@Entity
 public class Phonetic implements Parcelable
 {
 
@@ -14,6 +22,7 @@ public class Phonetic implements Parcelable
     private String audio;
     @SerializedName("sourceUrl")
     private String sourceUrl;
+    @Embedded(prefix = "license_")
     @SerializedName("license")
     private License license;
     public final static Parcelable.Creator<Phonetic> CREATOR = new Parcelable.Creator<Phonetic>() {
@@ -39,7 +48,6 @@ public class Phonetic implements Parcelable
         this.sourceUrl = ((String) in.readValue((String.class.getClassLoader())));
         this.license = ((License) in.readValue((License.class.getClassLoader())));
     }
-
     public Phonetic() {
     }
 

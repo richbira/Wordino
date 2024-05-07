@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 
 import java.util.List;
 
+import it.unimib.wordino.main.database.WordinoDao;
+import it.unimib.wordino.main.database.WordinoRoomDatabase;
 import it.unimib.wordino.main.model.Word;
 import it.unimib.wordino.main.service.DictionaryWordApiService;
 import it.unimib.wordino.main.ui.DailyFragment;
@@ -22,11 +24,14 @@ public class SpecificWordRepository implements ISpecificWordRepository {
     private final ResponseCallBack responseCallback;
     private final Application application;
     private final DictionaryWordApiService specificWordApiService;
+    private final WordinoDao wordinoDao;
 
     public SpecificWordRepository(Application application, ResponseCallBack responseCallBack){
         this.application = application;
         this.responseCallback = responseCallBack;
         this.specificWordApiService = ServiceLocator.getInstance().getSpecificWordApiService();
+        WordinoRoomDatabase wordinoRoomDatabase = ServiceLocator.getInstance().getWordinoDao(application);
+        this.wordinoDao = wordinoRoomDatabase.wordinoDao();
     }
 
 
@@ -44,7 +49,7 @@ public class SpecificWordRepository implements ISpecificWordRepository {
                     Log.d(TAG, "OnResponse: + " + response.isSuccessful());
                     List<Word> specificWord = response.body();
                     Log.d(TAG, "Successful fetch of word: " + specificWord.get(0).getWord());
-                    responseCallback.onSuccessSpecific(specificWord.get(0).getWord());
+                    responseCallback.onSuccessSpecific(specificWord);
                 } else {
                     responseCallback.onFailureSpecific("Errore nella chiamata API 1 ");
                 }
@@ -57,4 +62,18 @@ public class SpecificWordRepository implements ISpecificWordRepository {
             }
         });
     }
+    public void saveDataInDatabase(List<Word> wordList) {
+        WordinoRoomDatabase.databaseWriteExecutor.execute(() -> {
+
+            // Writes the words in the database and gets the associated primary keys
+            List<Long> insertedWordsIds = wordinoDao.insertAll(wordList);
+            for (int i = 0; i < wordList.size(); i++) {
+                // Adds the primary key to the corresponding object News just downloaded so that
+                // if the user marks the news as favorite (and vice-versa), we can use its id
+                // to know which news in the database must be marked as favorite/not favorite
+                wordList.get(i).setId(insertedWordsIds.get(i));
+            }
+        });
+    }
+
 }
