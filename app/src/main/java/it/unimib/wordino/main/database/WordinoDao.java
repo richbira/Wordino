@@ -1,5 +1,6 @@
 package it.unimib.wordino.main.database;
 
+import it.unimib.wordino.main.model.Highscore;
 import it.unimib.wordino.main.model.Word;
 
 import androidx.room.Dao;
@@ -21,4 +22,14 @@ public interface WordinoDao {
 
     @Delete
     void delete(Word word);
+
+    @Query("SELECT * FROM highscore ORDER BY score DESC")
+    List<Highscore> getHighscores();
+
+    @Insert
+    void insertScores(List<Highscore> scores);
+
+    @Query("DELETE FROM highscore")
+    void deleteAll();
 }
+

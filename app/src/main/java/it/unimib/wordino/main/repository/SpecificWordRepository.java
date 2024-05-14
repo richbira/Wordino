@@ -62,15 +62,13 @@ public class SpecificWordRepository implements ISpecificWordRepository {
             }
         });
     }
-    public void saveDataInDatabase(List<Word> wordList) {
+    public void saveWordInDatabase(List<Word> wordList) {
         WordinoRoomDatabase.databaseWriteExecutor.execute(() -> {
 
             // Writes the words in the database and gets the associated primary keys
             List<Long> insertedWordsIds = wordinoDao.insertAll(wordList);
             for (int i = 0; i < wordList.size(); i++) {
-                // Adds the primary key to the corresponding object Word just downloaded so that
-                // if the user marks the news as favorite (and vice-versa), we can use its id
-                // to know which news in the database must be marked as favorite/not favorite
+                // Adds the primary key to the corresponding object Word just downloaded
                 wordList.get(i).setWordId(insertedWordsIds.get(i));
             }
         });

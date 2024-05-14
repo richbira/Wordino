@@ -23,7 +23,10 @@ import java.util.List;
 import java.util.Objects;
 
 import it.unimib.wordino.R;
+import it.unimib.wordino.main.model.Highscore;
 import it.unimib.wordino.main.model.Word;
+import it.unimib.wordino.main.repository.HighscoreRepository;
+import it.unimib.wordino.main.repository.IHighscoreRepository;
 import it.unimib.wordino.main.repository.IRandomWordRepository;
 import it.unimib.wordino.main.repository.ISpecificWordRepository;
 import it.unimib.wordino.main.repository.RandomWordRepository;
@@ -48,6 +51,7 @@ public class TrainingFragment extends Fragment implements ResponseCallBack, View
     public Boolean fiveLetterWord = false;
     private IRandomWordRepository iRandomWordRepository;
     private ISpecificWordRepository iSpecificWordRepository;
+    private IHighscoreRepository iHighscoreRepository;
     private String langConst = ENGLISH;
     private String winloss;
     private boolean goodFetchedWordFlag = false;
@@ -74,6 +78,7 @@ public class TrainingFragment extends Fragment implements ResponseCallBack, View
 
         iRandomWordRepository = new RandomWordRepository(requireActivity().getApplication(), this);
         iSpecificWordRepository = new SpecificWordRepository(requireActivity().getApplication(), this);
+        iHighscoreRepository = new HighscoreRepository(requireActivity().getApplication());
 
 
     }
@@ -104,6 +109,10 @@ public class TrainingFragment extends Fragment implements ResponseCallBack, View
         flipAnimation3 = AnimatorInflater.loadAnimator(view.getContext(), R.animator.flip_animator);
         flipAnimation4 = AnimatorInflater.loadAnimator(view.getContext(), R.animator.flip_animator);
         flipAnimation5 = AnimatorInflater.loadAnimator(view.getContext(), R.animator.flip_animator);
+
+
+        Highscore newScore2 = new Highscore(8, "Fittizio");
+        iHighscoreRepository.updateHighscores(newScore2);
 
 
 
@@ -206,7 +215,7 @@ public class TrainingFragment extends Fragment implements ResponseCallBack, View
             if (!(Objects.equals(wordString, tempWord))) {//Caso in cui la parola fetchata dalla prima api non è valida
                 iRandomWordRepository.fetchRandomWord(5, langConst);
             } else {// Caso in cui la parola viene convalidata dalla seconda api, la flag serve per far si che la seconda chiamata possa essere utilizzata per il check delle parole immesse.
-                iSpecificWordRepository.saveDataInDatabase(word);
+                iSpecificWordRepository.saveWordInDatabase(word);
                 progressBar.setVisibility(View.GONE);
                 goodFetchedWordFlag = true;
             }
@@ -335,7 +344,7 @@ public class TrainingFragment extends Fragment implements ResponseCallBack, View
             score++;
             winloss = "win";
             gameoverAlert(winloss);
-            ((TextView) getView().findViewById(R.id.score)).setText("Score : " + score);
+            updateScoreBox();
             resetGame();
         }
         else if (currentLine != 5){
@@ -392,6 +401,10 @@ public class TrainingFragment extends Fragment implements ResponseCallBack, View
         }
     }
 
+    private void updateScoreBox(){
+        ((TextView) getView().findViewById(R.id.score)).setText("Score : " + score);
+    }
+
     private void resetGame() {
         String boxId;
         for (int i = 0; i < currentLine + 1; i++) {
@@ -426,8 +439,13 @@ public class TrainingFragment extends Fragment implements ResponseCallBack, View
                 builder.setMessage("Your score: " + score);
                 break;
             case "loss":
+                Highscore newScore = new Highscore(score, "Data prova");
+                iHighscoreRepository.updateHighscores(newScore);
+                score = 0;
+                updateScoreBox();
                 builder.setTitle("You Lose!");
                 builder.setMessage("Your score: " + score);
+
         }
         AlertDialog alertDialog = builder.create();
         alertDialog.show();

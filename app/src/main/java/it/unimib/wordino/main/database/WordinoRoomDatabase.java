@@ -11,9 +11,10 @@ import androidx.room.RoomDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import it.unimib.wordino.main.model.Highscore;
 import it.unimib.wordino.main.model.Word;
 
-@Database(entities = {Word.class}, version = 1, exportSchema = false)
+@Database(entities = {Word.class, Highscore.class}, version = 3, exportSchema = false)
 public abstract class WordinoRoomDatabase extends RoomDatabase {
     public abstract WordinoDao wordinoDao();
     private static volatile WordinoRoomDatabase INSTANCE;
@@ -25,7 +26,7 @@ public abstract class WordinoRoomDatabase extends RoomDatabase {
         if (INSTANCE == null) {
             synchronized (WordinoRoomDatabase.class) {
                 if (INSTANCE == null) {
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), WordinoRoomDatabase.class, WORDINO_DATABASE_NAME).build();
+                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), WordinoRoomDatabase.class, WORDINO_DATABASE_NAME).fallbackToDestructiveMigration().build();
                 }
             }
         }

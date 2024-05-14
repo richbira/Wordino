@@ -6,23 +6,15 @@ import static it.unimib.wordino.main.util.Constants.PACKAGE_NAME;
 
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
-import android.animation.AnimatorSet;
 import android.app.AlertDialog;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.DrawableContainer;
-import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -213,7 +205,7 @@ public class DailyFragment extends Fragment implements ResponseCallBack, View.On
             if (!(Objects.equals(wordString, tempWord))) {//Caso in cui la parola fetchata dalla prima api non è valida
                 iRandomWordRepository.fetchRandomWord(5, langConst);
             } else {// Caso in cui la parola viene convalidata dalla seconda api, la flag serve per far si che la seconda chiamata possa essere utilizzata per il check delle parole immesse.
-                iSpecificWordRepository.saveDataInDatabase(word);
+                iSpecificWordRepository.saveWordInDatabase(word);
                 progressBar.setVisibility(View.GONE);
                 goodFetchedWordFlag = true;
             }
