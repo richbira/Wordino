@@ -7,10 +7,11 @@
     tools:context=".main.ui.DailyFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
         <!-- Text Boxes-->
+
         <RelativeLayout
             android:id="@+id/relativeLayoutWord"
             android:layout_width="390dp"
@@ -768,8 +769,22 @@
                 app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
         </RelativeLayout>
 
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="@android:style/Widget.Material.ProgressBar.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="1dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_gravity="center" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
 </FrameLayout>

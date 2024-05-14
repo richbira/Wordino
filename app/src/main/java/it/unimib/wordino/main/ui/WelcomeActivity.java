@@ -43,5 +43,4 @@ public class WelcomeActivity extends AppCompatActivity {
         Intent playIntent = new Intent(WelcomeActivity.this, GameActivity.class);
         startActivity(playIntent);
     }
-    //TODO: Implement functionality for orientation fix
 }

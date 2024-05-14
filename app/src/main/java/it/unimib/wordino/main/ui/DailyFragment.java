@@ -4,15 +4,25 @@ import static it.unimib.wordino.main.util.Constants.ENGLISH;
 import static it.unimib.wordino.main.util.Constants.PACKAGE_NAME;
 
 
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorSet;
 import android.app.AlertDialog;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.DrawableContainer;
+import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -34,11 +44,11 @@ import it.unimib.wordino.main.util.ResponseCallBack;
  * create an instance of this fragment.
  */
 //TODO MANTENERE STATO DOPO SWITCH DI FRAGMENT
-    //todo rotellina di loading fino a quando non viene confermata la tempword
 public class DailyFragment extends Fragment implements ResponseCallBack, View.OnClickListener {
 
     private static final String TAG = DailyFragment.class.getSimpleName();
     public View activeBox;
+    public View progressBar;
     public int currentLine;
     public String tempWord = "spark";
     public Boolean fiveLetterWord = false;
@@ -49,6 +59,13 @@ public class DailyFragment extends Fragment implements ResponseCallBack, View.On
     private String winloss;
 
     private boolean goodFetchedWordFlag = false;
+
+    public Animator flipAnimation1;
+    public Animator flipAnimation2;
+    public Animator flipAnimation3;
+    public Animator flipAnimation4;
+    public Animator flipAnimation5;
+
 
 
     public DailyFragment() {
@@ -85,7 +102,16 @@ public class DailyFragment extends Fragment implements ResponseCallBack, View.On
         currentLine = 0;
         goodFetchedWordFlag = false;
 
+        progressBar = view.findViewById(R.id.progress_bar);
+
+        progressBar.setVisibility(View.VISIBLE);
         iRandomWordRepository.fetchRandomWord(5, langConst); //QUI C'E' SOLO ENG
+
+        flipAnimation1 = AnimatorInflater.loadAnimator(view.getContext(), R.animator.flip_animator);
+        flipAnimation2 = AnimatorInflater.loadAnimator(view.getContext(), R.animator.flip_animator);
+        flipAnimation3 = AnimatorInflater.loadAnimator(view.getContext(), R.animator.flip_animator);
+        flipAnimation4 = AnimatorInflater.loadAnimator(view.getContext(), R.animator.flip_animator);
+        flipAnimation5 = AnimatorInflater.loadAnimator(view.getContext(), R.animator.flip_animator);
 
 
 
@@ -170,6 +196,7 @@ public class DailyFragment extends Fragment implements ResponseCallBack, View.On
 
     @Override
     public void onFailureRandom(String errorMessage){
+        progressBar.setVisibility(View.GONE);
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Error");
         builder.setMessage(errorMessage);
@@ -183,10 +210,11 @@ public class DailyFragment extends Fragment implements ResponseCallBack, View.On
         String wordString = word.get(0).getWord();
         Log.d(TAG, "checkedWord settato a: " + wordString);
         if (!goodFetchedWordFlag) {//Ramo per la chiamata api per trovare la parola da guessare
-            if (!(Objects.equals(wordString, tempWord))) {//Caso in cui la parola fetchata dalla prima api non è valida todo fare rotellina che non si ferma finchè non è trovata una buona parola
+            if (!(Objects.equals(wordString, tempWord))) {//Caso in cui la parola fetchata dalla prima api non è valida
                 iRandomWordRepository.fetchRandomWord(5, langConst);
             } else {// Caso in cui la parola viene convalidata dalla seconda api, la flag serve per far si che la seconda chiamata possa essere utilizzata per il check delle parole immesse.
                 iSpecificWordRepository.saveDataInDatabase(word);
+                progressBar.setVisibility(View.GONE);
                 goodFetchedWordFlag = true;
             }
         }
@@ -304,6 +332,7 @@ public class DailyFragment extends Fragment implements ResponseCallBack, View.On
     private void tryWord(String guessedWord) {
         String code = stringToCode(guessedWord);
         changeBoxColor(code);
+        Log.d(TAG, "BACK TO TRYWORD");
         changeKeyColor(code, guessedWord);
 
         //Check se la parola è corretta
@@ -324,16 +353,32 @@ public class DailyFragment extends Fragment implements ResponseCallBack, View.On
     private void changeBoxColor(String code) {
         String boxId;
 
+        //ANIMATION
+        flipAnimation1.setTarget((TextView) getView().findViewById(getResources().getIdentifier("word_" + currentLine + "1", "id", PACKAGE_NAME)));
+        flipAnimation2.setTarget((TextView) getView().findViewById(getResources().getIdentifier("word_" + currentLine + "2", "id", PACKAGE_NAME)));
+        flipAnimation3.setTarget((TextView) getView().findViewById(getResources().getIdentifier("word_" + currentLine + "3", "id", PACKAGE_NAME)));
+        flipAnimation4.setTarget((TextView) getView().findViewById(getResources().getIdentifier("word_" + currentLine + "4", "id", PACKAGE_NAME)));
+        flipAnimation5.setTarget((TextView) getView().findViewById(getResources().getIdentifier("word_" + currentLine + "5", "id", PACKAGE_NAME)));
+        flipAnimation1.start();
+        flipAnimation2.start();
+        flipAnimation3.start();
+        flipAnimation4.start();
+        flipAnimation5.start();
+
         for (int i = 1; i < 6; i++){
             boxId = "word_" + currentLine + i;
+            TextView currentBox = (TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", PACKAGE_NAME));
+
             if (code.charAt(i-1) == 'g') {
-                ((TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", PACKAGE_NAME))).setBackgroundResource(R.drawable.border_green);
+                currentBox.setBackgroundResource(R.drawable.border_green);
             }else if (code.charAt(i-1) == 'y') {
-                ((TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", PACKAGE_NAME))).setBackgroundResource(R.drawable.border_yellow);
+                currentBox.setBackgroundResource(R.drawable.border_yellow);
             }else if (code.charAt(i-1) == 'b') {
-                ((TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", PACKAGE_NAME))).setBackgroundResource(R.drawable.border_grey);
+                currentBox.setBackgroundResource(R.drawable.border_grey);
             }
+
         }
+
     }
 
     private void changeKeyColor(String code, String word) {

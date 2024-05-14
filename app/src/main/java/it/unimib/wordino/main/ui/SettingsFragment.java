@@ -59,7 +59,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener{
         Button exitButton = view.findViewById(R.id.exit_account); exitButton.setOnClickListener(this);
         SwitchMaterial darkModeSwitch = view.findViewById(R.id.dark_mode_switch); darkModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) { //todo fare la darktheme
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) { //todo fare la darktheme bene
 
                 // checking if the switch is turned on
                 if (isChecked) {

@@ -10,6 +10,7 @@ import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
+import androidx.room.Relation;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -17,24 +18,29 @@ import com.google.gson.annotations.SerializedName;
 public class Word implements Parcelable
 {
     @PrimaryKey(autoGenerate = true)
-    private long id;
+    private long wordId;
     @ColumnInfo(name = "word")
     @SerializedName("word")
     private String word;
-    @SerializedName("phonetic")
+    //@SerializedName("phonetic")
+    @Ignore
     private String phonetic;
-    @Embedded(prefix = "phonetics_")
-    @SerializedName("phonetics")
+    //@Embedded(prefix = "phonetics_")
+    //@SerializedName("phonetics")
+    @Ignore
     private List<Phonetic> phonetics;
 
-    @Embedded(prefix = "meanings_")
-    @SerializedName("meanings")
+    //@Embedded(prefix = "meanings_")
+    //@SerializedName("meanings")
+    @Ignore
     private List<Meaning> meanings;
-    @Embedded(prefix = "license_")
-    @SerializedName("license")
+    //@Embedded(prefix = "license_")
+    //@SerializedName("license")
+    @Ignore
     private License license;
-    @Embedded(prefix = "source_urls_")
-    @SerializedName("sourceUrls")
+    //@Embedded(prefix = "source_urls_")
+    //@SerializedName("sourceUrls")
+    @Ignore
     private List<String> sourceUrls;
 
     public final static Creator<Word> CREATOR = new Creator<Word>() {
@@ -71,6 +77,11 @@ public class Word implements Parcelable
         this.sourceUrls = sourceUrls;
     }
 
+    public Word(long wordId, String word){
+        this.wordId = wordId;
+        this.word = word;
+    }
+
     public String getWord() {
         return word;
     }
@@ -78,12 +89,12 @@ public class Word implements Parcelable
         this.word = word;
     }
 
-    public long getId() {
-        return id;
+    public long getWordId() {
+        return wordId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setWordId(long id) {
+        this.wordId = id;
     }
 
 
