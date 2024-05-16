@@ -3,7 +3,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.util.Set;
 
-import it.unimib.wordino.Model.User;
+import it.unimib.wordino.main.Model.User;
 import it.unimib.wordino.main.data.Result;
 import it.unimib.wordino.main.source.user.BaseUserAuthenticationRemoteDataSource;
 import it.unimib.wordino.main.source.user.BaseUserDataRemoteDataSource;
@@ -18,14 +18,14 @@ public class UserRepository implements IUserRepository, UserResponseCallback {
     private final BaseUserAuthenticationRemoteDataSource userRemoteDataSource;
     private final BaseUserDataRemoteDataSource userDataRemoteDataSource;
     private final MutableLiveData<Result> userMutableLiveData;
-    private final MutableLiveData<Result> userPreferencesMutableLiveData;
+
 
     public UserRepository(BaseUserAuthenticationRemoteDataSource userRemoteDataSource,
                           BaseUserDataRemoteDataSource userDataRemoteDataSource) {
+
+        this.userMutableLiveData = new MutableLiveData<>();
         this.userRemoteDataSource = userRemoteDataSource;
         this.userDataRemoteDataSource = userDataRemoteDataSource;
-        this.userMutableLiveData = new MutableLiveData<>();
-        this.userPreferencesMutableLiveData = new MutableLiveData<>();
         this.userRemoteDataSource.setUserResponseCallback(this);
         this.userDataRemoteDataSource.setUserResponseCallback(this);
     }
@@ -45,13 +45,6 @@ public class UserRepository implements IUserRepository, UserResponseCallback {
         signInWithGoogle(idToken);
         return userMutableLiveData;
     }
-
-    @Override
-    public MutableLiveData<Result> getUserPreferences(String idToken) {
-        userDataRemoteDataSource.getUserPreferences(idToken);
-        return userPreferencesMutableLiveData;
-    }
-
     @Override
     public User getLoggedUser() {
         return userRemoteDataSource.getLoggedUser();
@@ -79,11 +72,6 @@ public class UserRepository implements IUserRepository, UserResponseCallback {
     }
 
     @Override
-    public void saveUserPreferences(String favoriteCountry, Set<String> favoriteTopics, String idToken) {
-        userDataRemoteDataSource.saveUserPreferences(favoriteCountry, favoriteTopics, idToken);
-    }
-
-    @Override
     public void onSuccessFromAuthentication(User user) {
         if (user != null) {
             userDataRemoteDataSource.saveUserData(user);
@@ -101,12 +89,6 @@ public class UserRepository implements IUserRepository, UserResponseCallback {
         Result.UserResponseSuccess result = new Result.UserResponseSuccess(user);
         userMutableLiveData.postValue(result);
     }
-
-    @Override
-    public void onSuccessFromGettingUserPreferences() {
-        userPreferencesMutableLiveData.postValue(new Result.UserResponseSuccess(null));
-    }
-
     @Override
     public void onFailureFromRemoteDatabase(String message) {
         Result.Error result = new Result.Error(message);
@@ -133,5 +115,9 @@ public class UserRepository implements IUserRepository, UserResponseCallback {
 
     public void onFailureFromCloud(Exception exception) {
 
+    }
+    @Override
+    public void resetPassword(String email){
+        userRemoteDataSource.resetPassword(email);
     }
 }

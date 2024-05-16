@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
@@ -24,17 +25,15 @@ import com.validator.easychecker.util.PasswordPattern;
 import org.apache.commons.validator.routines.EmailValidator;
 
 import it.unimib.wordino.R;
+import it.unimib.wordino.main.repository.user.IUserRepository;
+import it.unimib.wordino.main.util.ServiceLocator;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link LoginFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class LoginFragment extends Fragment {
 
     private static final String TAG = LoginActivity.class.getSimpleName();
     private EditText emailEditText;
     private EditText passwordEditText;
+    private UserViewModel userViewModel;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -66,7 +65,7 @@ public class LoginFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_login, container, false);
     }
 
-    @Override
+    /*@Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
@@ -127,8 +126,8 @@ public class LoginFragment extends Fragment {
                     // Specific error handling for developer errors
                 }
             }
-        });
-    }
+        });*/
+
         private boolean validateField (EditText editText, String fieldType) throws
         InputErrorException, DeveloperErrorException {
             Log.d(TAG, "Validating " + fieldType);

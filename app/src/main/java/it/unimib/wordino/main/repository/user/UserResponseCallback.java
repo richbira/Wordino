@@ -1,12 +1,11 @@
 package it.unimib.wordino.main.repository.user;
 
-import it.unimib.wordino.Model.User;
+import it.unimib.wordino.main.Model.User;
 
-public interface UserResponseCallback {
+public interface UserResponseCallback { //uso per le chiamate
     void onSuccessFromAuthentication(User user);
     void onFailureFromAuthentication(String message);
     void onSuccessFromRemoteDatabase(User user);
-    void onSuccessFromGettingUserPreferences();
     void onFailureFromRemoteDatabase(String message);
     void onSuccessLogout();
 }

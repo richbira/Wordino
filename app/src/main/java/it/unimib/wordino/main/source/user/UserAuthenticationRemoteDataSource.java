@@ -19,8 +19,7 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-import it.unimib.wordino.Model.User;
-import it.unimib.wordino.main.source.user.BaseUserAuthenticationRemoteDataSource;
+import it.unimib.wordino.main.Model.User;
 
 
 /**
@@ -45,6 +44,25 @@ public class UserAuthenticationRemoteDataSource extends BaseUserAuthenticationRe
             return new User(firebaseUser.getDisplayName(), firebaseUser.getEmail(), firebaseUser.getUid());
         }
     }
+    @Override
+    public void signUp(String email, String password) {
+        firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Log.d(TAG, "createUserWithEmail:success");
+                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                if (firebaseUser != null) {
+                    userResponseCallback.onSuccessFromAuthentication(
+                            new User(firebaseUser.getDisplayName(), email, firebaseUser.getUid())
+                    );
+                } else {
+                    userResponseCallback.onFailureFromAuthentication(getErrorMessage(task.getException()));
+                }
+            } else {
+                Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                userResponseCallback.onFailureFromAuthentication(getErrorMessage(task.getException()));
+            }
+        });
+    }
 
     @Override
     public void logout() {
@@ -62,30 +80,13 @@ public class UserAuthenticationRemoteDataSource extends BaseUserAuthenticationRe
         firebaseAuth.signOut();
     }
 
-    @Override
-    public void signUp(String email, String password) {
-        firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                if (firebaseUser != null) {
-                    userResponseCallback.onSuccessFromAuthentication(
-                            new User(firebaseUser.getDisplayName(), email, firebaseUser.getUid())
-                    );
-                } else {
-                    userResponseCallback.onFailureFromAuthentication(getErrorMessage(task.getException()));
-                }
-            } else {
-                userResponseCallback.onFailureFromAuthentication(getErrorMessage(task.getException()));
-            }
-        });
-    }
 
     @Override
     public void signIn(String email, String password) {
         firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                if (firebaseUser != null) {
+                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser(); //Prendo User
+                if (firebaseUser != null) { //Se esiste
                     userResponseCallback.onSuccessFromAuthentication(
                             new User(firebaseUser.getDisplayName(), email, firebaseUser.getUid())
                     );
@@ -121,11 +122,15 @@ public class UserAuthenticationRemoteDataSource extends BaseUserAuthenticationRe
                     }
                 } else {
                     // If sign in fails, display a message to the user.
-                    Log.w(TAG, "signInWithCredential:failure", task.getException());
                     userResponseCallback.onFailureFromAuthentication(getErrorMessage(task.getException()));
                 }
             });
         }
+    }
+
+    @Override
+    public void resetPassword(String email){
+        firebaseAuth.sendPasswordResetEmail(email);
     }
 
     private String getErrorMessage(Exception exception) {

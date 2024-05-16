@@ -1,4 +1,4 @@
-package it.unimib.wordino.Model;
+package it.unimib.wordino.main.Model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -8,6 +8,8 @@ public class User implements Parcelable {
     private String name;
     private String email;
     private String idToken;
+
+    //TODO Dao per salvare le statistiche del player? -> Usi Rooom
 
     public User(String name, String email, String idToken) {
         this.name = name;
