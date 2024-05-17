@@ -26,7 +26,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
         });
 
-        Button loginButton = findViewById(R.id.LoginButton);
+        Button loginButton = findViewById(R.id.loginButton);
         loginButton.setOnClickListener(view -> {
             Log.d(TAG, "login clicked");
             Intent loginIntent = new Intent(WelcomeActivity.this, LoginActivity.class);

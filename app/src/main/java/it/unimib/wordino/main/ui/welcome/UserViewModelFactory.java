@@ -5,28 +5,26 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import it.unimib.wordino.main.repository.user.IUserRepository;
+    public class UserViewModelFactory implements ViewModelProvider.Factory { // Factory per la creazione del ViewModel dell'utente
 
+        private final IUserRepository userRepository;
 
-/**
- * Custom ViewModelProvider to be able to have a custom constructor
- * for the UserViewModel class.
- */
-public class UserViewModelFactory implements ViewModelProvider.Factory {
+        public UserViewModelFactory(IUserRepository userRepository) {
+            this.userRepository = userRepository;
+        }
 
-    private final IUserRepository userRepository;
-
-    public UserViewModelFactory(IUserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-    @NonNull
-    @Override
-    public <T extends ViewModel> T create(@NonNull Class<T> modelClass) { //Da sistemare come quello del prof
-        if (UserViewModel.class.isAssignableFrom(modelClass)) {
-            // Here you ensure that the modelClass is indeed assignable to UserViewModel.
-            return modelClass.cast(new UserViewModel(userRepository));
-        } else {
-            // If not, throw an exception to inform that the requested model class is not supported.
-            throw new IllegalArgumentException("Unknown ViewModel class");
+        /*@NonNull
+        @Override
+        public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
+            return (T) new UserViewModel(userRepository);
+        }*/
+        @NonNull
+        @Override
+        public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
+            if (UserViewModel.class.isAssignableFrom(modelClass)) {
+                return modelClass.cast(new UserViewModel(userRepository));
+            }
+            throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
         }
     }
-}
+

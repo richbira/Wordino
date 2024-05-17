@@ -45,12 +45,8 @@ public class ServiceLocator {
      * @return An instance of IUserRepository.
      */
     public IUserRepository getUserRepository(Application application) {
-        BaseUserAuthenticationRemoteDataSource userRemoteAuthenticationDataSource =
-                new UserAuthenticationRemoteDataSource();
-
-        BaseUserDataRemoteDataSource userDataRemoteDataSource =
-                new UserDataRemoteDataSource();
-
+        BaseUserDataRemoteDataSource userDataRemoteDataSource = new UserDataRemoteDataSource();
+        BaseUserAuthenticationRemoteDataSource userRemoteAuthenticationDataSource = new UserAuthenticationRemoteDataSource();
         return (IUserRepository) new UserRepository(userRemoteAuthenticationDataSource,
                 userDataRemoteDataSource);
     }

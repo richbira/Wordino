@@ -22,6 +22,15 @@ public class Result<T> {
         return "";
     }
 
+    public boolean isSuccess() {
+        if (this instanceof UserResponseSuccess) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
     // Success sub-class
     public final static class Success<T> extends Result {
         private T data;

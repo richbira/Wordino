@@ -7,7 +7,7 @@ import java.util.Set;
 import it.unimib.wordino.main.Model.User;
 import it.unimib.wordino.main.data.Result;
 
-public interface IUserRepository {
+public interface IUserRepository { // Interfaccia per la gestione dell'utente
     MutableLiveData<Result> getUser(String email, String password, boolean isUserRegistered);
     MutableLiveData<Result> getGoogleUser(String idToken);
     MutableLiveData<Result> logout();

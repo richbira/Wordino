@@ -26,7 +26,7 @@ import it.unimib.wordino.main.Model.User;
  * Class that manages the user authentication using Firebase Authentication.
  */
 public class UserAuthenticationRemoteDataSource extends BaseUserAuthenticationRemoteDataSource {
-
+    //Classe che gestisce l'autenticazione dell'utente
     private static final String TAG = UserAuthenticationRemoteDataSource.class.getSimpleName();
 
     private final FirebaseAuth firebaseAuth;
@@ -36,7 +36,7 @@ public class UserAuthenticationRemoteDataSource extends BaseUserAuthenticationRe
     }
 
     @Override
-    public User getLoggedUser() {
+    public User getLoggedUser() { // Prendo l'utente loggato
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         if (firebaseUser == null) {
             return null;
@@ -45,7 +45,7 @@ public class UserAuthenticationRemoteDataSource extends BaseUserAuthenticationRe
         }
     }
     @Override
-    public void signUp(String email, String password) {
+    public void signUp(String email, String password) { // Registrazione
         firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 Log.d(TAG, "createUserWithEmail:success");
@@ -65,7 +65,7 @@ public class UserAuthenticationRemoteDataSource extends BaseUserAuthenticationRe
     }
 
     @Override
-    public void logout() {
+    public void logout() { // Logout
         FirebaseAuth.AuthStateListener authStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -82,7 +82,7 @@ public class UserAuthenticationRemoteDataSource extends BaseUserAuthenticationRe
 
 
     @Override
-    public void signIn(String email, String password) {
+    public void signIn(String email, String password) { // Login
         firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser(); //Prendo User
@@ -100,7 +100,7 @@ public class UserAuthenticationRemoteDataSource extends BaseUserAuthenticationRe
     }
 
     @Override
-    public void signInWithGoogle(String idToken) {
+    public void signInWithGoogle(String idToken) { // Login con Google
         if (idToken !=  null) {
             // Got an ID token from Google. Use it to authenticate with Firebase.
             AuthCredential firebaseCredential = GoogleAuthProvider.getCredential(idToken, null);
@@ -131,9 +131,9 @@ public class UserAuthenticationRemoteDataSource extends BaseUserAuthenticationRe
     @Override
     public void resetPassword(String email){
         firebaseAuth.sendPasswordResetEmail(email);
-    }
+    } // Reset password
 
-    private String getErrorMessage(Exception exception) {
+    private String getErrorMessage(Exception exception) { // Gestione errori
         if (exception instanceof FirebaseAuthWeakPasswordException) {
             return WEAK_PASSWORD_ERROR;
         } else if (exception instanceof FirebaseAuthInvalidCredentialsException) {

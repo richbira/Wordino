@@ -11,7 +11,7 @@ import it.unimib.wordino.main.source.user.BaseUserDataRemoteDataSource;
 /**
  * Repository class to get the user information.
  */
-public class UserRepository implements IUserRepository, UserResponseCallback {
+public class UserRepository implements IUserRepository, UserResponseCallback { // Gestione dell'utente
 
     private static final String TAG = UserRepository.class.getSimpleName();
 

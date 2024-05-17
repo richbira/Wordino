@@ -1,12 +1,13 @@
 package it.unimib.wordino.main.ui.welcome;
 
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
 import it.unimib.wordino.main.Model.User;
 import it.unimib.wordino.main.data.Result;
 import it.unimib.wordino.main.repository.user.IUserRepository;
 
-public class UserViewModel {
+public class UserViewModel extends ViewModel { // ViewModel per la gestione dell'utente
     private static final String TAG = UserViewModel.class.getSimpleName();
 
     private final IUserRepository userRepository;
@@ -17,6 +18,7 @@ public class UserViewModel {
         this.userRepository = userRepository;
         authenticationError = false;
     }
+
     public MutableLiveData<Result> getUserMutableLiveData(
             String email, String password, boolean isUserRegistered) {
         if (userMutableLiveData == null) {
@@ -64,7 +66,9 @@ public class UserViewModel {
         userMutableLiveData = userRepository.getGoogleUser(token);
     }
 
-    public void resetPassword(String email){
+    public void resetPassword(String email) {
         userRepository.resetPassword(email);
     }
-}
+    }
+
+

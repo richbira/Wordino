@@ -69,4 +69,12 @@
     <string name="forgot_password">forgot password</string>
     <string name="reset_password">reset passsowrd</string>
     <string name="verification_code">insert_verification_code</string>
+    <string name="default_web_client_id">default_web_client_id</string>
+    <string name="error_login_password_message">error_login_password_message</string>
+    <string name="error_login_user_message">error_login_user_message</string>
+    <string name="unexpected_error">unexpected_error</string>
+    <string name="error_email">error_email\n</string>
+    <string name="error_password">error_password</string>
+    <string name="error_user_collision_message">error_user_collision_message</string>
+    <string name="check_login_data_message">check_login_data_message</string>
 </resources>
