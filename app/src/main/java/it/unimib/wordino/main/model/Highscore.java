@@ -70,7 +70,7 @@ public class Highscore implements Parcelable
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(License.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
+        sb.append(Highscore.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
         sb.append("score");
         sb.append('=');
         sb.append(((this.score == 0)?"<null>":""+this.score)); // ???? forse this.score == 0 non va bene

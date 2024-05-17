@@ -12,7 +12,7 @@ import it.unimib.wordino.main.database.WordinoRoomDatabase;
 import it.unimib.wordino.main.model.Word;
 import it.unimib.wordino.main.service.DictionaryWordApiService;
 import it.unimib.wordino.main.ui.DailyFragment;
-import it.unimib.wordino.main.util.ResponseCallBack;
+import it.unimib.wordino.main.util.ResponseCallBackApi;
 import it.unimib.wordino.main.util.ServiceLocator;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -21,14 +21,14 @@ import retrofit2.Response;
 public class SpecificWordRepository implements ISpecificWordRepository {
 
     private static final String TAG = DailyFragment.class.getSimpleName();
-    private final ResponseCallBack responseCallback;
+    private final ResponseCallBackApi responseCallbackApi;
     private final Application application;
     private final DictionaryWordApiService specificWordApiService;
     private final WordinoDao wordinoDao;
 
-    public SpecificWordRepository(Application application, ResponseCallBack responseCallBack){
+    public SpecificWordRepository(Application application, ResponseCallBackApi responseCallBackApi){
         this.application = application;
-        this.responseCallback = responseCallBack;
+        this.responseCallbackApi = responseCallBackApi;
         this.specificWordApiService = ServiceLocator.getInstance().getSpecificWordApiService();
         WordinoRoomDatabase wordinoRoomDatabase = ServiceLocator.getInstance().getWordinoDao(application);
         this.wordinoDao = wordinoRoomDatabase.wordinoDao();
@@ -49,16 +49,16 @@ public class SpecificWordRepository implements ISpecificWordRepository {
                     Log.d(TAG, "OnResponse: + " + response.isSuccessful());
                     List<Word> specificWord = response.body();
                     Log.d(TAG, "Successful fetch of word: " + specificWord.get(0).getWord());
-                    responseCallback.onSuccessSpecific(specificWord);
+                    responseCallbackApi.onSuccessSpecific(specificWord);
                 } else {
-                    responseCallback.onFailureSpecific("Errore nella chiamata API 1 ");
+                    responseCallbackApi.onFailureSpecific("Errore nella chiamata API 1 ");
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<List<Word>> call, @NonNull Throwable t) {
                 Log.d(TAG, "OnFailure: + " + call.isExecuted());
-                responseCallback.onFailureSpecific("Error wordNotFound");
+                responseCallbackApi.onFailureSpecific("Error wordNotFound");
             }
         });
     }

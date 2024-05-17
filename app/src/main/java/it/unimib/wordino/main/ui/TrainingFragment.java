@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -31,23 +32,17 @@ import it.unimib.wordino.main.repository.IRandomWordRepository;
 import it.unimib.wordino.main.repository.ISpecificWordRepository;
 import it.unimib.wordino.main.repository.RandomWordRepository;
 import it.unimib.wordino.main.repository.SpecificWordRepository;
-import it.unimib.wordino.main.util.ResponseCallBack;
+import it.unimib.wordino.main.util.ResponseCallBackApi;
 
-/**
- * A simple {@link Fragment} subclass.
- * ù
- * Use the {@link TrainingFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class TrainingFragment extends Fragment implements ResponseCallBack, View.OnClickListener {
+public class TrainingFragment extends Fragment implements ResponseCallBackApi, View.OnClickListener {
 
     private static final String TAG = TrainingFragment.class.getSimpleName();
     public View activeBox;
     public View progressBar;
 
     public int currentLine;
-    public String tempWord = "spark";
-    public int score;
+    public String tempWord;
+    public int score = 0;
     public Boolean fiveLetterWord = false;
     private IRandomWordRepository iRandomWordRepository;
     private ISpecificWordRepository iSpecificWordRepository;
@@ -97,12 +92,12 @@ public class TrainingFragment extends Fragment implements ResponseCallBack, View
 
         activeBox = view.findViewById(R.id.word_01);
         currentLine = 0;
+        //score = 0;
         goodFetchedWordFlag = false;
 
         progressBar = view.findViewById(R.id.progress_bar);
 
         progressBar.setVisibility(View.VISIBLE);
-        iRandomWordRepository.fetchRandomWord(5, langConst); //QUI C'E' SOLO ENG
 
         flipAnimation1 = AnimatorInflater.loadAnimator(view.getContext(), R.animator.flip_animator);
         flipAnimation2 = AnimatorInflater.loadAnimator(view.getContext(), R.animator.flip_animator);
@@ -111,13 +106,18 @@ public class TrainingFragment extends Fragment implements ResponseCallBack, View
         flipAnimation5 = AnimatorInflater.loadAnimator(view.getContext(), R.animator.flip_animator);
 
 
-        Highscore newScore2 = new Highscore(8, "Fittizio");
+        String ldt = LocalDateTime.now().toString();
+        Highscore newScore2 = new Highscore(2, ldt);
         iHighscoreRepository.updateHighscores(newScore2);
 
 
 
-        score = 0;
+
+
         ((TextView) getView().findViewById(R.id.score)).setText("Score : " + score);
+
+        iRandomWordRepository.fetchRandomWord(5, langConst);
+
 
 
         Button qButton = view.findViewById(R.id.key_q); qButton.setOnClickListener(this);
@@ -439,7 +439,8 @@ public class TrainingFragment extends Fragment implements ResponseCallBack, View
                 builder.setMessage("Your score: " + score);
                 break;
             case "loss":
-                Highscore newScore = new Highscore(score, "Data prova");
+                String ldt = LocalDateTime.now().toString();
+                Highscore newScore = new Highscore(score, ldt);
                 iHighscoreRepository.updateHighscores(newScore);
                 score = 0;
                 updateScoreBox();
@@ -450,8 +451,6 @@ public class TrainingFragment extends Fragment implements ResponseCallBack, View
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
-
-
 }
 
 

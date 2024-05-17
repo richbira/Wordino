@@ -27,7 +27,7 @@ import it.unimib.wordino.main.repository.IRandomWordRepository;
 import it.unimib.wordino.main.repository.ISpecificWordRepository;
 import it.unimib.wordino.main.repository.RandomWordRepository;
 import it.unimib.wordino.main.repository.SpecificWordRepository;
-import it.unimib.wordino.main.util.ResponseCallBack;
+import it.unimib.wordino.main.util.ResponseCallBackApi;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,7 +36,7 @@ import it.unimib.wordino.main.util.ResponseCallBack;
  * create an instance of this fragment.
  */
 //TODO MANTENERE STATO DOPO SWITCH DI FRAGMENT
-public class DailyFragment extends Fragment implements ResponseCallBack, View.OnClickListener {
+public class DailyFragment extends Fragment implements ResponseCallBackApi, View.OnClickListener {
 
     private static final String TAG = DailyFragment.class.getSimpleName();
     public View activeBox;

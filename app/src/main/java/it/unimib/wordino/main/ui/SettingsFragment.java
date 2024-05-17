@@ -11,12 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.Switch;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import it.unimib.wordino.R;
-import it.unimib.wordino.main.util.ResponseCallBack;
 
 /**
  * A simple {@link Fragment} subclass.

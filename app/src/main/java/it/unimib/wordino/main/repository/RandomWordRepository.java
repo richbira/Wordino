@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 import java.util.List;
 
 import it.unimib.wordino.main.ui.DailyFragment;
-import it.unimib.wordino.main.util.ResponseCallBack;
+import it.unimib.wordino.main.util.ResponseCallBackApi;
 
 import it.unimib.wordino.main.service.RandomWordApiService;
 import it.unimib.wordino.main.util.ServiceLocator;
@@ -19,16 +19,16 @@ import retrofit2.Response;
 public class RandomWordRepository implements IRandomWordRepository {
 
     private static final String TAG = DailyFragment.class.getSimpleName();
-    private final ResponseCallBack responseCallback;
+    private final ResponseCallBackApi responseCallbackApi;
     private final Application application;
     private final RandomWordApiService randomWordApiService;
 
     private String randomWord;
 
 
-    public RandomWordRepository(Application application, ResponseCallBack responseCallBack){
+    public RandomWordRepository(Application application, ResponseCallBackApi responseCallBackApi){
         this.application = application;
-        this.responseCallback = responseCallBack;
+        this.responseCallbackApi = responseCallBackApi;
         this.randomWordApiService = ServiceLocator.getInstance().getRandomWordApiService();
     }
 
@@ -67,16 +67,16 @@ public class RandomWordRepository implements IRandomWordRepository {
                     Log.d(TAG, "OnResponse: + " + response.isSuccessful());
                     List<String> newWord = response.body();
                     Log.d(TAG, "Successful fetch of random word " + newWord.get(0));
-                    responseCallback.onSuccessRandom(newWord.get(0));
+                    responseCallbackApi.onSuccessRandom(newWord.get(0));
                 } else {
-                    responseCallback.onFailureRandom("Errore nella chiamata API 1 ");
+                    responseCallbackApi.onFailureRandom("Errore nella chiamata API 1 ");
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<List<String>> call, @NonNull Throwable t) {
                 Log.d(TAG, "OnFailure: + " + call.isExecuted());
-                responseCallback.onFailureRandom("Errore nella chiamata API 2" + t);
+                responseCallbackApi.onFailureRandom("Errore nella chiamata API 2" + t);
             }
         });
     }
