@@ -65,7 +65,7 @@ public class RegistrationFragment extends Fragment {
                                     User user = ((Result.UserResponseSuccess) result).getData();
                                     userViewModel.setAuthenticationError(false);
                                     Navigation.findNavController(view).navigate(
-                                            R.id.loginFragment); //TODO mettere destinazione corretta
+                                            R.id.howToPlayFragment);
                                     Log.d(TAG, "Account created on firebase: " + email);
                                 } else {
                                     userViewModel.setAuthenticationError(true);

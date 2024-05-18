@@ -1,7 +1,9 @@
 package it.unimib.wordino.main.ui.welcome;
 
 import static it.unimib.wordino.main.util.Constants.EMAIL_ADDRESS;
+import static it.unimib.wordino.main.util.Constants.ENCRYPTED_DATA_FILE_NAME;
 import static it.unimib.wordino.main.util.Constants.ENCRYPTED_SHARED_PREFERENCES_FILE_NAME;
+import static it.unimib.wordino.main.util.Constants.ID_TOKEN;
 import static it.unimib.wordino.main.util.Constants.INVALID_CREDENTIALS_ERROR;
 import static it.unimib.wordino.main.util.Constants.INVALID_USER_ERROR;
 import static it.unimib.wordino.main.util.Constants.PASSWORD;
@@ -26,10 +28,13 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.google.android.gms.auth.api.identity.BeginSignInRequest;
+import com.google.android.gms.auth.api.identity.BeginSignInResult;
 import com.google.android.gms.auth.api.identity.Identity;
 import com.google.android.gms.auth.api.identity.SignInClient;
 import com.google.android.gms.auth.api.identity.SignInCredential;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
@@ -40,6 +45,7 @@ import com.validator.easychecker.util.PasswordPattern;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
+import java.io.File;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
@@ -66,7 +72,8 @@ public class LoginFragment extends Fragment {
     private BeginSignInRequest signInRequest;
     private DataEncryptionUtil dataEncryptionUtil;
     private static final boolean USE_NAVIGATION_COMPONENT = true;
-    private LinearProgressIndicator progressIndicator;
+
+    //private LinearProgressIndicator progressIndicator;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -97,7 +104,7 @@ public class LoginFragment extends Fragment {
                 // Automatically sign in when exactly one credential is retrieved.
                 .setAutoSelectEnabled(true)
                 .build();
-
+        dataEncryptionUtil = new DataEncryptionUtil(requireActivity().getApplication());
 
         startIntentSenderForResult = new ActivityResultContracts.StartIntentSenderForResult();
 
@@ -114,8 +121,10 @@ public class LoginFragment extends Fragment {
                                 User user = ((Result.UserResponseSuccess) authenticationResult).getData();
                                 saveLoginData(user.getEmail(), null, user.getIdToken());
                                 userViewModel.setAuthenticationError(false);
+                                Log.d(TAG, "login successful");
                                 Navigation.findNavController(requireView()).navigate(R.id.login_nav_graph);
                                 requireActivity().finish();
+
                             } else {
                                 userViewModel.setAuthenticationError(true);
                                 Snackbar.make(requireActivity().findViewById(android.R.id.content),
@@ -148,12 +157,24 @@ public class LoginFragment extends Fragment {
     }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        /*if (userViewModel.getLoggedUser() != null) { // Check if the user is already logged in
+
+        Log.d(TAG, "XXX" + userViewModel.getLoggedUser());
+        if (userViewModel.getLoggedUser() != null) { // Check if the user is already logged in //TODO to fix this
             Log.d(TAG, "User already logged in");
             String email= null;
             String password= null;
             try {
-                email = dataEncryptionUtil.readSecretDataWithEncryptedSharedPreferences(ENCRYPTED_SHARED_PREFERENCES_FILE_NAME,EMAIL_ADDRESS); // Read the email from the encrypted shared preferences
+                Log.d(TAG, "Email address from encrypted SharedPref: " + dataEncryptionUtil.
+                readSecretDataWithEncryptedSharedPreferences(
+                        ENCRYPTED_SHARED_PREFERENCES_FILE_NAME, EMAIL_ADDRESS));
+        Log.d(TAG, "Password from encrypted SharedPref: " + dataEncryptionUtil.
+                readSecretDataWithEncryptedSharedPreferences(
+                        ENCRYPTED_SHARED_PREFERENCES_FILE_NAME, PASSWORD));
+        Log.d(TAG, "Token from encrypted SharedPref: " + dataEncryptionUtil.
+                readSecretDataWithEncryptedSharedPreferences(
+                        ENCRYPTED_SHARED_PREFERENCES_FILE_NAME, ID_TOKEN));
+        //Log.d(TAG, "Login data from encrypted file: " + dataEncryptionUtil.readSecretDataOnFile(ENCRYPTED_DATA_FILE_NAME));
+                email = dataEncryptionUtil.readSecretDataWithEncryptedSharedPreferences("it.unimib.wordino.shared_prefs","email_address"); // Read the email from the encrypted shared preferences
                 password = dataEncryptionUtil.readSecretDataWithEncryptedSharedPreferences(ENCRYPTED_SHARED_PREFERENCES_FILE_NAME, PASSWORD); // Read the password from the encrypted shared preferences
 
             } catch (GeneralSecurityException e) {
@@ -161,20 +182,40 @@ public class LoginFragment extends Fragment {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+            Log.d(TAG, "email: " + email + " password: " + password);
             if (email != null && password!= null) { // If the email and password are not null
                 String finalEmail = email;
                 String finalPassword = password;
-                startActivityBasedOnCondition(GameActivity.class, R.id.bottom_nav_menu_graph); // Start the GameActivity
+                startActivityBasedOnCondition(GameActivity.class, R.id.gameActivity); // Start the GameActivity
             }
-        }*/
+        }
 
         resetPassword.setOnClickListener(v -> {
             Log.d(TAG, "resetPassword clicked");
-            //Navigation.findNavController(requireView()).navigate(R.id.forgotPasswordFragment); // Navigate to the ForgotPasswordFragment
+            Navigation.findNavController(requireView()).navigate(R.id.action_loginFragment_to_forgotPasswordFragment); // Navigate to the ForgotPasswordFragment
         });
-        buttonGoogleLogin.setOnClickListener(v -> {
-            Log.d(TAG, "login with google clicked");
-        }); // Listener for the login button
+        buttonGoogleLogin.setOnClickListener(v -> oneTapClient.beginSignIn(signInRequest)
+                .addOnSuccessListener(requireActivity(), new OnSuccessListener<BeginSignInResult>() {
+                    @Override
+                    public void onSuccess(BeginSignInResult result) {
+                        Log.d(TAG, "onSuccess from oneTapClient.beginSignIn(BeginSignInRequest)");
+                        IntentSenderRequest intentSenderRequest =
+                                new IntentSenderRequest.Builder(result.getPendingIntent()).build();
+                        activityResultLauncher.launch(intentSenderRequest);
+                    }
+                })
+                .addOnFailureListener(requireActivity(), new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // No saved credentials found. Launch the One Tap sign-up flow, or
+                        // do nothing and continue presenting the signed-out UI.
+                        Log.d(TAG, e.getLocalizedMessage());
+
+                        Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                                requireActivity().getString(R.string.error_no_google_account_found_message),
+                                Snackbar.LENGTH_SHORT).show();
+                    }
+                })); // Listener for the login with Google button TODO fare test con account google
         registrationButton.setOnClickListener(v -> {
             Log.d(TAG, "register clicked ");
             Navigation.findNavController(getView()).navigate(R.id.registrationFragment);
@@ -186,18 +227,20 @@ public class LoginFragment extends Fragment {
             // Start login if email and password are ok
             if (isEmailOk(email) & isPasswordOk(password)) { // If the email and password are ok
                 if (!userViewModel.isAuthenticationError()) { // If the user is not authenticated
-                    progressIndicator.setVisibility(View.VISIBLE);
+                    //progressIndicator.setVisibility(View.VISIBLE);
                     userViewModel.getUserMutableLiveData(email, password, true).observe(
                             getViewLifecycleOwner(), result -> {
                                 if (result.isSuccess()) {
                                     User user = ((Result.UserResponseSuccess) result).getData();
                                     userViewModel.setAuthenticationError(false);
-                                    Navigation.findNavController(requireView()).navigate(R.id.bottom_nav_menu_graph); // Navigate to the MainActivity
+                                    Log.d(TAG, "login successful");
+                                    Navigation.findNavController(requireView()).navigate(R.id.action_loginFragment_to_gameActivity); // Navigate to the DailyFragment
                                     saveLoginData(email, password, user.getIdToken());
                                     requireActivity().finish();
+
                                 } else {
                                     userViewModel.setAuthenticationError(true);
-                                    progressIndicator.setVisibility(View.GONE);
+                                    //progressIndicator.setVisibility(View.GONE);
                                     Snackbar.make(requireActivity().findViewById(android.R.id.content),
                                             getErrorMessage(((Result.Error) result).getMessage()),
                                             Snackbar.LENGTH_SHORT).show();
@@ -221,27 +264,6 @@ public class LoginFragment extends Fragment {
         }
         requireActivity().finish();
     }
-    /*@Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        super.onViewCreated(view, savedInstanceState);
-        textInputLayoutEmail = view.findViewById(R.id.emailTextInputLayout);
-        textInputLayoutPassword = view.findViewById(R.id.passwordTextInputLayout);
-
-        Button loginButton = view.findViewById(R.id.loginButton);
-        Button registrationButton = view.findViewById(R.id.registerButton);
-        Button forgotPswButton = view.findViewById(R.id.forgotPasswordButton);
-
-        registrationButton.setOnClickListener(v -> {
-            Log.d(TAG, "register clicked ");
-            Navigation.findNavController(v).navigate(R.id.registrationFragment);
-        });
-
-        forgotPswButton.setOnClickListener(v -> {
-            Navigation.findNavController(v).navigate(R.id.forgotPasswordFragment);
-        });
-    }*/
-
     private boolean validateField(EditText editText, String fieldType) throws
             InputErrorException, DeveloperErrorException {
         Log.d(TAG, "Validating " + fieldType);
@@ -249,7 +271,6 @@ public class LoginFragment extends Fragment {
     }
 
     private void saveLoginData(String email, String password, String idToken) {
-        /*
         try {
             dataEncryptionUtil.writeSecretDataWithEncryptedSharedPreferences(
                     ENCRYPTED_SHARED_PREFERENCES_FILE_NAME, EMAIL_ADDRESS, email);
@@ -265,7 +286,6 @@ public class LoginFragment extends Fragment {
         } catch (GeneralSecurityException | IOException e) {
             e.printStackTrace();
         }
-    }*/
     }
     private String getErrorMessage(String errorType) {
         switch (errorType) {

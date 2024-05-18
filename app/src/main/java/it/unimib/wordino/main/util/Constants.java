@@ -31,13 +31,13 @@ public class Constants {
     public static final String SHARED_PREFERENCES_FIRST_LOADING = "first_loading";
 
     // Constants for EncryptedSharedPreferences
-    public static final String ENCRYPTED_SHARED_PREFERENCES_FILE_NAME = "";
+    public static final String ENCRYPTED_SHARED_PREFERENCES_FILE_NAME = "it.unimib.wordino.shared_prefs"; //TODO change this
     public static final String EMAIL_ADDRESS = "email_address";
     public static final String PASSWORD = "password";
     public static final String ID_TOKEN = "google_token";
 
     // Constants for encrypted files
-    public static final String ENCRYPTED_DATA_FILE_NAME = "";
+    public static final String ENCRYPTED_DATA_FILE_NAME = "it.unimib.wordino.encrypted_file.txt";
 
     public static final int MINIMUM_PASSWORD_LENGTH = 6;
 

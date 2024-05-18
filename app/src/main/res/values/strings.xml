@@ -77,4 +77,5 @@
     <string name="error_password">error_password</string>
     <string name="error_user_collision_message">error_user_collision_message</string>
     <string name="check_login_data_message">check_login_data_message</string>
+    <string name="error_no_google_account_found_message">error_no_google_account_found_message</string>
 </resources>

@@ -36,7 +36,7 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource {
 
     @Override
     public void saveUserData(User user) {
-        databaseReference.child(FIREBASE_USERS_COLLECTION).child(user.getIdToken()).addListenerForSingleValueEvent(new ValueEventListener() { //Verifico se l'utente è già presente
+        databaseReference.child(FIREBASE_USERS_COLLECTION).child(user.getIdToken()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
@@ -66,4 +66,7 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource {
             }
         });
     }
+
+    //TODO aggiungo i metodi per aggiornare le statistiche del player
+
 }
