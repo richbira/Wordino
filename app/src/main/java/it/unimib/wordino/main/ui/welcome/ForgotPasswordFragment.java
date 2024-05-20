@@ -2,25 +2,26 @@ package it.unimib.wordino.main.ui.welcome;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import it.unimib.wordino.R;
+import org.apache.commons.validator.routines.EmailValidator;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ForgotPasswordFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import it.unimib.wordino.R;
+import it.unimib.wordino.databinding.FragmentForgotPasswordBinding;
+
+
 public class ForgotPasswordFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private FragmentForgotPasswordBinding binding;
+    private UserViewModel userViewModel;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -29,38 +30,36 @@ public class ForgotPasswordFragment extends Fragment {
     public ForgotPasswordFragment() {
         // Required empty public constructor
     }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ForgotPasswordFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ForgotPasswordFragment newInstance(String param1, String param2) {
-        ForgotPasswordFragment fragment = new ForgotPasswordFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
+        userViewModel.setAuthenticationError(false);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_forgot_password, container, false);
+        binding = FragmentForgotPasswordBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
+        super.onViewCreated(view, savedInstanceState);
+        binding.btnResetPassword.setOnClickListener(v->{
+            String email = binding.etEmail.getText().toString().trim();
+            if(isEmailOk(email)){
+                userViewModel.resetPassword(email);
+                // https://firebase.google.com/docs/auth/android/manage-users?hl=it#send_a_password_reset_email
+                Navigation.findNavController(requireView()).navigate(R.id.action_forgotPasswordFragment_to_loginFragment);
+            }
+        });
+    }
+    private boolean isEmailOk(String email) {
+        if (!EmailValidator.getInstance().isValid((email))) {
+            binding.etEmail.setError(getString(R.string.error_email));
+            return false;
+        } else {
+            binding.etEmail.setError(null);
+            return true;
+        }
     }
 }

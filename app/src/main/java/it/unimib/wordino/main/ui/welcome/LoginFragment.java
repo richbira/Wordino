@@ -157,8 +157,8 @@ public class LoginFragment extends Fragment {
     }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
-        Log.d(TAG, "XXX" + userViewModel.getLoggedUser());
+        // TODO LO SPOSTO NELLA MAINACTIVITY, COSI LOGGA DIRETTAMENTE
+        /*Log.d(TAG, "XXX" + userViewModel.getLoggedUser());
         if (userViewModel.getLoggedUser() != null) { // Check if the user is already logged in //TODO to fix this
             Log.d(TAG, "User already logged in");
             String email= null;
@@ -174,7 +174,7 @@ public class LoginFragment extends Fragment {
                 readSecretDataWithEncryptedSharedPreferences(
                         ENCRYPTED_SHARED_PREFERENCES_FILE_NAME, ID_TOKEN));
         //Log.d(TAG, "Login data from encrypted file: " + dataEncryptionUtil.readSecretDataOnFile(ENCRYPTED_DATA_FILE_NAME));
-                email = dataEncryptionUtil.readSecretDataWithEncryptedSharedPreferences("it.unimib.wordino.shared_prefs","email_address"); // Read the email from the encrypted shared preferences
+                email = dataEncryptionUtil.readSecretDataWithEncryptedSharedPreferences(ENCRYPTED_SHARED_PREFERENCES_FILE_NAME,EMAIL_ADDRESS); // Read the email from the encrypted shared preferences
                 password = dataEncryptionUtil.readSecretDataWithEncryptedSharedPreferences(ENCRYPTED_SHARED_PREFERENCES_FILE_NAME, PASSWORD); // Read the password from the encrypted shared preferences
 
             } catch (GeneralSecurityException e) {
@@ -188,7 +188,7 @@ public class LoginFragment extends Fragment {
                 String finalPassword = password;
                 startActivityBasedOnCondition(GameActivity.class, R.id.gameActivity); // Start the GameActivity
             }
-        }
+        }*/
 
         resetPassword.setOnClickListener(v -> {
             Log.d(TAG, "resetPassword clicked");
