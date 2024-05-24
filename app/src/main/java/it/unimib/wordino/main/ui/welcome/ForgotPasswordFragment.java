@@ -44,8 +44,8 @@ public class ForgotPasswordFragment extends Fragment {
     }
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
-        binding.btnResetPassword.setOnClickListener(v->{
-            String email = binding.etEmail.getText().toString().trim();
+        binding.buttonResetPassword.setOnClickListener(v->{
+            String email = binding.emailTextInputLayoutForgotPsw.getText().toString().trim();
             if(isEmailOk(email)){
                 userViewModel.resetPassword(email);
                 // https://firebase.google.com/docs/auth/android/manage-users?hl=it#send_a_password_reset_email
@@ -55,10 +55,10 @@ public class ForgotPasswordFragment extends Fragment {
     }
     private boolean isEmailOk(String email) {
         if (!EmailValidator.getInstance().isValid((email))) {
-            binding.etEmail.setError(getString(R.string.error_email));
+            binding.emailTextInputLayoutForgotPsw.setError(getString(R.string.error_email));
             return false;
         } else {
-            binding.etEmail.setError(null);
+            binding.emailTextInputLayoutForgotPsw.setError(null);
             return true;
         }
     }
