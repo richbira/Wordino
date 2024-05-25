@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "799788431910",
+    "firebase_url": "https://wordino-6452d-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "wordino-6452d",
     "storage_bucket": "wordino-6452d.appspot.com"
   },
@@ -12,7 +13,12 @@
           "package_name": "it.unimib.wordino"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "799788431910-surdklv1mpjj5cpmr27rg4lpckjeqfsk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAdBLbNMBXKUK438t6sO9UVrQocL5HOKf4"
@@ -20,7 +26,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "799788431910-surdklv1mpjj5cpmr27rg4lpckjeqfsk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

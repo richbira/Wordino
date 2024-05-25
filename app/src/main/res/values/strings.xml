@@ -2,7 +2,7 @@
     <string name="app_name">Wordino</string>
     <string name="How_to_play">How to play</string>
     <string name="Login">Login</string>
-    <string name="Play">Play</string>
+    <string name="Play">Play as Guest</string>
     <string name="game_short_description">Guess the 5-letter word.</string>
     <string name="OR">OR</string>
     <string name="n_attempts">Number of attempts today</string>

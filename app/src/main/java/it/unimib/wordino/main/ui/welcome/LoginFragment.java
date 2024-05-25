@@ -71,7 +71,7 @@ public class LoginFragment extends Fragment {
     private SignInClient oneTapClient;
     private BeginSignInRequest signInRequest;
     private DataEncryptionUtil dataEncryptionUtil;
-    private static final boolean USE_NAVIGATION_COMPONENT = true;
+;
 
     //private LinearProgressIndicator progressIndicator;
 
@@ -157,44 +157,12 @@ public class LoginFragment extends Fragment {
     }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        // TODO LO SPOSTO NELLA MAINACTIVITY, COSI LOGGA DIRETTAMENTE
-        /*Log.d(TAG, "XXX" + userViewModel.getLoggedUser());
-        if (userViewModel.getLoggedUser() != null) { // Check if the user is already logged in //TODO to fix this
-            Log.d(TAG, "User already logged in");
-            String email= null;
-            String password= null;
-            try {
-                Log.d(TAG, "Email address from encrypted SharedPref: " + dataEncryptionUtil.
-                readSecretDataWithEncryptedSharedPreferences(
-                        ENCRYPTED_SHARED_PREFERENCES_FILE_NAME, EMAIL_ADDRESS));
-        Log.d(TAG, "Password from encrypted SharedPref: " + dataEncryptionUtil.
-                readSecretDataWithEncryptedSharedPreferences(
-                        ENCRYPTED_SHARED_PREFERENCES_FILE_NAME, PASSWORD));
-        Log.d(TAG, "Token from encrypted SharedPref: " + dataEncryptionUtil.
-                readSecretDataWithEncryptedSharedPreferences(
-                        ENCRYPTED_SHARED_PREFERENCES_FILE_NAME, ID_TOKEN));
-        //Log.d(TAG, "Login data from encrypted file: " + dataEncryptionUtil.readSecretDataOnFile(ENCRYPTED_DATA_FILE_NAME));
-                email = dataEncryptionUtil.readSecretDataWithEncryptedSharedPreferences(ENCRYPTED_SHARED_PREFERENCES_FILE_NAME,EMAIL_ADDRESS); // Read the email from the encrypted shared preferences
-                password = dataEncryptionUtil.readSecretDataWithEncryptedSharedPreferences(ENCRYPTED_SHARED_PREFERENCES_FILE_NAME, PASSWORD); // Read the password from the encrypted shared preferences
-
-            } catch (GeneralSecurityException e) {
-                throw new RuntimeException(e);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            Log.d(TAG, "email: " + email + " password: " + password);
-            if (email != null && password!= null) { // If the email and password are not null
-                String finalEmail = email;
-                String finalPassword = password;
-                startActivityBasedOnCondition(GameActivity.class, R.id.gameActivity); // Start the GameActivity
-            }
-        }*/
 
         resetPassword.setOnClickListener(v -> {
             Log.d(TAG, "resetPassword clicked");
             Navigation.findNavController(requireView()).navigate(R.id.action_loginFragment_to_forgotPasswordFragment); // Navigate to the ForgotPasswordFragment
         });
-        buttonGoogleLogin.setOnClickListener(v -> oneTapClient.beginSignIn(signInRequest)
+        buttonGoogleLogin.setOnClickListener(v -> oneTapClient.beginSignIn(signInRequest) // Start the One Tap sign-in flow
                 .addOnSuccessListener(requireActivity(), new OnSuccessListener<BeginSignInResult>() {
                     @Override
                     public void onSuccess(BeginSignInResult result) {
@@ -202,6 +170,10 @@ public class LoginFragment extends Fragment {
                         IntentSenderRequest intentSenderRequest =
                                 new IntentSenderRequest.Builder(result.getPendingIntent()).build();
                         activityResultLauncher.launch(intentSenderRequest);
+
+                        // Se loggato correttamente vado al gioco
+                        Navigation.findNavController(requireView()).navigate(R.id.action_loginFragment_to_gameActivity); // Navigate to the GameFragment
+
                     }
                 })
                 .addOnFailureListener(requireActivity(), new OnFailureListener() {
@@ -255,15 +227,7 @@ public class LoginFragment extends Fragment {
             }
         });// Listener for the login button
     }
-    private void startActivityBasedOnCondition(Class<?> destinationActivity, int destination) {
-        if (USE_NAVIGATION_COMPONENT) {
-            Navigation.findNavController(requireView()).navigate(destination);
-        } else {
-            Intent intent = new Intent(requireContext(), destinationActivity);
-            startActivity(intent);
-        }
-        requireActivity().finish();
-    }
+
     private boolean validateField(EditText editText, String fieldType) throws
             InputErrorException, DeveloperErrorException {
         Log.d(TAG, "Validating " + fieldType);
