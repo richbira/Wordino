@@ -33,7 +33,7 @@ public class HighscoreRepository implements IHighscoreRepository{
         this.wordinoDao = wordinoRoomDatabase.wordinoDao();
     }
 
-    public void updateHighscores(Highscore score){ //todo usare responsecallback??, forse usare date come dataclass.
+    public void updateHighscores(Highscore score){ // forse usare date come dataclass.
         Log.d(TAG, "Highscores update start: " + score);
 
 
@@ -72,7 +72,7 @@ public class HighscoreRepository implements IHighscoreRepository{
         });
     }
 
-    public void loadHighscoreLadder(){
+    public void loadHighscoreLadder(){ //todo
 
         WordinoRoomDatabase.databaseWriteExecutor.execute(() -> {
             List<Highscore> highscoresList = wordinoDao.getHighscores();

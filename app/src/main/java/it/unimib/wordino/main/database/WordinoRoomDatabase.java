@@ -12,9 +12,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import it.unimib.wordino.main.model.Highscore;
-import it.unimib.wordino.main.model.Word;
+import it.unimib.wordino.main.model.wordmodel.Word;
 
-@Database(entities = {Word.class, Highscore.class}, version = 3, exportSchema = false)
+@Database(entities = {Word.class, Highscore.class}, version = 4, exportSchema = false)
 public abstract class WordinoRoomDatabase extends RoomDatabase {
     public abstract WordinoDao wordinoDao();
     private static volatile WordinoRoomDatabase INSTANCE;

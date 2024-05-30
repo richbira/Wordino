@@ -1,3 +1,4 @@
+/*
 package it.unimib.wordino.main.ui;
 
 import static it.unimib.wordino.main.util.Constants.ENGLISH;
@@ -16,39 +17,42 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
 import it.unimib.wordino.R;
-import it.unimib.wordino.main.model.Highscore;
 import it.unimib.wordino.main.model.wordmodel.Word;
-import it.unimib.wordino.main.repository.HighscoreRepository;
-import it.unimib.wordino.main.repository.IHighscoreRepository;
 import it.unimib.wordino.main.repository.IRandomWordRepository;
 import it.unimib.wordino.main.repository.ISpecificWordRepository;
 import it.unimib.wordino.main.repository.RandomWordRepository;
 import it.unimib.wordino.main.repository.SpecificWordRepository;
 import it.unimib.wordino.main.util.ResponseCallBackApi;
 
-public class TrainingFragment extends Fragment implements ResponseCallBackApi, View.OnClickListener {
+/**
+ * A simple {@link Fragment} subclass.
+ * ù
+ * Use the {@link DailyFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+//TODO MANTENERE STATO DOPO SWITCH DI FRAGMENT
+    /*
 
-    private static final String TAG = TrainingFragment.class.getSimpleName();
+public class DailyFragment extends Fragment implements ResponseCallBackApi, View.OnClickListener {
+
+    private static final String TAG = DailyFragment.class.getSimpleName();
     public View activeBox;
     public View progressBar;
-
     public int currentLine;
-    public String tempWord;
-    public int score = 0;
+    public String tempWord = "spark";
     public Boolean fiveLetterWord = false;
     private IRandomWordRepository iRandomWordRepository;
     private ISpecificWordRepository iSpecificWordRepository;
-    private IHighscoreRepository iHighscoreRepository;
-    private String langConst = ENGLISH;
+    final String langConst = ENGLISH;
+
     private String winloss;
+
     private boolean goodFetchedWordFlag = false;
 
     public Animator flipAnimation1;
@@ -58,12 +62,13 @@ public class TrainingFragment extends Fragment implements ResponseCallBackApi, V
     public Animator flipAnimation5;
 
 
-    public TrainingFragment() {
+
+    public DailyFragment() {
         // Required empty public constructor
     }
 
-    public static TrainingFragment newInstance(String param1, String param2) {
-        TrainingFragment fragment = new TrainingFragment();
+    public static DailyFragment newInstance(String param1, String param2) {
+        DailyFragment fragment = new DailyFragment();
         return fragment;
     }
 
@@ -73,8 +78,6 @@ public class TrainingFragment extends Fragment implements ResponseCallBackApi, V
 
         iRandomWordRepository = new RandomWordRepository(requireActivity().getApplication(), this);
         iSpecificWordRepository = new SpecificWordRepository(requireActivity().getApplication(), this);
-        iHighscoreRepository = new HighscoreRepository(requireActivity().getApplication());
-
 
     }
 
@@ -82,7 +85,7 @@ public class TrainingFragment extends Fragment implements ResponseCallBackApi, V
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_training, container, false);
+        return inflater.inflate(R.layout.fragment_daily, container, false);
 
     }
 
@@ -92,31 +95,18 @@ public class TrainingFragment extends Fragment implements ResponseCallBackApi, V
 
         activeBox = view.findViewById(R.id.word_01);
         currentLine = 0;
-        //score = 0;
         goodFetchedWordFlag = false;
 
         progressBar = view.findViewById(R.id.progress_bar);
 
         progressBar.setVisibility(View.VISIBLE);
+        iRandomWordRepository.fetchRandomWord(5, langConst); //QUI C'E' SOLO ENG
 
         flipAnimation1 = AnimatorInflater.loadAnimator(view.getContext(), R.animator.flip_animator);
         flipAnimation2 = AnimatorInflater.loadAnimator(view.getContext(), R.animator.flip_animator);
         flipAnimation3 = AnimatorInflater.loadAnimator(view.getContext(), R.animator.flip_animator);
         flipAnimation4 = AnimatorInflater.loadAnimator(view.getContext(), R.animator.flip_animator);
         flipAnimation5 = AnimatorInflater.loadAnimator(view.getContext(), R.animator.flip_animator);
-
-
-        String ldt = LocalDateTime.now().toString();
-        Highscore newScore2 = new Highscore(2, ldt);
-        iHighscoreRepository.updateHighscores(newScore2);
-
-
-
-
-
-        ((TextView) getView().findViewById(R.id.score)).setText("Score : " + score);
-
-        iRandomWordRepository.fetchRandomWord(5, langConst);
 
 
 
@@ -155,38 +145,41 @@ public class TrainingFragment extends Fragment implements ResponseCallBackApi, V
     @Override
     public void onClick(View v) {
 
-        int id = v.getId();
-        if (id == R.id.key_q) updateActiveBox("Q");
-        else if (id == R.id.key_w) updateActiveBox("W");
-        else if (id == R.id.key_e) updateActiveBox("E");
-        else if (id == R.id.key_r) updateActiveBox("R");
-        else if (id == R.id.key_t) updateActiveBox("T");
-        else if (id == R.id.key_y) updateActiveBox("Y");
-        else if (id == R.id.key_u) updateActiveBox("U");
-        else if (id == R.id.key_i) updateActiveBox("I");
-        else if (id == R.id.key_o) updateActiveBox("O");
-        else if (id == R.id.key_p) updateActiveBox("P");
-        else if (id == R.id.key_a) updateActiveBox("A");
-        else if (id == R.id.key_s) updateActiveBox("S");
-        else if (id == R.id.key_d) updateActiveBox("D");
-        else if (id == R.id.key_f) updateActiveBox("F");
-        else if (id == R.id.key_g) updateActiveBox("G");
-        else if (id == R.id.key_h) updateActiveBox("H");
-        else if (id == R.id.key_j) updateActiveBox("J");
-        else if (id == R.id.key_k) updateActiveBox("K");
-        else if (id == R.id.key_l) updateActiveBox("L");
-        else if (id == R.id.key_z) updateActiveBox("Z");
-        else if (id == R.id.key_x) updateActiveBox("X");
-        else if (id == R.id.key_c) updateActiveBox("C");
-        else if (id == R.id.key_v) updateActiveBox("V");
-        else if (id == R.id.key_b) updateActiveBox("B");
-        else if (id == R.id.key_n) updateActiveBox("N");
-        else if (id == R.id.key_m) updateActiveBox("M");
-        else if (id == R.id.key_cancel) updateActiveBox("CANC");
-        else if (id == R.id.key_enter) updateActiveBox("ENTER");
+        if (winloss == null) {
+            int id = v.getId();
+            if (id == R.id.key_q) updateActiveBox("Q");
+            else if (id == R.id.key_w) updateActiveBox("W");
+            else if (id == R.id.key_e) updateActiveBox("E");
+            else if (id == R.id.key_r) updateActiveBox("R");
+            else if (id == R.id.key_t) updateActiveBox("T");
+            else if (id == R.id.key_y) updateActiveBox("Y");
+            else if (id == R.id.key_u) updateActiveBox("U");
+            else if (id == R.id.key_i) updateActiveBox("I");
+            else if (id == R.id.key_o) updateActiveBox("O");
+            else if (id == R.id.key_p) updateActiveBox("P");
+            else if (id == R.id.key_a) updateActiveBox("A");
+            else if (id == R.id.key_s) updateActiveBox("S");
+            else if (id == R.id.key_d) updateActiveBox("D");
+            else if (id == R.id.key_f) updateActiveBox("F");
+            else if (id == R.id.key_g) updateActiveBox("G");
+            else if (id == R.id.key_h) updateActiveBox("H");
+            else if (id == R.id.key_j) updateActiveBox("J");
+            else if (id == R.id.key_k) updateActiveBox("K");
+            else if (id == R.id.key_l) updateActiveBox("L");
+            else if (id == R.id.key_z) updateActiveBox("Z");
+            else if (id == R.id.key_x) updateActiveBox("X");
+            else if (id == R.id.key_c) updateActiveBox("C");
+            else if (id == R.id.key_v) updateActiveBox("V");
+            else if (id == R.id.key_b) updateActiveBox("B");
+            else if (id == R.id.key_n) updateActiveBox("N");
+            else if (id == R.id.key_m) updateActiveBox("M");
+            else if (id == R.id.key_cancel) updateActiveBox("CANC");
+            else if (id == R.id.key_enter) updateActiveBox("ENTER");
+        }
+        else {
+            gameoverAlert(winloss);
+        }
     }
-
-
 
 
     @Override
@@ -245,7 +238,7 @@ public class TrainingFragment extends Fragment implements ResponseCallBackApi, V
     /*  ----------------------------------------------------------------------------------------FUNZIONI DI LOGICA  ----------------------------------------------------------------------------------------*/
     /*  ----------------------------------------------------------------------------------------FUNZIONI DI LOGICA  ----------------------------------------------------------------------------------------*/
     /*  ----------------------------------------------------------------------------------------FUNZIONI DI LOGICA  ----------------------------------------------------------------------------------------*/
-
+/*
     private void updateActiveBox(String text) {
         if (activeBox instanceof TextView) {
             if (Objects.equals(text, "CANC")) {
@@ -299,8 +292,7 @@ public class TrainingFragment extends Fragment implements ResponseCallBackApi, V
 
         if (fiveLetterWord) {
 
-
-            for (int i = 1; i < 6; i++){
+            for (int i = 1; i < 6; i++) {
                 boxIndex = "word_" + currentLine + i;
                 guessedWord += ((TextView) getView().findViewById(getResources().getIdentifier(boxIndex, "id", PACKAGE_NAME))).getText();
             }
@@ -308,7 +300,6 @@ public class TrainingFragment extends Fragment implements ResponseCallBackApi, V
             guessedWord = guessedWord.toLowerCase();
 
             iSpecificWordRepository.fetchSpecificWord(guessedWord); //chiamata api se la parola è valida
-
         }
         else {
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -318,7 +309,6 @@ public class TrainingFragment extends Fragment implements ResponseCallBackApi, V
             alertDialog.show();
         }
     }
-
     private String stringToCode(String guess) {
         String colorCodes = "";
         for (int i = 0; i < 5; i++) {
@@ -337,25 +327,21 @@ public class TrainingFragment extends Fragment implements ResponseCallBackApi, V
     private void tryWord(String guessedWord) {
         String code = stringToCode(guessedWord);
         changeBoxColor(code);
+        Log.d(TAG, "BACK TO TRYWORD");
         changeKeyColor(code, guessedWord);
 
         //Check se la parola è corretta
         if (code.equals("ggggg")) {
-            score++;
             winloss = "win";
             gameoverAlert(winloss);
-            updateScoreBox();
-            resetGame();
-        }
-        else if (currentLine != 5){
+
+        } else if (currentLine != 5) {
             String nextLineBoxName = "word_" + ++currentLine + "1";
             activeBox = getView().findViewById(getResources().getIdentifier(nextLineBoxName, "id", PACKAGE_NAME));
             fiveLetterWord = false;
-        }
-        else {
+        } else {
             winloss = "loss";
             gameoverAlert(winloss);
-            resetGame();
         }
     }
 
@@ -377,6 +363,7 @@ public class TrainingFragment extends Fragment implements ResponseCallBackApi, V
         for (int i = 1; i < 6; i++){
             boxId = "word_" + currentLine + i;
             TextView currentBox = (TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", PACKAGE_NAME));
+
             if (code.charAt(i-1) == 'g') {
                 currentBox.setBackgroundResource(R.drawable.border_green);
             }else if (code.charAt(i-1) == 'y') {
@@ -384,7 +371,9 @@ public class TrainingFragment extends Fragment implements ResponseCallBackApi, V
             }else if (code.charAt(i-1) == 'b') {
                 currentBox.setBackgroundResource(R.drawable.border_grey);
             }
+
         }
+
     }
 
     private void changeKeyColor(String code, String word) {
@@ -401,34 +390,18 @@ public class TrainingFragment extends Fragment implements ResponseCallBackApi, V
         }
     }
 
-    private void updateScoreBox(){
-        ((TextView) getView().findViewById(R.id.score)).setText("Score : " + score);
-    }
-
     private void resetGame() {
         String boxId;
-        for (int i = 0; i < currentLine + 1; i++) {
-            for (int j = 1; j < 6; j++) {
+        for (int i = 0; i < currentLine + 1; i++){
+            for (int j = 1; j < 6; j++){
                 boxId = "word_" + i + j;
                 ((TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", PACKAGE_NAME))).setBackgroundResource(R.drawable.border_white);
                 ((TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", PACKAGE_NAME))).setText("");
             }
         }
-        RelativeLayout keyboardLayout = (RelativeLayout) getView().findViewById(R.id.relativeLayoutKeyboard);
-        final int childCount = keyboardLayout.getChildCount();
-        for (int i = 0; i < childCount; i++) {
-            View v = keyboardLayout.getChildAt(i);
-            if (!(v.getId() == R.id.key_cancel) && !(v.getId() == R.id.key_enter)) {
-                v.setBackgroundColor(getResources().getColor(R.color.mywhite));  //TODO deprecated getcolor
-            }
-        }
-
         activeBox = getView().findViewById(R.id.word_01);
         currentLine = 0;
         fiveLetterWord = false;
-        goodFetchedWordFlag = false;
-
-        iRandomWordRepository.fetchRandomWord(5, langConst);
     }
 
     private void gameoverAlert(String winloss){
@@ -436,21 +409,17 @@ public class TrainingFragment extends Fragment implements ResponseCallBackApi, V
         switch(winloss){
             case "win":
                 builder.setTitle("You Win!");
-                builder.setMessage("Your score: " + score);
+                builder.setMessage("You're a winner bro!");
                 break;
             case "loss":
-                String ldt = LocalDateTime.now().toString();
-                Highscore newScore = new Highscore(score, ldt);
-                iHighscoreRepository.updateHighscores(newScore);
-                score = 0;
-                updateScoreBox();
                 builder.setTitle("You Lose!");
-                builder.setMessage("Your score: " + score);
-
+                builder.setMessage("You're a loser bro!");
         }
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }
+
 }
 
 
+*/

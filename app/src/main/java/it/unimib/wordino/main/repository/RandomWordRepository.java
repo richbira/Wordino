@@ -59,7 +59,7 @@ public class RandomWordRepository implements IRandomWordRepository {
         Log.d(TAG, lang + "Random word fetch start");
         Call<List<String>> wordResponseCall = randomWordApiService.getRandomWord(length, lang);
 
-        wordResponseCall.enqueue(new Callback<List<String>>() {
+        wordResponseCall.enqueue(new Callback<List<String>>() { //todo forse estrarre la logica in una nuova classe (videolezione livedata 26:00)
 
             @Override
             public void onResponse(@NonNull Call<List<String>> call, @NonNull Response<List<String>> response) {

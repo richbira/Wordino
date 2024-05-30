@@ -1,4 +1,4 @@
-package it.unimib.wordino.main.model;
+package it.unimib.wordino.main.model.wordmodel;
 
 import java.util.List;
 
@@ -7,10 +7,7 @@ import android.os.Parcelable;
 
 import androidx.room.Embedded;
 import androidx.room.Entity;
-import androidx.room.Ignore;
-import androidx.room.PrimaryKey;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 @Entity
 public class Definition implements Parcelable

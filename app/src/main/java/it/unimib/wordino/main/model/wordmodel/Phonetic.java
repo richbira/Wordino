@@ -1,17 +1,12 @@
-package it.unimib.wordino.main.model;
+package it.unimib.wordino.main.model.wordmodel;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.room.Embedded;
 import androidx.room.Entity;
-import androidx.room.Ignore;
-import androidx.room.PrimaryKey;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
-import java.util.List;
 
 @Entity
 public class Phonetic implements Parcelable

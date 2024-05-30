@@ -6,10 +6,12 @@ import static it.unimib.wordino.main.util.Constants.PACKAGE_NAME;
 
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
-import android.app.AlertDialog;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,16 +20,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.List;
-import java.util.Objects;
-
 import it.unimib.wordino.R;
-import it.unimib.wordino.main.model.Word;
+import it.unimib.wordino.main.model.GameBoard;
+import it.unimib.wordino.main.model.Result;
 import it.unimib.wordino.main.repository.IRandomWordRepository;
 import it.unimib.wordino.main.repository.ISpecificWordRepository;
+import it.unimib.wordino.main.repository.IWordRepositoryLD;
 import it.unimib.wordino.main.repository.RandomWordRepository;
 import it.unimib.wordino.main.repository.SpecificWordRepository;
 import it.unimib.wordino.main.util.ResponseCallBackApi;
+import it.unimib.wordino.main.util.ServiceLocator;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,21 +38,19 @@ import it.unimib.wordino.main.util.ResponseCallBackApi;
  * create an instance of this fragment.
  */
 //TODO MANTENERE STATO DOPO SWITCH DI FRAGMENT
-public class DailyFragment extends Fragment implements ResponseCallBackApi, View.OnClickListener {
+public class DailyFragment extends Fragment implements View.OnClickListener {
 
     private static final String TAG = DailyFragment.class.getSimpleName();
     public View activeBox;
     public View progressBar;
+    public int currentLetter;
     public int currentLine;
     public String tempWord = "spark";
     public Boolean fiveLetterWord = false;
+    public String winloss;
+    private GameBoardViewModel gameBoardModel;
     private IRandomWordRepository iRandomWordRepository;
     private ISpecificWordRepository iSpecificWordRepository;
-    final String langConst = ENGLISH;
-
-    private String winloss;
-
-    private boolean goodFetchedWordFlag = false;
 
     public Animator flipAnimation1;
     public Animator flipAnimation2;
@@ -73,8 +73,12 @@ public class DailyFragment extends Fragment implements ResponseCallBackApi, View
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        iRandomWordRepository = new RandomWordRepository(requireActivity().getApplication(), this);
-        iSpecificWordRepository = new SpecificWordRepository(requireActivity().getApplication(), this);
+        IWordRepositoryLD wordRepositoryLD =
+                ServiceLocator.getInstance().getWordRepositoryLD(requireActivity().getApplication());
+
+        gameBoardModel = new ViewModelProvider(
+                requireActivity(),
+                new GameBoardViewModelFactory(wordRepositoryLD)).get(GameBoardViewModel.class);
 
     }
 
@@ -90,14 +94,11 @@ public class DailyFragment extends Fragment implements ResponseCallBackApi, View
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        activeBox = view.findViewById(R.id.word_01);
-        currentLine = 0;
-        goodFetchedWordFlag = false;
-
         progressBar = view.findViewById(R.id.progress_bar);
 
+        gameBoardModel.fetchRandomWord();
+
         progressBar.setVisibility(View.VISIBLE);
-        iRandomWordRepository.fetchRandomWord(5, langConst); //QUI C'E' SOLO ENG
 
         flipAnimation1 = AnimatorInflater.loadAnimator(view.getContext(), R.animator.flip_animator);
         flipAnimation2 = AnimatorInflater.loadAnimator(view.getContext(), R.animator.flip_animator);
@@ -137,6 +138,34 @@ public class DailyFragment extends Fragment implements ResponseCallBackApi, View
         Button enterButton = view.findViewById(R.id.key_enter); enterButton.setOnClickListener(this);
 
 
+        Observer<GameBoard> gameBoardObserver = new Observer<GameBoard>() {
+            @Override
+            public void onChanged(@Nullable GameBoard gameBoard) {
+                updateGameBoardUI(gameBoard);
+                progressBar.setVisibility(View.GONE);
+            }
+        };
+
+        gameBoardModel.getGameBoard().observe(getViewLifecycleOwner(), gameBoardObserver);
+
+
+        Observer<Result> wordCheckObserver = new Observer<Result>() {
+            @Override
+            public void onChanged(@Nullable Result result) {
+                Log.d(TAG, "INIZIO ONCHANGED OBSERVER");
+                if (result.isSuccess()){
+                    Log.d(TAG, "Result is success, inizia procedura di comparazione");
+                    gameBoardModel.tryWord(result.getData());
+                    currentLine++; //todo dovrebbe richiedere a gameboardviewmodel
+                }
+
+            }
+        };
+
+        gameBoardModel.getGuessedWord().observe(getViewLifecycleOwner(), wordCheckObserver); //todo non va bene che fa ripartire il check ogni voltas che si cambia fragment
+
+
+
     }
 
     @Override
@@ -144,202 +173,72 @@ public class DailyFragment extends Fragment implements ResponseCallBackApi, View
 
         if (winloss == null) {
             int id = v.getId();
-            if (id == R.id.key_q) updateActiveBox("Q");
-            else if (id == R.id.key_w) updateActiveBox("W");
-            else if (id == R.id.key_e) updateActiveBox("E");
-            else if (id == R.id.key_r) updateActiveBox("R");
-            else if (id == R.id.key_t) updateActiveBox("T");
-            else if (id == R.id.key_y) updateActiveBox("Y");
-            else if (id == R.id.key_u) updateActiveBox("U");
-            else if (id == R.id.key_i) updateActiveBox("I");
-            else if (id == R.id.key_o) updateActiveBox("O");
-            else if (id == R.id.key_p) updateActiveBox("P");
-            else if (id == R.id.key_a) updateActiveBox("A");
-            else if (id == R.id.key_s) updateActiveBox("S");
-            else if (id == R.id.key_d) updateActiveBox("D");
-            else if (id == R.id.key_f) updateActiveBox("F");
-            else if (id == R.id.key_g) updateActiveBox("G");
-            else if (id == R.id.key_h) updateActiveBox("H");
-            else if (id == R.id.key_j) updateActiveBox("J");
-            else if (id == R.id.key_k) updateActiveBox("K");
-            else if (id == R.id.key_l) updateActiveBox("L");
-            else if (id == R.id.key_z) updateActiveBox("Z");
-            else if (id == R.id.key_x) updateActiveBox("X");
-            else if (id == R.id.key_c) updateActiveBox("C");
-            else if (id == R.id.key_v) updateActiveBox("V");
-            else if (id == R.id.key_b) updateActiveBox("B");
-            else if (id == R.id.key_n) updateActiveBox("N");
-            else if (id == R.id.key_m) updateActiveBox("M");
-            else if (id == R.id.key_cancel) updateActiveBox("CANC");
-            else if (id == R.id.key_enter) updateActiveBox("ENTER");
+            if (id == R.id.key_q) keyPressed("Q");
+            else if (id == R.id.key_w) keyPressed("W");
+            else if (id == R.id.key_e) keyPressed("E");
+            else if (id == R.id.key_r) keyPressed("R");
+            else if (id == R.id.key_t) keyPressed("T");
+            else if (id == R.id.key_y) keyPressed("Y");
+            else if (id == R.id.key_u) keyPressed("U");
+            else if (id == R.id.key_i) keyPressed("I");
+            else if (id == R.id.key_o) keyPressed("O");
+            else if (id == R.id.key_p) keyPressed("P");
+            else if (id == R.id.key_a) keyPressed("A");
+            else if (id == R.id.key_s) keyPressed("S");
+            else if (id == R.id.key_d) keyPressed("D");
+            else if (id == R.id.key_f) keyPressed("F");
+            else if (id == R.id.key_g) keyPressed("G");
+            else if (id == R.id.key_h) keyPressed("H");
+            else if (id == R.id.key_j) keyPressed("J");
+            else if (id == R.id.key_k) keyPressed("K");
+            else if (id == R.id.key_l) keyPressed("L");
+            else if (id == R.id.key_z) keyPressed("Z");
+            else if (id == R.id.key_x) keyPressed("X");
+            else if (id == R.id.key_c) keyPressed("C");
+            else if (id == R.id.key_v) keyPressed("V");
+            else if (id == R.id.key_b) keyPressed("B");
+            else if (id == R.id.key_n) keyPressed("N");
+            else if (id == R.id.key_m) keyPressed("M");
+            else if (id == R.id.key_cancel) keyPressed("CANC");
+            else if (id == R.id.key_enter) keyPressed("ENTER");
         }
         else {
-            gameoverAlert(winloss);
+            //gameoverAlert(winloss);
         }
     }
 
+    public void keyPressed(String key){
+        Log.d(TAG, "Premuto il tasto " + key);
 
-    @Override
-    public void onSuccessRandom(String word) {
-        tempWord = word;
-        Log.d(TAG, "tempWord settato a: " + tempWord);
-            iSpecificWordRepository.fetchSpecificWord(word);
-    }
+        gameBoardModel.updateGameBoard(key);
 
-    @Override
-    public void onFailureRandom(String errorMessage){
-        progressBar.setVisibility(View.GONE);
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Error");
-        builder.setMessage(errorMessage);
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
 
     }
 
-    @Override
-    public void onSuccessSpecific(List<Word> word) {
-        String wordString = word.get(0).getWord();
-        Log.d(TAG, "checkedWord settato a: " + wordString);
-        if (!goodFetchedWordFlag) {//Ramo per la chiamata api per trovare la parola da guessare
-            if (!(Objects.equals(wordString, tempWord))) {//Caso in cui la parola fetchata dalla prima api non è valida
-                iRandomWordRepository.fetchRandomWord(5, langConst);
-            } else {// Caso in cui la parola viene convalidata dalla seconda api, la flag serve per far si che la seconda chiamata possa essere utilizzata per il check delle parole immesse.
-                iSpecificWordRepository.saveWordInDatabase(word);
-                progressBar.setVisibility(View.GONE);
-                goodFetchedWordFlag = true;
-            }
-        }
-        else { //Ramo per la chiamata api per checkare se la parola immessa esiste o meno
-            Log.d(TAG, "La parola " + word + " esiste");
-            tryWord(wordString);
-        }
-    }
 
-    @Override
-    public void onFailureSpecific(String errorMessage){
-        Log.d(TAG, errorMessage);
-        Log.d(TAG, "Parola non trovata nel check");
-        if (!goodFetchedWordFlag){ //Ramo per la chiamata api per trovare la parola da guessare
-            iRandomWordRepository.fetchRandomWord(5, langConst);
-        } else { //Ramo per la chiamata api per checkare se la parola immessa esiste o meno
-            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-            builder.setTitle("Whooops");
-            builder.setMessage("La parola immessa non esiste!");
-            AlertDialog alertDialog = builder.create();
-            alertDialog.show();
-        }
 
-    }
-
-    /*  ----------------------------------------------------------------------------------------FUNZIONI DI LOGICA  ----------------------------------------------------------------------------------------*/
-    /*  ----------------------------------------------------------------------------------------FUNZIONI DI LOGICA  ----------------------------------------------------------------------------------------*/
-    /*  ----------------------------------------------------------------------------------------FUNZIONI DI LOGICA  ----------------------------------------------------------------------------------------*/
-
-    private void updateActiveBox(String text) {
-        if (activeBox instanceof TextView) {
-            if (Objects.equals(text, "CANC")) {
-                nextWordBox(-1);
-                ((TextView) activeBox).setText("");
-            }else if (Objects.equals(text, "ENTER")) {
-                enterPressed();
+    private void updateGameBoardUI(GameBoard gameBoard){
+        Log.d(TAG, "Inizio updateGameBoardUI");
+        String wordCode = "";
+        String colorCode = "";
+        for (int i = 0; i < 6; i++){
+            for (int j = 0; j < 5; j++){
+                if (!(gameBoard.getValue(i, j) == null)){
+                    wordCode += gameBoard.getValue(i, j).charAt(0);
+                    colorCode += gameBoard.getValue(i, j).charAt(1);
+                    changeBoxText(i, j, gameBoard.getValue(i, j).charAt(0) + "");
+                }else changeBoxText(i, j, "");
             }
 
-            else {
-                ((TextView) activeBox).setText(text);
-                nextWordBox(1);
-            }
+            changeBoxColor(colorCode);
+            changeKeyColor(colorCode, wordCode);
         }
+
     }
 
-    public void nextWordBox(int i) {
-
-        String fullName = getResources().getResourceName(activeBox.getId());
-        String activeBoxName = fullName.substring(fullName.lastIndexOf("/") + 1);
-        int nextLetterNum;
-        int currentLetterNum = Integer.parseInt(activeBoxName.substring(activeBoxName.length() - 1));
-        //Check che serve per far funzionare il cancel sull'ultima box
-        if (currentLetterNum == 5
-                && i == 1){
-            fiveLetterWord = true;
-        } else if (currentLetterNum == 5
-                && i == -1
-                && !(((TextView) activeBox).getText().toString().isEmpty())) {
-
-            ((TextView) activeBox).setText("");
-            i = 0;
-            fiveLetterWord = false;
-        }
-
-        nextLetterNum = currentLetterNum + i;
-        String nextActiveBoxName = activeBoxName.substring(0, activeBoxName.length() - 1) + nextLetterNum;
-        int nextActiveBoxId = getResources().getIdentifier(nextActiveBoxName, "id", PACKAGE_NAME);
-        if (nextActiveBoxId != 0) { // Check if the next box exist
-            activeBox = getView().findViewById(nextActiveBoxId);
-        } else {
-            // Handle the case when there's no next box (maybe reset to the first box or do nothing)
-            Log.d(TAG, "No next word box available.");
-        }
-    }
-
-    private void enterPressed(){
-
-        String boxIndex;
-        String guessedWord = "";
-
-        if (fiveLetterWord) {
-
-            for (int i = 1; i < 6; i++) {
-                boxIndex = "word_" + currentLine + i;
-                guessedWord += ((TextView) getView().findViewById(getResources().getIdentifier(boxIndex, "id", PACKAGE_NAME))).getText();
-            }
-
-            guessedWord = guessedWord.toLowerCase();
-
-            iSpecificWordRepository.fetchSpecificWord(guessedWord); //chiamata api se la parola è valida
-        }
-        else {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-            builder.setTitle("Whooops");
-            builder.setMessage("La parola non è di cinque lettere!");
-            AlertDialog alertDialog = builder.create();
-            alertDialog.show();
-        }
-    }
-    private String stringToCode(String guess) {
-        String colorCodes = "";
-        for (int i = 0; i < 5; i++) {
-            Log.d(TAG, "Check: " + guess.charAt(i) + " - " + tempWord.charAt(i));
-            if (guess.charAt(i) == tempWord.charAt(i)) {
-                colorCodes += "g";
-            } else if (!(tempWord.indexOf(guess.charAt(i)) < 0)) {
-                colorCodes += "y";
-            } else {
-                colorCodes += "b";
-            }
-        }
-        return colorCodes;
-    }
-
-    private void tryWord(String guessedWord) {
-        String code = stringToCode(guessedWord);
-        changeBoxColor(code);
-        Log.d(TAG, "BACK TO TRYWORD");
-        changeKeyColor(code, guessedWord);
-
-        //Check se la parola è corretta
-        if (code.equals("ggggg")) {
-            winloss = "win";
-            gameoverAlert(winloss);
-
-        } else if (currentLine != 5) {
-            String nextLineBoxName = "word_" + ++currentLine + "1";
-            activeBox = getView().findViewById(getResources().getIdentifier(nextLineBoxName, "id", PACKAGE_NAME));
-            fiveLetterWord = false;
-        } else {
-            winloss = "loss";
-            gameoverAlert(winloss);
-        }
+    private void changeBoxText(int currentLine, int currentLetter, String value){
+        String boxIndex = "word_" + currentLine + (currentLetter + 1);
+        ((TextView) getView().findViewById(getResources().getIdentifier(boxIndex, "id", PACKAGE_NAME))).setText(value);
     }
 
     private void changeBoxColor(String code) {
@@ -357,64 +256,44 @@ public class DailyFragment extends Fragment implements ResponseCallBackApi, View
         flipAnimation4.start();
         flipAnimation5.start();
 
-        for (int i = 1; i < 6; i++){
-            boxId = "word_" + currentLine + i;
-            TextView currentBox = (TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", PACKAGE_NAME));
+        if (code != "") {
+            for (int i = 1; i < 6; i++) {
+                if (i < code.length() + 1) {
+                    boxId = "word_" + currentLine + i;
+                    TextView currentBox = (TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", PACKAGE_NAME));
 
-            if (code.charAt(i-1) == 'g') {
-                currentBox.setBackgroundResource(R.drawable.border_green);
-            }else if (code.charAt(i-1) == 'y') {
-                currentBox.setBackgroundResource(R.drawable.border_yellow);
-            }else if (code.charAt(i-1) == 'b') {
-                currentBox.setBackgroundResource(R.drawable.border_grey);
+                    if (code.charAt(i - 1) == 'g') {
+                        currentBox.setBackgroundResource(R.drawable.border_green);
+                    } else if (code.charAt(i - 1) == 'y') {
+                        currentBox.setBackgroundResource(R.drawable.border_yellow);
+                    } else if (code.charAt(i - 1) == 'b') {
+                        currentBox.setBackgroundResource(R.drawable.border_grey);
+                    }
+                }
+
             }
-
         }
 
     }
 
     private void changeKeyColor(String code, String word) {
         String keyId;
-        for (int i = 0; i < 5; i++) {
-            keyId = "key_" + word.charAt(i);
-            if (code.charAt(i) == 'g') {
-                ((Button) getView().findViewById(getResources().getIdentifier(keyId, "id", PACKAGE_NAME))).setBackgroundColor(getResources().getColor(R.color.mygreen));  //TODO deprecated getcolor
-            } else if (code.charAt(i) == 'y') {
-                ((Button) getView().findViewById(getResources().getIdentifier(keyId, "id", PACKAGE_NAME))).setBackgroundColor(getResources().getColor(R.color.myyellow));  //TODO deprecated getcolor
-            } else if (code.charAt(i) == 'b') {
-                ((Button) getView().findViewById(getResources().getIdentifier(keyId, "id", PACKAGE_NAME))).setBackgroundColor(getResources().getColor(R.color.mygrey));  //TODO deprecated getcolor
+        if (word != "") {
+            for (int i = 0; i < 5; i++) {
+                if (i < code.length()) {
+                    keyId = "key_" + word.charAt(i);
+                    if (code.charAt(i) == 'g') {
+                        ((Button) getView().findViewById(getResources().getIdentifier(keyId, "id", PACKAGE_NAME))).setBackgroundColor(getResources().getColor(R.color.mygreen));  //TODO deprecated getcolor
+                    } else if (code.charAt(i) == 'y') {
+                        ((Button) getView().findViewById(getResources().getIdentifier(keyId, "id", PACKAGE_NAME))).setBackgroundColor(getResources().getColor(R.color.myyellow));  //TODO deprecated getcolor
+                    } else if (code.charAt(i) == 'b') {
+                        ((Button) getView().findViewById(getResources().getIdentifier(keyId, "id", PACKAGE_NAME))).setBackgroundColor(getResources().getColor(R.color.mygrey));  //TODO deprecated getcolor
+                    }
+                }
             }
         }
     }
 
-    private void resetGame() {
-        String boxId;
-        for (int i = 0; i < currentLine + 1; i++){
-            for (int j = 1; j < 6; j++){
-                boxId = "word_" + i + j;
-                ((TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", PACKAGE_NAME))).setBackgroundResource(R.drawable.border_white);
-                ((TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", PACKAGE_NAME))).setText("");
-            }
-        }
-        activeBox = getView().findViewById(R.id.word_01);
-        currentLine = 0;
-        fiveLetterWord = false;
-    }
-
-    private void gameoverAlert(String winloss){
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        switch(winloss){
-            case "win":
-                builder.setTitle("You Win!");
-                builder.setMessage("You're a winner bro!");
-                break;
-            case "loss":
-                builder.setTitle("You Lose!");
-                builder.setMessage("You're a loser bro!");
-        }
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-    }
 
 }
 

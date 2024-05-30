@@ -1,4 +1,4 @@
-package it.unimib.wordino.main.model;
+package it.unimib.wordino.main.model.wordmodel;
 
 import java.util.List;
 
@@ -6,13 +6,10 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.room.ColumnInfo;
-import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
-import androidx.room.Relation;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 @Entity
 public class Word implements Parcelable
@@ -62,8 +59,8 @@ public class Word implements Parcelable
     protected Word(Parcel in) {
         this.word = ((String) in.readValue((String.class.getClassLoader())));
         this.phonetic = ((String) in.readValue((String.class.getClassLoader())));
-        in.readList(this.phonetics, (it.unimib.wordino.main.model.Phonetic.class.getClassLoader()));
-        in.readList(this.meanings, (it.unimib.wordino.main.model.Meaning.class.getClassLoader()));
+        in.readList(this.phonetics, (Phonetic.class.getClassLoader()));
+        in.readList(this.meanings, (Meaning.class.getClassLoader()));
         this.license = ((License) in.readValue((License.class.getClassLoader())));
         in.readList(this.sourceUrls, (java.lang.String.class.getClassLoader()));
     }

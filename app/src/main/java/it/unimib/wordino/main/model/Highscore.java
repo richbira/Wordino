@@ -3,11 +3,12 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.room.Entity;
-import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import it.unimib.wordino.main.model.wordmodel.License;
+
 @Entity
 public class Highscore implements Parcelable
 {
@@ -17,13 +18,14 @@ public class Highscore implements Parcelable
     private int score;
     @SerializedName("date")
     private String date;
-    public final static Creator<License> CREATOR = new Creator<License>() {
-        public License createFromParcel(Parcel in) {
-            return new License(in);
+
+    public final static Creator<Highscore> CREATOR = new Creator<Highscore>() {
+        public Highscore createFromParcel(Parcel in) {
+            return new Highscore(in);
         }
 
-        public License[] newArray(int size) {
-            return (new License[size]);
+        public Highscore[] newArray(int size) {
+            return (new Highscore[size]);
         }
 
     };

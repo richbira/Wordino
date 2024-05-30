@@ -9,7 +9,7 @@ import java.util.List;
 
 import it.unimib.wordino.main.database.WordinoDao;
 import it.unimib.wordino.main.database.WordinoRoomDatabase;
-import it.unimib.wordino.main.model.Word;
+import it.unimib.wordino.main.model.wordmodel.Word;
 import it.unimib.wordino.main.service.DictionaryWordApiService;
 import it.unimib.wordino.main.ui.DailyFragment;
 import it.unimib.wordino.main.util.ResponseCallBackApi;
@@ -66,10 +66,10 @@ public class SpecificWordRepository implements ISpecificWordRepository {
         WordinoRoomDatabase.databaseWriteExecutor.execute(() -> {
 
             // Writes the words in the database and gets the associated primary keys
-            List<Long> insertedWordsIds = wordinoDao.insertAll(wordList);
+            //List<Long> insertedWordsIds = wordinoDao.insertAll(wordList); todo attenzione qui ho tolto
             for (int i = 0; i < wordList.size(); i++) {
                 // Adds the primary key to the corresponding object Word just downloaded
-                wordList.get(i).setWordId(insertedWordsIds.get(i));
+                //wordList.get(i).setWordId(insertedWordsIds.get(i));
             }
         });
     }

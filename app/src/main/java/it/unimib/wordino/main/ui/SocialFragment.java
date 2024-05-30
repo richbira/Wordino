@@ -110,7 +110,7 @@ public class SocialFragment extends Fragment implements ResponseCallBackDb {
     }
 
     private void loadHighScores(List<Highscore> highscoreList) {
-        for (int i = 0; i < 5; i++ ){
+        for (int i = 0; i < highscoreList.size(); i++ ){
             String scoreTextId = "scoreText" + (i + 1);
             String dateTextId = "dateText" + (i + 1);
 

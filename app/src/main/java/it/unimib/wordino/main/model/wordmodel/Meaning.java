@@ -1,4 +1,4 @@
-package it.unimib.wordino.main.model;
+package it.unimib.wordino.main.model.wordmodel;
 
 import java.util.List;
 
@@ -7,10 +7,7 @@ import android.os.Parcelable;
 
 import androidx.room.Embedded;
 import androidx.room.Entity;
-import androidx.room.Ignore;
-import androidx.room.PrimaryKey;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 @Entity
 public class Meaning implements Parcelable
@@ -44,7 +41,7 @@ public class Meaning implements Parcelable
     })
     protected Meaning(Parcel in) {
         this.partOfSpeech = ((String) in.readValue((String.class.getClassLoader())));
-        in.readList(this.definitions, (it.unimib.wordino.main.model.Definition.class.getClassLoader()));
+        in.readList(this.definitions, (Definition.class.getClassLoader()));
         in.readList(this.synonyms, String.class.getClassLoader()); //NOT SURE
         in.readList(this.antonyms, String.class.getClassLoader()); //NOT SURE
     }
