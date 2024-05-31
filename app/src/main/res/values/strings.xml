@@ -2,7 +2,7 @@
     <string name="app_name">Wordino</string>
     <string name="How_to_play">How to play</string>
     <string name="Login">Login</string>
-    <string name="Play">Play</string>
+    <string name="Play">Play as Guest</string>
     <string name="game_short_description">Guess the 5-letter word.</string>
     <string name="OR">OR</string>
     <string name="n_attempts">Number of attempts today</string>
@@ -74,4 +74,16 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="reset_password">Reset Passsowrd</string>
+    <string name="verification_code">insert_verification_code</string>
+    <string name="default_web_client_id">default_web_client_id</string>
+    <string name="error_login_password_message">error_login_password_message</string>
+    <string name="error_login_user_message">error_login_user_message</string>
+    <string name="unexpected_error">unexpected_error</string>
+    <string name="error_email">error_email\n</string>
+    <string name="error_password">error_password</string>
+    <string name="error_user_collision_message">error_user_collision_message</string>
+    <string name="check_login_data_message">check_login_data_message</string>
+    <string name="error_no_google_account_found_message">error_no_google_account_found_message</string>
 </resources>

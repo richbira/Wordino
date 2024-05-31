@@ -1,5 +1,7 @@
 package it.unimib.wordino.main.data;
 
+import it.unimib.wordino.main.Model.User;
+
 /**
  * A generic class that holds a result success w/ data or an error exception.
  */
@@ -20,6 +22,15 @@ public class Result<T> {
         return "";
     }
 
+    public boolean isSuccess() {
+        if (this instanceof UserResponseSuccess) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
     // Success sub-class
     public final static class Success<T> extends Result {
         private T data;
@@ -36,13 +47,29 @@ public class Result<T> {
     // Error sub-class
     public final static class Error extends Result {
         private Exception error;
+        private final String message;
 
         public Error(Exception error) {
             this.error = error;
+            message = null;
         }
-
+        public Error(String message) {
+            this.message = message;
+        }
+        public String getMessage() {
+            return message;
+        }
         public Exception getError() {
             return this.error;
+        }
+    }
+    public static final class UserResponseSuccess extends Result {
+        private final User user;
+        public UserResponseSuccess(User user) {
+            this.user = user;
+        }
+        public User getData() {
+            return user;
         }
     }
 }
