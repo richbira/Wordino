@@ -87,7 +87,7 @@ public class WelcomeActivity extends AppCompatActivity {
                     ENCRYPTED_SHARED_PREFERENCES_FILE_NAME, PASSWORD);
             if (email != null && password != null) {
                 // Proceed with automatic login or directly start game
-                startGame("PLAY");
+                startGame();
             }
         } catch (GeneralSecurityException | IOException e) {
             Log.e(TAG, "Failed to retrieve login credentials", e);

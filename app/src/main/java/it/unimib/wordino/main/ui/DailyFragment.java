@@ -6,6 +6,7 @@ import static it.unimib.wordino.main.util.Constants.PACKAGE_NAME;
 
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
+import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -38,26 +39,21 @@ import it.unimib.wordino.main.util.ServiceLocator;
  * Use the {@link DailyFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-//TODO MANTENERE STATO DOPO SWITCH DI FRAGMENT
 public class DailyFragment extends Fragment implements View.OnClickListener {
 
     private static final String TAG = DailyFragment.class.getSimpleName();
-    public View activeBox;
     public View progressBar;
-    public int currentLetter;
     public int currentLine;
-    public String tempWord = "spark";
-    public Boolean fiveLetterWord = false;
-    public String winloss;
     private GameBoardViewModel gameBoardModel;
-    private IRandomWordRepository iRandomWordRepository;
-    private ISpecificWordRepository iSpecificWordRepository;
 
     public Animator flipAnimation1;
     public Animator flipAnimation2;
     public Animator flipAnimation3;
     public Animator flipAnimation4;
     public Animator flipAnimation5;
+    public Observer<GameBoard> gameBoardObserver;
+    public Observer<Result> wordCheckObserver;
+    public Observer<Result> randomWordObserver;
 
 
 
@@ -81,6 +77,45 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
                 requireActivity(),
                 new GameBoardViewModelFactory(wordRepositoryLD)).get(GameBoardViewModel.class);
 
+
+        gameBoardObserver = new Observer<GameBoard>() {
+            @Override
+            public void onChanged(@Nullable GameBoard gameBoard) {
+                updateGameBoardUI(gameBoard);
+                currentLine = gameBoardModel.getCurrentLine();
+                if(gameBoardModel.getWinloss() != ""){
+                    gameOverAlert(gameBoardModel.getWinloss());
+                }
+            }
+        };
+
+        wordCheckObserver = new Observer<Result>() {
+            @Override
+            public void onChanged(@Nullable Result result) {
+                Log.d(TAG, "INIZIO ONCHANGED OBSERVER");
+                if (result.isSuccess()){
+                    Log.d(TAG, "Result is success, inizia procedura di comparazione");
+                    Log.d(TAG, "parola: " + result.getData());
+                    gameBoardModel.tryWord(result.getData());
+                    currentLine = gameBoardModel.getCurrentLine();
+                }else {
+                    Log.d(TAG, "La parola non esiste! ");
+                }
+
+            }
+        };
+
+        randomWordObserver = new Observer<Result>() {
+            @Override
+            public void onChanged(@Nullable Result result) {
+                Log.d(TAG, "INIZIO randomword OBSERVER");
+                if (result.isSuccess()){
+                    Log.d(TAG, "finisce la rotella");
+                    progressBar.setVisibility(View.GONE);
+                }
+
+            }
+        };
     }
 
     @Override
@@ -96,8 +131,6 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
         super.onViewCreated(view, savedInstanceState);
 
         progressBar = view.findViewById(R.id.progress_bar);
-
-        gameBoardModel.fetchRandomWord();
 
         progressBar.setVisibility(View.VISIBLE);
 
@@ -139,40 +172,18 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
         Button enterButton = view.findViewById(R.id.key_enter); enterButton.setOnClickListener(this);
 
 
-        Observer<GameBoard> gameBoardObserver = new Observer<GameBoard>() {
-            @Override
-            public void onChanged(@Nullable GameBoard gameBoard) {
-                updateGameBoardUI(gameBoard);
-                progressBar.setVisibility(View.GONE);
-            }
-        };
+        //OBSERVERS
 
         gameBoardModel.getGameBoard().observe(getViewLifecycleOwner(), gameBoardObserver);
-
-
-        Observer<Result> wordCheckObserver = new Observer<Result>() {
-            @Override
-            public void onChanged(@Nullable Result result) {
-                Log.d(TAG, "INIZIO ONCHANGED OBSERVER");
-                if (result.isSuccess()){
-                    Log.d(TAG, "Result is success, inizia procedura di comparazione");
-                    gameBoardModel.tryWord(result.getData());
-                    currentLine++; //todo dovrebbe richiedere a gameboardviewmodel
-                }
-
-            }
-        };
-
-        gameBoardModel.getGuessedWord().observe(getViewLifecycleOwner(), wordCheckObserver); //todo non va bene che fa ripartire il check ogni voltas che si cambia fragment
-
-
+        gameBoardModel.getRandomWord().observe(getViewLifecycleOwner(), randomWordObserver);
+        gameBoardModel.getGuessedWord().observe(getViewLifecycleOwner(), wordCheckObserver);
 
     }
 
     @Override
     public void onClick(View v) {
 
-        if (winloss == null) {
+        if (gameBoardModel.getWinloss() == "") {
             int id = v.getId();
             if (id == R.id.key_q) keyPressed("Q");
             else if (id == R.id.key_w) keyPressed("W");
@@ -204,7 +215,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
             else if (id == R.id.key_enter) keyPressed("ENTER");
         }
         else {
-            //gameoverAlert(winloss);
+            Log.d(TAG, "Gameover, tasti disattivati");
         }
     }
 
@@ -222,7 +233,9 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
         Log.d(TAG, "Inizio updateGameBoardUI");
         String wordCode = "";
         String colorCode = "";
-        for (int i = 0; i < 6; i++){
+        for (int i = 0; i < (currentLine+1); i++){
+            wordCode = "";
+            colorCode = "";
             for (int j = 0; j < 5; j++){
                 if (!(gameBoard.getValue(i, j) == null)){
                     wordCode += gameBoard.getValue(i, j).charAt(0);
@@ -231,7 +244,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
                 }else changeBoxText(i, j, "");
             }
 
-            changeBoxColor(colorCode);
+            changeBoxColor(i, colorCode);
             changeKeyColor(colorCode, wordCode);
         }
 
@@ -242,37 +255,40 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
         ((TextView) getView().findViewById(getResources().getIdentifier(boxIndex, "id", PACKAGE_NAME))).setText(value);
     }
 
-    private void changeBoxColor(String code) {
+    private void changeBoxColor(int i, String code) {
         String boxId;
 
         //ANIMATION
-        flipAnimation1.setTarget((TextView) getView().findViewById(getResources().getIdentifier("word_" + currentLine + "1", "id", PACKAGE_NAME)));
-        flipAnimation2.setTarget((TextView) getView().findViewById(getResources().getIdentifier("word_" + currentLine + "2", "id", PACKAGE_NAME)));
-        flipAnimation3.setTarget((TextView) getView().findViewById(getResources().getIdentifier("word_" + currentLine + "3", "id", PACKAGE_NAME)));
-        flipAnimation4.setTarget((TextView) getView().findViewById(getResources().getIdentifier("word_" + currentLine + "4", "id", PACKAGE_NAME)));
-        flipAnimation5.setTarget((TextView) getView().findViewById(getResources().getIdentifier("word_" + currentLine + "5", "id", PACKAGE_NAME)));
-        flipAnimation1.start();
-        flipAnimation2.start();
-        flipAnimation3.start();
-        flipAnimation4.start();
-        flipAnimation5.start();
+        if (gameBoardModel.getEnterIsPressed()) {
+            flipAnimation1.setTarget((TextView) getView().findViewById(getResources().getIdentifier("word_" + currentLine + "1", "id", PACKAGE_NAME)));
+            flipAnimation2.setTarget((TextView) getView().findViewById(getResources().getIdentifier("word_" + currentLine + "2", "id", PACKAGE_NAME)));
+            flipAnimation3.setTarget((TextView) getView().findViewById(getResources().getIdentifier("word_" + currentLine + "3", "id", PACKAGE_NAME)));
+            flipAnimation4.setTarget((TextView) getView().findViewById(getResources().getIdentifier("word_" + currentLine + "4", "id", PACKAGE_NAME)));
+            flipAnimation5.setTarget((TextView) getView().findViewById(getResources().getIdentifier("word_" + currentLine + "5", "id", PACKAGE_NAME)));
+
+            flipAnimation1.start();
+            flipAnimation2.start();
+            flipAnimation3.start();
+            flipAnimation4.start();
+            flipAnimation5.start();
+        }
 
         if (code != "") {
-            for (int i = 1; i < 6; i++) {
-                if (i < code.length() + 1) {
-                    boxId = "word_" + currentLine + i;
-                    TextView currentBox = (TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", PACKAGE_NAME));
+                for (int j = 1; j < 6; j++) {
+                    if (j < code.length() + 1) {
 
-                    if (code.charAt(i - 1) == 'g') {
-                        currentBox.setBackgroundResource(R.drawable.border_green);
-                    } else if (code.charAt(i - 1) == 'y') {
-                        currentBox.setBackgroundResource(R.drawable.border_yellow);
-                    } else if (code.charAt(i - 1) == 'b') {
-                        currentBox.setBackgroundResource(R.drawable.border_grey);
+                        boxId = "word_" + i + j;
+                        TextView currentBox = (TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", PACKAGE_NAME));
+                        if (code.charAt(j - 1) == 'g') {
+                            currentBox.setBackgroundResource(R.drawable.border_green);
+                        } else if (code.charAt(j - 1) == 'y') {
+                            currentBox.setBackgroundResource(R.drawable.border_yellow);
+                        } else if (code.charAt(j - 1) == 'b') {
+                            currentBox.setBackgroundResource(R.drawable.border_grey);
+                        }
                     }
                 }
 
-            }
         }
 
     }
@@ -280,19 +296,34 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
     private void changeKeyColor(String code, String word) {
         String keyId;
         if (word != "") {
-            for (int i = 0; i < 5; i++) {
-                if (i < code.length()) {
-                    keyId = "key_" + word.charAt(i);
-                    if (code.charAt(i) == 'g') {
-                        ((Button) getView().findViewById(getResources().getIdentifier(keyId, "id", PACKAGE_NAME))).setBackgroundColor(getResources().getColor(R.color.mygreen));  //TODO deprecated getcolor
-                    } else if (code.charAt(i) == 'y') {
-                        ((Button) getView().findViewById(getResources().getIdentifier(keyId, "id", PACKAGE_NAME))).setBackgroundColor(getResources().getColor(R.color.myyellow));  //TODO deprecated getcolor
-                    } else if (code.charAt(i) == 'b') {
-                        ((Button) getView().findViewById(getResources().getIdentifier(keyId, "id", PACKAGE_NAME))).setBackgroundColor(getResources().getColor(R.color.mygrey));  //TODO deprecated getcolor
-                    }
+            for (int i = 0; i < code.length(); i++) {
+
+                keyId = ("key_" + word.charAt(i)).toLowerCase();
+                if (code.charAt(i) == 'g') {
+                    ((Button) getView().findViewById(getResources().getIdentifier(keyId, "id", PACKAGE_NAME))).setBackgroundColor(getResources().getColor(R.color.mygreen));  //TODO deprecated getcolor
+                } else if (code.charAt(i) == 'y') {
+                    ((Button) getView().findViewById(getResources().getIdentifier(keyId, "id", PACKAGE_NAME))).setBackgroundColor(getResources().getColor(R.color.myyellow));  //TODO deprecated getcolor
+                } else if (code.charAt(i) == 'b') {
+                    ((Button) getView().findViewById(getResources().getIdentifier(keyId, "id", PACKAGE_NAME))).setBackgroundColor(getResources().getColor(R.color.mygrey));  //TODO deprecated getcolor
                 }
+
             }
         }
+    }
+
+    private void gameOverAlert(String winloss) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        switch(winloss){
+            case "win":
+                builder.setTitle("You Win!");
+                builder.setMessage("You're a winner bro!");
+                break;
+            case "loss":
+                builder.setTitle("You Lose!");
+                builder.setMessage("You're a loser bro!");
+        }
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
 

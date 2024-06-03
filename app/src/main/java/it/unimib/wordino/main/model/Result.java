@@ -20,6 +20,9 @@ public abstract class Result {
      */
     public static final class Success extends Result {
         private final String word;
+        public Success(){
+            this.word = "";
+        }
         public Success(String word) {
             this.word = word;
         }
@@ -28,18 +31,7 @@ public abstract class Result {
             return word;
         }
     }
-/*
-    public static final class SuccessBoardState extends Result {
-        private final GameBoard boardState;
-        public SuccessBoardState(GameBoard boardState) {
-            this.boardState = boardState;
-        }
-        public GameBoard getData() {
-            return boardState;
-        }
 
-    }
-*/
     /**
      * Class that represents an error occurred during the interaction
      * with a Web Service or a local database.

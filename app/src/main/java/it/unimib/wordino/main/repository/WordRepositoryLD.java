@@ -47,7 +47,6 @@ public class WordRepositoryLD implements IWordRepositoryLD, WordCallback {
     }
     @Override
     public MutableLiveData<Result> fetchSpecificWordCheck(String word) {
-        Log.d(TAG, "INIZIO FETCHSPECIFICWORDCHECK");
         wordRemoteDataSource.getSpecificWordCheck(word);
         return guessedWord;
     }
@@ -65,7 +64,7 @@ public class WordRepositoryLD implements IWordRepositoryLD, WordCallback {
         fetchSpecificWord(word);
     }
     public void onFailureFromRemoteRandom(String exception){
-
+        Log.d(TAG, exception);
     }
 
     @Override
@@ -77,23 +76,26 @@ public class WordRepositoryLD implements IWordRepositoryLD, WordCallback {
             wordRemoteDataSource.getRandomWord();
         } else {
             //saveWordInDatabase(word); TODO RISOLVERE QUESTO
-            randomWord.postValue(new Result.Success(wordString)); //todo attenzione qui prototipo
+            randomWord.postValue(new Result.Success(wordString));
+            Log.d(TAG, "Postata la parola " + wordString + " come randomWord");
         }
     }
     @Override
     public void onFailureFromRemoteSpecific(String exception){
-
+        Log.d(TAG, exception);
+        wordRemoteDataSource.getRandomWord(); // fa ripartire il random anche in caso di errore
     }
 
     @Override
     public void onSuccessFromRemoteSpecificCheck(Word word) {
         String wordString = word.getWord();
-        Log.d(TAG, "La parola " + wordString + " esiste");
         guessedWord.postValue(new Result.Success(wordString));
+        Log.d(TAG, "La parola " + wordString + " esiste");
     }
     @Override
     public void onFailureFromRemoteSpecificCheck(String exception){
         Log.d(TAG, exception);
+        guessedWord.postValue(new Result.Error("CHECKERROR")); //todo qui è tentativo
     }
 
     @Override

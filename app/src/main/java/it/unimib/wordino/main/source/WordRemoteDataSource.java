@@ -76,6 +76,7 @@ public class WordRemoteDataSource extends BaseWordRemoteDataSource{
                     List<Word> specificWord = response.body();
                     Log.d(TAG, "Successful fetch of word: " + specificWord.get(0).getWord());
                     wordCallback.onSuccessFromRemoteSpecificCheck(specificWord.get(0));
+
                 } else {
                     wordCallback.onFailureFromRemoteSpecificCheck("La parola non esiste");
                 }

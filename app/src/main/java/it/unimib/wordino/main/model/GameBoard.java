@@ -14,8 +14,8 @@ public class GameBoard {
         return this.gameboard[i][j];
     }
 
-    public void addColor(int i, int j, String color){
-        changeValue(i, j, getValue(i, j) + color);
+    public void changeColor(int i, int j, String color){
+        changeValue(i, j, getValue(i, j).charAt(0) + color);
     }
 
     public GameBoard(){

@@ -24,14 +24,13 @@ public class GameBoardViewModel extends ViewModel {
 
     private MutableLiveData<Result> guessedWord;
     private MutableLiveData<Result> dailyWord;
-    private MutableLiveData<GameBoard> boardState = new MutableLiveData<>(new GameBoard());
+    private MutableLiveData<GameBoard> boardState;
 
     public int currentLine = 0;
     public int currentLetter = 0;
     public Boolean fiveLetterWord = false;
-    private String winloss;
-
-    private boolean goodFetchedWordFlag = false;
+    public Boolean enterIsPressed = false;
+    private String winloss = "";
 
     public GameBoardViewModel(IWordRepositoryLD wordRepositoryLD){
         this.wordRepositoryLD = wordRepositoryLD;
@@ -47,18 +46,28 @@ public class GameBoardViewModel extends ViewModel {
     }
     public MutableLiveData<Result> getGuessedWord(){
         if (guessedWord == null) {
-            guessedWord = new MutableLiveData<Result>();
+            guessedWord = wordRepositoryLD.fetchSpecificWordCheck("");
             Log.d(TAG, "inizializzata guessedWord");
         }
         return guessedWord;
     }
 
-    public void fetchRandomWord(){
-        //todo mettere check se la daily è scaduta
-        dailyWord = wordRepositoryLD.fetchRandomWord();
-    };
+    public MutableLiveData<Result> getRandomWord(){
+        if (dailyWord == null) {
+            dailyWord = wordRepositoryLD.fetchRandomWord();//todo mettere check se la daily è scaduta
+            Log.d(TAG, "fetch dailyWord");
+        }
+        return dailyWord;
+    }
 
-    private void checkRealWord(String word){  //todo forse mettere altri due onsucces e onfailure appositi per questa chiamata
+    public int getCurrentLine(){ return currentLine;}
+    public Boolean getEnterIsPressed() {return enterIsPressed;}
+
+    public String getWinloss() {return winloss;}
+
+
+
+    private void checkRealWord(String word){
         guessedWord = wordRepositoryLD.fetchSpecificWordCheck(word);
     }
 
@@ -72,13 +81,13 @@ public class GameBoardViewModel extends ViewModel {
 
             if (Objects.equals(text, "CANC")) {
                 findNextLetter(-1);
-                boardState.getValue().changeValue(currentLine, currentLetter, null); //todo get value potrebbe essere sbagliato
+                boardState.getValue().changeValue(currentLine, currentLetter, null);
             }else if (Objects.equals(text, "ENTER")) {
                 enterPressed();
             }
 
             else {
-                boardState.getValue().changeValue(currentLine, currentLetter, text + "w"); //todo get value potrebbe essere sbagliato
+                boardState.getValue().changeValue(currentLine, currentLetter, text + "w");
                 findNextLetter(1);
             }
 
@@ -89,7 +98,6 @@ public class GameBoardViewModel extends ViewModel {
     public void findNextLetter(int i) {
 
         int nextLetter;
-        Log.d(TAG, "CurrentLetter = " + currentLetter);
 
         //Check che serve per far funzionare il cancel sull'ultima box
         if (currentLetter == 4
@@ -110,14 +118,14 @@ public class GameBoardViewModel extends ViewModel {
         if (0 <= nextLetter && nextLetter < 5){ //Check se la nuova lettera è compresa fra 0 e 4
             currentLetter = nextLetter;
         }
-        Log.d(TAG, "NextLetter = " + currentLetter);
     }
 
     private void enterPressed(){
         Log.d(TAG, "INIZIO ENTERPRESSED");
         String tempWord = "";
-
         if (fiveLetterWord) {
+
+            enterIsPressed = true;
 
             for (int i = 0; i < 5; i++) {
                 tempWord += boardState.getValue().getValue(currentLine, i).charAt(0);
@@ -125,7 +133,7 @@ public class GameBoardViewModel extends ViewModel {
 
             tempWord = tempWord.toLowerCase(); // forse non serve
 
-            checkRealWord(tempWord); //todo prob fare un observer sulla parola fetchata nel repo in modo che quando cambi si possa fare partire il processo per matchare la parola guessata con quella da guessare
+            checkRealWord(tempWord);
             // idea: mettere observer nel ui su tempword, in modo che quando arriva il cambiamento possa rilanciare una call sulla continuazione della logica
             // se guessedWord è success, allora si continua, se è error, allora ui fa uscire dialog di errore.
         }
@@ -135,30 +143,39 @@ public class GameBoardViewModel extends ViewModel {
     }
 
     public void tryWord(String guessedWordString) {
-        String dailyWordString = dailyWord.getValue().getData(); //todo forse non funziona, getData come override potrebbe non essere giusto
-        for (int i = 0; i < 5; i++){
-            Log.d(TAG, "Check: " + guessedWordString.charAt(i) + " - " + dailyWordString.charAt(i));
-            if (guessedWordString.charAt(i) == dailyWordString.charAt(i)) {
-                boardState.getValue().addColor(currentLine, i, "g");
-            } else if (!(dailyWordString.indexOf(guessedWordString.charAt(i)) < 0)) { //todo volendo cambiare il comportamento di yellow
-                boardState.getValue().addColor(currentLine, i, "y");
-            } else {
-                boardState.getValue().addColor(currentLine, i, "b");
+        if (enterIsPressed) {
+            String dailyWordString = dailyWord.getValue().getData();
+            String color_code = "";
+            for (int i = 0; i < 5; i++) {
+                Log.d(TAG, "Check: " + guessedWordString.charAt(i) + " - " + dailyWordString.charAt(i));
+                if (guessedWordString.charAt(i) == dailyWordString.charAt(i)) {
+                    boardState.getValue().changeColor(currentLine, i, "g");
+                } else if (!(dailyWordString.indexOf(guessedWordString.charAt(i)) < 0)) { //todo volendo cambiare il comportamento di yellow
+                    boardState.getValue().changeColor(currentLine, i, "y");
+                } else {
+                    boardState.getValue().changeColor(currentLine, i, "b");
+                }
+                color_code += boardState.getValue().getValue(currentLine, i);
             }
-        }
+            Log.d(TAG, "Code = " + color_code);
 
-        boardState.setValue(this.boardState.getValue());
+            Log.d(TAG, "guess = " + guessedWordString);
+            Log.d(TAG, "daily = " + dailyWordString);
+            if (guessedWordString.equals(dailyWordString)) { //todo finire di implementare winloss
+                winloss = "win";
+                Log.d(TAG, "Hai vinto!");
+            } else if (currentLine != 5) {
+                currentLine++;
+                currentLetter = 0;
+                fiveLetterWord = false;
+            } else {
+                winloss = "loss";
+                Log.d(TAG, "Hai perso!");
+            }
 
-
-        if (guessedWordString == dailyWordString){ //todo finire di implementare winloss
-            winloss = "win";
-        }else if (currentLine != 5) {
-            currentLine++;
-            currentLetter = 0;
-            fiveLetterWord = false;
-        }else {
-            winloss = "loss";
-        }
+            boardState.setValue(this.boardState.getValue());
+            enterIsPressed = false;
+        } else Log.d(TAG, "enterisPressed è false");
     }
 
 
