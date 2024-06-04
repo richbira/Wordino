@@ -1,5 +1,6 @@
 package it.unimib.wordino.main.source.user;
 
+import static it.unimib.wordino.main.util.Constants.FIREBASE_REALTIME_DATABASE;
 import static it.unimib.wordino.main.util.Constants.INVALID_CREDENTIALS_ERROR;
 import static it.unimib.wordino.main.util.Constants.INVALID_USER_ERROR;
 import static it.unimib.wordino.main.util.Constants.UNEXPECTED_ERROR;
@@ -9,7 +10,7 @@ import static it.unimib.wordino.main.util.Constants.WEAK_PASSWORD_ERROR;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-
+import it.unimib.wordino.main.model.PlayerStats;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
@@ -18,6 +19,8 @@ import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import it.unimib.wordino.main.Model.User;
 
@@ -53,7 +56,9 @@ public class UserAuthenticationRemoteDataSource extends BaseUserAuthenticationRe
                 if (firebaseUser != null) {
                     userResponseCallback.onSuccessFromAuthentication(
                             new User(firebaseUser.getDisplayName(), email, firebaseUser.getUid())
+
                     );
+
                 } else {
                     userResponseCallback.onFailureFromAuthentication(getErrorMessage(task.getException()));
                 }
@@ -63,6 +68,24 @@ public class UserAuthenticationRemoteDataSource extends BaseUserAuthenticationRe
             }
         });
     }
+
+    /*private void saveUserStats(User user) { //TODO Da cancellare
+        // Initialize default statistics
+        PlayerStats defaultStats = new PlayerStats();
+
+        // Save the user statistics in Firebase
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance(FIREBASE_REALTIME_DATABASE);
+        DatabaseReference databaseReference = firebaseDatabase.getReference().getRef();
+        DatabaseReference userRef = databaseReference.child("users").child(user.getIdToken()).child("stats");
+        userRef.setValue(defaultStats).addOnSuccessListener(aVoid -> {
+            Log.d(TAG, "User stats saved successfully");
+            userResponseCallback.onSuccessFromAuthentication(user);
+        }).addOnFailureListener(e -> {
+            Log.w(TAG, "Failed to save user stats", e);
+            userResponseCallback.onFailureFromAuthentication("Failed to save user stats: " + e.getMessage());
+        });
+    }*/
+
 
     @Override
     public void logout() { // Logout

@@ -26,7 +26,7 @@ import it.unimib.wordino.main.Model.User;
 import it.unimib.wordino.main.data.Result;
 
 public class RegistrationFragment extends Fragment {
-    static final String TAG = LoginActivity.class.getSimpleName();
+    static final String TAG = RegistrationFragment.class.getSimpleName();
     private FragmentRegistrationBinding binding;
     private UserViewModel userViewModel;
 
@@ -46,37 +46,30 @@ public class RegistrationFragment extends Fragment {
         binding = FragmentRegistrationBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
-
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         binding.registerButton.setOnClickListener(v -> {
             String email = binding.emailEditText.getText().toString().trim();
             String password = binding.passwordEditText.getText().toString().trim();
 
-            if (isEmailOk(email) & isPasswordOk(password)) {
+            if (isEmailOk(email) && isPasswordOk(password)) {
                 binding.container.setVisibility(View.VISIBLE);
-                if (!userViewModel.isAuthenticationError()) {
-                    userViewModel.getUserMutableLiveData(email, password, false).observe(
-                            getViewLifecycleOwner(), result -> {
-                                if (result.isSuccess()) {
-                                    User user = ((Result.UserResponseSuccess) result).getData();
-                                    userViewModel.setAuthenticationError(false);
-                                    Navigation.findNavController(view).navigate(
-                                            R.id.howToPlayFragment);
-                                    Log.d(TAG, "Account created on firebase: " + email);
-                                } else {
-                                    userViewModel.setAuthenticationError(true);
-                                    Snackbar.make(requireActivity().findViewById(android.R.id.content),
-                                            getErrorMessage(((Result.Error) result).getMessage()),
-                                            Snackbar.LENGTH_SHORT).show();
-                                }
-                            });
-                } else {
-                    userViewModel.getUser(email, password, false);
-                }
+                userViewModel.getUserMutableLiveData(email, password,false).observe(getViewLifecycleOwner(), result -> {
+                    if (result.isSuccess()) {
+                        User user = ((Result.UserResponseSuccess) result).getData();
+                        userViewModel.setAuthenticationError(false);
+                        // After successful registration, save the user stats
+                        userViewModel.saveUserStats(user);
+                        Navigation.findNavController(view).navigate(R.id.action_registrationFragment_to_gameActivity);
+                        Log.d(TAG, "Account created and stats initialized on firebase: " + email);
+                    } else {
+                        userViewModel.setAuthenticationError(true);
+                        Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                                getErrorMessage(((Result.Error) result).getMessage()),
+                                Snackbar.LENGTH_SHORT).show();
+                    }
+                });
             } else {
                 userViewModel.setAuthenticationError(true);
                 Snackbar.make(requireActivity().findViewById(android.R.id.content),
@@ -84,6 +77,7 @@ public class RegistrationFragment extends Fragment {
             }
         });
     }
+
 
     private String getErrorMessage(String message) {
         switch(message) {

@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/accountFragment"
-        android:enabled="true"
-        android:icon="@drawable/baseline_account_circle_24"
-        android:title="@string/account"
-        />
-    <item
         android:id="@+id/socialFragment"
         android:enabled="true"
         android:icon="@drawable/baseline_people_24"

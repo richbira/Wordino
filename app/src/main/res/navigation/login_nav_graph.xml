@@ -26,8 +26,8 @@
         android:label="RegistrationFragment"
         tools:layout="@layout/fragment_registration">
         <action
-            android:id="@+id/action_registrationFragment_to_howToPlayFragment"
-            app:destination="@id/howToPlayFragment" />
+            android:id="@+id/action_registrationFragment_to_gameActivity"
+            app:destination="@id/gameActivity" />
     </fragment>
     <activity
         android:id="@+id/gameActivity"
@@ -43,9 +43,4 @@
             android:id="@+id/action_forgotPasswordFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/howToPlayFragment"
-        android:name="it.unimib.wordino.main.ui.HowToPlayFragment"
-        android:label="fragment_how_to_play"
-        tools:layout="@layout/fragment_how_to_play" />
 </navigation>

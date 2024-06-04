@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel;
 
 import it.unimib.wordino.main.Model.User;
 import it.unimib.wordino.main.data.Result;
+import it.unimib.wordino.main.model.PlayerStats;
 import it.unimib.wordino.main.repository.user.IUserRepository;
 
 public class UserViewModel extends ViewModel { // ViewModel per la gestione dell'utente
@@ -26,6 +27,7 @@ public class UserViewModel extends ViewModel { // ViewModel per la gestione dell
         }
         return userMutableLiveData;
     }
+
     public MutableLiveData<Result> getGoogleUserMutableLiveData(String token) {
         if (userMutableLiveData == null) {
             getUserData(token);
@@ -46,6 +48,7 @@ public class UserViewModel extends ViewModel { // ViewModel per la gestione dell
 
         return userMutableLiveData;
     }
+
     public void getUser(String email, String password, boolean isUserRegistered) {
         userRepository.getUser(email, password, isUserRegistered);
     }
@@ -69,6 +72,12 @@ public class UserViewModel extends ViewModel { // ViewModel per la gestione dell
     public void resetPassword(String email) {
         userRepository.resetPassword(email);
     }
+
+    public void saveUserStats(User user) {
+        // Assumi che PlayerStats sia inizializzato al momento della creazione dell'utente o qui
+        PlayerStats stats = new PlayerStats();  // Dovresti configurare i valori iniziali di PlayerStats
     }
+}
+
 
 

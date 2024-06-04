@@ -99,23 +99,6 @@ public class UserRepository implements IUserRepository, UserResponseCallback { /
     public void onSuccessLogout() {
 
     }
-
-    public void onSuccessDeletion() {
-        Result.UserResponseSuccess result = new Result.UserResponseSuccess(null);
-        userMutableLiveData.postValue(result);
-    }
-
-    public void onFailureFromRemote(Exception exception) {
-
-    }
-
-    public void onFailureFromLocal(Exception exception) {
-
-    }
-
-    public void onFailureFromCloud(Exception exception) {
-
-    }
     @Override
     public void resetPassword(String email){
         userRemoteDataSource.resetPassword(email);
