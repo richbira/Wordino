@@ -1,24 +1,18 @@
 package it.unimib.wordino.main.ui;
 
-import static it.unimib.wordino.main.util.Constants.PACKAGE_NAME;
-
-import android.app.AlertDialog;
 import android.util.Log;
-import android.widget.TextView;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.util.Objects;
 
-import it.unimib.wordino.R;
 import it.unimib.wordino.main.model.GameBoard;
 import it.unimib.wordino.main.model.Result;
 import it.unimib.wordino.main.repository.IWordRepositoryLD;
 
-public class GameBoardViewModel extends ViewModel {
-
-    private static final String TAG = GameBoardViewModel.class.getSimpleName();
+public class GameBoardViewModelTraining extends ViewModel {
+    private static final String TAG = GameBoardViewModelTraining.class.getSimpleName();
 
     private final IWordRepositoryLD wordRepositoryLD;
 
@@ -28,11 +22,12 @@ public class GameBoardViewModel extends ViewModel {
 
     public int currentLine = 0;
     public int currentLetter = 0;
+    public int score = 0;
     public Boolean fiveLetterWord = false;
     public Boolean enterIsPressed = false;
     private String winloss = "";
 
-    public GameBoardViewModel(IWordRepositoryLD wordRepositoryLD){
+    public GameBoardViewModelTraining(IWordRepositoryLD wordRepositoryLD){
         this.wordRepositoryLD = wordRepositoryLD;
 
     }
@@ -54,7 +49,7 @@ public class GameBoardViewModel extends ViewModel {
 
     public MutableLiveData<Result> getRandomWord(){
         if (dailyWord == null) {
-            dailyWord = wordRepositoryLD.fetchRandomWord();//todo mettere check se la daily è scaduta
+            dailyWord = wordRepositoryLD.fetchRandomWord();
             Log.d(TAG, "fetch dailyWord");
         }
         return dailyWord;
@@ -62,8 +57,8 @@ public class GameBoardViewModel extends ViewModel {
 
     public int getCurrentLine(){ return currentLine;}
     public Boolean getEnterIsPressed() {return enterIsPressed;}
-
     public String getWinloss() {return winloss;}
+    public int getScore() {return score;}
 
 
 
@@ -79,19 +74,21 @@ public class GameBoardViewModel extends ViewModel {
 
     public void updateGameBoard(String text) {
 
-            if (Objects.equals(text, "CANC")) {
-                findNextLetter(-1);
-                boardState.getValue().changeValue(currentLine, currentLetter, null);
-            }else if (Objects.equals(text, "ENTER")) {
-                enterPressed();
-            }
+        winloss = "";
 
-            else {
-                boardState.getValue().changeValue(currentLine, currentLetter, text + "w");
-                findNextLetter(1);
-            }
+        if (Objects.equals(text, "CANC")) {
+            findNextLetter(-1);
+            boardState.getValue().changeValue(currentLine, currentLetter, null);
+        }else if (Objects.equals(text, "ENTER")) {
+            enterPressed();
+        }
 
-            boardState.setValue(this.boardState.getValue());
+        else {
+            boardState.getValue().changeValue(currentLine, currentLetter, text + "w");
+            findNextLetter(1);
+        }
+
+        boardState.setValue(this.boardState.getValue());
 
     }
 
@@ -163,14 +160,22 @@ public class GameBoardViewModel extends ViewModel {
             Log.d(TAG, "daily = " + dailyWordString);
             if (guessedWordString.equals(dailyWordString)) { //todo finire di implementare winloss
                 winloss = "win";
+                score++;
                 Log.d(TAG, "Hai vinto!");
+                resetGame();
+                dailyWord = wordRepositoryLD.fetchRandomWord();
+                Log.d(TAG, "fetch dailyWord");
             } else if (currentLine != 5) {
                 currentLine++;
                 currentLetter = 0;
                 fiveLetterWord = false;
             } else {
                 winloss = "loss";
+                score = 0;
                 Log.d(TAG, "Hai perso!");
+                resetGame();
+                dailyWord = wordRepositoryLD.fetchRandomWord();
+                Log.d(TAG, "fetch dailyWord");
             }
 
             boardState.setValue(this.boardState.getValue());
@@ -180,13 +185,11 @@ public class GameBoardViewModel extends ViewModel {
 
 
     private void resetGame() {
-        boardState.getValue().reset();
         currentLetter = 0;
         currentLine = 0;
         fiveLetterWord = false;
+        enterIsPressed = false;
+        boardState.getValue().reset();
     }
-
-
-
 
 }

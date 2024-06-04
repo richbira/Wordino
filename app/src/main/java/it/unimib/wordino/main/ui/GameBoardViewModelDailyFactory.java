@@ -6,18 +6,18 @@ import androidx.lifecycle.ViewModelProvider;
 
 import it.unimib.wordino.main.repository.IWordRepositoryLD;
 
-public class GameBoardViewModelFactory implements ViewModelProvider.Factory{
+public class GameBoardViewModelDailyFactory implements ViewModelProvider.Factory{
 
     private final IWordRepositoryLD iWordRepositoryLD;
 
-    public GameBoardViewModelFactory(IWordRepositoryLD iWordRepositoryLD) {
+    public GameBoardViewModelDailyFactory(IWordRepositoryLD iWordRepositoryLD) {
         this.iWordRepositoryLD = iWordRepositoryLD;
     }
 
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        return (T) new GameBoardViewModel(iWordRepositoryLD);
+        return (T) new GameBoardViewModelDaily(iWordRepositoryLD);
     }
 }
 

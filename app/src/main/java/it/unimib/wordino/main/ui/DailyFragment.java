@@ -1,6 +1,5 @@
 package it.unimib.wordino.main.ui;
 
-import static it.unimib.wordino.main.util.Constants.ENGLISH;
 import static it.unimib.wordino.main.util.Constants.PACKAGE_NAME;
 
 
@@ -24,27 +23,15 @@ import android.widget.TextView;
 import it.unimib.wordino.R;
 import it.unimib.wordino.main.model.GameBoard;
 import it.unimib.wordino.main.model.Result;
-import it.unimib.wordino.main.repository.IRandomWordRepository;
-import it.unimib.wordino.main.repository.ISpecificWordRepository;
 import it.unimib.wordino.main.repository.IWordRepositoryLD;
-import it.unimib.wordino.main.repository.RandomWordRepository;
-import it.unimib.wordino.main.repository.SpecificWordRepository;
-import it.unimib.wordino.main.util.ResponseCallBackApi;
 import it.unimib.wordino.main.util.ServiceLocator;
 
-
-/**
- * A simple {@link Fragment} subclass.
- * ù
- * Use the {@link DailyFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class DailyFragment extends Fragment implements View.OnClickListener {
 
     private static final String TAG = DailyFragment.class.getSimpleName();
     public View progressBar;
     public int currentLine;
-    private GameBoardViewModel gameBoardModel;
+    private GameBoardViewModelDaily gameBoardModel;
 
     public Animator flipAnimation1;
     public Animator flipAnimation2;
@@ -75,7 +62,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
 
         gameBoardModel = new ViewModelProvider(
                 requireActivity(),
-                new GameBoardViewModelFactory(wordRepositoryLD)).get(GameBoardViewModel.class);
+                new GameBoardViewModelDailyFactory(wordRepositoryLD)).get(GameBoardViewModelDaily.class);
 
 
         gameBoardObserver = new Observer<GameBoard>() {
@@ -84,6 +71,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
                 updateGameBoardUI(gameBoard);
                 currentLine = gameBoardModel.getCurrentLine();
                 if(gameBoardModel.getWinloss() != ""){
+                    Log.d(TAG, "Gameover alert");
                     gameOverAlert(gameBoardModel.getWinloss());
                 }
             }
@@ -218,6 +206,11 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
             Log.d(TAG, "Gameover, tasti disattivati");
         }
     }
+
+    /*  ----------------------------------------------------------------------------------------FUNZIONI DI LOGICA  ----------------------------------------------------------------------------------------*/
+    /*  ----------------------------------------------------------------------------------------FUNZIONI DI LOGICA  ----------------------------------------------------------------------------------------*/
+    /*  ----------------------------------------------------------------------------------------FUNZIONI DI LOGICA  ----------------------------------------------------------------------------------------*/
+
 
     public void keyPressed(String key){
         Log.d(TAG, "Premuto il tasto " + key);
