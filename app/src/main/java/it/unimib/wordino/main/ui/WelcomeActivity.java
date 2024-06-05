@@ -61,7 +61,7 @@ public class WelcomeActivity extends AppCompatActivity {
         userViewModel = new ViewModelProvider(
         this,
         new UserViewModelFactory(userRepository)).get(UserViewModel.class);
-        //checkLoginStatus();
+        checkLoginStatus();
     }
 
     public void startGame() {

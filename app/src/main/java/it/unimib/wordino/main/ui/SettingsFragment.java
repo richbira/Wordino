@@ -14,7 +14,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.CompoundButton;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
@@ -24,6 +23,7 @@ import java.security.GeneralSecurityException;
 
 import it.unimib.wordino.R;
 import it.unimib.wordino.databinding.FragmentSettingsBinding;
+import it.unimib.wordino.main.model.UserStat;
 import it.unimib.wordino.main.repository.user.IUserRepository;
 import it.unimib.wordino.main.ui.welcome.UserViewModel;
 import it.unimib.wordino.main.ui.welcome.UserViewModelFactory;
@@ -81,9 +81,18 @@ public class SettingsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         binding.logoutButton.setOnClickListener(v->{
             userViewModel.logout();
-            Navigation.findNavController(view).navigate(R.id.action_settingsFragment_to_loginFragment2);
+            Navigation.findNavController(view).navigate(R.id.action_settingsFragment_to_welcomeActivity);
             requireActivity().finish();
         });
+        binding.howToPlayButton.setOnClickListener(v -> {
+            Log.d(TAG, "cliccato how to play: ");
+            //Navigation.findNavController(view).navigate(R.id.); //TODO mettere screen How to play, immagine?
+        });
+
+        //TODO Da spostare su Score
+        //UserStat stats = userViewModel.getLoggedUser().getPlayerStats();
+        //Integer gamesPlayed = stats.getGamesPlayed();
+        //Log.d(TAG, "gamesPlayed: " + gamesPlayed);
         SwitchMaterial darkModeSwitch = view.findViewById(R.id.dark_mode_switch); darkModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) { //todo fare la darktheme bene

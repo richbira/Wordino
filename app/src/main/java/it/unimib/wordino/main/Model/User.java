@@ -4,22 +4,27 @@ import android.os.Parcelable;
 
 import com.google.firebase.database.Exclude;
 
-import it.unimib.wordino.main.model.PlayerStats;
+import it.unimib.wordino.main.model.UserStat;
 
 public class User implements Parcelable {
     private String name;
     private String email;
     private String idToken;
 
-    PlayerStats playerStats;
+    UserStat userStat;
 
     //TODO Dao per salvare le statistiche del player? -> Usi Rooom
 
+    public User(String name, String email, String idToken, UserStat userStat) {
+        this.name = name;
+        this.email = email;
+        this.idToken = idToken;
+        this.userStat = new UserStat();
+    }
     public User(String name, String email, String idToken) {
         this.name = name;
         this.email = email;
         this.idToken = idToken;
-        playerStats = new PlayerStats();
     }
 
     public String getName() {
@@ -92,11 +97,11 @@ public class User implements Parcelable {
         }
     };
 
-    public PlayerStats getPlayerStats() {
-        return playerStats;
+    public UserStat getPlayerStats() {
+        return userStat;
     }
 
-    public void setPlayerStats(PlayerStats playerStats) {
-        this.playerStats = playerStats;
+    public void setPlayerStats(UserStat userStat) {
+        this.userStat = userStat;
     }
 }

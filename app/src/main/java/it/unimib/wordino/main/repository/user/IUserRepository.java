@@ -15,6 +15,5 @@ public interface IUserRepository { // Interfaccia per la gestione dell'utente
     void signUp(String email, String password);
     void signIn(String email, String password);
     void signInWithGoogle(String token);
-
     void resetPassword(String email);
 }

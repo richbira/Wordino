@@ -21,8 +21,8 @@
         android:label="fragment_settings"
         tools:layout="@layout/fragment_settings" >
         <action
-            android:id="@+id/action_settingsFragment_to_loginFragment2"
-            app:destination="@id/loginFragment2" />
+            android:id="@+id/action_settingsFragment_to_welcomeActivity"
+            app:destination="@id/welcomeActivity" />
     </fragment>
     <fragment
         android:id="@+id/socialFragment"
@@ -34,8 +34,9 @@
         android:name="it.unimib.wordino.main.ui.TrainingFragment"
         android:label="fragment_training"
         tools:layout="@layout/fragment_training" />
-    <fragment
-        android:id="@+id/loginFragment2"
-        android:name="it.unimib.wordino.main.ui.welcome.LoginFragment"
-        android:label="LoginFragment" />
+    <activity
+        android:id="@+id/welcomeActivity"
+        android:name="it.unimib.wordino.main.ui.WelcomeActivity"
+        android:label="activity_welcome"
+        tools:layout="@layout/activity_welcome" />
 </navigation>

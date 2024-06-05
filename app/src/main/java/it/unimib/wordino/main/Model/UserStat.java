@@ -1,11 +1,9 @@
 package it.unimib.wordino.main.model;
 
-import androidx.annotation.NonNull;
-
 import java.util.HashMap;
 import java.util.Map;
 
-public class PlayerStats {
+public class UserStat {
     private int gamesPlayed;
     private int gamesWon;
     private int gamesLost;
@@ -14,7 +12,7 @@ public class PlayerStats {
     private int HighscoreTraining;
     private Map<String, Integer> guessDistribution;
 
-    public PlayerStats() {
+    public UserStat() {
         this.gamesPlayed = 0;
         this.gamesWon = 0;
         this.gamesLost = 0;
@@ -87,7 +85,7 @@ public class PlayerStats {
 
     @Override
     public String toString() {
-        return "PlayerStats{" +
+        return "UserStat{" +
                 "gamesPlayed=" + gamesPlayed +
                 ", gamesWon=" + gamesWon +
                 ", gamesLost=" + gamesLost +

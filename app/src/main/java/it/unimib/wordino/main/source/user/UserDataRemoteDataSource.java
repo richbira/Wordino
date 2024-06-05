@@ -16,11 +16,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.Set;
-
 import it.unimib.wordino.main.Model.User;
-import it.unimib.wordino.main.model.PlayerStats;
-import it.unimib.wordino.main.util.SharedPreferencesUtil;
+import it.unimib.wordino.main.model.UserStat;
 
 /**
  * Class that gets the user information using Firebase Realtime Database.
@@ -35,10 +32,8 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance(FIREBASE_REALTIME_DATABASE); //TODO Da settare costante
         databaseReference = firebaseDatabase.getReference().getRef();
     }
-
-    public void saveUserData(User user) {
-        DatabaseReference userRef = databaseReference.child(FIREBASE_USERS_COLLECTION).child(user.getIdToken());
-        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+        public void saveUserData(User user) {
+        databaseReference.child(FIREBASE_USERS_COLLECTION).child(user.getIdToken()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
@@ -46,27 +41,28 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource {
                     userResponseCallback.onSuccessFromRemoteDatabase(user);
                 } else {
                     Log.d(TAG, "User not present in Firebase Realtime Database");
-                    // Salvataggio dell'utente
-                    userRef.setValue(user)
-                            .addOnSuccessListener(aVoid -> {
-                                userResponseCallback.onSuccessFromRemoteDatabase(user);
-                                // Salvataggio delle statistiche solo se l'utente viene salvato con successo
-                                PlayerStats playerStats = new PlayerStats(); // Assicurati che PlayerStats sia correttamente inizializzato
-                                userRef.child(FIREBASE_STATS_COLLECTION).setValue(playerStats)
-                                        .addOnSuccessListener(voidStats -> userResponseCallback.onSuccessFromRemoteDatabase(user)) // Ho cambiato 'aVoid' in 'voidStats'
-                                        .addOnFailureListener(e -> userResponseCallback.onFailureFromRemoteDatabase("Failed to save player stats: " + e.getLocalizedMessage()));
+                    databaseReference.child(FIREBASE_USERS_COLLECTION).child(user.getIdToken()).setValue(user)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    userResponseCallback.onSuccessFromRemoteDatabase(user);
+                                }
                             })
-                            .addOnFailureListener(e -> userResponseCallback.onFailureFromRemoteDatabase("Failed to save user: " + e.getLocalizedMessage()));
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    userResponseCallback.onFailureFromRemoteDatabase(e.getLocalizedMessage());
+                                }
+                            });
                 }
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                userResponseCallback.onFailureFromRemoteDatabase("Database error: " + databaseError.getMessage());
+            public void onCancelled(@NonNull DatabaseError error) {
+                userResponseCallback.onFailureFromRemoteDatabase(error.getMessage());
             }
         });
     }
-
 
 
     //TODO aggiungo i metodi per aggiornare le statistiche del player

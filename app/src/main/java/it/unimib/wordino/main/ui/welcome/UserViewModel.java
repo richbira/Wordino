@@ -1,11 +1,13 @@
 package it.unimib.wordino.main.ui.welcome;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import it.unimib.wordino.main.Model.User;
 import it.unimib.wordino.main.data.Result;
-import it.unimib.wordino.main.model.PlayerStats;
+import it.unimib.wordino.main.model.UserStat;
 import it.unimib.wordino.main.repository.user.IUserRepository;
 
 public class UserViewModel extends ViewModel { // ViewModel per la gestione dell'utente
@@ -74,8 +76,8 @@ public class UserViewModel extends ViewModel { // ViewModel per la gestione dell
     }
 
     public void saveUserStats(User user) {
-        // Assumi che PlayerStats sia inizializzato al momento della creazione dell'utente o qui
-        PlayerStats stats = new PlayerStats();  // Dovresti configurare i valori iniziali di PlayerStats
+        // Assumi che UserStat sia inizializzato al momento della creazione dell'utente o qui
+        UserStat stats = new UserStat();  // Dovresti configurare i valori iniziali di UserStat
     }
 }
 
