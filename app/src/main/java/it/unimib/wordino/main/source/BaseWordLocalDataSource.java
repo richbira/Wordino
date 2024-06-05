@@ -1,5 +1,6 @@
 package it.unimib.wordino.main.source;
 
+import it.unimib.wordino.main.model.Highscore;
 import it.unimib.wordino.main.model.wordmodel.Word;
 
 public abstract class BaseWordLocalDataSource {
@@ -10,5 +11,7 @@ public abstract class BaseWordLocalDataSource {
     public abstract void getWord(Word word);
 
     public abstract void insertWord(Word word);
+    public abstract void updateHighscores(Highscore highscore);
+    public abstract void loadHighscoreLadder();
 
 }

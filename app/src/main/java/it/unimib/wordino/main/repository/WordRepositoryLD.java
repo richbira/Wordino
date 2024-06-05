@@ -4,8 +4,10 @@ import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
+import java.util.List;
 import java.util.Objects;
 
+import it.unimib.wordino.main.model.Highscore;
 import it.unimib.wordino.main.model.Result;
 import it.unimib.wordino.main.model.wordmodel.Word;
 import it.unimib.wordino.main.source.BaseWordLocalDataSource;
@@ -18,6 +20,7 @@ public class WordRepositoryLD implements IWordRepositoryLD, WordCallback {
 
     private final MutableLiveData<Result> guessedWord;
     private final MutableLiveData<Result> randomWord;
+    private final MutableLiveData<List<Highscore>> highscores;
     private final BaseWordRemoteDataSource wordRemoteDataSource;
     private final BaseWordLocalDataSource wordLocalDataSource;
 
@@ -29,6 +32,7 @@ public class WordRepositoryLD implements IWordRepositoryLD, WordCallback {
 
         guessedWord = new MutableLiveData<>();
         randomWord = new MutableLiveData<>();
+        highscores = new MutableLiveData<>();
         this.wordRemoteDataSource = wordRemoteDataSource;
         this.wordLocalDataSource = wordLocalDataSource;
         this.wordRemoteDataSource.setWordCallback(this);
@@ -40,7 +44,6 @@ public class WordRepositoryLD implements IWordRepositoryLD, WordCallback {
         wordRemoteDataSource.getRandomWord();
         return randomWord;
     }
-
     @Override
     public void fetchSpecificWord(String word) {
         wordRemoteDataSource.getSpecificWord(word);
@@ -51,11 +54,14 @@ public class WordRepositoryLD implements IWordRepositoryLD, WordCallback {
         return guessedWord;
     }
 
-    @Override
-    public void saveWordInDatabase(Word word) {
-        wordLocalDataSource.insertWord(word);
+    public void saveHighscore(Highscore highscore){
+        wordLocalDataSource.updateHighscores(highscore);
     }
 
+    public MutableLiveData<List<Highscore>> getHighscores(){
+        wordLocalDataSource.loadHighscoreLadder();
+        return highscores;
+    }
 
 
     public void onSuccessFromRemoteRandom(String word){
@@ -95,16 +101,16 @@ public class WordRepositoryLD implements IWordRepositoryLD, WordCallback {
     @Override
     public void onFailureFromRemoteSpecificCheck(String exception){
         Log.d(TAG, exception);
-        guessedWord.postValue(new Result.Error("CHECKERROR")); //todo qui è tentativo
+        guessedWord.postValue(new Result.Error("CHECKERROR"));
     }
 
     @Override
-    public void onSuccessFromLocal(Word word){
-        //post value per il livedata
+    public void onSuccessFromLocal(List<Highscore> newhighscores){
+        highscores.postValue(newhighscores); //todo fare forse il wrapper per highscore per vedere se è un error o meno
     }
     @Override
     public void onFailureFromLocal(String exception){
-
+        Log.d(TAG, "Errore : " + exception);
     }
 
 }

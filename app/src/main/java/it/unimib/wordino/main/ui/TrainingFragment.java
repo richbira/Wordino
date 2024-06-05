@@ -21,8 +21,11 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.List;
+
 import it.unimib.wordino.R;
 import it.unimib.wordino.main.model.GameBoard;
+import it.unimib.wordino.main.model.Highscore;
 import it.unimib.wordino.main.model.Result;
 import it.unimib.wordino.main.repository.IWordRepositoryLD;
 import it.unimib.wordino.main.util.ServiceLocator;
@@ -42,6 +45,8 @@ public class TrainingFragment extends Fragment implements View.OnClickListener {
     public Observer<GameBoard> gameBoardObserver;
     public Observer<Result> wordCheckObserver;
     public Observer<Result> randomWordObserver;
+
+    public Observer<List<Highscore>> highscoreObserver;
 
 
     public TrainingFragment() {
@@ -74,7 +79,6 @@ public class TrainingFragment extends Fragment implements View.OnClickListener {
                     clearKeyColors();
                 }
                 updateGameBoardUI(gameBoard);
-                currentLine = gameBoardModel.getCurrentLine();
             }
         };
 
@@ -105,7 +109,20 @@ public class TrainingFragment extends Fragment implements View.OnClickListener {
 
             }
         };
+
+        highscoreObserver = new Observer<List<Highscore>>() {
+            @Override
+            public void onChanged(@Nullable List<Highscore> scores) {
+                Log.d(TAG, "INIZIO highscore OBSERVER");
+                if (scores != null){
+
+                    progressBar.setVisibility(View.GONE);
+                }
+            }
+        };
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -173,6 +190,7 @@ public class TrainingFragment extends Fragment implements View.OnClickListener {
         gameBoardModel.getRandomWord().observe(getViewLifecycleOwner(), randomWordObserver);
         gameBoardModel.getGuessedWord().observe(getViewLifecycleOwner(), wordCheckObserver);
 
+
     }
 
     @Override
@@ -229,6 +247,7 @@ public class TrainingFragment extends Fragment implements View.OnClickListener {
         updateScoreBox();
         String wordCode = "";
         String colorCode = "";
+        Log.d(TAG, "currentLine: " + currentLine);
         for (int i = 0; i < (currentLine+1); i++){
             wordCode = "";
             colorCode = "";
@@ -239,6 +258,8 @@ public class TrainingFragment extends Fragment implements View.OnClickListener {
                     changeBoxText(i, j, gameBoard.getValue(i, j).charAt(0) + "");
                 }else changeBoxText(i, j, "");
             }
+            Log.d(TAG, "word: "+ wordCode);
+            Log.d(TAG, "color: "+ colorCode);
 
             changeBoxColor(i, colorCode);
             changeKeyColor(colorCode, wordCode);
@@ -268,25 +289,25 @@ public class TrainingFragment extends Fragment implements View.OnClickListener {
             flipAnimation4.start();
             flipAnimation5.start();
         }
-
+        currentLine = gameBoardModel.getCurrentLine();
         if (code != "") {
-            for (int j = 1; j < 6; j++) {
-                if (j < code.length() + 1) {
+            for (int j = 0; j < 5; j++) {
+                if (j < code.length()) {
 
-                    boxId = "word_" + i + j;
+                    boxId = "word_" + i + (j+1);
                     TextView currentBox = (TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", PACKAGE_NAME));
-                    if (code.charAt(j - 1) == 'g') {
+                    if (code.charAt(j) == 'g') {
                         currentBox.setBackgroundResource(R.drawable.border_green);
-                    } else if (code.charAt(j - 1) == 'y') {
+                    } else if (code.charAt(j) == 'y') {
                         currentBox.setBackgroundResource(R.drawable.border_yellow);
-                    } else if (code.charAt(j - 1) == 'b') {
+                    } else if (code.charAt(j) == 'b') {
                         currentBox.setBackgroundResource(R.drawable.border_grey);
                     }
                 }
             }
 
         }else{ //questo ramo serve per il reset, a rendere bianche le caselle con valore null invece di w
-
+                Log.d(TAG, "Ramo in caso code = null");
             for (int j = 1; j < 6; j++) {
                 boxId = "word_" + i + j;
                 TextView currentBox = (TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", PACKAGE_NAME));

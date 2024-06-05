@@ -1,15 +1,11 @@
 package it.unimib.wordino.main.ui;
-
+/*
 import static it.unimib.wordino.main.util.Constants.PACKAGE_NAME;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,57 +16,54 @@ import android.widget.TextView;
 import java.util.List;
 
 import it.unimib.wordino.R;
-import it.unimib.wordino.main.model.GameBoard;
 import it.unimib.wordino.main.model.Highscore;
 import it.unimib.wordino.main.repository.HighscoreRepository;
 import it.unimib.wordino.main.repository.IHighscoreRepository;
-import it.unimib.wordino.main.repository.IWordRepositoryLD;
 import it.unimib.wordino.main.util.ResponseCallBackDb;
-import it.unimib.wordino.main.util.ServiceLocator;
 
-public class SocialFragment extends Fragment {
+
+public class SocialFragment extends Fragment implements ResponseCallBackDb {
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String TAG = SocialFragment.class.getSimpleName();
-    private ScoresViewModel highscoresModel;
-    private Observer<List<Highscore>> highscoresObserver;
+
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
+
+    private String mParam1;
+    private String mParam2;
+
+    private List<Highscore> loadedHighscores;
+    private IHighscoreRepository iHighscoreRepository;
 
 
     public SocialFragment() {
         // Required empty public constructor
     }
 
+
     public static SocialFragment newInstance(String param1, String param2) {
         SocialFragment fragment = new SocialFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
 
-        IWordRepositoryLD wordRepositoryLD =
-                ServiceLocator.getInstance().getWordRepositoryLD(requireActivity().getApplication());
+        iHighscoreRepository = new HighscoreRepository(requireActivity().getApplication(), this);
 
-        highscoresModel = new ViewModelProvider(
-                requireActivity(),
-                new HighscoresViewModelFactory(wordRepositoryLD)).get(ScoresViewModel.class);
+        iHighscoreRepository.loadHighscoreLadder();
 
-        highscoresObserver = new Observer<List<Highscore>>() {
-            @Override
-            public void onChanged(@Nullable List<Highscore> highscores) {
-                Log.d(TAG, "gameboard Onchanged");
-                if (highscores != null) {
-                    loadHighScores(highscores);
-                }else{
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setTitle("Error");
-                    builder.setMessage("There are no recorded highscores");
-                    AlertDialog alertDialog = builder.create();
-                    alertDialog.show();
-                }
-            }
-        };
+
     }
 
     @Override
@@ -83,8 +76,25 @@ public class SocialFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        loadHighScores(loadedHighscores);
 
-        highscoresModel.getHighscores().observe(getViewLifecycleOwner(), highscoresObserver);
+
+    }
+
+    @Override
+    public void onSuccess(List<Highscore> highscores) {
+        Log.d(TAG, "Success! ---> " + highscores.toString());
+        loadedHighscores = highscores;
+
+    }
+
+    @Override
+    public void onFailure (String errorMessage){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Error");
+        builder.setMessage(errorMessage);
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
 
     }
 
@@ -102,3 +112,4 @@ public class SocialFragment extends Fragment {
     }
 
 }
+*/

@@ -1,6 +1,9 @@
 
 package it.unimib.wordino.main.source;
 
+import java.util.List;
+
+import it.unimib.wordino.main.model.Highscore;
 import it.unimib.wordino.main.model.wordmodel.Word;
 
 public interface WordCallback {
@@ -10,6 +13,6 @@ public interface WordCallback {
     void onFailureFromRemoteSpecificCheck(String exception);
     void onSuccessFromRemoteRandom(String word);
     void onFailureFromRemoteRandom(String exception);
-    void onSuccessFromLocal(Word word);
+    void onSuccessFromLocal(List<Highscore> highscores);
     void onFailureFromLocal(String exception);
 }

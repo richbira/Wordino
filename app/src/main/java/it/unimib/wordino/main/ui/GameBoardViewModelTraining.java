@@ -5,9 +5,11 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 import it.unimib.wordino.main.model.GameBoard;
+import it.unimib.wordino.main.model.Highscore;
 import it.unimib.wordino.main.model.Result;
 import it.unimib.wordino.main.repository.IWordRepositoryLD;
 
@@ -171,6 +173,7 @@ public class GameBoardViewModelTraining extends ViewModel {
                 fiveLetterWord = false;
             } else {
                 winloss = "loss";
+                wordRepositoryLD.saveHighscore(new Highscore(score, LocalDateTime.now().toString()));
                 score = 0;
                 Log.d(TAG, "Hai perso!");
                 resetGame();

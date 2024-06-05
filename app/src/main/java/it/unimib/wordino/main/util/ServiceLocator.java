@@ -29,6 +29,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class ServiceLocator {
     private static volatile ServiceLocator INSTANCE = null;
+
     private ServiceLocator() {}
 
     public static ServiceLocator getInstance() {
