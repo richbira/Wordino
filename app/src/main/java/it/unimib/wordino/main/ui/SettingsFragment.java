@@ -1,9 +1,14 @@
 package it.unimib.wordino.main.ui;
 
+import static it.unimib.wordino.main.util.Constants.ENCRYPTED_SHARED_PREFERENCES_FILE_NAME;
+import static it.unimib.wordino.main.util.Constants.ID_TOKEN;
+
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,17 +19,29 @@ import android.widget.CompoundButton;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+
 import it.unimib.wordino.R;
+import it.unimib.wordino.databinding.FragmentSettingsBinding;
+import it.unimib.wordino.main.repository.user.IUserRepository;
+import it.unimib.wordino.main.ui.welcome.UserViewModel;
+import it.unimib.wordino.main.ui.welcome.UserViewModelFactory;
+import it.unimib.wordino.main.util.DataEncryptionUtil;
+import it.unimib.wordino.main.util.ServiceLocator;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link SettingsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SettingsFragment extends Fragment implements View.OnClickListener{
+public class SettingsFragment extends Fragment {
 
-    private static final String TAG = TrainingFragment.class.getSimpleName();
-
+    private static final String TAG = SettingsFragment.class.getSimpleName();
+    private FragmentSettingsBinding binding;
+    private UserViewModel userViewModel;
+    private DataEncryptionUtil dataEncryptionUtil;
+    private String idToken;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -40,21 +57,33 @@ public class SettingsFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
+        dataEncryptionUtil = new DataEncryptionUtil(requireActivity().getApplication());
+        IUserRepository userRepository = ServiceLocator.getInstance().
+                getUserRepository(getActivity().getApplication());
+        userViewModel = new ViewModelProvider(
+                this, new UserViewModelFactory(userRepository)).get(UserViewModel.class);
+        try {
+            idToken = dataEncryptionUtil.readSecretDataWithEncryptedSharedPreferences(
+                    ENCRYPTED_SHARED_PREFERENCES_FILE_NAME, ID_TOKEN);
+        } catch (GeneralSecurityException | IOException e) {
+            e.printStackTrace();
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_settings, container, false);
+        binding = FragmentSettingsBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        Button exitButton = view.findViewById(R.id.exit_account); exitButton.setOnClickListener(this);
+        binding.logoutButton.setOnClickListener(v->{
+            userViewModel.logout();
+            Navigation.findNavController(view).navigate(R.id.action_settingsFragment_to_loginFragment2);
+            requireActivity().finish();
+        });
         SwitchMaterial darkModeSwitch = view.findViewById(R.id.dark_mode_switch); darkModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) { //todo fare la darktheme bene
@@ -77,13 +106,4 @@ public class SettingsFragment extends Fragment implements View.OnClickListener{
             }
         });
     }
-
-    @Override
-    public void onClick(View v) {
-
-        int id = v.getId();
-        if (id == R.id.exit_account) Log.d(TAG, "Hai cliccato exit acc");
-    }
-
-
 }
