@@ -22,8 +22,6 @@ import java.util.List;
 import it.unimib.wordino.R;
 import it.unimib.wordino.main.model.GameBoard;
 import it.unimib.wordino.main.model.Highscore;
-import it.unimib.wordino.main.repository.HighscoreRepository;
-import it.unimib.wordino.main.repository.IHighscoreRepository;
 import it.unimib.wordino.main.repository.IWordRepositoryLD;
 import it.unimib.wordino.main.util.ResponseCallBackDb;
 import it.unimib.wordino.main.util.ServiceLocator;
