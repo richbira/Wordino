@@ -91,15 +91,12 @@ public class UserViewModel extends ViewModel { // ViewModel per la gestione dell
     public LiveData<UserStat> getUserStats(String tokenId) { // Da mettere nella schermata delle statistiche
         return userRepository.getUserStats(tokenId);
     }
-    public void updateUserStats(UserStat userStat) {
-        userRepository.updateUserStats(getLoggedUser(), userStat); // Assume currentUser is already defined and valid
-    }
-    public void updateGameResult(String tokenId, boolean won, LifecycleOwner lifecycleOwner) {
+    public void updateGameResult(String tokenId, boolean won,Integer guessCount, LifecycleOwner lifecycleOwner) {
         getUserStats(tokenId).observe(lifecycleOwner, userStats -> {
             Log.d(TAG, "updateGameResult: updating stats");
             if (userStats != null) {
                 Log.d(TAG, "stats esistono: " + userStats);
-                userStats.updateStats(won);
+                userStats.updateStats(won,guessCount);
                 userRepository.updateUserStats(getLoggedUser(), userStats);
             } else {
                 Log.d(TAG, "Stats: not available");

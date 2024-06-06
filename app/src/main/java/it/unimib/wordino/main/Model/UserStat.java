@@ -107,12 +107,12 @@ public class UserStat {
     }
 
 
-    public void updateStats(boolean isWin) {
+    public void updateStats(boolean isWin,int guessCount) {
         gamesPlayed++;
         if (isWin) {
             gamesWon++;
             currentStreak++;
-            updateGuessDistribution(3); //gli passo parametro per aggiornare la distribuzione
+            updateGuessDistribution(guessCount); //gli passo parametro per aggiornare la distribuzione
             if (currentStreak > maxStreak) {
                 maxStreak = currentStreak;
             }

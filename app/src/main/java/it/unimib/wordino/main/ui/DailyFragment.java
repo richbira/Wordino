@@ -56,6 +56,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
     private UserViewModel userViewModel;
     private DataEncryptionUtil dataEncryptionUtil;
     private String tokenId;
+    private boolean gameWon;
 
 
 
@@ -92,21 +93,20 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
                 updateGameBoardUI(gameBoard);
                 currentLine = gameBoardModel.getCurrentLine();
                 if(gameBoardModel.getWinloss() != ""){
+
                     Log.d(TAG, "Gameover alert");
                     if(gameBoardModel.getWinloss().equals("win")){
-                        //handleGameEnd(true);
                         Log.d(TAG, "onChanged: WIN");
-                        userViewModel.updateGameResult(tokenId,true,getViewLifecycleOwner());
+                        gameWon = true;
                     } else if(gameBoardModel.getWinloss().equals("lose")){
                         Log.d(TAG, "onChanged: lose");
-                        //handleGameEnd(false);
-                        userViewModel.updateGameResult(tokenId,false,getViewLifecycleOwner());
+                        gameWon = false;
                     }
+                    userViewModel.updateGameResult(tokenId,gameWon,currentLine,getViewLifecycleOwner());
                     gameOverAlert(gameBoardModel.getWinloss());
                 }
             }
         };
-
 
         wordCheckObserver = new Observer<Result>() {
             @Override
@@ -136,18 +136,6 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
             }
         };
     }
-
-    private void handleGameEnd(boolean won) {
-        userViewModel.getUserStats(tokenId).observe(getViewLifecycleOwner(), userStats -> {
-            if (userStats != null) {
-                userStats.updateStats(won);
-                userViewModel.updateUserStats(userStats);
-            } else {
-                Log.d(TAG, "Stats: not available");
-            }
-        });
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
