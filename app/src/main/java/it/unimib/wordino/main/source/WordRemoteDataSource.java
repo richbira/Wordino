@@ -11,7 +11,6 @@ import java.util.List;
 import it.unimib.wordino.main.model.wordmodel.Word;
 import it.unimib.wordino.main.service.DictionaryWordApiService;
 import it.unimib.wordino.main.service.RandomWordApiService;
-import it.unimib.wordino.main.util.ResponseCallBackApi;
 import it.unimib.wordino.main.util.ServiceLocator;
 import retrofit2.Call;
 import retrofit2.Callback;

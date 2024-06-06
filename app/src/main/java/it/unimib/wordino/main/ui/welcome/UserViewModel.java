@@ -2,6 +2,7 @@ package it.unimib.wordino.main.ui.welcome;
 
 import android.util.Log;
 
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -92,6 +93,18 @@ public class UserViewModel extends ViewModel { // ViewModel per la gestione dell
     }
     public void updateUserStats(UserStat userStat) {
         userRepository.updateUserStats(getLoggedUser(), userStat); // Assume currentUser is already defined and valid
+    }
+    public void updateGameResult(String tokenId, boolean won, LifecycleOwner lifecycleOwner) {
+        getUserStats(tokenId).observe(lifecycleOwner, userStats -> {
+            Log.d(TAG, "updateGameResult: updating stats");
+            if (userStats != null) {
+                Log.d(TAG, "stats esistono: " + userStats);
+                userStats.updateStats(won);
+                userRepository.updateUserStats(getLoggedUser(), userStats);
+            } else {
+                Log.d(TAG, "Stats: not available");
+            }
+        });
     }
 
 }
