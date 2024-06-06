@@ -22,7 +22,7 @@ import org.apache.commons.validator.routines.EmailValidator;
 
 import it.unimib.wordino.R;
 import it.unimib.wordino.databinding.FragmentRegistrationBinding;
-import it.unimib.wordino.main.Model.User;
+import it.unimib.wordino.main.model.User;
 import it.unimib.wordino.main.data.Result;
 
 public class RegistrationFragment extends Fragment {

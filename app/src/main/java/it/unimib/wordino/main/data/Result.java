@@ -1,6 +1,6 @@
 package it.unimib.wordino.main.data;
 
-import it.unimib.wordino.main.Model.User;
+import it.unimib.wordino.main.model.User;
 
 /**
  * A generic class that holds a result success w/ data or an error exception.

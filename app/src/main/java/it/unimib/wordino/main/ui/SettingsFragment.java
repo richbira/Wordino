@@ -90,9 +90,19 @@ public class SettingsFragment extends Fragment {
         });
 
         //TODO Da spostare su Score
-        //UserStat stats = userViewModel.getLoggedUser().getPlayerStats();
-        //Integer gamesPlayed = stats.getGamesPlayed();
-        //Log.d(TAG, "gamesPlayed: " + gamesPlayed);
+        // Ottieni l'ID Token e l'email dell'utente loggato + visualizzarli a layout
+        String tokenId = userViewModel.getLoggedUser().getIdToken();
+        String email = userViewModel.getLoggedUser().getEmail();
+        Log.d(TAG, "Settings onViewCreated tokenId User: " + tokenId + " email: " + email);
+
+        userViewModel.getUserStats(tokenId).observe(getViewLifecycleOwner(), userStats -> {
+            if (userStats != null) {
+                // Stampa le statistiche nei log
+                Log.d(TAG, "Stats: " + userStats);
+            } else {
+                Log.d(TAG, "Stats: not available");
+            }
+        });
         SwitchMaterial darkModeSwitch = view.findViewById(R.id.dark_mode_switch); darkModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) { //todo fare la darktheme bene

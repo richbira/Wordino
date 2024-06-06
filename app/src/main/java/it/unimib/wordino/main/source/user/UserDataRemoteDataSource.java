@@ -7,6 +7,8 @@ import static it.unimib.wordino.main.util.Constants.FIREBASE_USERS_COLLECTION;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -16,7 +18,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import it.unimib.wordino.main.Model.User;
+import java.util.HashMap;
+import java.util.Map;
+
+import it.unimib.wordino.main.model.User;
 import it.unimib.wordino.main.model.UserStat;
 
 /**
@@ -27,9 +32,10 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource {
     private static final String TAG = UserDataRemoteDataSource.class.getSimpleName();
 
     private final DatabaseReference databaseReference;
+    private FirebaseDatabase firebaseDatabase;
 
     public UserDataRemoteDataSource() {
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance(FIREBASE_REALTIME_DATABASE); //TODO Da settare costante
+        firebaseDatabase = FirebaseDatabase.getInstance(FIREBASE_REALTIME_DATABASE); //TODO Da settare costante
         databaseReference = firebaseDatabase.getReference().getRef();
     }
         public void saveUserData(User user) {
@@ -63,8 +69,48 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource {
             }
         });
     }
+        //TODO aggiungo i metodi per aggiornare le statistiche del player
+        public LiveData<UserStat> getUserStats(String tokenId) { // prendo le statistiche su firebase di un utente passando tokenId
+            MutableLiveData<UserStat> liveData = new MutableLiveData<>();
+            if (tokenId == null || tokenId.isEmpty()) {
+                Log.e(TAG, "Token ID is null or empty");
+                return liveData; // Returns an empty LiveData object.
+            }
+            databaseReference.child(FIREBASE_USERS_COLLECTION).child(tokenId).child("userStats")
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) { // Legge i dati dal database però lo faccio manuale perchè si spacca la deserilizzazione
+                            UserStat stats = new UserStat(); // Crea un oggetto vuoto di UserStat
+                            stats.setGamesPlayed(dataSnapshot.child("gamesPlayed").getValue(Integer.class));
+                            stats.setGamesWon(dataSnapshot.child("gamesWon").getValue(Integer.class));
+                            stats.setGamesLost(dataSnapshot.child("gamesLost").getValue(Integer.class));
+                            stats.setCurrentStreak(dataSnapshot.child("currentStreak").getValue(Integer.class));
+                            stats.setMaxStreak(dataSnapshot.child("maxStreak").getValue(Integer.class));
+                            stats.setHighscoreTraining(dataSnapshot.child("highscoreTraining").getValue(Integer.class));
+
+                            Map<String, Integer> guessDistribution = new HashMap<>();
+                            for (DataSnapshot entry : dataSnapshot.child("guessDistribution").getChildren()) {
+                                guessDistribution.put(entry.getKey(), entry.getValue(Integer.class));
+                            }
+                            stats.setGuessDistribution(guessDistribution);
+
+                            if (stats != null) {
+                                Log.d(TAG, "Stats trovate " + stats);
+                                liveData.setValue(stats);
+                            } else {
+                                Log.d(TAG, "No stats found for token ID: " + tokenId);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            Log.e(TAG, "Failed to read user stats: " + databaseError.getMessage());
+                        }
+                    });
+            return liveData;
+        }
 
 
-    //TODO aggiungo i metodi per aggiornare le statistiche del player
+
 
 }

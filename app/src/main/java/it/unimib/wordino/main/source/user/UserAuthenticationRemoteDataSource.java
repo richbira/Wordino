@@ -25,7 +25,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import it.unimib.wordino.main.Model.User;
+import it.unimib.wordino.main.model.User;
 import it.unimib.wordino.main.model.UserStat;
 
 
@@ -99,8 +99,7 @@ public class UserAuthenticationRemoteDataSource extends BaseUserAuthenticationRe
                         userResponseCallback.onSuccessFromAuthentication(
                                 new User(firebaseUser.getDisplayName(),
                                         firebaseUser.getEmail(),
-                                        firebaseUser.getUid(),
-                                        new UserStat()
+                                        firebaseUser.getUid()
                                 )
                         );
                     } else {
@@ -136,8 +135,9 @@ public class UserAuthenticationRemoteDataSource extends BaseUserAuthenticationRe
             if (task.isSuccessful()) {
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                 if (firebaseUser != null) {
+                    UserStat userStat = new UserStat();
                     userResponseCallback.onSuccessFromAuthentication(new User(
-                            firebaseUser.getDisplayName(), email, firebaseUser.getUid(),new UserStat()));
+                            firebaseUser.getDisplayName(), email, firebaseUser.getUid()));
                 } else {
                     userResponseCallback.onFailureFromAuthentication(getErrorMessage(task.getException()));
                 }

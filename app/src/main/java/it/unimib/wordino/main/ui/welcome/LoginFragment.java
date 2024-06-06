@@ -50,7 +50,7 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 
 import it.unimib.wordino.R;
-import it.unimib.wordino.main.Model.User;
+import it.unimib.wordino.main.model.User;
 import it.unimib.wordino.main.data.Result;
 import it.unimib.wordino.main.repository.user.IUserRepository;
 import it.unimib.wordino.main.ui.GameActivity;

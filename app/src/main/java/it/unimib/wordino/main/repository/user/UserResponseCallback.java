@@ -1,6 +1,6 @@
 package it.unimib.wordino.main.repository.user;
 
-import it.unimib.wordino.main.Model.User;
+import it.unimib.wordino.main.model.User;
 
 public interface UserResponseCallback { // Interfaccia per la gestione delle risposte dell'utente
     void onSuccessFromAuthentication(User user);
