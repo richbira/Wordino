@@ -13,7 +13,7 @@ public class User implements Parcelable {
     //TODO Dao per salvare le statistiche del player? -> Usi Rooom
 
     public User(String name, String email, String idToken) {
-        this.name = name;
+        this.name = name; //name da togliere
         this.email = email;
         this.idToken = idToken;
         this.userStat = new UserStat();

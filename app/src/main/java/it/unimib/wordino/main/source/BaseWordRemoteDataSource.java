@@ -5,10 +5,8 @@ public abstract class BaseWordRemoteDataSource {
     public void setWordCallback(WordCallback newsCallback) {
         this.wordCallback = newsCallback;
     }
-
     public abstract void getSpecificWord(String word);
     public abstract void getSpecificWordCheck(String word);
-
     public abstract void getRandomWord();
 
 }

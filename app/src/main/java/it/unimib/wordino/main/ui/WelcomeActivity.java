@@ -5,6 +5,7 @@ import static it.unimib.wordino.main.util.Constants.EMAIL_ADDRESS;
 import static it.unimib.wordino.main.util.Constants.ENCRYPTED_SHARED_PREFERENCES_FILE_NAME;
 import static it.unimib.wordino.main.util.Constants.ID_TOKEN;
 import static it.unimib.wordino.main.util.Constants.PASSWORD;
+import static it.unimib.wordino.main.util.Constants.SHARED_PREFERENCES_FILE_NAME;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,6 +15,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -42,7 +44,6 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
-
         Button loginButton = findViewById(R.id.loginButton);
         loginButton.setOnClickListener(view -> {
             Log.d(TAG, "login clicked");
@@ -50,8 +51,11 @@ public class WelcomeActivity extends AppCompatActivity {
             startActivity(loginIntent);
         });
 
+        // Play as guest button
         Button playButton = findViewById(R.id.PlayButton);
         playButton.setOnClickListener(view -> {
+            //ensureGuestCredentials();
+            //Se utente è già presente in locale, allora non serve fare nulla, altirmenti creo utenza
             startGame();
         });
 
@@ -61,7 +65,7 @@ public class WelcomeActivity extends AppCompatActivity {
         userViewModel = new ViewModelProvider(
         this,
         new UserViewModelFactory(userRepository)).get(UserViewModel.class);
-        checkLoginStatus();
+        //checkLoginStatus();
     }
 
     public void startGame() {
@@ -93,5 +97,20 @@ public class WelcomeActivity extends AppCompatActivity {
             Log.e(TAG, "Failed to retrieve login credentials", e);
             throw new RuntimeException("Failed to retrieve encrypted data", e);
         }
+    }
+
+    // Metodo per salvare dati nelle SharedPreferences
+    private void saveGuestCredentials() {
+        SharedPreferences sharedPreferences = getSharedPreferences("app_preferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("GuestEmail", "guest@example.com"); // Salva un'email fittizia per il guest
+        editor.apply();
+    }
+    private void ensureGuestCredentials() {
+        SharedPreferences prefs = getSharedPreferences(SHARED_PREFERENCES_FILE_NAME, MODE_PRIVATE);
+        if (!prefs.contains("GuestEmail")) {  // Controlla se le credenziali ospite sono già state salvate
+            saveGuestCredentials();
+        }
+
     }
 }

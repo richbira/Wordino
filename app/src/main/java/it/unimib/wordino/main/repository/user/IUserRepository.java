@@ -19,4 +19,5 @@ public interface IUserRepository { // Interfaccia per la gestione dell'utente
     void signInWithGoogle(String token);
     void resetPassword(String email);
      LiveData<UserStat> getUserStats(String tokenId);
+    void updateUserStats(User user, UserStat userStat);
 }

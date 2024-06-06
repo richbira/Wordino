@@ -109,5 +109,7 @@ public class UserRepository implements IUserRepository, UserResponseCallback { /
     public LiveData<UserStat> getUserStats(String tokenId) {
         return userDataRemoteDataSource.getUserStats(tokenId);
     }
-
+    public void updateUserStats(User user, UserStat userStat) {
+        userDataRemoteDataSource.updateUserStats(user.getIdToken(), userStat);
+    }
 }

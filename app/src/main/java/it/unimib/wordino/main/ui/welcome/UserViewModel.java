@@ -90,6 +90,9 @@ public class UserViewModel extends ViewModel { // ViewModel per la gestione dell
     public LiveData<UserStat> getUserStats(String tokenId) { // Da mettere nella schermata delle statistiche
         return userRepository.getUserStats(tokenId);
     }
+    public void updateUserStats(UserStat userStat) {
+        userRepository.updateUserStats(getLoggedUser(), userStat); // Assume currentUser is already defined and valid
+    }
 
 }
 

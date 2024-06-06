@@ -82,6 +82,9 @@ public class UserStat {
     public void setGuessDistribution(Map<String, Integer> guessDistribution) {
         this.guessDistribution = guessDistribution;
     }
+    public void incrementGamesPlayed() { //Da capire come fare se voglio farlo "dinamico"
+        this.gamesPlayed++;
+    }
 
     @Override
     public String toString() {
@@ -96,13 +99,28 @@ public class UserStat {
     }
 
     // Metodo per aggiornare la distribuzione dei tentativi
-    /*public void updateGuessDistribution(int guessCount) {
-        if (guessDistribution.containsKey(guessCount)) {
-            guessDistribution.put(guessCount, guessDistribution.get(guessCount) + 1);
-        } else {
-            guessDistribution.put(guessCount, 1);
+    public void updateGuessDistribution(int guessCount) {
+        String key = String.valueOf(guessCount);
+        if (guessDistribution.containsKey(key)) {
+            guessDistribution.put(key, guessDistribution.get(key) + 1);
         }
-    }*/
+    }
+
+
+    public void updateStats(boolean isWin) {
+        gamesPlayed++;
+        if (isWin) {
+            gamesWon++;
+            currentStreak++;
+            updateGuessDistribution(3); //gli passo parametro per aggiornare la distribuzione
+            if (currentStreak > maxStreak) {
+                maxStreak = currentStreak;
+            }
+        } else {
+            gamesLost++;
+            currentStreak = 0;
+        }
+    }
     // Aggiungi altri metodi utili come incrementare le vittorie, aggiornare le sequenze, ecc.
 
 }

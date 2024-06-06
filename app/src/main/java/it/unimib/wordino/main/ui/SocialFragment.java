@@ -7,7 +7,6 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -20,12 +19,8 @@ import android.widget.TextView;
 import java.util.List;
 
 import it.unimib.wordino.R;
-import it.unimib.wordino.main.model.GameBoard;
 import it.unimib.wordino.main.model.Highscore;
-import it.unimib.wordino.main.repository.HighscoreRepository;
-import it.unimib.wordino.main.repository.IHighscoreRepository;
 import it.unimib.wordino.main.repository.IWordRepositoryLD;
-import it.unimib.wordino.main.util.ResponseCallBackDb;
 import it.unimib.wordino.main.util.ServiceLocator;
 
 public class SocialFragment extends Fragment {
