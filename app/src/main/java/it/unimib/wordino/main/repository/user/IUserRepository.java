@@ -1,11 +1,13 @@
 package it.unimib.wordino.main.repository.user;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.Set;
 
-import it.unimib.wordino.main.Model.User;
+import it.unimib.wordino.main.model.User;
 import it.unimib.wordino.main.data.Result;
+import it.unimib.wordino.main.model.UserStat;
 
 public interface IUserRepository { // Interfaccia per la gestione dell'utente
     MutableLiveData<Result> getUser(String email, String password, boolean isUserRegistered);
@@ -15,6 +17,7 @@ public interface IUserRepository { // Interfaccia per la gestione dell'utente
     void signUp(String email, String password);
     void signIn(String email, String password);
     void signInWithGoogle(String token);
-
     void resetPassword(String email);
+     LiveData<UserStat> getUserStats(String tokenId);
+    void updateUserStats(User user, UserStat userStat);
 }

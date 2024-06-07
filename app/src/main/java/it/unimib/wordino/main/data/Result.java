@@ -1,6 +1,6 @@
 package it.unimib.wordino.main.data;
 
-import it.unimib.wordino.main.Model.User;
+import it.unimib.wordino.main.model.User;
 
 /**
  * A generic class that holds a result success w/ data or an error exception.
@@ -63,7 +63,7 @@ public class Result<T> {
             return this.error;
         }
     }
-    public static final class UserResponseSuccess extends Result {
+    public static final class UserResponseSuccess extends Result { //TODO Da checkare, da merge con Result
         private final User user;
         public UserResponseSuccess(User user) {
             this.user = user;

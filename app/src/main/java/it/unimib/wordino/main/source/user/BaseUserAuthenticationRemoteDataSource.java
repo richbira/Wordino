@@ -1,6 +1,6 @@
 package it.unimib.wordino.main.source.user;
 
-import it.unimib.wordino.main.Model.User;
+import it.unimib.wordino.main.model.User;
 import it.unimib.wordino.main.repository.user.UserResponseCallback;
 
 /**

@@ -73,6 +73,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
                 if(gameBoardModel.getWinloss() != ""){
                     Log.d(TAG, "Gameover alert");
                     gameOverAlert(gameBoardModel.getWinloss());
+
                 }
             }
         };

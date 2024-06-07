@@ -1,4 +1,6 @@
 package it.unimib.wordino.main.util;
+import static android.content.Context.MODE_PRIVATE;
+
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -25,7 +27,7 @@ public class SharedPreferencesUtil {
      */
     public void writeStringData(String sharedPreferencesFileName, String key, String value) {
         SharedPreferences sharedPref = application.getSharedPreferences(sharedPreferencesFileName,
-                Context.MODE_PRIVATE);
+                MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(key, value);
         editor.apply();
@@ -39,7 +41,7 @@ public class SharedPreferencesUtil {
      */
     public void writeBooleanData(String sharedPreferencesFileName, String key, boolean value) {
         SharedPreferences sharedPref = application.getSharedPreferences(sharedPreferencesFileName,
-                Context.MODE_PRIVATE);
+                MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putBoolean(key, value);
         editor.apply();
@@ -53,7 +55,7 @@ public class SharedPreferencesUtil {
      */
     public void writeStringSetData(String sharedPreferencesFileName, String key, Set<String> value) {
         SharedPreferences sharedPref = application.getSharedPreferences(sharedPreferencesFileName,
-                Context.MODE_PRIVATE);
+                MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putStringSet(key, value);
         editor.apply();
@@ -68,7 +70,7 @@ public class SharedPreferencesUtil {
      */
     public String readStringData(String sharedPreferencesFileName, String key) {
         SharedPreferences sharedPref = application.getSharedPreferences(sharedPreferencesFileName,
-                Context.MODE_PRIVATE);
+                MODE_PRIVATE);
         return sharedPref.getString(key, null);
     }
 
@@ -81,7 +83,7 @@ public class SharedPreferencesUtil {
      */
     public boolean readBooleanData(String sharedPreferencesFileName, String key) {
         SharedPreferences sharedPref = application.getSharedPreferences(sharedPreferencesFileName,
-                Context.MODE_PRIVATE);
+                MODE_PRIVATE);
         return sharedPref.getBoolean(key, false);
     }
 
@@ -94,7 +96,7 @@ public class SharedPreferencesUtil {
      */
     public Set<String> readStringSetData(String sharedPreferencesFileName, String key) {
         SharedPreferences sharedPref = application.getSharedPreferences(sharedPreferencesFileName,
-                Context.MODE_PRIVATE);
+                MODE_PRIVATE);
         return sharedPref.getStringSet(key, null);
     }
 
@@ -104,9 +106,10 @@ public class SharedPreferencesUtil {
      */
     public void deleteAll(String sharedPreferencesFileName) {
         SharedPreferences sharedPref = application.getSharedPreferences(sharedPreferencesFileName,
-                Context.MODE_PRIVATE);
+                MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.clear();
         editor.apply();
     }
+
 }

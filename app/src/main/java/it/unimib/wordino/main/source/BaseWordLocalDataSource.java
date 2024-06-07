@@ -9,7 +9,6 @@ public abstract class BaseWordLocalDataSource {
         this.wordCallback = newsCallback;
     }
     public abstract void getWord(Word word);
-
     public abstract void insertWord(Word word);
     public abstract void updateHighscores(Highscore highscore);
     public abstract void loadHighscoreLadder();

@@ -1,11 +1,17 @@
 package it.unimib.wordino.main.ui.welcome;
 
+import android.util.Log;
+
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import it.unimib.wordino.main.Model.User;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import it.unimib.wordino.main.model.User;
 import it.unimib.wordino.main.data.Result;
-import it.unimib.wordino.main.model.PlayerStats;
+import it.unimib.wordino.main.model.UserStat;
 import it.unimib.wordino.main.repository.user.IUserRepository;
 
 public class UserViewModel extends ViewModel { // ViewModel per la gestione dell'utente
@@ -14,10 +20,14 @@ public class UserViewModel extends ViewModel { // ViewModel per la gestione dell
     private final IUserRepository userRepository;
     private MutableLiveData<Result> userMutableLiveData;
     private boolean authenticationError;
+    private MutableLiveData<UserStat> userStatsLiveData;
+
 
     public UserViewModel(IUserRepository userRepository) {
         this.userRepository = userRepository;
         authenticationError = false;
+        userStatsLiveData = new MutableLiveData<>();
+
     }
 
     public MutableLiveData<Result> getUserMutableLiveData(
@@ -74,9 +84,16 @@ public class UserViewModel extends ViewModel { // ViewModel per la gestione dell
     }
 
     public void saveUserStats(User user) {
-        // Assumi che PlayerStats sia inizializzato al momento della creazione dell'utente o qui
-        PlayerStats stats = new PlayerStats();  // Dovresti configurare i valori iniziali di PlayerStats
+        // Assumi che UserStat sia inizializzato al momento della creazione dell'utente o qui
+        UserStat stats = new UserStat();  // Dovresti configurare i valori iniziali di UserStat
     }
+    public LiveData<UserStat> getUserStats(String tokenId) { // Da mettere nella schermata delle statistiche
+        return userRepository.getUserStats(tokenId);
+    }
+    public void updateUserStats(UserStat userStat) {
+        userRepository.updateUserStats(getLoggedUser(), userStat); // Assume currentUser is already defined and valid
+    }
+
 }
 
 

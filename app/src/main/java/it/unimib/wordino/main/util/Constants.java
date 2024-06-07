@@ -25,13 +25,13 @@ public class Constants {
 
 
     // Constants for SharedPreferences
-    public static final String SHARED_PREFERENCES_FILE_NAME = "";
+    public static final String SHARED_PREFERENCES_FILE_NAME = "it.unimib.wordino.shared_prefs";
     public static final String SHARED_PREFERENCES_COUNTRY_OF_INTEREST = "country_of_interest";
     public static final String SHARED_PREFERENCES_TOPICS_OF_INTEREST = "topics_of_interest";
     public static final String SHARED_PREFERENCES_FIRST_LOADING = "first_loading";
 
     // Constants for EncryptedSharedPreferences
-    public static final String ENCRYPTED_SHARED_PREFERENCES_FILE_NAME = "it.unimib.wordino.shared_prefs"; //TODO change this
+    public static final String ENCRYPTED_SHARED_PREFERENCES_FILE_NAME = "it.unimib.wordino.Enc_shared_prefs"; //TODO change this
     public static final String EMAIL_ADDRESS = "email_address";
     public static final String PASSWORD = "password";
     public static final String ID_TOKEN = "google_token";
@@ -44,5 +44,5 @@ public class Constants {
     // Constants for Firebase Realtime Database
     public static final String FIREBASE_REALTIME_DATABASE = "https://wordino-6452d-default-rtdb.europe-west1.firebasedatabase.app/";
     public static final String FIREBASE_USERS_COLLECTION = "users";
-    public static final String FIREBASE_STATS_COLLECTION = "playerStats";
+    public static final String FIREBASE_STATS_COLLECTION = "userStats";
 }

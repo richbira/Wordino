@@ -1,10 +1,12 @@
 package it.unimib.wordino.main.repository.user;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import java.util.Set;
 
-import it.unimib.wordino.main.Model.User;
+import it.unimib.wordino.main.model.User;
 import it.unimib.wordino.main.data.Result;
+import it.unimib.wordino.main.model.UserStat;
 import it.unimib.wordino.main.source.user.BaseUserAuthenticationRemoteDataSource;
 import it.unimib.wordino.main.source.user.BaseUserDataRemoteDataSource;
 
@@ -102,5 +104,12 @@ public class UserRepository implements IUserRepository, UserResponseCallback { /
     @Override
     public void resetPassword(String email){
         userRemoteDataSource.resetPassword(email);
+    }
+
+    public LiveData<UserStat> getUserStats(String tokenId) {
+        return userDataRemoteDataSource.getUserStats(tokenId);
+    }
+    public void updateUserStats(User user, UserStat userStat) {
+        userDataRemoteDataSource.updateUserStats(user.getIdToken(), userStat);
     }
 }

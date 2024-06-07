@@ -22,7 +22,7 @@ import org.apache.commons.validator.routines.EmailValidator;
 
 import it.unimib.wordino.R;
 import it.unimib.wordino.databinding.FragmentRegistrationBinding;
-import it.unimib.wordino.main.Model.User;
+import it.unimib.wordino.main.model.User;
 import it.unimib.wordino.main.data.Result;
 
 public class RegistrationFragment extends Fragment {
@@ -46,7 +46,7 @@ public class RegistrationFragment extends Fragment {
         binding = FragmentRegistrationBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
-        public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         binding.registerButton.setOnClickListener(v -> {
@@ -54,15 +54,12 @@ public class RegistrationFragment extends Fragment {
             String password = binding.passwordEditText.getText().toString().trim();
 
             if (isEmailOk(email) && isPasswordOk(password)) {
-                binding.container.setVisibility(View.VISIBLE);
+                //binding.container.setVisibility(View.VISIBLE);
                 userViewModel.getUserMutableLiveData(email, password,false).observe(getViewLifecycleOwner(), result -> {
                     if (result.isSuccess()) {
                         User user = ((Result.UserResponseSuccess) result).getData();
                         userViewModel.setAuthenticationError(false);
-                        // After successful registration, save the user stats
-                        userViewModel.saveUserStats(user);
                         Navigation.findNavController(view).navigate(R.id.action_registrationFragment_to_gameActivity);
-                        Log.d(TAG, "Account created and stats initialized on firebase: " + email);
                     } else {
                         userViewModel.setAuthenticationError(true);
                         Snackbar.make(requireActivity().findViewById(android.R.id.content),

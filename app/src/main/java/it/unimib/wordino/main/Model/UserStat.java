@@ -1,11 +1,9 @@
 package it.unimib.wordino.main.model;
 
-import androidx.annotation.NonNull;
-
 import java.util.HashMap;
 import java.util.Map;
 
-public class PlayerStats {
+public class UserStat {
     private int gamesPlayed;
     private int gamesWon;
     private int gamesLost;
@@ -14,7 +12,7 @@ public class PlayerStats {
     private int HighscoreTraining;
     private Map<String, Integer> guessDistribution;
 
-    public PlayerStats() {
+    public UserStat() {
         this.gamesPlayed = 0;
         this.gamesWon = 0;
         this.gamesLost = 0;
@@ -84,10 +82,13 @@ public class PlayerStats {
     public void setGuessDistribution(Map<String, Integer> guessDistribution) {
         this.guessDistribution = guessDistribution;
     }
+    public void incrementGamesPlayed() { //Da capire come fare se voglio farlo "dinamico"
+        this.gamesPlayed++;
+    }
 
     @Override
     public String toString() {
-        return "PlayerStats{" +
+        return "UserStat{" +
                 "gamesPlayed=" + gamesPlayed +
                 ", gamesWon=" + gamesWon +
                 ", gamesLost=" + gamesLost +
@@ -98,13 +99,28 @@ public class PlayerStats {
     }
 
     // Metodo per aggiornare la distribuzione dei tentativi
-    /*public void updateGuessDistribution(int guessCount) {
-        if (guessDistribution.containsKey(guessCount)) {
-            guessDistribution.put(guessCount, guessDistribution.get(guessCount) + 1);
-        } else {
-            guessDistribution.put(guessCount, 1);
+    public void updateGuessDistribution(int guessCount) {
+        String key = String.valueOf(guessCount);
+        if (guessDistribution.containsKey(key)) {
+            guessDistribution.put(key, guessDistribution.get(key) + 1);
         }
-    }*/
+    }
+
+
+    public void updateStats(boolean isWin) {
+        gamesPlayed++;
+        if (isWin) {
+            gamesWon++;
+            currentStreak++;
+            updateGuessDistribution(3); //gli passo parametro per aggiornare la distribuzione
+            if (currentStreak > maxStreak) {
+                maxStreak = currentStreak;
+            }
+        } else {
+            gamesLost++;
+            currentStreak = 0;
+        }
+    }
     // Aggiungi altri metodi utili come incrementare le vittorie, aggiornare le sequenze, ecc.
 
 }
