@@ -65,7 +65,7 @@ public class WelcomeActivity extends AppCompatActivity {
         userViewModel = new ViewModelProvider(
         this,
         new UserViewModelFactory(userRepository)).get(UserViewModel.class);
-        //checkLoginStatus();
+        checkLoginStatus();
     }
 
     public void startGame() {
@@ -78,8 +78,9 @@ public class WelcomeActivity extends AppCompatActivity {
         // Insert the logic you had planned for onViewCreated here
         if (userViewModel.getLoggedUser() != null) {
             Log.d(TAG, "User already logged in: " + userViewModel.getLoggedUser().getEmail());
-
             autoLogin();
+        }else{
+            Log.d(TAG, "User not logged in: ");
         }
     }
 

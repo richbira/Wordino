@@ -2,6 +2,7 @@ package it.unimib.wordino.main.ui.welcome;
 
 import android.util.Log;
 
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -10,7 +11,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import it.unimib.wordino.main.model.User;
-import it.unimib.wordino.main.data.Result;
+import it.unimib.wordino.main.model.Result;
 import it.unimib.wordino.main.model.UserStat;
 import it.unimib.wordino.main.repository.user.IUserRepository;
 
@@ -83,15 +84,20 @@ public class UserViewModel extends ViewModel { // ViewModel per la gestione dell
         userRepository.resetPassword(email);
     }
 
-    public void saveUserStats(User user) {
-        // Assumi che UserStat sia inizializzato al momento della creazione dell'utente o qui
-        UserStat stats = new UserStat();  // Dovresti configurare i valori iniziali di UserStat
-    }
     public LiveData<UserStat> getUserStats(String tokenId) { // Da mettere nella schermata delle statistiche
         return userRepository.getUserStats(tokenId);
     }
-    public void updateUserStats(UserStat userStat) {
-        userRepository.updateUserStats(getLoggedUser(), userStat); // Assume currentUser is already defined and valid
+    public void updateGameResult(String tokenId, boolean won,Integer guessCount, LifecycleOwner lifecycleOwner) {
+        getUserStats(tokenId).observe(lifecycleOwner, userStats -> {
+            Log.d(TAG, "updateGameResult: updating stats");
+            if (userStats != null) {
+                Log.d(TAG, "stats esistono: " + userStats);
+                userStats.updateStats(won,guessCount);
+                userRepository.updateUserStats(getLoggedUser(), userStats);
+            } else {
+                Log.d(TAG, "Stats: not available");
+            }
+        });
     }
 
 }

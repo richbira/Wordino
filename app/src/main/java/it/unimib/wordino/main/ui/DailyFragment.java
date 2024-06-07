@@ -1,5 +1,7 @@
 package it.unimib.wordino.main.ui;
 
+import static it.unimib.wordino.main.util.Constants.ENCRYPTED_SHARED_PREFERENCES_FILE_NAME;
+import static it.unimib.wordino.main.util.Constants.ID_TOKEN;
 import static it.unimib.wordino.main.util.Constants.PACKAGE_NAME;
 
 
@@ -10,6 +12,7 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -20,10 +23,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.io.IOException;
+import java.security.GeneralSecurityException;
+
 import it.unimib.wordino.R;
 import it.unimib.wordino.main.model.GameBoard;
 import it.unimib.wordino.main.model.Result;
+import it.unimib.wordino.main.model.UserStat;
 import it.unimib.wordino.main.repository.IWordRepositoryLD;
+import it.unimib.wordino.main.repository.user.IUserRepository;
+import it.unimib.wordino.main.ui.welcome.UserViewModel;
+import it.unimib.wordino.main.ui.welcome.UserViewModelFactory;
+import it.unimib.wordino.main.util.DataEncryptionUtil;
 import it.unimib.wordino.main.util.ServiceLocator;
 
 public class DailyFragment extends Fragment implements View.OnClickListener {
@@ -41,6 +52,11 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
     public Observer<GameBoard> gameBoardObserver;
     public Observer<Result> wordCheckObserver;
     public Observer<Result> randomWordObserver;
+
+    private UserViewModel userViewModel;
+    private DataEncryptionUtil dataEncryptionUtil;
+    private String tokenId;
+    private boolean gameWon;
 
 
 
@@ -64,7 +80,13 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
                 requireActivity(),
                 new GameBoardViewModelDailyFactory(wordRepositoryLD)).get(GameBoardViewModelDaily.class);
 
-
+        //Roba per user e statistiche
+        dataEncryptionUtil = new DataEncryptionUtil(requireActivity().getApplication());
+        IUserRepository userRepository = ServiceLocator.getInstance().
+                getUserRepository(getActivity().getApplication());
+        userViewModel = new ViewModelProvider(
+                this, new UserViewModelFactory(userRepository)).get(UserViewModel.class);
+        tokenId = userViewModel.getLoggedUser().getIdToken();
         gameBoardObserver = new Observer<GameBoard>() {
             @Override
             public void onChanged(@Nullable GameBoard gameBoard) {
@@ -72,6 +94,14 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
                 currentLine = gameBoardModel.getCurrentLine();
                 if(gameBoardModel.getWinloss() != ""){
                     Log.d(TAG, "Gameover alert");
+                    if(gameBoardModel.getWinloss().equals("win")){
+                        Log.d(TAG, "onChanged: WIN");
+                        gameWon = true;
+                    } else if(gameBoardModel.getWinloss().equals("lose")){
+                        Log.d(TAG, "onChanged: lose");
+                        gameWon = false;
+                    }
+                    userViewModel.updateGameResult(tokenId,gameWon,currentLine,getViewLifecycleOwner());
                     gameOverAlert(gameBoardModel.getWinloss());
 
                 }
@@ -85,7 +115,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
                 if (result.isSuccess()){
                     Log.d(TAG, "Result is success, inizia procedura di comparazione");
                     Log.d(TAG, "parola: " + result.getData());
-                    gameBoardModel.tryWord(result.getData());
+                    gameBoardModel.tryWord((String) result.getData());
                     currentLine = gameBoardModel.getCurrentLine();
                 }else {
                     Log.d(TAG, "La parola non esiste! ");
@@ -106,7 +136,6 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
             }
         };
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

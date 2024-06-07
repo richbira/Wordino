@@ -22,4 +22,6 @@ public abstract class BaseUserDataRemoteDataSource { // Chiamata backend
     //Gestisco qua le statistiche dell'highscore + calcolo statistiche
     //Creo i metodi e li implemento su UserDataRemote
     public abstract LiveData<UserStat> getUserStats(String tokenId);
+
+    public abstract void updateUserStats(String idToken, UserStat userStat);
 }

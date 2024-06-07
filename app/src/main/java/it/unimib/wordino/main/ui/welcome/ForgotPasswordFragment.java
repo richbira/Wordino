@@ -23,10 +23,6 @@ public class ForgotPasswordFragment extends Fragment {
     private FragmentForgotPasswordBinding binding;
     private UserViewModel userViewModel;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     public ForgotPasswordFragment() {
         // Required empty public constructor
     }

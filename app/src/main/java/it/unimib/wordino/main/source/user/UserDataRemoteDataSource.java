@@ -110,7 +110,26 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource {
             return liveData;
         }
 
-
+    @Override
+    public void updateUserStats(String idToken, UserStat userStat) {
+        if (idToken == null || idToken.isEmpty()) {
+            Log.e(TAG, "Token ID is null or empty");
+            return;
+        }
+        databaseReference.child(FIREBASE_USERS_COLLECTION).child(idToken).child("userStats").setValue(userStat)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "User stats updated successfully");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG, "Failed to update user stats: " + e.getLocalizedMessage());
+                    }
+                });
+    }
 
 
 }
