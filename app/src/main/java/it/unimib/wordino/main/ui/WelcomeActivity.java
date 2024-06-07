@@ -78,8 +78,9 @@ public class WelcomeActivity extends AppCompatActivity {
         // Insert the logic you had planned for onViewCreated here
         if (userViewModel.getLoggedUser() != null) {
             Log.d(TAG, "User already logged in: " + userViewModel.getLoggedUser().getEmail());
-
             autoLogin();
+        }else{
+            Log.d(TAG, "User not logged in: ");
         }
     }
 

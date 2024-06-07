@@ -8,9 +8,9 @@ public abstract class Result {
     private Result() {}
 
     public boolean isSuccess() {
-        return this instanceof Success;
+        return (this instanceof UserResponseSuccess) || (this instanceof Success);
     }
-    public String getData(){
+    public Object getData(){
         return "";
     }
 
@@ -43,6 +43,19 @@ public abstract class Result {
         }
         public String getMessage() {
             return message;
+        }
+
+
+    }
+
+    public static final class UserResponseSuccess extends Result { //TODO Da checkare, da merge con Result
+        private final User user;
+        public UserResponseSuccess(User user) {
+            super();
+            this.user = user;
+        }
+        public User getData() { //Capire con Yoshiki
+            return user;
         }
     }
 }

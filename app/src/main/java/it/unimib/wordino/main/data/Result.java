@@ -7,10 +7,11 @@ import it.unimib.wordino.main.model.User;
  */
 public class Result<T> {
     // hide the private constructor to limit subclass types (Success, Error)
-    private Result() {
+    /*public Result() {
+
     }
 
-    @Override
+    @Override // Yoshi
     public String toString() {
         if (this instanceof Result.Success) {
             Result.Success success = (Result.Success) this;
@@ -22,7 +23,7 @@ public class Result<T> {
         return "";
     }
 
-    public boolean isSuccess() {
+    public boolean isSuccess() { //Usare quello l'altro /
         if (this instanceof UserResponseSuccess) {
             return true;
         } else {
@@ -71,5 +72,5 @@ public class Result<T> {
         public User getData() {
             return user;
         }
-    }
+    }*/
 }

@@ -139,7 +139,7 @@ public class GameBoardViewModelDaily extends ViewModel {
 
     public void tryWord(String guessedWordString) {
         if (enterIsPressed) {
-            String dailyWordString = dailyWord.getValue().getData();
+            String dailyWordString = (String) dailyWord.getValue().getData();
             String color_code = "";
             for (int i = 0; i < 5; i++) {
                 Log.d(TAG, "Check: " + guessedWordString.charAt(i) + " - " + dailyWordString.charAt(i));

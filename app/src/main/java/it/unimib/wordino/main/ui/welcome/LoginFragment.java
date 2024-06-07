@@ -50,8 +50,9 @@ import java.io.IOException;
 import java.security.GeneralSecurityException;
 
 import it.unimib.wordino.R;
+import it.unimib.wordino.main.model.Result.UserResponseSuccess;
 import it.unimib.wordino.main.model.User;
-import it.unimib.wordino.main.data.Result;
+import it.unimib.wordino.main.model.Result;
 import it.unimib.wordino.main.repository.user.IUserRepository;
 import it.unimib.wordino.main.ui.GameActivity;
 import it.unimib.wordino.main.util.DataEncryptionUtil;
@@ -114,7 +115,7 @@ public class LoginFragment extends Fragment {
                         // Got an ID token from Google. Use it to authenticate with Firebase.
                         userViewModel.getGoogleUserMutableLiveData(idToken).observe(getViewLifecycleOwner(), authenticationResult -> {
                             if (authenticationResult.isSuccess()) {
-                                User user = ((Result.UserResponseSuccess) authenticationResult).getData();
+                                User user = ((UserResponseSuccess) authenticationResult).getData();
                                 saveLoginData(user.getEmail(), null, user.getIdToken());
                                 userViewModel.setAuthenticationError(false);
                                 Log.d(TAG, "login successful");
@@ -198,7 +199,7 @@ public class LoginFragment extends Fragment {
                     userViewModel.getUserMutableLiveData(email, password, true).observe(
                             getViewLifecycleOwner(), result -> {
                                 if (result.isSuccess()) {
-                                    User user = ((Result.UserResponseSuccess) result).getData();
+                                    User user = ((UserResponseSuccess) result).getData();
                                     userViewModel.setAuthenticationError(false);
                                     Log.d(TAG, "login successful");
                                     Navigation.findNavController(requireView()).navigate(R.id.action_loginFragment_to_gameActivity); // Navigate to the DailyFragment

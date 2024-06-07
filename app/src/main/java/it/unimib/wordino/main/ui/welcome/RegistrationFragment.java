@@ -23,7 +23,7 @@ import org.apache.commons.validator.routines.EmailValidator;
 import it.unimib.wordino.R;
 import it.unimib.wordino.databinding.FragmentRegistrationBinding;
 import it.unimib.wordino.main.model.User;
-import it.unimib.wordino.main.data.Result;
+import it.unimib.wordino.main.model.Result;
 
 public class RegistrationFragment extends Fragment {
     static final String TAG = RegistrationFragment.class.getSimpleName();

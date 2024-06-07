@@ -114,7 +114,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
                 if (result.isSuccess()){
                     Log.d(TAG, "Result is success, inizia procedura di comparazione");
                     Log.d(TAG, "parola: " + result.getData());
-                    gameBoardModel.tryWord(result.getData());
+                    gameBoardModel.tryWord((String) result.getData());
                     currentLine = gameBoardModel.getCurrentLine();
                 }else {
                     Log.d(TAG, "La parola non esiste! ");

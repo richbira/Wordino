@@ -11,7 +11,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import it.unimib.wordino.main.model.User;
-import it.unimib.wordino.main.data.Result;
+import it.unimib.wordino.main.model.Result;
 import it.unimib.wordino.main.model.UserStat;
 import it.unimib.wordino.main.repository.user.IUserRepository;
 

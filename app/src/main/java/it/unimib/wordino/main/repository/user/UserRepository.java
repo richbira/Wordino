@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import java.util.Set;
 
 import it.unimib.wordino.main.model.User;
-import it.unimib.wordino.main.data.Result;
+import it.unimib.wordino.main.model.Result;
 import it.unimib.wordino.main.model.UserStat;
 import it.unimib.wordino.main.source.user.BaseUserAuthenticationRemoteDataSource;
 import it.unimib.wordino.main.source.user.BaseUserDataRemoteDataSource;
