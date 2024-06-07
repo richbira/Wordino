@@ -14,9 +14,6 @@ import org.apache.commons.validator.routines.EmailValidator;
 import it.unimib.wordino.R;
 
 public class LoginActivity extends AppCompatActivity {
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

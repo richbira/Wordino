@@ -12,12 +12,6 @@ import it.unimib.wordino.main.repository.user.IUserRepository;
         public UserViewModelFactory(IUserRepository userRepository) {
             this.userRepository = userRepository;
         }
-
-        /*@NonNull
-        @Override
-        public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-            return (T) new UserViewModel(userRepository);
-        }*/
         @NonNull
         @Override
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {

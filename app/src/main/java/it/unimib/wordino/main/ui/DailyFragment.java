@@ -93,7 +93,6 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
                 updateGameBoardUI(gameBoard);
                 currentLine = gameBoardModel.getCurrentLine();
                 if(gameBoardModel.getWinloss() != ""){
-
                     Log.d(TAG, "Gameover alert");
                     if(gameBoardModel.getWinloss().equals("win")){
                         Log.d(TAG, "onChanged: WIN");

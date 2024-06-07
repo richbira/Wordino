@@ -92,32 +92,6 @@ public class SettingsFragment extends Fragment {
             //Navigation.findNavController(view).navigate(R.id.); //TODO mettere screen How to play, immagine?
         });*/
 
-        /*//TODO Da spostare su Score
-        // Ottieni l'ID Token e l'email dell'utente loggato + visualizzarli a layout
-        String tokenId = userViewModel.getLoggedUser().getIdToken();
-        String email = userViewModel.getLoggedUser().getEmail();
-        Log.d(TAG, "Settings onViewCreated tokenId User: " + tokenId + " email: " + email);
-
-        userViewModel.getUserStats(tokenId).observe(getViewLifecycleOwner(), userStats -> {
-            if (userStats != null) {
-                Log.d(TAG, "Stats: " + userStats);
-                // Set up button listener that needs userStats
-                binding.howToPlayButton.setOnClickListener(v -> {
-                    Log.d(TAG, "Stats: incrementing");
-                    userStats.updateStats(true); // Adjust based on the specific stat
-                    userViewModel.updateUserStats(userStats);
-                });
-            } else {
-                Log.d(TAG, "Stats: not available");
-                binding.howToPlayButton.setOnClickListener(v -> {
-                    Log.d(TAG, "Attempt to increment stats failed: No stats available");
-                });
-            }
-        });*
-
-         */
-        // Spostato, quiindi posso cancellar
-
         SwitchMaterial darkModeSwitch = view.findViewById(R.id.dark_mode_switch); darkModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) { //todo fare la darktheme bene

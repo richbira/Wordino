@@ -71,10 +71,6 @@ public class LoginFragment extends Fragment {
     private SignInClient oneTapClient;
     private BeginSignInRequest signInRequest;
     private DataEncryptionUtil dataEncryptionUtil;
-;
-
-    //private LinearProgressIndicator progressIndicator;
-
     public LoginFragment() {
         // Required empty public constructor
     }
@@ -199,7 +195,6 @@ public class LoginFragment extends Fragment {
             // Start login if email and password are ok
             if (isEmailOk(email) & isPasswordOk(password)) { // If the email and password are ok
                 if (!userViewModel.isAuthenticationError()) { // If the user is not authenticated
-                    //progressIndicator.setVisibility(View.VISIBLE);
                     userViewModel.getUserMutableLiveData(email, password, true).observe(
                             getViewLifecycleOwner(), result -> {
                                 if (result.isSuccess()) {
@@ -212,7 +207,6 @@ public class LoginFragment extends Fragment {
 
                                 } else {
                                     userViewModel.setAuthenticationError(true);
-                                    //progressIndicator.setVisibility(View.GONE);
                                     Snackbar.make(requireActivity().findViewById(android.R.id.content),
                                             getErrorMessage(((Result.Error) result).getMessage()),
                                             Snackbar.LENGTH_SHORT).show();

@@ -84,10 +84,6 @@ public class UserViewModel extends ViewModel { // ViewModel per la gestione dell
         userRepository.resetPassword(email);
     }
 
-    public void saveUserStats(User user) {
-        // Assumi che UserStat sia inizializzato al momento della creazione dell'utente o qui
-        UserStat stats = new UserStat();  // Dovresti configurare i valori iniziali di UserStat
-    }
     public LiveData<UserStat> getUserStats(String tokenId) { // Da mettere nella schermata delle statistiche
         return userRepository.getUserStats(tokenId);
     }
