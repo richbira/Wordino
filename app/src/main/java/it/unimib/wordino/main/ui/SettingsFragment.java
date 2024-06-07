@@ -79,6 +79,10 @@ public class SettingsFragment extends Fragment {
 
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        View htpView = view.findViewById(R.id.howToPlayConstraint);
+        View settingsView = view.findViewById(R.id.settingsLayout);
+
         // Logout button listener
         binding.logoutButton.setOnClickListener(v -> {
             userViewModel.logout();
@@ -87,10 +91,18 @@ public class SettingsFragment extends Fragment {
         });
 
         // HowToPlay button listener
-        /*binding.howToPlayButton.setOnClickListener(v -> {
-            Log.d(TAG, "cliccato how to play: ");
-            //Navigation.findNavController(view).navigate(R.id.); //TODO mettere screen How to play, immagine?
-        });*/
+        binding.howToPlayButton.setOnClickListener(v -> {
+            Log.d(TAG, "cliccato how to play");
+            htpView.setVisibility(View.VISIBLE);
+            settingsView.setVisibility(View.GONE);
+        });
+
+        binding.closeButton.setOnClickListener(v -> {
+            Log.d(TAG, "cliccato bottone per chiudere");
+            settingsView.setVisibility(View.VISIBLE);
+            htpView.setVisibility(View.GONE);
+        });
+
 
         SwitchMaterial darkModeSwitch = view.findViewById(R.id.dark_mode_switch); darkModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
