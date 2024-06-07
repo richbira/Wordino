@@ -119,6 +119,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
                     currentLine = gameBoardModel.getCurrentLine();
                 }else {
                     Log.d(TAG, "La parola non esiste! ");
+                    gameBoardModel.resetEnterNotPressed();
                 }
 
             }

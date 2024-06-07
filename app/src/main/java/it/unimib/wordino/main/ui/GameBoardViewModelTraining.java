@@ -59,6 +59,8 @@ public class GameBoardViewModelTraining extends ViewModel {
 
     public int getCurrentLine(){ return currentLine;}
     public Boolean getEnterIsPressed() {return enterIsPressed;}
+    public void resetEnterNotPressed() {enterIsPressed = false;}
+
     public String getWinloss() {return winloss;}
     public int getScore() {return score;}
 
