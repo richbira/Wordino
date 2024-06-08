@@ -32,7 +32,7 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource {
     private static final String TAG = UserDataRemoteDataSource.class.getSimpleName();
 
     private final DatabaseReference databaseReference;
-    private FirebaseDatabase firebaseDatabase;
+    private final FirebaseDatabase firebaseDatabase;
 
     public UserDataRemoteDataSource() {
         firebaseDatabase = FirebaseDatabase.getInstance(FIREBASE_REALTIME_DATABASE); //TODO Da settare costante
@@ -48,18 +48,8 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource {
                 } else {
                     Log.d(TAG, "User not present in Firebase Realtime Database");
                     databaseReference.child(FIREBASE_USERS_COLLECTION).child(user.getIdToken()).setValue(user)
-                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-                                    userResponseCallback.onSuccessFromRemoteDatabase(user);
-                                }
-                            })
-                            .addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    userResponseCallback.onFailureFromRemoteDatabase(e.getLocalizedMessage());
-                                }
-                            });
+                            .addOnSuccessListener(aVoid -> userResponseCallback.onSuccessFromRemoteDatabase(user))
+                            .addOnFailureListener(e -> userResponseCallback.onFailureFromRemoteDatabase(e.getLocalizedMessage()));
                 }
             }
 
@@ -75,11 +65,11 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource {
                 Log.e(TAG, "Token ID is null or empty");
                 return liveData; // Returns an empty LiveData object.
             }
-            databaseReference.child(FIREBASE_USERS_COLLECTION).child(tokenId).child("userStats")
+            databaseReference.child(FIREBASE_USERS_COLLECTION).child(tokenId).child(FIREBASE_STATS_COLLECTION)
                     .addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) { // Legge i dati dal database però lo faccio manuale perchè si spacca la deserilizzazione
-                            UserStat stats = new UserStat(); // Crea un oggetto vuoto di UserStat
+                            UserStat stats = null; // Crea un oggetto vuoto di UserStat
                             stats.setGamesPlayed(dataSnapshot.child("gamesPlayed").getValue(Integer.class));
                             stats.setGamesWon(dataSnapshot.child("gamesWon").getValue(Integer.class));
                             stats.setGamesLost(dataSnapshot.child("gamesLost").getValue(Integer.class));
@@ -116,18 +106,8 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource {
             return;
         }
         databaseReference.child(FIREBASE_USERS_COLLECTION).child(idToken).child("userStats").setValue(userStat)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "User stats updated successfully");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.e(TAG, "Failed to update user stats: " + e.getLocalizedMessage());
-                    }
-                });
+                .addOnSuccessListener(aVoid -> Log.d(TAG, "User stats updated successfully"))
+                .addOnFailureListener(e -> Log.e(TAG, "Failed to update user stats: " + e.getLocalizedMessage()));
     }
 
 

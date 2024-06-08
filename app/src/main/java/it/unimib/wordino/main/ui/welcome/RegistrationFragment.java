@@ -3,8 +3,6 @@ package it.unimib.wordino.main.ui.welcome;
 import static it.unimib.wordino.main.util.Constants.MINIMUM_PASSWORD_LENGTH;
 import static it.unimib.wordino.main.util.Constants.USER_COLLISION_ERROR;
 import static it.unimib.wordino.main.util.Constants.WEAK_PASSWORD_ERROR;
-
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;

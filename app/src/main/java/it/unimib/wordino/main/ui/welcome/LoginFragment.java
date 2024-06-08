@@ -15,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.IntentSenderRequest;
@@ -27,20 +26,12 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.google.android.gms.auth.api.identity.BeginSignInRequest;
-import com.google.android.gms.auth.api.identity.BeginSignInResult;
 import com.google.android.gms.auth.api.identity.Identity;
 import com.google.android.gms.auth.api.identity.SignInClient;
 import com.google.android.gms.auth.api.identity.SignInCredential;
 import com.google.android.gms.common.api.ApiException;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
-import com.validator.easychecker.EasyChecker;
-import com.validator.easychecker.exceptions.DeveloperErrorException;
-import com.validator.easychecker.exceptions.InputErrorException;
-import com.validator.easychecker.util.PasswordPattern;
-
 import org.apache.commons.validator.routines.EmailValidator;
 
 import java.io.IOException;
@@ -178,7 +169,7 @@ public class LoginFragment extends Fragment {
                 })); // Listener for the login with Google button TODO fare test con account google
         registrationButton.setOnClickListener(v -> {
             Log.d(TAG, "register clicked ");
-            Navigation.findNavController(Objects.requireNonNull(getView())).navigate(R.id.registrationFragment);
+            Navigation.findNavController(requireView()).navigate(R.id.registrationFragment);
         });
         loginButton.setOnClickListener(v -> {
             String email = Objects.requireNonNull(textInputLayoutEmail.getEditText()).getText().toString().trim();

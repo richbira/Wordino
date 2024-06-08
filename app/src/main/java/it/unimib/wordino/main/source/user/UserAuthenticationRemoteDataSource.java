@@ -128,7 +128,7 @@ public class UserAuthenticationRemoteDataSource extends BaseUserAuthenticationRe
             if (task.isSuccessful()) {
                 FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
                 if (firebaseUser != null) {
-                    UserStat userStat = new UserStat();
+                   // UserStat userStat = new UserStat();
                     userResponseCallback.onSuccessFromAuthentication(new User(
                             firebaseUser.getDisplayName(), email, firebaseUser.getUid()));
                 } else {
