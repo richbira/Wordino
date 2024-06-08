@@ -18,10 +18,14 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -52,9 +56,8 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
     public Observer<GameBoard> gameBoardObserver;
     public Observer<Result> wordCheckObserver;
     public Observer<Result> randomWordObserver;
-
     private UserViewModel userViewModel;
-    private DataEncryptionUtil dataEncryptionUtil;
+    //private DataEncryptionUtil dataEncryptionUtil;
     private String tokenId;
     private boolean gameWon;
 
@@ -81,12 +84,11 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
                 new GameBoardViewModelDailyFactory(wordRepositoryLD)).get(GameBoardViewModelDaily.class);
 
         //Roba per user e statistiche
-        dataEncryptionUtil = new DataEncryptionUtil(requireActivity().getApplication());
+        //dataEncryptionUtil = new DataEncryptionUtil(requireActivity().getApplication());
         IUserRepository userRepository = ServiceLocator.getInstance().
                 getUserRepository(getActivity().getApplication());
         userViewModel = new ViewModelProvider(
                 this, new UserViewModelFactory(userRepository)).get(UserViewModel.class);
-        tokenId = userViewModel.getLoggedUser().getIdToken();
         gameBoardObserver = new Observer<GameBoard>() {
             @Override
             public void onChanged(@Nullable GameBoard gameBoard) {
@@ -107,7 +109,6 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
                 }
             }
         };
-
         wordCheckObserver = new Observer<Result>() {
             @Override
             public void onChanged(@Nullable Result result) {
@@ -148,6 +149,26 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        //Nascondo tab Setting e Social se l'utente non è loggato
+        if (userViewModel.getLoggedUser() != null) {
+            tokenId = userViewModel.getLoggedUser().getIdToken();
+        }else{
+            // Safe access to BottomNavigationView
+            BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.bottom_nav);
+            if (bottomNavigationView != null) {
+                Menu menu = bottomNavigationView.getMenu();
+                for (int i = 0, size = menu.size(); i < size; i++) {
+                    MenuItem menuItem = menu.getItem(i);
+                    if (menuItem.getTitle().equals("Social")){
+                        menuItem.setVisible(false);
+                    }
+                }
+                // Your code to manipulate the menu
+            } else {
+                Log.e("DailyFragment", "BottomNavigationView is not found.");
+            }
+        }
 
         progressBar = view.findViewById(R.id.progress_bar);
 

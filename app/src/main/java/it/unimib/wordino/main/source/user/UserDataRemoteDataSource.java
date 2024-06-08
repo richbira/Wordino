@@ -69,7 +69,6 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource {
             }
         });
     }
-        //TODO aggiungo i metodi per aggiornare le statistiche del player
         public LiveData<UserStat> getUserStats(String tokenId) { // prendo le statistiche su firebase di un utente passando tokenId
             MutableLiveData<UserStat> liveData = new MutableLiveData<>();
             if (tokenId == null || tokenId.isEmpty()) {

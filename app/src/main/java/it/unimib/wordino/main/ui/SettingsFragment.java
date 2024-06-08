@@ -40,8 +40,8 @@ public class SettingsFragment extends Fragment {
     private static final String TAG = SettingsFragment.class.getSimpleName();
     private FragmentSettingsBinding binding;
     private UserViewModel userViewModel;
-    private DataEncryptionUtil dataEncryptionUtil;
-    private String idToken;
+    //private DataEncryptionUtil dataEncryptionUtil;
+    //private String idToken;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -57,17 +57,17 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        dataEncryptionUtil = new DataEncryptionUtil(requireActivity().getApplication());
+        //dataEncryptionUtil = new DataEncryptionUtil(requireActivity().getApplication());
         IUserRepository userRepository = ServiceLocator.getInstance().
                 getUserRepository(getActivity().getApplication());
         userViewModel = new ViewModelProvider(
                 this, new UserViewModelFactory(userRepository)).get(UserViewModel.class);
-        try {
+        /*try {
             idToken = dataEncryptionUtil.readSecretDataWithEncryptedSharedPreferences(
                     ENCRYPTED_SHARED_PREFERENCES_FILE_NAME, ID_TOKEN);
         } catch (GeneralSecurityException | IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     @Override
@@ -82,6 +82,11 @@ public class SettingsFragment extends Fragment {
 
         View htpView = view.findViewById(R.id.howToPlayConstraint);
         View settingsView = view.findViewById(R.id.settingsLayout);
+
+        //se utente non è loggato, nascondi il bottone di logout
+        if (userViewModel.getLoggedUser() == null) {
+            binding.logoutButton.setVisibility(View.GONE);
+        }
 
         // Logout button listener
         binding.logoutButton.setOnClickListener(v -> {

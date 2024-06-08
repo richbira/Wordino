@@ -9,7 +9,6 @@ import static it.unimib.wordino.main.util.Constants.INVALID_USER_ERROR;
 import static it.unimib.wordino.main.util.Constants.PASSWORD;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,7 +34,6 @@ import com.google.android.gms.auth.api.identity.SignInCredential;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.validator.easychecker.EasyChecker;
@@ -45,16 +43,15 @@ import com.validator.easychecker.util.PasswordPattern;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
-import java.io.File;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.util.Objects;
 
 import it.unimib.wordino.R;
 import it.unimib.wordino.main.model.Result.UserResponseSuccess;
 import it.unimib.wordino.main.model.User;
 import it.unimib.wordino.main.model.Result;
 import it.unimib.wordino.main.repository.user.IUserRepository;
-import it.unimib.wordino.main.ui.GameActivity;
 import it.unimib.wordino.main.util.DataEncryptionUtil;
 import it.unimib.wordino.main.util.ServiceLocator;
 
@@ -160,38 +157,32 @@ public class LoginFragment extends Fragment {
             Navigation.findNavController(requireView()).navigate(R.id.action_loginFragment_to_forgotPasswordFragment); // Navigate to the ForgotPasswordFragment
         });
         buttonGoogleLogin.setOnClickListener(v -> oneTapClient.beginSignIn(signInRequest) // Start the One Tap sign-in flow
-                .addOnSuccessListener(requireActivity(), new OnSuccessListener<BeginSignInResult>() {
-                    @Override
-                    public void onSuccess(BeginSignInResult result) {
-                        Log.d(TAG, "onSuccess from oneTapClient.beginSignIn(BeginSignInRequest)");
-                        IntentSenderRequest intentSenderRequest =
-                                new IntentSenderRequest.Builder(result.getPendingIntent()).build();
-                        activityResultLauncher.launch(intentSenderRequest);
+                .addOnSuccessListener(requireActivity(), result -> {
+                    Log.d(TAG, "onSuccess from oneTapClient.beginSignIn(BeginSignInRequest)");
+                    IntentSenderRequest intentSenderRequest =
+                            new IntentSenderRequest.Builder(result.getPendingIntent()).build();
+                    activityResultLauncher.launch(intentSenderRequest);
 
-                        // Se loggato correttamente vado al gioco
-                        Navigation.findNavController(requireView()).navigate(R.id.action_loginFragment_to_gameActivity); // Navigate to the GameFragment
+                    // Se loggato correttamente vado al gioco
+                    Navigation.findNavController(requireView()).navigate(R.id.action_loginFragment_to_gameActivity); // Navigate to the GameFragment
 
-                    }
                 })
-                .addOnFailureListener(requireActivity(), new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        // No saved credentials found. Launch the One Tap sign-up flow, or
-                        // do nothing and continue presenting the signed-out UI.
-                        Log.d(TAG, e.getLocalizedMessage());
+                .addOnFailureListener(requireActivity(), e -> {
+                    // No saved credentials found. Launch the One Tap sign-up flow, or
+                    // do nothing and continue presenting the signed-out UI.
+                    Log.d(TAG, Objects.requireNonNull(e.getLocalizedMessage()));
 
-                        Snackbar.make(requireActivity().findViewById(android.R.id.content),
-                                requireActivity().getString(R.string.error_no_google_account_found_message),
-                                Snackbar.LENGTH_SHORT).show();
-                    }
+                    Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                            requireActivity().getString(R.string.error_no_google_account_found_message),
+                            Snackbar.LENGTH_SHORT).show();
                 })); // Listener for the login with Google button TODO fare test con account google
         registrationButton.setOnClickListener(v -> {
             Log.d(TAG, "register clicked ");
-            Navigation.findNavController(getView()).navigate(R.id.registrationFragment);
+            Navigation.findNavController(Objects.requireNonNull(getView())).navigate(R.id.registrationFragment);
         });
         loginButton.setOnClickListener(v -> {
-            String email = textInputLayoutEmail.getEditText().getText().toString().trim();
-            String password = textInputLayoutPassword.getEditText().getText().toString().trim();
+            String email = Objects.requireNonNull(textInputLayoutEmail.getEditText()).getText().toString().trim();
+            String password = Objects.requireNonNull(textInputLayoutPassword.getEditText()).getText().toString().trim();
 
             // Start login if email and password are ok
             if (isEmailOk(email) & isPasswordOk(password)) { // If the email and password are ok
@@ -222,13 +213,6 @@ public class LoginFragment extends Fragment {
             }
         });// Listener for the login button
     }
-
-    private boolean validateField(EditText editText, String fieldType) throws
-            InputErrorException, DeveloperErrorException {
-        Log.d(TAG, "Validating " + fieldType);
-        return EasyChecker.Instance.validateInput(getContext(), 8, PasswordPattern.PASSWORD_PATTERN_THREE, editText);
-    }
-
     private void saveLoginData(String email, String password, String idToken) {
         try {
             dataEncryptionUtil.writeSecretDataWithEncryptedSharedPreferences(

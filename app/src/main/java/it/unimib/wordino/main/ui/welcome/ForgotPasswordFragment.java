@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
+import java.util.Objects;
+
 import it.unimib.wordino.R;
 import it.unimib.wordino.databinding.FragmentForgotPasswordBinding;
 
@@ -33,7 +35,7 @@ public class ForgotPasswordFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentForgotPasswordBinding.inflate(inflater, container, false);
         return binding.getRoot();
@@ -41,7 +43,7 @@ public class ForgotPasswordFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view, savedInstanceState);
         binding.buttonResetPassword.setOnClickListener(v->{
-            String email = binding.emailTextInputLayoutForgotPsw.getText().toString().trim();
+            String email = Objects.requireNonNull(binding.emailTextInputLayoutForgotPsw.getText()).toString().trim();
             if(isEmailOk(email)){
                 userViewModel.resetPassword(email);
                 // https://firebase.google.com/docs/auth/android/manage-users?hl=it#send_a_password_reset_email
