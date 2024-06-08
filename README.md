@@ -1,7 +1,10 @@
-Nome gruppo: MangoLoco 2.0
-Nome App: Wordino
+# Wordino App
 
-Membri del gruppo:
-844804 Breznay Yoshiki
-869353 Rabi Richard
-Referente: 844804 Breznay Yoshiki 
+**Nome del Gruppo:** MangoLoco 2.0
+
+**Nome dell'Applicazione:** Wordino
+
+## Membri del Gruppo
+
+- **Breznay Yoshiki** - Matricola: 844804 (Referente del Progetto)
+- **Rabi Richard** - Matricola: 869353
