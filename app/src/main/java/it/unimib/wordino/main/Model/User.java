@@ -5,27 +5,25 @@ import android.os.Parcelable;
 import com.google.firebase.database.Exclude;
 
 public class User implements Parcelable {
-    private String name;
+    //private String name;
     private String email;
     private String idToken;
     private UserStat userStat;
 
-    //TODO Dao per salvare le statistiche del player? -> Usi Rooom
-
     public User(String name, String email, String idToken) {
-        this.name = name; //name da togliere
+        //this.name = name; //name da togliere
         this.email = email;
         this.idToken = idToken;
         this.userStat = new UserStat();
     }
 
-    public String getName() {
+    /*public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
-    }
+    }*/
 
     public String getEmail() {
         return email;
@@ -47,7 +45,6 @@ public class User implements Parcelable {
     @Override
     public String toString() {
         return "User{" +
-                "name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", idToken='" + idToken + '\'' +
                 '}';
@@ -60,19 +57,15 @@ public class User implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.name);
+        //dest.writeString(this.name);
         dest.writeString(this.email);
         dest.writeString(this.idToken);
     }
 
-    public void readFromParcel(Parcel source) {
-        this.name = source.readString();
-        this.email = source.readString();
-        this.idToken = source.readString();
-    }
+
 
     protected User(Parcel in) {
-        this.name = in.readString();
+        //this.name = in.readString();
         this.email = in.readString();
         this.idToken = in.readString();
     }
@@ -89,6 +82,12 @@ public class User implements Parcelable {
         }
     };
 
+    //Volendo questo metodo si può togliere
+    public void readFromParcel(Parcel source) {
+        //this.name = source.readString();
+        this.email = source.readString();
+        this.idToken = source.readString();
+    }
     public UserStat getUserStats() {
         return userStat;
     }

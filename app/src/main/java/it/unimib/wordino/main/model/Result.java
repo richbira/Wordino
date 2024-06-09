@@ -13,11 +13,6 @@ public abstract class Result {
     public Object getData(){
         return "";
     }
-
-    /**
-     * Class that represents a successful action during the interaction
-     * with a Web Service or a local database.
-     */
     public static final class Success extends Result {
         private final String word;
         public Success(){

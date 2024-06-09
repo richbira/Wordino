@@ -7,9 +7,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 import it.unimib.wordino.main.model.User;
 import it.unimib.wordino.main.model.Result;
 import it.unimib.wordino.main.model.UserStat;
@@ -21,14 +18,12 @@ public class UserViewModel extends ViewModel { // ViewModel per la gestione dell
     private final IUserRepository userRepository;
     private MutableLiveData<Result> userMutableLiveData;
     private boolean authenticationError;
-    private MutableLiveData<UserStat> userStatsLiveData;
 
 
     public UserViewModel(IUserRepository userRepository) {
         this.userRepository = userRepository;
         authenticationError = false;
-        userStatsLiveData = new MutableLiveData<>();
-
+        //MutableLiveData<UserStat> userStatsLiveData = new MutableLiveData<>();
     }
 
     public MutableLiveData<Result> getUserMutableLiveData(
@@ -56,7 +51,6 @@ public class UserViewModel extends ViewModel { // ViewModel per la gestione dell
         } else {
             userRepository.logout();
         }
-
         return userMutableLiveData;
     }
 

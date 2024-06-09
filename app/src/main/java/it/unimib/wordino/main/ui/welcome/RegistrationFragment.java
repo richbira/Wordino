@@ -3,9 +3,7 @@ package it.unimib.wordino.main.ui.welcome;
 import static it.unimib.wordino.main.util.Constants.MINIMUM_PASSWORD_LENGTH;
 import static it.unimib.wordino.main.util.Constants.USER_COLLISION_ERROR;
 import static it.unimib.wordino.main.util.Constants.WEAK_PASSWORD_ERROR;
-
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,13 +18,13 @@ import com.google.android.material.snackbar.Snackbar;
 
 import org.apache.commons.validator.routines.EmailValidator;
 
+import java.util.Objects;
+
 import it.unimib.wordino.R;
 import it.unimib.wordino.databinding.FragmentRegistrationBinding;
-import it.unimib.wordino.main.model.User;
 import it.unimib.wordino.main.model.Result;
 
 public class RegistrationFragment extends Fragment {
-    static final String TAG = RegistrationFragment.class.getSimpleName();
     private FragmentRegistrationBinding binding;
     private UserViewModel userViewModel;
 
@@ -41,7 +39,7 @@ public class RegistrationFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentRegistrationBinding.inflate(inflater, container, false);
         return binding.getRoot();
@@ -50,14 +48,13 @@ public class RegistrationFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         binding.registerButton.setOnClickListener(v -> {
-            String email = binding.emailEditText.getText().toString().trim();
-            String password = binding.passwordEditText.getText().toString().trim();
+            String email = Objects.requireNonNull(binding.emailEditText.getText()).toString().trim();
+            String password = Objects.requireNonNull(binding.passwordEditText.getText()).toString().trim();
 
             if (isEmailOk(email) && isPasswordOk(password)) {
-                //binding.container.setVisibility(View.VISIBLE);
                 userViewModel.getUserMutableLiveData(email, password,false).observe(getViewLifecycleOwner(), result -> {
                     if (result.isSuccess()) {
-                        User user = ((Result.UserResponseSuccess) result).getData();
+                        //User user = ((Result.UserResponseSuccess) result).getData();
                         userViewModel.setAuthenticationError(false);
                         Navigation.findNavController(view).navigate(R.id.action_registrationFragment_to_gameActivity);
                     } else {

@@ -38,7 +38,7 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
 
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.accountFragment, R.id.dailyFragment,
+                R.id.dailyFragment,
                 R.id.settingsFragment, R.id.socialFragment, R.id.trainingFragment).build();
 
         // For the BottomNavigationView
