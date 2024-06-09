@@ -158,10 +158,7 @@ public class GameBoardViewModelTraining extends ViewModel {
                 }
                 color_code += boardState.getValue().getValue(currentLine, i);
             }
-            Log.d(TAG, "Code = " + color_code);
 
-            Log.d(TAG, "guess = " + guessedWordString);
-            Log.d(TAG, "daily = " + dailyWordString);
             if (guessedWordString.equals(dailyWordString)) { //todo finire di implementare winloss
                 winloss = "win";
                 score++;
@@ -184,7 +181,7 @@ public class GameBoardViewModelTraining extends ViewModel {
             }
 
             boardState.setValue(this.boardState.getValue());
-            enterIsPressed = false;
+            //enterIsPressed = false;
         } else Log.d(TAG, "enterisPressed è false");
     }
 

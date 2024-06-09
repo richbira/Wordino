@@ -42,6 +42,12 @@ public class TrainingFragment extends Fragment implements View.OnClickListener {
     public Animator flipAnimation4;
     public Animator flipAnimation5;
 
+    public Animator shakeAnimation1;
+    public Animator shakeAnimation2;
+    public Animator shakeAnimation3;
+    public Animator shakeAnimation4;
+    public Animator shakeAnimation5;
+
     public Observer<GameBoard> gameBoardObserver;
     public Observer<Result> wordCheckObserver;
     public Observer<Result> randomWordObserver;
@@ -90,11 +96,46 @@ public class TrainingFragment extends Fragment implements View.OnClickListener {
                     Log.d(TAG, "Result is success, inizia procedura di comparazione");
                     Log.d(TAG, "parola: " + result.getData());
                     gameBoardModel.tryWord((String) result.getData());
-                    currentLine = gameBoardModel.getCurrentLine();
-                }else {
+                    Log.d(TAG, "enterpressd? " + gameBoardModel.getEnterIsPressed());
+                    if (gameBoardModel.getEnterIsPressed()) {
+                        gameBoardModel.resetEnterNotPressed();
+                        Log.d(TAG, "Flip animation + " + (currentLine - 1));
+                        flipAnimation1.setTarget((TextView) getView().findViewById(getResources().getIdentifier("word_" + (currentLine - 1) + "1", "id", PACKAGE_NAME)));
+                        flipAnimation2.setTarget((TextView) getView().findViewById(getResources().getIdentifier("word_" + (currentLine - 1) + "2", "id", PACKAGE_NAME)));
+                        flipAnimation3.setTarget((TextView) getView().findViewById(getResources().getIdentifier("word_" + (currentLine - 1) + "3", "id", PACKAGE_NAME)));
+                        flipAnimation4.setTarget((TextView) getView().findViewById(getResources().getIdentifier("word_" + (currentLine - 1) + "4", "id", PACKAGE_NAME)));
+                        flipAnimation5.setTarget((TextView) getView().findViewById(getResources().getIdentifier("word_" + (currentLine - 1) + "5", "id", PACKAGE_NAME)));
+
+
+                        flipAnimation1.start();
+                        flipAnimation2.start();
+                        flipAnimation3.start();
+                        flipAnimation4.start();
+                        flipAnimation5.start();
+                    }
+
+                }else if (gameBoardModel.enterIsPressed){
                     Log.d(TAG, "La parola non esiste! ");
                     gameBoardModel.resetEnterNotPressed();
+
+                    //shake animation
+                    Log.d(TAG, "shake animation -- " + "word_" + currentLine);
+
+
+                    shakeAnimation1.setTarget((TextView) getView().findViewById(getResources().getIdentifier("word_" + currentLine + "1", "id", PACKAGE_NAME)));
+                    shakeAnimation2.setTarget((TextView) getView().findViewById(getResources().getIdentifier("word_" + currentLine + "2", "id", PACKAGE_NAME)));
+                    shakeAnimation3.setTarget((TextView) getView().findViewById(getResources().getIdentifier("word_" + currentLine + "3", "id", PACKAGE_NAME)));
+                    shakeAnimation4.setTarget((TextView) getView().findViewById(getResources().getIdentifier("word_" + currentLine + "4", "id", PACKAGE_NAME)));
+                    shakeAnimation5.setTarget((TextView) getView().findViewById(getResources().getIdentifier("word_" + currentLine + "5", "id", PACKAGE_NAME)));
+
+                    shakeAnimation1.start();
+                    shakeAnimation2.start();
+                    shakeAnimation3.start();
+                    shakeAnimation4.start();
+                    shakeAnimation5.start();
                 }
+
+                currentLine = gameBoardModel.getCurrentLine();
 
             }
         };
@@ -148,12 +189,13 @@ public class TrainingFragment extends Fragment implements View.OnClickListener {
         flipAnimation4 = AnimatorInflater.loadAnimator(view.getContext(), R.animator.flip_animator);
         flipAnimation5 = AnimatorInflater.loadAnimator(view.getContext(), R.animator.flip_animator);
 
+        shakeAnimation1 = AnimatorInflater.loadAnimator(view.getContext(), R.animator.shake_animator);
+        shakeAnimation2 = AnimatorInflater.loadAnimator(view.getContext(), R.animator.shake_animator);
+        shakeAnimation3 = AnimatorInflater.loadAnimator(view.getContext(), R.animator.shake_animator);
+        shakeAnimation4 = AnimatorInflater.loadAnimator(view.getContext(), R.animator.shake_animator);
+        shakeAnimation5 = AnimatorInflater.loadAnimator(view.getContext(), R.animator.shake_animator);
 
-        /* todo qui fare nel viewmodel
-        String ldt = LocalDateTime.now().toString();
-        Highscore newScore2 = new Highscore(2, ldt);
-        iHighscoreRepository.updateHighscores(newScore2);
-*/
+
 
 
         Button qButton = view.findViewById(R.id.key_q); qButton.setOnClickListener(this);
@@ -248,8 +290,9 @@ public class TrainingFragment extends Fragment implements View.OnClickListener {
         updateScoreBox();
         String wordCode = "";
         String colorCode = "";
+        currentLine = gameBoardModel.getCurrentLine();
         Log.d(TAG, "currentLine: " + currentLine);
-        for (int i = 0; i < (currentLine+1); i++){
+        for (int i = 0; i < 6; i++){
             wordCode = "";
             colorCode = "";
             for (int j = 0; j < 5; j++){
@@ -259,8 +302,6 @@ public class TrainingFragment extends Fragment implements View.OnClickListener {
                     changeBoxText(i, j, gameBoard.getValue(i, j).charAt(0) + "");
                 }else changeBoxText(i, j, "");
             }
-            Log.d(TAG, "word: "+ wordCode);
-            Log.d(TAG, "color: "+ colorCode);
 
             changeBoxColor(i, colorCode);
             changeKeyColor(colorCode, wordCode);
@@ -276,20 +317,7 @@ public class TrainingFragment extends Fragment implements View.OnClickListener {
     private void changeBoxColor(int i, String code) {
         String boxId;
 
-        //ANIMATION
-        if (gameBoardModel.getEnterIsPressed()) {
-            flipAnimation1.setTarget((TextView) getView().findViewById(getResources().getIdentifier("word_" + currentLine + "1", "id", PACKAGE_NAME)));
-            flipAnimation2.setTarget((TextView) getView().findViewById(getResources().getIdentifier("word_" + currentLine + "2", "id", PACKAGE_NAME)));
-            flipAnimation3.setTarget((TextView) getView().findViewById(getResources().getIdentifier("word_" + currentLine + "3", "id", PACKAGE_NAME)));
-            flipAnimation4.setTarget((TextView) getView().findViewById(getResources().getIdentifier("word_" + currentLine + "4", "id", PACKAGE_NAME)));
-            flipAnimation5.setTarget((TextView) getView().findViewById(getResources().getIdentifier("word_" + currentLine + "5", "id", PACKAGE_NAME)));
 
-            flipAnimation1.start();
-            flipAnimation2.start();
-            flipAnimation3.start();
-            flipAnimation4.start();
-            flipAnimation5.start();
-        }
         currentLine = gameBoardModel.getCurrentLine();
         if (code != "") {
             for (int j = 0; j < 5; j++) {
