@@ -2,8 +2,6 @@ package it.unimib.wordino.main.repository.user;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import java.util.Set;
-
 import it.unimib.wordino.main.model.User;
 import it.unimib.wordino.main.model.Result;
 import it.unimib.wordino.main.model.UserStat;
@@ -114,5 +112,11 @@ public class UserRepository implements IUserRepository, UserResponseCallback { /
     }
     public void updateGameResult(String tokenId, boolean won,Integer guessCount){
         userDataRemoteDataSource.updateGameResult(tokenId, won, guessCount);
+    }
+    public MutableLiveData<Boolean> getIsTodayLiveData() {
+        return userDataRemoteDataSource.getIsTodayLiveData();
+    }
+    public void setIsTodayLiveData(String idToken){
+        userDataRemoteDataSource.setIsTodayLiveData(idToken);
     }
 }

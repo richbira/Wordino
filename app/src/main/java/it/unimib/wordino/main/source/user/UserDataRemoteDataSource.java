@@ -18,6 +18,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,10 +35,13 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource {
 
     private final DatabaseReference databaseReference;
     private final FirebaseDatabase firebaseDatabase;
+    private MutableLiveData<Boolean> isTodayLiveData = new MutableLiveData<>();
+
 
     public UserDataRemoteDataSource() {
         firebaseDatabase = FirebaseDatabase.getInstance(FIREBASE_REALTIME_DATABASE); //TODO Da settare costante
         databaseReference = firebaseDatabase.getReference().getRef();
+        //isTodayLiveData = getIsTodayLiveData();
     }
         public void saveUserData(User user) {
         databaseReference.child(FIREBASE_USERS_COLLECTION).child(user.getIdToken()).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -68,22 +73,36 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource {
             databaseReference.child(FIREBASE_USERS_COLLECTION).child(tokenId).child(FIREBASE_STATS_COLLECTION)
                     .addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) { // Legge i dati dal database però lo faccio manuale perchè si spacca la deserilizzazione
-                            UserStat stats = new UserStat(); // Crea un oggetto vuoto di UserStat
-                            stats.setGamesPlayed(dataSnapshot.child("gamesPlayed").getValue(Integer.class));
-                            stats.setGamesWon(dataSnapshot.child("gamesWon").getValue(Integer.class));
-                            stats.setGamesLost(dataSnapshot.child("gamesLost").getValue(Integer.class));
-                            stats.setCurrentStreak(dataSnapshot.child("currentStreak").getValue(Integer.class));
-                            stats.setMaxStreak(dataSnapshot.child("maxStreak").getValue(Integer.class));
-                            stats.setHighscoreTraining(dataSnapshot.child("highscoreTraining").getValue(Integer.class));
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                UserStat stats = new UserStat();
+                                if (dataSnapshot.child("gamesPlayed").exists()) {
+                                    stats.setGamesPlayed(dataSnapshot.child("gamesPlayed").getValue(Integer.class));
+                                }
+                                if (dataSnapshot.child("gamesWon").exists()) {
+                                    stats.setGamesWon(dataSnapshot.child("gamesWon").getValue(Integer.class));
+                                }
+                                if (dataSnapshot.child("gamesLost").exists()) {
+                                    stats.setGamesLost(dataSnapshot.child("gamesLost").getValue(Integer.class));
+                                }
+                                if (dataSnapshot.child("currentStreak").exists()) {
+                                    stats.setCurrentStreak(dataSnapshot.child("currentStreak").getValue(Integer.class));
+                                }
+                                if (dataSnapshot.child("maxStreak").exists()) {
+                                    stats.setMaxStreak(dataSnapshot.child("maxStreak").getValue(Integer.class));
+                                }
+                                if (dataSnapshot.child("highscoreTraining").exists()) {
+                                    stats.setHighscoreTraining(dataSnapshot.child("highscoreTraining").getValue(Integer.class));
+                                }
 
-                            Map<String, Integer> guessDistribution = new HashMap<>();
-                            for (DataSnapshot entry : dataSnapshot.child("guessDistribution").getChildren()) {
-                                guessDistribution.put(entry.getKey(), entry.getValue(Integer.class));
-                            }
-                            stats.setGuessDistribution(guessDistribution);
+                                Map<String, Integer> guessDistribution = new HashMap<>();
+                                if (dataSnapshot.child("guessDistribution").exists()) {
+                                    for (DataSnapshot entry : dataSnapshot.child("guessDistribution").getChildren()) {
+                                        guessDistribution.put(entry.getKey(), entry.getValue(Integer.class));
+                                    }
+                                }
+                                stats.setGuessDistribution(guessDistribution);
 
-                            if (stats != null) {
                                 Log.d(TAG, "Stats trovate " + stats);
                                 liveData.setValue(stats);
                             } else {
@@ -150,4 +169,64 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource {
                     }
                 });
     }
+    public MutableLiveData<Boolean> getIsTodayLiveData() {
+        return isTodayLiveData;
+    }
+    //Creare metodo che fetch data di daily challenge
+    public void setIsTodayLiveData(String idToken) {
+        if (idToken == null || idToken.isEmpty()) {
+            Log.e(TAG, "Token ID is null or empty");
+            isTodayLiveData.setValue(false);
+            return;
+        }
+        databaseReference.child(FIREBASE_USERS_COLLECTION).child(idToken).child("dailyChallengeDate")
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            Log.d(TAG, "Daily challenge date found: " + dataSnapshot.getValue());
+                            Map<String, Long> map = (Map<String, Long>) dataSnapshot.getValue();
+                            Date dailyChallengeDate = new Date(map.get("time"));
+
+                            // Verifica se dailyChallengeDate è uguale a oggi
+                            boolean isDateToday = isDateToday(dailyChallengeDate);
+                            isTodayLiveData.setValue(isDateToday);
+                        } else {
+                            Log.d(TAG, "No daily challenge date found for token ID: " + idToken);
+                            isTodayLiveData.setValue(false);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Log.e(TAG, "Failed to read daily challenge date: " + databaseError.getMessage());
+                        isTodayLiveData.setValue(false);
+                    }
+                });
+    }
+
+    private boolean isDateToday(Date date) {
+        Calendar calendar = Calendar.getInstance();
+
+        // Normalizza la data del challenge
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        Date normalizedChallengeDate = calendar.getTime();
+
+        // Normalizza la data odierna
+        calendar.setTime(new Date());
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        Date todayDate = calendar.getTime();
+
+        // Confronta le date
+        return normalizedChallengeDate.equals(todayDate);
+    }
+
+
 }

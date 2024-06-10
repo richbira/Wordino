@@ -202,6 +202,18 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
                 Log.e("DailyFragment", "BottomNavigationView is not found.");
             }
         }
+        userViewModel.getIsTodayLiveData().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isToday) {
+                if (isToday) {
+                    Log.d(TAG, "onChanged: è oggi");
+                } else {
+                    Log.d(TAG, "onChanged: non è oggi");
+                }
+            }
+        });
+
+        userViewModel.checkIfDailyChallengeDateIsToday(tokenId);
 
         progressBar = view.findViewById(R.id.progress_bar);
 
@@ -304,10 +316,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
 
     public void keyPressed(String key){
         Log.d(TAG, "Premuto il tasto " + key);
-
         gameBoardModel.updateGameBoard(key);
-
-
     }
 
 

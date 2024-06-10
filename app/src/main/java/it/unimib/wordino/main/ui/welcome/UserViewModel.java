@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
+
 import it.unimib.wordino.main.model.User;
 import it.unimib.wordino.main.model.Result;
 import it.unimib.wordino.main.model.UserStat;
@@ -18,13 +19,14 @@ public class UserViewModel extends ViewModel { // ViewModel per la gestione dell
 
     private final IUserRepository userRepository;
     private MutableLiveData<Result> userMutableLiveData;
+    private LiveData<Boolean> isTodayLiveData;
     private boolean authenticationError;
 
 
     public UserViewModel(IUserRepository userRepository) {
         this.userRepository = userRepository;
         authenticationError = false;
-        //MutableLiveData<UserStat> userStatsLiveData = new MutableLiveData<>();
+        isTodayLiveData = userRepository.getIsTodayLiveData();
     }
 
     public MutableLiveData<Result> getUserMutableLiveData(
@@ -92,6 +94,13 @@ public class UserViewModel extends ViewModel { // ViewModel per la gestione dell
                 //userStatsLiveData.setValue(userStat);
             }
         });
+    }
+    public LiveData<Boolean> getIsTodayLiveData() {
+        return userRepository.getIsTodayLiveData();
+    }
+
+    public void checkIfDailyChallengeDateIsToday(String idToken) {
+        userRepository.setIsTodayLiveData(idToken);
     }
 }
 
