@@ -21,7 +21,7 @@ public class UserStat {
         this.HighscoreTraining = 0;
         this.guessDistribution = new HashMap<>();
         // Inizializza la mappa con chiavi da 1 a 5 con valori iniziali a 0
-        for (int i = 1; i <= 5; i++) {
+        for (int i = 1; i <= 6; i++) {
             guessDistribution.put(String.valueOf(i), 0);
         }
     }

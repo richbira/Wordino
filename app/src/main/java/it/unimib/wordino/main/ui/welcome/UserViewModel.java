@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
 import it.unimib.wordino.main.model.User;
@@ -81,19 +82,17 @@ public class UserViewModel extends ViewModel { // ViewModel per la gestione dell
     public LiveData<UserStat> getUserStats(String tokenId) { // Da mettere nella schermata delle statistiche
         return userRepository.getUserStats(tokenId);
     }
-    public void updateGameResult(String tokenId, boolean won,Integer guessCount, LifecycleOwner lifecycleOwner) {
-        getUserStats(tokenId).observe(lifecycleOwner, userStats -> {
-            Log.d(TAG, "updateGameResult: updating stats");
-            if (userStats != null) {
-                Log.d(TAG, "stats esistono: " + userStats);
-                userStats.updateStats(won,guessCount);
-                userRepository.updateUserStats(getLoggedUser(), userStats);
-            } else {
-                Log.d(TAG, "Stats: not available");
+    public void updateGameResult(String tokenId, boolean won,Integer guessCount) {
+        userRepository.updateGameResult(tokenId, won, guessCount);
+    }
+    public void fetchUserStats(String tokenId) {
+        userRepository.getUserStats(tokenId).observeForever(new Observer<UserStat>() {
+            @Override
+            public void onChanged(UserStat userStat) {
+                //userStatsLiveData.setValue(userStat);
             }
         });
     }
-
 }
 
 

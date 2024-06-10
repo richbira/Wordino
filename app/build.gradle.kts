@@ -53,7 +53,7 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     implementation("commons-validator:commons-validator:1.8.0")
     implementation("androidx.gridlayout:gridlayout:1.0.0")
-
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
     implementation ("androidx.lifecycle:lifecycle-extensions:2.2.0-beta01")
 
     // Room

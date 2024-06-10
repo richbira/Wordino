@@ -98,11 +98,11 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
                     if(gameBoardModel.getWinloss().equals("win")){
                         Log.d(TAG, "onChanged: WIN");
                         gameOver = true;
-                        userViewModel.updateGameResult(tokenId, true,currentLine,getViewLifecycleOwner());
+                        userViewModel.updateGameResult(tokenId, true,currentLine);
                     } else if(gameBoardModel.getWinloss().equals("lose")){
                         Log.d(TAG, "onChanged: lose");
                         gameOver = true;
-                        userViewModel.updateGameResult(tokenId, false,currentLine,getViewLifecycleOwner());
+                        userViewModel.updateGameResult(tokenId, false,currentLine);
                     }
                     gameOverAlert(gameBoardModel.getWinloss());
 

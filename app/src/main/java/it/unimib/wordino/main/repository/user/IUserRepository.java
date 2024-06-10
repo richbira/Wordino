@@ -13,11 +13,13 @@ public interface IUserRepository { // Interfaccia per la gestione dell'utente
     MutableLiveData<Result> getUser(String email, String password, boolean isUserRegistered);
     MutableLiveData<Result> getGoogleUser(String idToken);
     MutableLiveData<Result> logout();
+    MutableLiveData<UserStat>getUserStats(String tokenId);
     User getLoggedUser();
     void signUp(String email, String password);
     void signIn(String email, String password);
     void signInWithGoogle(String token);
     void resetPassword(String email);
-     LiveData<UserStat> getUserStats(String tokenId);
+
     void updateUserStats(User user, UserStat userStat);
+    void updateGameResult(String tokenId, boolean won,Integer guessCount);
 }

@@ -59,7 +59,7 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource {
             }
         });
     }
-        public LiveData<UserStat> getUserStats(String tokenId) { // prendo le statistiche su firebase di un utente passando tokenId
+        public MutableLiveData<UserStat> getUserStats(String tokenId) { // prendo le statistiche su firebase di un utente passando tokenId
             MutableLiveData<UserStat> liveData = new MutableLiveData<>();
             if (tokenId == null || tokenId.isEmpty()) {
                 Log.e(TAG, "Token ID is null or empty");
@@ -69,7 +69,7 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource {
                     .addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) { // Legge i dati dal database però lo faccio manuale perchè si spacca la deserilizzazione
-                            UserStat stats = null; // Crea un oggetto vuoto di UserStat
+                            UserStat stats = new UserStat(); // Crea un oggetto vuoto di UserStat
                             stats.setGamesPlayed(dataSnapshot.child("gamesPlayed").getValue(Integer.class));
                             stats.setGamesWon(dataSnapshot.child("gamesWon").getValue(Integer.class));
                             stats.setGamesLost(dataSnapshot.child("gamesLost").getValue(Integer.class));
@@ -109,6 +109,45 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource {
                 .addOnSuccessListener(aVoid -> Log.d(TAG, "User stats updated successfully"))
                 .addOnFailureListener(e -> Log.e(TAG, "Failed to update user stats: " + e.getLocalizedMessage()));
     }
+    public void updateGameResult(String idToken, boolean won, Integer guessCount) {
+        if (idToken == null || idToken.isEmpty()) {
+            Log.e(TAG, "Token ID is null or empty");
+            return;
+        }
+        //Mi prendo i dati del idToken
+        databaseReference.child(FIREBASE_USERS_COLLECTION).child(idToken).child(FIREBASE_STATS_COLLECTION)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) { // Legge i dati dal database però lo faccio manuale perchè si spacca la deserilizzazione
+                        UserStat stats = new UserStat(); // Crea un oggetto vuoto di UserStat
+                        stats.setGamesPlayed(dataSnapshot.child("gamesPlayed").getValue(Integer.class));
+                        stats.setGamesWon(dataSnapshot.child("gamesWon").getValue(Integer.class));
+                        stats.setGamesLost(dataSnapshot.child("gamesLost").getValue(Integer.class));
+                        stats.setCurrentStreak(dataSnapshot.child("currentStreak").getValue(Integer.class));
+                        stats.setMaxStreak(dataSnapshot.child("maxStreak").getValue(Integer.class));
+                        stats.setHighscoreTraining(dataSnapshot.child("highscoreTraining").getValue(Integer.class));
 
+                        Map<String, Integer> guessDistribution = new HashMap<>();
+                        for (DataSnapshot entry : dataSnapshot.child("guessDistribution").getChildren()) {
+                            guessDistribution.put(entry.getKey(), entry.getValue(Integer.class));
+                        }
+                        stats.setGuessDistribution(guessDistribution);
+                        Log.d(TAG, "Statistiche trovate " + stats.toString());
+                        if (won) {
+                            stats.updateStats(true, (guessCount+1));
 
+                            Log.d(TAG, "User stats updated successfully on firebase");
+                        } else {
+                            stats.updateStats(false, (guessCount+1));
+                            Log.d(TAG, "User stats updated successfully on firebase");
+                        }
+                        updateUserStats(idToken, stats);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        Log.e(TAG, "Failed to read user stats: " + databaseError.getMessage());
+                    }
+                });
+    }
 }
