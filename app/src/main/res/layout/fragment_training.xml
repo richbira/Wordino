@@ -25,344 +25,252 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
+                style="@style/Theme.Wordino.Wordbox"
                 android:id="@+id/word_01"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
                 android:layout_alignParentTop="true"
-                android:layout_marginTop="0dp"
-                android:background="@drawable/border_white"
-                android:textAlignment="center"
-                android:textSize="48sp" />
+                />
 
             <TextView
+                style="@style/Theme.Wordino.Wordbox"
                 android:id="@+id/word_02"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@id/word_01"
-                android:background="@drawable/border_white"
-                android:textAlignment="center"
-                android:textSize="48sp" />
+                />
 
             <TextView
+                style="@style/Theme.Wordino.Wordbox"
                 android:id="@+id/word_03"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@id/word_02"
-                android:background="@drawable/border_white"
-                android:textAlignment="center"
-                android:textSize="48sp" />
+                />
 
             <TextView
+                style="@style/Theme.Wordino.Wordbox"
                 android:id="@+id/word_04"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
                 android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@id/word_03"
-                android:background="@drawable/border_white"
-                android:textAlignment="center"
-                android:textSize="48sp" />
+                android:layout_toRightOf="@id/word_03" />
 
             <TextView
+                style="@style/Theme.Wordino.Wordbox"
                 android:id="@+id/word_05"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@id/word_04"
-                android:background="@drawable/border_white"
-                android:textAlignment="center"
-                android:textSize="48sp" />
+                />
 
             <TextView
                 android:id="@+id/word_11"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                style="@style/Theme.Wordino.Wordbox"
                 android:layout_below="@id/word_01"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/border_white"
-                android:textAlignment="center"
-                android:textSize="48sp" />
+                />
 
             <TextView
                 android:id="@+id/word_12"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                style="@style/Theme.Wordino.Wordbox"
                 android:layout_below="@id/word_01"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/word_11"
-                android:background="@drawable/border_white"
-                android:textAlignment="center"
-                android:textSize="48sp" />
+                />
 
             <TextView
                 android:id="@+id/word_13"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                style="@style/Theme.Wordino.Wordbox"
                 android:layout_below="@id/word_01"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/word_12"
-                android:background="@drawable/border_white"
-                android:textAlignment="center"
-                android:textSize="48sp" />
+                />
 
             <TextView
                 android:id="@+id/word_14"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                style="@style/Theme.Wordino.Wordbox"
                 android:layout_below="@id/word_01"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/word_13"
-                android:background="@drawable/border_white"
-                android:textAlignment="center"
-                android:textSize="48sp" />
+                />
 
             <TextView
                 android:id="@+id/word_15"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                style="@style/Theme.Wordino.Wordbox"
                 android:layout_below="@id/word_01"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/word_14"
-                android:background="@drawable/border_white"
-                android:textAlignment="center"
-                android:textSize="48sp" />
+                />
 
             <TextView
                 android:id="@+id/word_21"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                style="@style/Theme.Wordino.Wordbox"
                 android:layout_below="@id/word_11"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/border_white"
-                android:textAlignment="center"
-                android:textSize="48sp" />
+                />
 
             <TextView
                 android:id="@+id/word_22"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                style="@style/Theme.Wordino.Wordbox"
                 android:layout_below="@id/word_11"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/word_21"
-                android:background="@drawable/border_white"
-                android:textAlignment="center"
-                android:textSize="48sp" />
+                />
 
             <TextView
                 android:id="@+id/word_23"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                style="@style/Theme.Wordino.Wordbox"
                 android:layout_below="@id/word_11"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/word_22"
-                android:background="@drawable/border_white"
-                android:textAlignment="center"
-                android:textSize="48sp" />
+                />
 
             <TextView
                 android:id="@+id/word_24"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                style="@style/Theme.Wordino.Wordbox"
                 android:layout_below="@id/word_11"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/word_23"
-                android:background="@drawable/border_white"
-                android:textAlignment="center"
-                android:textSize="48sp" />
+                />
 
             <TextView
                 android:id="@+id/word_25"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                style="@style/Theme.Wordino.Wordbox"
                 android:layout_below="@id/word_11"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/word_24"
-                android:background="@drawable/border_white"
-                android:textAlignment="center"
-                android:textSize="48sp" />
+                />
 
             <TextView
                 android:id="@+id/word_31"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                style="@style/Theme.Wordino.Wordbox"
                 android:layout_below="@id/word_21"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/border_white"
-                android:textAlignment="center"
-                android:textSize="48sp" />
+                />
 
             <TextView
                 android:id="@+id/word_32"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                style="@style/Theme.Wordino.Wordbox"
                 android:layout_below="@id/word_21"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/word_31"
-                android:background="@drawable/border_white"
-                android:textAlignment="center"
-                android:textSize="48sp" />
+                />
 
             <TextView
                 android:id="@+id/word_33"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                style="@style/Theme.Wordino.Wordbox"
                 android:layout_below="@id/word_21"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/word_32"
-                android:background="@drawable/border_white"
-                android:textAlignment="center"
-                android:textSize="48sp" />
+                />
 
             <TextView
                 android:id="@+id/word_34"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                style="@style/Theme.Wordino.Wordbox"
                 android:layout_below="@id/word_21"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/word_33"
-                android:background="@drawable/border_white"
-                android:textAlignment="center"
-                android:textSize="48sp" />
+                />
 
             <TextView
                 android:id="@+id/word_35"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                style="@style/Theme.Wordino.Wordbox"
                 android:layout_below="@id/word_21"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/word_34"
-                android:background="@drawable/border_white"
-                android:textAlignment="center"
-                android:textSize="48sp" />
+                />
 
             <TextView
                 android:id="@+id/word_41"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                style="@style/Theme.Wordino.Wordbox"
                 android:layout_below="@id/word_31"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/border_white"
-                android:textAlignment="center"
-                android:textSize="48sp" />
+                />
 
             <TextView
                 android:id="@+id/word_42"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                style="@style/Theme.Wordino.Wordbox"
                 android:layout_below="@id/word_31"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/word_41"
-                android:background="@drawable/border_white"
-                android:textAlignment="center"
-                android:textSize="48sp" />
+                />
 
             <TextView
                 android:id="@+id/word_43"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                style="@style/Theme.Wordino.Wordbox"
                 android:layout_below="@id/word_31"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/word_42"
-                android:background="@drawable/border_white"
-                android:textAlignment="center"
-                android:textSize="48sp" />
+                />
 
             <TextView
                 android:id="@+id/word_44"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                style="@style/Theme.Wordino.Wordbox"
                 android:layout_below="@id/word_31"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/word_43"
-                android:background="@drawable/border_white"
-                android:textAlignment="center"
-                android:textSize="48sp" />
+                />
 
             <TextView
                 android:id="@+id/word_45"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                style="@style/Theme.Wordino.Wordbox"
                 android:layout_below="@id/word_31"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/word_44"
-                android:background="@drawable/border_white"
-                android:textAlignment="center"
-                android:textSize="48sp" />
+                />
 
             <TextView
                 android:id="@+id/word_51"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                style="@style/Theme.Wordino.Wordbox"
                 android:layout_below="@id/word_41"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/border_white"
-                android:textAlignment="center"
-                android:textSize="48sp" />
+                />
 
             <TextView
                 android:id="@+id/word_52"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                style="@style/Theme.Wordino.Wordbox"
                 android:layout_below="@id/word_41"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/word_51"
-                android:background="@drawable/border_white"
-                android:textAlignment="center"
-                android:textSize="48sp" />
+                />
 
             <TextView
                 android:id="@+id/word_53"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                style="@style/Theme.Wordino.Wordbox"
                 android:layout_below="@id/word_41"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/word_52"
-                android:background="@drawable/border_white"
-                android:textAlignment="center"
-                android:textSize="48sp" />
+                />
 
             <TextView
                 android:id="@+id/word_54"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                style="@style/Theme.Wordino.Wordbox"
                 android:layout_below="@id/word_41"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/word_53"
-                android:background="@drawable/border_white"
-                android:textAlignment="center"
-                android:textSize="48sp" />
+                />
 
             <TextView
                 android:id="@+id/word_55"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                style="@style/Theme.Wordino.Wordbox"
                 android:layout_below="@id/word_41"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toRightOf="@id/word_54"
-                android:background="@drawable/border_white"
-                android:textAlignment="center"
-                android:textSize="48sp" />
+                />
 
         </RelativeLayout>
 
@@ -373,21 +281,19 @@
             android:layout_height="151dp"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="11dp"
-            android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
             <Button
                 android:id="@+id/key_q"
-                style="@style/Widget.Material3.Button.OutlinedButton"
+                style="@style/Theme.Wordino.Buttons"
                 android:layout_width="38dp"
                 android:layout_height="50dp"
                 android:layout_alignParentTop="true"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="0dp"
                 android:layout_marginBottom="0dp"
-                android:backgroundTint="#EDEDED"
                 android:paddingLeft="0dp"
                 android:paddingRight="0dp"
                 android:text="@string/q"
@@ -396,11 +302,10 @@
 
             <Button
                 android:id="@+id/key_w"
-                style="@style/Widget.Material3.Button.OutlinedButton"
+                style="@style/Theme.Wordino.Buttons"
                 android:layout_width="38dp"
                 android:layout_height="50dp"
                 android:layout_toEndOf="@id/key_q"
-                android:backgroundTint="#EDEDED"
                 android:paddingLeft="0dp"
                 android:paddingRight="0dp"
                 android:text="@string/w"
@@ -410,11 +315,10 @@
             <Button
 
                 android:id="@+id/key_e"
-                style="@style/Widget.Material3.Button.OutlinedButton"
+                style="@style/Theme.Wordino.Buttons"
                 android:layout_width="38dp"
                 android:layout_height="50dp"
                 android:layout_toEndOf="@id/key_w"
-                android:backgroundTint="#EDEDED"
                 android:paddingLeft="0dp"
                 android:paddingRight="0dp"
                 android:text="@string/e"
@@ -423,11 +327,10 @@
 
             <Button
                 android:id="@+id/key_r"
-                style="@style/Widget.Material3.Button.OutlinedButton"
+                style="@style/Theme.Wordino.Buttons"
                 android:layout_width="38dp"
                 android:layout_height="50dp"
                 android:layout_toEndOf="@id/key_e"
-                android:backgroundTint="#EDEDED"
                 android:paddingLeft="0dp"
                 android:paddingRight="0dp"
                 android:text="@string/r"
@@ -436,11 +339,10 @@
 
             <Button
                 android:id="@+id/key_t"
-                style="@style/Widget.Material3.Button.OutlinedButton"
+                style="@style/Theme.Wordino.Buttons"
                 android:layout_width="38dp"
                 android:layout_height="50dp"
                 android:layout_toEndOf="@id/key_r"
-                android:backgroundTint="#EDEDED"
                 android:paddingLeft="0dp"
                 android:paddingRight="0dp"
                 android:text="@string/t"
@@ -449,11 +351,10 @@
 
             <Button
                 android:id="@+id/key_y"
-                style="@style/Widget.Material3.Button.OutlinedButton"
+                style="@style/Theme.Wordino.Buttons"
                 android:layout_width="38dp"
                 android:layout_height="50dp"
                 android:layout_toEndOf="@id/key_t"
-                android:backgroundTint="#EDEDED"
                 android:paddingLeft="0dp"
                 android:paddingRight="0dp"
                 android:text="@string/y"
@@ -462,11 +363,10 @@
 
             <Button
                 android:id="@+id/key_u"
-                style="@style/Widget.Material3.Button.OutlinedButton"
+                style="@style/Theme.Wordino.Buttons"
                 android:layout_width="38dp"
                 android:layout_height="50dp"
                 android:layout_toEndOf="@id/key_y"
-                android:backgroundTint="#EDEDED"
                 android:paddingLeft="0dp"
                 android:paddingRight="0dp"
                 android:text="@string/u"
@@ -475,11 +375,10 @@
 
             <Button
                 android:id="@+id/key_i"
-                style="@style/Widget.Material3.Button.OutlinedButton"
+                style="@style/Theme.Wordino.Buttons"
                 android:layout_width="38dp"
                 android:layout_height="50dp"
                 android:layout_toEndOf="@id/key_u"
-                android:backgroundTint="#EDEDED"
                 android:paddingLeft="0dp"
                 android:paddingRight="0dp"
                 android:text="@string/i"
@@ -488,11 +387,10 @@
 
             <Button
                 android:id="@+id/key_o"
-                style="@style/Widget.Material3.Button.OutlinedButton"
+                style="@style/Theme.Wordino.Buttons"
                 android:layout_width="38dp"
                 android:layout_height="50dp"
                 android:layout_toEndOf="@id/key_i"
-                android:backgroundTint="#EDEDED"
                 android:paddingLeft="0dp"
                 android:paddingRight="0dp"
                 android:text="@string/o"
@@ -501,11 +399,10 @@
 
             <Button
                 android:id="@+id/key_p"
-                style="@style/Widget.Material3.Button.OutlinedButton"
+                style="@style/Theme.Wordino.Buttons"
                 android:layout_width="38dp"
                 android:layout_height="50dp"
                 android:layout_toEndOf="@id/key_o"
-                android:backgroundTint="#EDEDED"
                 android:paddingLeft="0dp"
                 android:paddingRight="0dp"
                 android:text="@string/p"
@@ -514,12 +411,11 @@
 
             <Button
                 android:id="@+id/key_a"
-                style="@style/Widget.Material3.Button.OutlinedButton"
+                style="@style/Theme.Wordino.Buttons"
                 android:layout_width="38dp"
                 android:layout_height="50dp"
                 android:layout_below="@id/key_q"
                 android:layout_marginStart="23dp"
-                android:backgroundTint="#EDEDED"
                 android:paddingLeft="0dp"
                 android:paddingRight="0dp"
                 android:text="@string/a"
@@ -528,12 +424,11 @@
 
             <Button
                 android:id="@+id/key_s"
-                style="@style/Widget.Material3.Button.OutlinedButton"
+                style="@style/Theme.Wordino.Buttons"
                 android:layout_width="38dp"
                 android:layout_height="50dp"
                 android:layout_below="@id/key_q"
                 android:layout_toEndOf="@id/key_a"
-                android:backgroundTint="#EDEDED"
                 android:paddingLeft="0dp"
                 android:paddingRight="0dp"
                 android:text="@string/s"
@@ -542,12 +437,11 @@
 
             <Button
                 android:id="@+id/key_d"
-                style="@style/Widget.Material3.Button.OutlinedButton"
+                style="@style/Theme.Wordino.Buttons"
                 android:layout_width="38dp"
                 android:layout_height="50dp"
                 android:layout_below="@id/key_q"
                 android:layout_toEndOf="@id/key_s"
-                android:backgroundTint="#EDEDED"
                 android:paddingLeft="0dp"
                 android:paddingRight="0dp"
                 android:text="@string/d"
@@ -556,12 +450,11 @@
 
             <Button
                 android:id="@+id/key_f"
-                style="@style/Widget.Material3.Button.OutlinedButton"
+                style="@style/Theme.Wordino.Buttons"
                 android:layout_width="38dp"
                 android:layout_height="50dp"
                 android:layout_below="@id/key_q"
                 android:layout_toEndOf="@id/key_d"
-                android:backgroundTint="#EDEDED"
                 android:paddingLeft="0dp"
                 android:paddingRight="0dp"
                 android:text="@string/f"
@@ -570,12 +463,11 @@
 
             <Button
                 android:id="@+id/key_g"
-                style="@style/Widget.Material3.Button.OutlinedButton"
+                style="@style/Theme.Wordino.Buttons"
                 android:layout_width="38dp"
                 android:layout_height="50dp"
                 android:layout_below="@id/key_q"
                 android:layout_toEndOf="@id/key_f"
-                android:backgroundTint="#EDEDED"
                 android:paddingLeft="0dp"
                 android:paddingRight="0dp"
                 android:text="@string/g"
@@ -584,12 +476,11 @@
 
             <Button
                 android:id="@+id/key_h"
-                style="@style/Widget.Material3.Button.OutlinedButton"
+                style="@style/Theme.Wordino.Buttons"
                 android:layout_width="38dp"
                 android:layout_height="50dp"
                 android:layout_below="@id/key_q"
                 android:layout_toEndOf="@id/key_g"
-                android:backgroundTint="#EDEDED"
                 android:paddingLeft="0dp"
                 android:paddingRight="0dp"
                 android:text="@string/h"
@@ -598,12 +489,11 @@
 
             <Button
                 android:id="@+id/key_j"
-                style="@style/Widget.Material3.Button.OutlinedButton"
+                style="@style/Theme.Wordino.Buttons"
                 android:layout_width="38dp"
                 android:layout_height="50dp"
                 android:layout_below="@id/key_q"
                 android:layout_toEndOf="@id/key_h"
-                android:backgroundTint="#EDEDED"
                 android:paddingLeft="0dp"
                 android:paddingRight="0dp"
                 android:text="@string/j"
@@ -612,12 +502,11 @@
 
             <Button
                 android:id="@+id/key_k"
-                style="@style/Widget.Material3.Button.OutlinedButton"
+                style="@style/Theme.Wordino.Buttons"
                 android:layout_width="38dp"
                 android:layout_height="50dp"
                 android:layout_below="@id/key_q"
                 android:layout_toEndOf="@id/key_j"
-                android:backgroundTint="#EDEDED"
                 android:paddingLeft="0dp"
                 android:paddingRight="0dp"
                 android:text="@string/k"
@@ -626,12 +515,11 @@
 
             <Button
                 android:id="@+id/key_l"
-                style="@style/Widget.Material3.Button.OutlinedButton"
+                style="@style/Theme.Wordino.Buttons"
                 android:layout_width="38dp"
                 android:layout_height="50dp"
                 android:layout_below="@id/key_q"
                 android:layout_toEndOf="@id/key_k"
-                android:backgroundTint="#EDEDED"
                 android:paddingLeft="0dp"
                 android:paddingRight="0dp"
                 android:text="@string/l"
@@ -640,11 +528,10 @@
 
             <Button
                 android:id="@+id/key_cancel"
-                style="@style/Widget.Material3.Button.OutlinedButton"
+                style="@style/Theme.Wordino.ButtonsCyan"
                 android:layout_width="60dp"
                 android:layout_height="50dp"
                 android:layout_below="@id/key_a"
-                android:backgroundTint="#B4FFFF"
                 android:paddingLeft="0dp"
                 android:paddingRight="0dp"
                 android:text="@string/canc"
@@ -653,12 +540,11 @@
 
             <Button
                 android:id="@+id/key_z"
-                style="@style/Widget.Material3.Button.OutlinedButton"
+                style="@style/Theme.Wordino.Buttons"
                 android:layout_width="38dp"
                 android:layout_height="50dp"
                 android:layout_below="@id/key_a"
                 android:layout_toEndOf="@id/key_cancel"
-                android:backgroundTint="#EDEDED"
                 android:paddingLeft="0dp"
                 android:paddingRight="0dp"
                 android:text="@string/z"
@@ -667,12 +553,11 @@
 
             <Button
                 android:id="@+id/key_x"
-                style="@style/Widget.Material3.Button.OutlinedButton"
+                style="@style/Theme.Wordino.Buttons"
                 android:layout_width="38dp"
                 android:layout_height="50dp"
                 android:layout_below="@id/key_a"
                 android:layout_toEndOf="@id/key_z"
-                android:backgroundTint="#EDEDED"
                 android:paddingLeft="0dp"
                 android:paddingRight="0dp"
                 android:text="@string/x"
@@ -681,12 +566,11 @@
 
             <Button
                 android:id="@+id/key_c"
-                style="@style/Widget.Material3.Button.OutlinedButton"
+                style="@style/Theme.Wordino.Buttons"
                 android:layout_width="38dp"
                 android:layout_height="50dp"
                 android:layout_below="@id/key_a"
                 android:layout_toEndOf="@id/key_x"
-                android:backgroundTint="#EDEDED"
                 android:paddingLeft="0dp"
                 android:paddingRight="0dp"
                 android:text="@string/c"
@@ -695,12 +579,11 @@
 
             <Button
                 android:id="@+id/key_v"
-                style="@style/Widget.Material3.Button.OutlinedButton"
+                style="@style/Theme.Wordino.Buttons"
                 android:layout_width="38dp"
                 android:layout_height="50dp"
                 android:layout_below="@id/key_a"
                 android:layout_toEndOf="@id/key_c"
-                android:backgroundTint="#EDEDED"
                 android:paddingLeft="0dp"
                 android:paddingRight="0dp"
                 android:text="@string/v"
@@ -709,12 +592,11 @@
 
             <Button
                 android:id="@+id/key_b"
-                style="@style/Widget.Material3.Button.OutlinedButton"
+                style="@style/Theme.Wordino.Buttons"
                 android:layout_width="38dp"
                 android:layout_height="50dp"
                 android:layout_below="@id/key_a"
                 android:layout_toEndOf="@id/key_v"
-                android:backgroundTint="#EDEDED"
                 android:paddingLeft="0dp"
                 android:paddingRight="0dp"
                 android:text="@string/b"
@@ -723,12 +605,11 @@
 
             <Button
                 android:id="@+id/key_n"
-                style="@style/Widget.Material3.Button.OutlinedButton"
+                style="@style/Theme.Wordino.Buttons"
                 android:layout_width="38dp"
                 android:layout_height="50dp"
                 android:layout_below="@id/key_a"
                 android:layout_toEndOf="@id/key_b"
-                android:backgroundTint="#EDEDED"
                 android:paddingLeft="0dp"
                 android:paddingRight="0dp"
                 android:text="@string/n"
@@ -737,14 +618,13 @@
 
             <Button
                 android:id="@+id/key_m"
-                style="@style/Widget.Material3.Button.OutlinedButton"
+                style="@style/Theme.Wordino.Buttons"
                 android:layout_width="38dp"
                 android:layout_height="50dp"
                 android:layout_below="@id/key_a"
                 android:layout_marginStart="0dp"
                 android:layout_marginTop="0dp"
                 android:layout_toEndOf="@id/key_n"
-                android:backgroundTint="#EDEDED"
                 android:paddingLeft="0dp"
                 android:paddingRight="0dp"
                 android:text="@string/m"
@@ -753,14 +633,13 @@
 
             <Button
                 android:id="@+id/key_enter"
-                style="@style/Widget.Material3.Button.OutlinedButton"
+                style="@style/Theme.Wordino.ButtonsCyan"
                 android:layout_width="60dp"
                 android:layout_height="50dp"
                 android:layout_below="@id/key_a"
                 android:layout_marginStart="0dp"
                 android:layout_marginTop="0dp"
                 android:layout_toEndOf="@id/key_m"
-                android:backgroundTint="#B4FFFF"
                 android:paddingLeft="0dp"
                 android:paddingRight="0dp"
                 android:text="@string/enter"

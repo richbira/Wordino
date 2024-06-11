@@ -12,6 +12,7 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,6 +32,8 @@ import java.util.List;
 import java.util.Map;
 
 import it.unimib.wordino.R;
+import it.unimib.wordino.databinding.FragmentSettingsBinding;
+import it.unimib.wordino.databinding.FragmentSocialBinding;
 import it.unimib.wordino.main.model.Highscore;
 import it.unimib.wordino.main.model.UserStat;
 import it.unimib.wordino.main.repository.IWordRepositoryLD;
@@ -43,6 +46,7 @@ public class SocialFragment extends Fragment {
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String TAG = SocialFragment.class.getSimpleName();
+    private FragmentSocialBinding binding;
     private ScoresViewModel highscoresModel;
     private Observer<List<Highscore>> highscoresObserver;
     private UserViewModel userViewModel;
@@ -101,13 +105,19 @@ public class SocialFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_social, container, false);
+
+        binding = FragmentSocialBinding.inflate(inflater, container, false);
+
+        return binding.getRoot();
+
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        View statsView = binding.userStatistics;
+        View leaderboardView = binding.localLeaderboard;
 
         gamePlayedText = view.findViewById(R.id.gamePlayedText);
         currentStreakText = view.findViewById(R.id.currentStreakText);
@@ -115,6 +125,20 @@ public class SocialFragment extends Fragment {
         winrateText = view.findViewById(R.id.winrateText);
         barChart = view.findViewById(R.id.barChart);
         highscoresModel.getHighscores().observe(getViewLifecycleOwner(), highscoresObserver);
+
+        binding.userStatisticsButton.setOnClickListener(v -> {
+            statsView.setVisibility(View.VISIBLE);
+            binding.userStatisticsButton.setBackgroundColor(getResources().getColor(R.color.mywhite));
+            leaderboardView.setVisibility(View.GONE);
+            binding.localLeaderboardButton.setBackgroundColor(getResources().getColor(R.color.maincyan));
+        });
+
+        binding.localLeaderboardButton.setOnClickListener(v -> {
+            statsView.setVisibility(View.GONE);
+            binding.userStatisticsButton.setBackgroundColor(getResources().getColor(R.color.maincyan));
+            leaderboardView.setVisibility(View.VISIBLE);
+            binding.localLeaderboardButton.setBackgroundColor(getResources().getColor(R.color.mywhite));
+        });
     }
     @Override
     public void onResume() {
@@ -129,7 +153,7 @@ public class SocialFragment extends Fragment {
 
             int scoreValue = highscoreList.get(i).getScore();
             String dateValue = highscoreList.get(i).getDate();
-            dateValue = dateValue.substring(0,9);
+            dateValue = dateValue.substring(0,10);
             ((TextView) getView().findViewById(getResources().getIdentifier(scoreTextId, "id", PACKAGE_NAME))).setText(""+scoreValue);
             ((TextView) getView().findViewById(getResources().getIdentifier(dateTextId, "id", PACKAGE_NAME))).setText(""+dateValue);
         }

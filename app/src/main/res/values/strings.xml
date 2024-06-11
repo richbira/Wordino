@@ -57,7 +57,7 @@
     <string name="canc">Canc</string>
     <string name="enter">Enter</string>
     <string name="score">Score :</string>
-    <string name="Statistics">STATISTICS</string>
+    <string name="Statistics">Statistics</string>
     <!-- Strings related to languages -->
     <string-array name="language_array">
         <item>English</item>

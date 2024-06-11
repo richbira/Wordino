@@ -21,13 +21,52 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <LinearLayout
+        android:layout_marginTop="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:background="@color/mywhite">
+
+        <Button
+            style="@style/Theme.Wordino.ButtonClear"
+            android:id="@+id/userStatisticsButton"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="User statistics"
+            android:textSize="20dp"
+            app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.None">
+        </Button>
+
+        <Button
+            style="@style/Theme.Wordino.ButtonCyanClear"
+            android:id="@+id/localLeaderboardButton"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Local leaderboard"
+            android:textSize="20dp"
+            app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.None">
+        </Button>
+    </LinearLayout>
+
+    <LinearLayout
+        android:background="@color/maincyandark"
+        android:id="@+id/localLeaderboard"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:backgroundTint="@color/mywhite"
+        android:visibility="gone">
 
     <LinearLayout
             android:id="@+id/header"
+            android:paddingTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="0dp"
             android:orientation="horizontal">
 
             <TextView
@@ -70,9 +109,12 @@
                 app:contentPadding="10dp">
 
                 <LinearLayout
+                    android:background="@drawable/border_white"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    >
 
                     <TextView
                         android:layout_width="100dp"
@@ -108,6 +150,8 @@
                 app:contentPadding="10dp">
 
                 <LinearLayout
+                    android:background="@drawable/border_white"
+                    android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
@@ -145,6 +189,8 @@
                 app:contentPadding="10dp">
 
                 <LinearLayout
+                    android:background="@drawable/border_white"
+                    android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
@@ -182,6 +228,8 @@
                 app:contentPadding="10dp">
 
                 <LinearLayout
+                    android:background="@drawable/border_white"
+                    android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
@@ -219,6 +267,8 @@
                 app:contentPadding="10dp">
 
                 <LinearLayout
+                    android:background="@drawable/border_white"
+                    android:gravity="center_vertical"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
@@ -250,52 +300,67 @@
             </androidx.cardview.widget.CardView>
 
         </LinearLayout>
-
-    <TextView
-        android:id="@+id/StatisticsText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/Statistics" />
-
-    <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/barChart"
-        android:layout_width="match_parent"
-        android:layout_height="155dp" />
-
+    </LinearLayout>
     <LinearLayout
+        android:id="@+id/userStatistics"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:background="@color/mywhite"
+        android:orientation="vertical">
+
 
         <TextView
-            android:id="@+id/gamePlayedText"
-            android:layout_width="wrap_content"
+            android:id="@+id/StatisticsText"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="TextView" />
+            android:text="@string/Statistics" />
 
-        <TextView
-            android:id="@+id/winrateText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="TextView" />
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/barChart"
+            android:layout_marginTop="20dp
+"
+            android:layout_width="match_parent"
+            android:layout_height="155dp" />
 
-        <TextView
-            android:id="@+id/currentStreakText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="TextView" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/maxStreakText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="TextView" />
+            <TextView
+                android:id="@+id/gamePlayedText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="10sp"
+                 />
+
+            <TextView
+                android:id="@+id/winrateText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="10sp"
+                />
+
+            <TextView
+                android:id="@+id/currentStreakText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="10sp"
+                 />
+
+            <TextView
+                android:id="@+id/maxStreakText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="10sp"
+                 />
 
 
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>
