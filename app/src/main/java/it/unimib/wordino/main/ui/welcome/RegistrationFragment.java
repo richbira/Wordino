@@ -27,6 +27,7 @@ import it.unimib.wordino.main.model.Result;
 public class RegistrationFragment extends Fragment {
     private FragmentRegistrationBinding binding;
     private UserViewModel userViewModel;
+    public View progressBar;
 
     public RegistrationFragment() {
         // Required empty public constructor
@@ -46,19 +47,26 @@ public class RegistrationFragment extends Fragment {
     }
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        progressBar = binding.progressBar;
         binding.registerButton.setOnClickListener(v -> {
             String email = Objects.requireNonNull(binding.emailEditText.getText()).toString().trim();
             String password = Objects.requireNonNull(binding.passwordEditText.getText()).toString().trim();
-
+            binding.registerButton.setEnabled(false);
             if (isEmailOk(email) && isPasswordOk(password)) {
+                progressBar.setVisibility(View.VISIBLE);
+
                 userViewModel.getUserMutableLiveData(email, password,false).observe(getViewLifecycleOwner(), result -> {
                     if (result.isSuccess()) {
                         //User user = ((Result.UserResponseSuccess) result).getData();
                         userViewModel.setAuthenticationError(false);
+                        progressBar.setVisibility(View.GONE);
+                        //freeze register buttom
+
                         Navigation.findNavController(view).navigate(R.id.action_registrationFragment_to_gameActivity);
                     } else {
                         userViewModel.setAuthenticationError(true);
+                        progressBar.setVisibility(View.GONE);
+                        binding.registerButton.setEnabled(true);
                         Snackbar.make(requireActivity().findViewById(android.R.id.content),
                                 getErrorMessage(((Result.Error) result).getMessage()),
                                 Snackbar.LENGTH_SHORT).show();
@@ -66,6 +74,8 @@ public class RegistrationFragment extends Fragment {
                 });
             } else {
                 userViewModel.setAuthenticationError(true);
+                binding.registerButton.setEnabled(true);
+                progressBar.setVisibility(View.GONE);
                 Snackbar.make(requireActivity().findViewById(android.R.id.content),
                         R.string.check_login_data_message, Snackbar.LENGTH_SHORT).show();
             }

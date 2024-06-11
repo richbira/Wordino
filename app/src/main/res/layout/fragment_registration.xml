@@ -114,10 +114,23 @@
                 android:layout_marginEnd="24dp"
                 android:textColor="@color/black"
                 android:textSize="14sp"
+                android:text="@string/register"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/passwordTextInputLayout" />
 
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                style="@android:style/Widget.Material.ProgressBar.Large"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="1dp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_gravity="center" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

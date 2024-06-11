@@ -60,6 +60,7 @@ public class LoginFragment extends Fragment {
     private SignInClient oneTapClient;
     private BeginSignInRequest signInRequest;
     private DataEncryptionUtil dataEncryptionUtil;
+    private View progressBar;
     public LoginFragment() {
         // Required empty public constructor
     }
@@ -138,6 +139,7 @@ public class LoginFragment extends Fragment {
         loginButton = view.findViewById(R.id.loginButton);
         resetPassword = view.findViewById(R.id.forgotPasswordButton);
         buttonGoogleLogin = view.findViewById(R.id.logInWithGoogleButton);
+        progressBar = view.findViewById(R.id.progress_bar);
         return view;
     }
     @Override
@@ -145,6 +147,7 @@ public class LoginFragment extends Fragment {
 
         resetPassword.setOnClickListener(v -> {
             Log.d(TAG, "resetPassword clicked");
+            lockButtons(false);
             Navigation.findNavController(requireView()).navigate(R.id.action_loginFragment_to_forgotPasswordFragment); // Navigate to the ForgotPasswordFragment
         });
         buttonGoogleLogin.setOnClickListener(v -> oneTapClient.beginSignIn(signInRequest) // Start the One Tap sign-in flow
@@ -152,6 +155,8 @@ public class LoginFragment extends Fragment {
                     Log.d(TAG, "onSuccess from oneTapClient.beginSignIn(BeginSignInRequest)");
                     IntentSenderRequest intentSenderRequest =
                             new IntentSenderRequest.Builder(result.getPendingIntent()).build();
+                    lockButtons(false);
+                    progressBar.setVisibility(View.VISIBLE);
                     activityResultLauncher.launch(intentSenderRequest);
 
                     // Se loggato correttamente vado al gioco
@@ -162,19 +167,22 @@ public class LoginFragment extends Fragment {
                     // No saved credentials found. Launch the One Tap sign-up flow, or
                     // do nothing and continue presenting the signed-out UI.
                     Log.d(TAG, Objects.requireNonNull(e.getLocalizedMessage()));
-
+                    lockButtons(true);
+                    progressBar.setVisibility(View.GONE);
                     Snackbar.make(requireActivity().findViewById(android.R.id.content),
                             requireActivity().getString(R.string.error_no_google_account_found_message),
                             Snackbar.LENGTH_SHORT).show();
                 })); // Listener for the login with Google button TODO fare test con account google
         registrationButton.setOnClickListener(v -> {
-            Log.d(TAG, "register clicked ");
+            lockButtons(false);
+            progressBar.setVisibility(View.VISIBLE);
             Navigation.findNavController(requireView()).navigate(R.id.registrationFragment);
         });
         loginButton.setOnClickListener(v -> {
             String email = Objects.requireNonNull(textInputLayoutEmail.getEditText()).getText().toString().trim();
             String password = Objects.requireNonNull(textInputLayoutPassword.getEditText()).getText().toString().trim();
-
+            lockButtons(false);
+            progressBar.setVisibility(View.VISIBLE);
             // Start login if email and password are ok
             if (isEmailOk(email) & isPasswordOk(password)) { // If the email and password are ok
                 if (!userViewModel.isAuthenticationError()) { // If the user is not authenticated
@@ -193,14 +201,19 @@ public class LoginFragment extends Fragment {
                                     Snackbar.make(requireActivity().findViewById(android.R.id.content),
                                             getErrorMessage(((Result.Error) result).getMessage()),
                                             Snackbar.LENGTH_SHORT).show();
+                                    lockButtons(true);
+                                    progressBar.setVisibility(View.GONE);
                                 }
                             });
                 } else {
                     userViewModel.getUser(email, password, true);
                 }
             } else {
+                lockButtons(true);
+                progressBar.setVisibility(View.GONE);
                 Snackbar.make(requireActivity().findViewById(android.R.id.content),
                         R.string.check_login_data_message, Snackbar.LENGTH_SHORT).show();
+
             }
         });// Listener for the login button
     }
@@ -251,5 +264,12 @@ public class LoginFragment extends Fragment {
             textInputLayoutEmail.setError(null);
             return true;
         }
+    }
+
+    private void lockButtons(boolean lock) {
+        loginButton.setEnabled(lock);
+        registrationButton.setEnabled(lock);
+        buttonGoogleLogin.setEnabled(lock);
+        resetPassword.setEnabled(lock);
     }
 }
