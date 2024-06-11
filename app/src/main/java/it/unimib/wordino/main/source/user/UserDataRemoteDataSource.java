@@ -160,10 +160,9 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource {
                         Log.d(TAG, "Statistiche trovate " + stats.toString());
                         if (won) {
                             stats.updateStats(true, (guessCount+1));
-
                             Log.d(TAG, "User stats updated successfully on firebase");
                         } else {
-                            stats.updateStats(false, (guessCount+1));
+                            stats.updateStats(false, (guessCount));
                             Log.d(TAG, "User stats updated successfully on firebase");
                         }
                         updateUserStats(idToken, stats);

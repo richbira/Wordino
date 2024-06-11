@@ -99,7 +99,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
                         Log.d(TAG, "onChanged: WIN");
                         gameOver = true;
                         userViewModel.updateGameResult(tokenId, true,currentLine);
-                    } else if(gameBoardModel.getWinloss().equals("lose")){
+                    } else if(gameBoardModel.getWinloss().equals("loss")){
                         Log.d(TAG, "onChanged: lose");
                         gameOver = true;
                         userViewModel.updateGameResult(tokenId, false,currentLine);
@@ -197,9 +197,6 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
                         menuItem.setVisible(false);
                     }
                 }
-                // Your code to manipulate the menu
-            } else {
-                Log.e("DailyFragment", "BottomNavigationView is not found.");
             }
         }
         userViewModel.getIsTodayLiveData().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
