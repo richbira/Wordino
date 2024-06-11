@@ -30,6 +30,8 @@ public class User implements Parcelable {
         calendar.set(Calendar.MILLISECOND, 0);
         this.dailyChallengeDate = calendar.getTime();
     }
+
+
     /*public String getName() {
         return name;
     }

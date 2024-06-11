@@ -124,9 +124,15 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource {
             Log.e(TAG, "Token ID is null or empty");
             return;
         }
-        databaseReference.child(FIREBASE_USERS_COLLECTION).child(idToken).child("userStats").setValue(userStat)
+        databaseReference.child(FIREBASE_USERS_COLLECTION).child(idToken).child(FIREBASE_STATS_COLLECTION).setValue(userStat)
                 .addOnSuccessListener(aVoid -> Log.d(TAG, "User stats updated successfully"))
                 .addOnFailureListener(e -> Log.e(TAG, "Failed to update user stats: " + e.getLocalizedMessage()));
+        Date today = new Date();
+        setCurrentDailyDate(today);
+        Log.d(TAG, "updateUserStats: "+today);
+        databaseReference.child(FIREBASE_USERS_COLLECTION).child(idToken).child("dailyChallengeDate").setValue(today)
+                .addOnSuccessListener(aVoid -> Log.d(TAG, "Daily challenge date updated successfully"))
+                .addOnFailureListener(e -> Log.e(TAG, "Failed to update daily challenge date: " + e.getLocalizedMessage()));
     }
     public void updateGameResult(String idToken, boolean won, Integer guessCount) {
         if (idToken == null || idToken.isEmpty()) {
@@ -226,6 +232,11 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource {
 
         // Confronta le date
         return normalizedChallengeDate.equals(todayDate);
+    }
+    public void setCurrentDailyDate(Date data) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.MILLISECOND, 0);
+        data = calendar.getTime();
     }
 
 
