@@ -193,7 +193,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
                 Menu menu = bottomNavigationView.getMenu();
                 for (int i = 0, size = menu.size(); i < size; i++) {
                     MenuItem menuItem = menu.getItem(i);
-                    if (menuItem.getTitle().equals("Social")){
+                    if (menuItem.getTitle().equals("Social") || menuItem.getTitle().equals("Daily")){
                         menuItem.setVisible(false);
                     }
                 }
@@ -207,8 +207,10 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
             public void onChanged(Boolean isToday) {
                 if (isToday) {
                     Log.d(TAG, "onChanged: è oggi");
+                    //Mettere blocco dicendo che hai già giocato
                 } else {
                     Log.d(TAG, "onChanged: non è oggi");
+                    //Puoi giocare
                 }
             }
         });
