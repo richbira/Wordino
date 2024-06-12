@@ -45,4 +45,5 @@ public class Constants {
     public static final String FIREBASE_REALTIME_DATABASE = "https://wordino-6452d-default-rtdb.europe-west1.firebasedatabase.app/";
     public static final String FIREBASE_USERS_COLLECTION = "users";
     public static final String FIREBASE_STATS_COLLECTION = "userStats";
+    public static final String FIREBASE_WORDS_COLLECTION = "words";
 }

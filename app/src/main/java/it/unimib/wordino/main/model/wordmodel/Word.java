@@ -1,5 +1,7 @@
 package it.unimib.wordino.main.model.wordmodel;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import android.os.Parcel;
@@ -39,6 +41,8 @@ public class Word implements Parcelable
     //@SerializedName("sourceUrls")
     @Ignore
     private List<String> sourceUrls;
+    @Ignore
+    private Date dailyDate;
 
     public final static Creator<Word> CREATOR = new Creator<Word>() {
         public Word createFromParcel(Parcel in) {
@@ -63,6 +67,7 @@ public class Word implements Parcelable
         in.readList(this.meanings, (Meaning.class.getClassLoader()));
         this.license = ((License) in.readValue((License.class.getClassLoader())));
         in.readList(this.sourceUrls, (java.lang.String.class.getClassLoader()));
+
     }
 
     public Word(String word, String phonetic, List<Phonetic> phonetics, List<Meaning> meanings, License license, List<String> sourceUrls ) {
@@ -77,6 +82,20 @@ public class Word implements Parcelable
     public Word(long wordId, String word){
         this.wordId = wordId;
         this.word = word;
+    }
+
+    public Date getDailyDate() {
+        return dailyDate;
+    }
+
+    public void setDailyDate(int year, int month, int day, int hour, int minute, int second) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month - 1, day, hour, minute, second); // Mese meno uno perché Calendar usa 0-11 per i mesi
+        this.dailyDate = calendar.getTime();
+    }
+    public Word(Long wordId, Date date){
+        this.wordId = wordId;
+        this.dailyDate = date;
     }
 
     public String getWord() {

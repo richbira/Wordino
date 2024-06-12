@@ -5,6 +5,8 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
 
 import it.unimib.wordino.main.model.GameBoard;
@@ -26,6 +28,8 @@ public class GameBoardViewModelDaily extends ViewModel {
     public Boolean fiveLetterWord = false;
     public Boolean enterIsPressed = false;
     private String winloss = "";
+    private String dailyWordString;
+
 
     public GameBoardViewModelDaily(IWordRepositoryLD wordRepositoryLD){
         this.wordRepositoryLD = wordRepositoryLD;
@@ -48,9 +52,15 @@ public class GameBoardViewModelDaily extends ViewModel {
     }
 
     public MutableLiveData<Result> getRandomWord(){
+        //Pullo la parola del giorno e controllo se data è la stessa di oggi
+        //se data è la stessa ritorno &&  la parola, altrimenti la pusho la data oggi con data odierna
+
         if (dailyWord == null) {
-            dailyWord = wordRepositoryLD.fetchRandomWord();//todo mettere check se la daily è scaduta
-            Log.d(TAG, "fetch dailyWord");
+            dailyWord = wordRepositoryLD.fetchRandomWord();//TODO mettere check se la daily è scaduta
+
+            wordRepositoryLD.getWordFromFirebase(dailyWordString);
+            //wordRepositoryLD.getWord();
+            Log.d(TAG, "fetch dailyWord: ");
         }
         return dailyWord;
     }
@@ -67,12 +77,30 @@ public class GameBoardViewModelDaily extends ViewModel {
         guessedWord = wordRepositoryLD.fetchSpecificWordCheck(word);
     }
 
+    public void pushWordOnFirebase(String word){
+        //pusho la dailyword in boardstate se la data non è la stessa data di oggi, se è diversa la carico
+        dailyWordString = (String) dailyWord.getValue().getData();
+        Log.d(TAG, "pushWordOnFirebase: "+ (String) dailyWord.getValue().getData());
+        //wordRepositoryLD.setWordOfTheDay((String) dailyWord.getValue().getData());
+        wordRepositoryLD.setWordOfTheDay(dailyWordString);
+    }
 
 
     //--------------------------------------------------------------------------------------------------------------------
     //--------------------------------------------------------------------------------------------------------------------
     //--------------------------------------------------------------------------------------------------------------------
 
+    public static boolean areDatesEqual(Date date1, Date date2) { //todo mettere in classe di utilità
+        Calendar cal1 = Calendar.getInstance();
+        Calendar cal2 = Calendar.getInstance();
+        cal1.setTime(date1);
+        cal2.setTime(date2);
+
+        // Confronta anno, mese e giorno
+        return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
+                cal1.get(Calendar.MONTH) == cal2.get(Calendar.MONTH) &&
+                cal1.get(Calendar.DAY_OF_MONTH) == cal2.get(Calendar.DAY_OF_MONTH);
+    }
     public void updateGameBoard(String text) {
 
             if (Objects.equals(text, "CANC")) {

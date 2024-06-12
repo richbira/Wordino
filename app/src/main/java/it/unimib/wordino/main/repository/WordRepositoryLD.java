@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -111,6 +112,20 @@ public class WordRepositoryLD implements IWordRepositoryLD, WordCallback {
     @Override
     public void onFailureFromLocal(String exception){
         Log.d(TAG, "Errore : " + exception);
+    }
+
+    public MutableLiveData<String> getWord(){
+        return wordRemoteDataSource.getWord();
+    }
+    public MutableLiveData<Date> getDate(){
+        return wordRemoteDataSource.getDate();
+    }
+
+    public void setWordOfTheDay(String word){
+        wordRemoteDataSource.setWordOfTheDay(word);
+    }
+    public  void getWordFromFirebase(String word){
+        wordRemoteDataSource.getWordFromFirebase(word);
     }
 
 }

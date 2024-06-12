@@ -2,6 +2,7 @@ package it.unimib.wordino.main.repository;
 
 import androidx.lifecycle.MutableLiveData;
 
+import java.util.Date;
 import java.util.List;
 
 import it.unimib.wordino.main.model.Highscore;
@@ -15,4 +16,10 @@ public interface IWordRepositoryLD {
 
     void saveHighscore(Highscore highscore);
     MutableLiveData<List<Highscore>> getHighscores();
+
+    MutableLiveData<String> getWord();
+    MutableLiveData<Date> getDate();
+
+    void setWordOfTheDay(String word);
+     void getWordFromFirebase(String word);
 }

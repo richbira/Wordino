@@ -39,7 +39,7 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource {
 
 
     public UserDataRemoteDataSource() {
-        firebaseDatabase = FirebaseDatabase.getInstance(FIREBASE_REALTIME_DATABASE); //TODO Da settare costante
+        firebaseDatabase = FirebaseDatabase.getInstance(FIREBASE_REALTIME_DATABASE);
         databaseReference = firebaseDatabase.getReference().getRef();
         //isTodayLiveData = getIsTodayLiveData();
     }

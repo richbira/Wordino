@@ -21,7 +21,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -55,7 +57,8 @@ public class SocialFragment extends Fragment {
     private TextView currentStreakText;
     private TextView maxStreakText;
     private TextView winrateText;
-    private BarChart barChart;
+    private HorizontalBarChart horizontalBarChart;
+
     LiveData<UserStat> userStatsLiveData;
 
     public SocialFragment() {
@@ -123,7 +126,7 @@ public class SocialFragment extends Fragment {
         currentStreakText = view.findViewById(R.id.currentStreakText);
         maxStreakText = view.findViewById(R.id.maxStreakText);
         winrateText = view.findViewById(R.id.winrateText);
-        barChart = view.findViewById(R.id.barChart);
+        horizontalBarChart = view.findViewById(R.id.horizontalBarChart);
         highscoresModel.getHighscores().observe(getViewLifecycleOwner(), highscoresObserver);
 
         binding.userStatisticsButton.setOnClickListener(v -> {
@@ -172,12 +175,12 @@ public class SocialFragment extends Fragment {
                     int gamesWon = userStat.getGamesWon();
                     double winrate = (gamesPlayed > 0) ? ((double) gamesWon / gamesPlayed) * 100 : 0;
                     winrateText.setText(String.format("Win Rate:\n%.2f%%", winrate));
-                    setupBarChart(userStat.getGuessDistribution());
+                    setupHorizontalBarChart(userStat.getGuessDistribution());
                 }
             }
         });
     }
-    private void setupBarChart(Map<String, Integer> guessDistribution) {
+    private void setupHorizontalBarChart(Map<String, Integer> guessDistribution) {
         List<BarEntry> entries = new ArrayList<>();
         List<String> labels = new ArrayList<>();
 
@@ -185,42 +188,44 @@ public class SocialFragment extends Fragment {
             String key = String.valueOf(i);
             Integer value = guessDistribution.get(key);
             if (value != null) {
-                entries.add(new BarEntry(i-1, value));
+                entries.add(new BarEntry(i - 1, value));
             } else {
-                entries.add(new BarEntry(i-1, 0));
+                entries.add(new BarEntry(i - 1, 0));
             }
             labels.add(key);
         }
 
         BarDataSet dataSet = new BarDataSet(entries, "Guess Distribution");
         BarData barData = new BarData(dataSet);
-        barChart.setData(barData);
+        horizontalBarChart.setData(barData); // Use HorizontalBarChart here
 
-        XAxis xAxis = barChart.getXAxis();
+        // Configure the x-axis as it now displays on the left/right
+        XAxis xAxis = horizontalBarChart.getXAxis();
         xAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM); // For horizontal bar chart, BOTTOM represents the side axis
         xAxis.setGranularity(1f);
         xAxis.setGranularityEnabled(true);
+        xAxis.setDrawGridLines(false); // no grid lines
 
-        // Rimuovi le linee della griglia
-        xAxis.setDrawGridLines(false);
-        barChart.getAxisLeft().setDrawGridLines(false);
-        barChart.getAxisRight().setDrawGridLines(false);
+        // Configure the y-axis (now acts as the x-axis in a vertical bar chart)
+        YAxis leftAxis = horizontalBarChart.getAxisLeft();
+        leftAxis.setDrawGridLines(false); // no grid lines
+        leftAxis.setDrawLabels(false); // no axis labels
 
-        // Imposta il grafico come non cliccabile
-        barChart.setTouchEnabled(false);
-        barChart.setClickable(false);
-        barChart.setLongClickable(false);
+        YAxis rightAxis = horizontalBarChart.getAxisRight();
+        rightAxis.setDrawGridLines(false); // no grid lines
+        rightAxis.setDrawLabels(false); // no axis labels
 
-        // Rimuovi la legenda
-        barChart.getLegend().setEnabled(false);
+        // Set chart interaction settings
+        horizontalBarChart.setTouchEnabled(false);
+        horizontalBarChart.setClickable(false);
+        horizontalBarChart.setLongClickable(false);
 
-        barChart.getAxisLeft().setDrawLabels(false);
-        barChart.getAxisRight().setDrawLabels(false);
+        // Disable legend and description
+        horizontalBarChart.getLegend().setEnabled(false);
+        horizontalBarChart.getDescription().setEnabled(false);
 
-        // Disabilita la descrizione del grafico
-        barChart.getDescription().setEnabled(false);
-
-        barChart.invalidate(); // refresh
+        horizontalBarChart.invalidate(); // Refresh the chart
     }
+
 }

@@ -53,7 +53,7 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
     public void startGame() {
-        Intent playIntent = new Intent(WelcomeActivity.this, GameActivity.class);
+        Intent playIntent = new Intent(WelcomeActivity.this, GameActivity.class); //TODO Deve andare nel training
         startActivity(playIntent);
     }
 

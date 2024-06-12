@@ -315,12 +315,11 @@
             android:layout_height="wrap_content"
             android:text="@string/Statistics" />
 
-        <com.github.mikephil.charting.charts.BarChart
-            android:id="@+id/barChart"
-            android:layout_marginTop="20dp
-"
+        <com.github.mikephil.charting.charts.HorizontalBarChart
+            android:id="@+id/horizontalBarChart"
             android:layout_width="match_parent"
-            android:layout_height="155dp" />
+            android:layout_height="match_parent" />
+
 
         <LinearLayout
             android:layout_width="match_parent"

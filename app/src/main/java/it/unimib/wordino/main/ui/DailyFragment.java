@@ -165,6 +165,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
                 Log.d(TAG, "INIZIO randomword OBSERVER");
                 if (result.isSuccess()){
                     Log.d(TAG, "finisce la rotella");
+                    gameBoardModel.pushWordOnFirebase((String) result.getData());
                     progressBar.setVisibility(View.GONE);
                 }
 
@@ -266,6 +267,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
         gameBoardModel.getGameBoard().observe(getViewLifecycleOwner(), gameBoardObserver);
         gameBoardModel.getRandomWord().observe(getViewLifecycleOwner(), randomWordObserver);
         gameBoardModel.getGuessedWord().observe(getViewLifecycleOwner(), wordCheckObserver);
+
 
     }
 

@@ -1,12 +1,26 @@
 package it.unimib.wordino.main.source;
 
 import static it.unimib.wordino.main.util.Constants.ENGLISH;
+import static it.unimib.wordino.main.util.Constants.FIREBASE_REALTIME_DATABASE;
+import static it.unimib.wordino.main.util.Constants.FIREBASE_WORDS_COLLECTION;
 
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.MutableLiveData;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import it.unimib.wordino.main.model.wordmodel.Word;
 import it.unimib.wordino.main.service.DictionaryWordApiService;
@@ -22,11 +36,18 @@ public class WordRemoteDataSource extends BaseWordRemoteDataSource{
     private final DictionaryWordApiService specificWordApiService;
     private final RandomWordApiService randomWordApiService;
 
+    private final DatabaseReference databaseReference;
+    private final FirebaseDatabase firebaseDatabase;
+
+    private MutableLiveData<String> wordLiveData;
+    private MutableLiveData<Date> dateLiveData;
+
 
     public WordRemoteDataSource(){
         this.specificWordApiService = ServiceLocator.getInstance().getSpecificWordApiService();
         this.randomWordApiService = ServiceLocator.getInstance().getRandomWordApiService();
-
+        firebaseDatabase = FirebaseDatabase.getInstance(FIREBASE_REALTIME_DATABASE);
+        databaseReference = firebaseDatabase.getReference().getRef();
     }
     @Override
     public void getSpecificWord(String word) {
@@ -116,5 +137,66 @@ public class WordRemoteDataSource extends BaseWordRemoteDataSource{
             }
         });
     }
+
+    public void setWordOfTheDay(String word) {
+        // Crea un oggetto HashMap per conservare i dati.
+        Map<String, Object> dataMap = new HashMap<>();
+        dataMap.put("word", word);
+        dataMap.put("date", new Date());  // Aggiunge la data odierna.
+
+        // "push()" genera un ID univoco per ogni nuova parola, per evitare sovrascritture.
+        databaseReference.child("WordOfTheDay").push().setValue(dataMap);
+    }
+
+    public MutableLiveData<String> getWord(){
+        return wordLiveData;
+    }
+
+    public MutableLiveData<Date> getDate(){
+        return dateLiveData;
+    }
+
+    public void getWordFromFirebase(String word) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String todayDate = sdf.format(new Date()); // Ottiene la data odierna nel formato yyyy-MM-dd
+
+        // Log initial access to method.
+        Log.d(TAG, "getWord: Fetching word and date from Firebase");
+        // Access the Firebase database reference to "WordOfTheDay".
+        databaseReference.child("WordOfTheDay").orderByChild("word").equalTo(word)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            boolean found = false;
+                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                DataSnapshot dateSnapshot = snapshot.child("date");
+                                int day = dateSnapshot.child("day").getValue(Integer.class);
+                                int month = dateSnapshot.child("month").getValue(Integer.class);
+                                int year = dateSnapshot.child("year").getValue(Integer.class);
+                                String dateStr = year + "-" + String.format("%02d", month) + "-" + String.format("%02d", day);
+
+                                if (dateStr.equals(todayDate)) {
+                                    found = true;
+                                    String entryId = snapshot.getKey();
+                                    // Logging the retrieved data.
+                                    Log.d(TAG, "Data Retrieved: Entry ID = " + entryId + ", word = " + word + ", Date = " + dateStr);
+                                }
+                            }
+                            if (!found) {
+                                Log.d(TAG, "No data found for the word with today's date.");
+                            }
+                        } else {
+                        }
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        // Log any errors.
+                        System.err.println("Listener was cancelled, error: " + databaseError.getMessage());
+                    }
+                });
+    }
+
+
 }
 
