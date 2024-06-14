@@ -193,6 +193,9 @@ public class WordRemoteDataSource extends BaseWordRemoteDataSource{
                                     wordCallback.onFailureFromRemoteFirebaseWord("Parola di oggi non presente nel firebase");
                                 }
                             }
+                        } else {
+                            Log.d(TAG, "NON TROVATO NIENTE NEL DATABASE ");
+                            wordCallback.onFailureFromRemoteFirebaseWord("Parola di oggi non presente nel firebase");
                         }
                     }
                     @Override

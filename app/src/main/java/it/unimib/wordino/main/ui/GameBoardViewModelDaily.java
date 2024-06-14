@@ -71,9 +71,6 @@ public class GameBoardViewModelDaily extends ViewModel {
 
         if(randomWord == null){
 
-                randomWord = new MutableLiveData<Result>(new Result.Error("temp"));
-        }
-        if (randomWordToBeFetched) {
             Log.d(TAG, "fetchrandomWord dal getrandomword");
             randomWord = wordRepositoryLD.fetchRandomWord();
         }
@@ -96,10 +93,15 @@ public class GameBoardViewModelDaily extends ViewModel {
         guessedWord = wordRepositoryLD.fetchSpecificWordCheck(word);
     }
 
-    public void pushWordOnFirebase(String word){
+    public void pushWordOnFirebase(){
         //pusho la dailyword in boardstate se la data non è la stessa data di oggi, se è diversa la carico
-        Log.d(TAG, "pushWordOnFirebase: " + word);
-        wordRepositoryLD.setWordOfTheDay(word);
+        if (randomWordToBeFetched) {
+            Log.d(TAG, "pushWordOnFirebase: " + randomWord.getValue().getData());
+            wordRepositoryLD.setWordOfTheDay((String) randomWord.getValue().getData());
+            randomWordToBeFetched = false;
+            dailyWord = randomWord;
+        }
+        else randomWordToBeFetched = true;
     }
 
 

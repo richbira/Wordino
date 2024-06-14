@@ -166,12 +166,11 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
 
                 if(result.isSuccess()){
                     Log.d(TAG, "finisce la rotella");
+                    Log.d(TAG, "La parola daily è: " + result.getData());
                     progressBar.setVisibility(View.GONE);
 
                 } else {
-                    gameBoardModel.setRandomWordToBeFetched();
-                    gameBoardModel.getRandomWord();
-
+                    gameBoardModel.pushWordOnFirebase();
                 }
 
             }
@@ -180,12 +179,10 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
         randomWordObserver = new Observer<Result>() {
             @Override
             public void onChanged(@Nullable Result result) {
-                gameBoardModel.pushWordOnFirebase("spark");
-
 
                 Log.d(TAG, "INIZIO randomword OBSERVER");
                 if (result.isSuccess()){
-                    gameBoardModel.pushWordOnFirebase((String) result.getData());
+                    gameBoardModel.pushWordOnFirebase();
                     Log.d(TAG, "finisce la rotella");
                     progressBar.setVisibility(View.GONE);
                 }
