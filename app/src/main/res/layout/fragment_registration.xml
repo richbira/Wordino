@@ -45,7 +45,7 @@
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/wordinoLogo" />
+                    app:srcCompat="@drawable/wordino_logo" />
 
             </androidx.cardview.widget.CardView>
 
@@ -106,7 +106,7 @@
 
             <Button
                 android:id="@+id/registerButton"
-                style="@style/Widget.Material3.Button.ElevatedButton"
+                style="@style/Theme.Wordino.ButtonCyanClear"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"

@@ -21,6 +21,8 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.List;
 
 import it.unimib.wordino.R;
@@ -96,10 +98,8 @@ public class TrainingFragment extends Fragment implements View.OnClickListener {
                     Log.d(TAG, "Result is success, inizia procedura di comparazione");
                     Log.d(TAG, "parola: " + result.getData());
                     gameBoardModel.tryWord((String) result.getData());
-                    Log.d(TAG, "enterpressd? " + gameBoardModel.getEnterIsPressed());
                     if (gameBoardModel.getEnterIsPressed()) {
                         gameBoardModel.resetEnterNotPressed();
-                        Log.d(TAG, "Flip animation + " + (currentLine - 1));
                         flipAnimation1.setTarget((TextView) getView().findViewById(getResources().getIdentifier("word_" + (currentLine - 1) + "1", "id", PACKAGE_NAME)));
                         flipAnimation2.setTarget((TextView) getView().findViewById(getResources().getIdentifier("word_" + (currentLine - 1) + "2", "id", PACKAGE_NAME)));
                         flipAnimation3.setTarget((TextView) getView().findViewById(getResources().getIdentifier("word_" + (currentLine - 1) + "3", "id", PACKAGE_NAME)));
@@ -119,7 +119,6 @@ public class TrainingFragment extends Fragment implements View.OnClickListener {
                     gameBoardModel.resetEnterNotPressed();
 
                     //shake animation
-                    Log.d(TAG, "shake animation -- " + "word_" + currentLine);
 
 
                     shakeAnimation1.setTarget((TextView) getView().findViewById(getResources().getIdentifier("word_" + currentLine + "1", "id", PACKAGE_NAME)));
@@ -133,6 +132,10 @@ public class TrainingFragment extends Fragment implements View.OnClickListener {
                     shakeAnimation3.start();
                     shakeAnimation4.start();
                     shakeAnimation5.start();
+
+                    Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                            "La parola non esiste!",
+                            Snackbar.LENGTH_SHORT).show();
                 }
 
                 currentLine = gameBoardModel.getCurrentLine();
@@ -145,7 +148,6 @@ public class TrainingFragment extends Fragment implements View.OnClickListener {
             public void onChanged(@Nullable Result result) {
                 Log.d(TAG, "INIZIO randomword OBSERVER");
                 if (result.isSuccess()){
-                    Log.d(TAG, "finisce la rotella");
                     progressBar.setVisibility(View.GONE);
                 }
 
@@ -291,7 +293,6 @@ public class TrainingFragment extends Fragment implements View.OnClickListener {
         String wordCode = "";
         String colorCode = "";
         currentLine = gameBoardModel.getCurrentLine();
-        Log.d(TAG, "currentLine: " + currentLine);
         for (int i = 0; i < 6; i++){
             wordCode = "";
             colorCode = "";
@@ -336,7 +337,6 @@ public class TrainingFragment extends Fragment implements View.OnClickListener {
             }
 
         }else{ //questo ramo serve per il reset, a rendere bianche le caselle con valore null invece di w
-                Log.d(TAG, "Ramo in caso code = null");
             for (int j = 1; j < 6; j++) {
                 boxId = "word_" + i + j;
                 TextView currentBox = (TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", PACKAGE_NAME));

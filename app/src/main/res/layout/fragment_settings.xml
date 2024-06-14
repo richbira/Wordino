@@ -30,38 +30,51 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/accountText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="68dp"
+            android:layout_marginStart="40dp"
+            android:text="Logged in as: "
+            android:textSize="18dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/dark_mode_switch"></TextView>
+
         <Button
             android:id="@+id/logoutButton"
             style="@style/Theme.Wordino.ButtonsCyan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="50dp"
             android:text="Exit Account"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.163"
+            app:layout_constraintHorizontal_bias="0.127"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/app_name" />
+            app:layout_constraintTop_toBottomOf="@+id/accountText" />
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/dark_mode_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            app:switchPadding="10dp"
+            android:layout_marginTop="44dp"
             android:text="Dark Mode"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.139"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/logoutButton" />
+            app:layout_constraintTop_toBottomOf="@+id/howToPlayButton" />
 
         <Button
-            style="@style/Theme.Wordino.Buttons"
             android:id="@+id/howToPlayButton"
+            style="@style/Theme.Wordino.Buttons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="40dp"
             android:text="@string/How_to_play"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.504"
-            app:layout_constraintStart_toEndOf="@+id/logoutButton"
+            app:layout_constraintHorizontal_bias="0.145"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/app_name" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

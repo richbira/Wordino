@@ -28,7 +28,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/wordinoLogo" />
+            app:srcCompat="@drawable/wordino_logo" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/emailTextInputLayout"
@@ -70,12 +70,11 @@
 
         <Button
             android:id="@+id/registerButton"
-            style="@style/Widget.AppCompat.Button.Borderless"
+            style="@style/Theme.Wordino.ButtonBorderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="40dp"
             android:text="@string/register"
-            android:textColor="#673AB7"
             app:layout_constraintBottom_toBottomOf="@+id/textview_new_account"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/logInWithGoogleButton"
@@ -84,19 +83,19 @@
 
         <Button
             android:id="@+id/forgotPasswordButton"
-            style="@style/Widget.AppCompat.Button.Borderless.Colored"
+            style="@style/Theme.Wordino.ButtonBorderless"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="24dp"
             android:text="@string/Forgot_psw"
-            android:textColor="#9C27B0"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/passwordTextInputLayout"
             app:layout_constraintVertical_bias="0.031" />
 
         <Button
+            style="@style/Theme.Wordino.ButtonsCyan"
             android:id="@+id/loginButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -146,6 +145,8 @@
 
         <Button
             android:id="@+id/logInWithGoogleButton"
+            style="@style/Theme.Wordino.ButtonsCyan"
+
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/google_login"

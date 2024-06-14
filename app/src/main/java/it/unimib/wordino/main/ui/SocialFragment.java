@@ -133,16 +133,16 @@ public class SocialFragment extends Fragment {
 
         binding.userStatisticsButton.setOnClickListener(v -> {
             statsView.setVisibility(View.VISIBLE);
-            binding.userStatisticsButton.setBackgroundColor(getResources().getColor(R.color.mywhite));
+            binding.userStatisticsButton.setBackgroundColor(getResources().getColor(R.color.maincyandark));
             leaderboardView.setVisibility(View.GONE);
-            binding.localLeaderboardButton.setBackgroundColor(getResources().getColor(R.color.maincyan));
+            binding.localLeaderboardButton.setBackgroundColor(getResources().getColor(R.color.mywhite));
         });
 
         binding.localLeaderboardButton.setOnClickListener(v -> {
             statsView.setVisibility(View.GONE);
-            binding.userStatisticsButton.setBackgroundColor(getResources().getColor(R.color.maincyan));
+            binding.userStatisticsButton.setBackgroundColor(getResources().getColor(R.color.mywhite));
             leaderboardView.setVisibility(View.VISIBLE);
-            binding.localLeaderboardButton.setBackgroundColor(getResources().getColor(R.color.mywhite));
+            binding.localLeaderboardButton.setBackgroundColor(getResources().getColor(R.color.maincyandark));
         });
     }
     @Override

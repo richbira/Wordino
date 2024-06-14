@@ -14,7 +14,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/baseline_menu_book_24"
+        app:srcCompat="@drawable/wordino_logo"
         android:contentDescription="@string/image" />
 
     <TextView
@@ -31,8 +31,10 @@
 
     <Button
         android:id="@+id/loginButton"
+        style="@style/Theme.Wordino.ButtonsCyan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
         android:width="150dp"
         android:text="@string/Login"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,6 +43,7 @@
 
     <Button
         android:id="@+id/PlayButton"
+        style="@style/Theme.Wordino.ButtonsCyan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"

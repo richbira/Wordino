@@ -11,9 +11,12 @@
     <color name="myyellow">#ffbf00</color>
     <color name="mygrey">#a0a0a0</color>
     <color name="mywhite">#EDEDED</color>
+    <color name="myblack">#2C2C2C</color>
     <color name="darkthemeblack">#FF464646</color>
+    <color name="mywhitedarktheme">#4E4A4A</color>
     <color name="maincyan">#B4FFFF</color>
-    <color name="maincyandark">#FF376E6E</color>
+    <color name="maincyandark">#54BEBE</color>
+    <color name="darkthemetext">#DCEAEA</color>
 
 
 

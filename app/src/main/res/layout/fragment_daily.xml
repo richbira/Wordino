@@ -534,7 +534,6 @@
                 android:layout_width="60dp"
                 android:layout_height="50dp"
                 android:layout_below="@id/key_a"
-                android:backgroundTint="@color/maincyan"
                 android:paddingLeft="0dp"
                 android:paddingRight="0dp"
                 android:text="@string/canc"

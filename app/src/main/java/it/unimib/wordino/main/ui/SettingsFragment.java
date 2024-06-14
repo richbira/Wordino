@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
+import android.widget.TextView;
 
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
@@ -82,10 +83,16 @@ public class SettingsFragment extends Fragment {
 
         View htpView = view.findViewById(R.id.howToPlayConstraint);
         View settingsView = view.findViewById(R.id.settingsLayout);
+        TextView loggedUserView = view.findViewById(R.id.accountText);
+
+        String loggedUser = userViewModel.getLoggedUser().getEmail();
 
         //se utente non è loggato, nascondi il bottone di logout
         if (userViewModel.getLoggedUser() == null) {
             binding.logoutButton.setVisibility(View.GONE);
+            loggedUserView.setText("Logged in as guest");
+        } else {
+            loggedUserView.setText("Logged in as:\n" + loggedUser);
         }
 
         // Logout button listener

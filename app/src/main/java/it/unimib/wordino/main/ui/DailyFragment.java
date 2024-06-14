@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.snackbar.Snackbar;
 
 import it.unimib.wordino.R;
 import it.unimib.wordino.main.model.GameBoard;
@@ -94,13 +95,11 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
                 updateGameBoardUI(gameBoard);
                 currentLine = gameBoardModel.getCurrentLine();
                 if(gameBoardModel.getWinloss() != "" && !gameOver){ //todo gameover ricevuto da firebase
-                    Log.d(TAG, "Gameover alert");
+
                     if(gameBoardModel.getWinloss().equals("win")){
-                        Log.d(TAG, "onChanged: WIN");
                         gameOver = true;
                         userViewModel.updateGameResult(tokenId, true,currentLine);
                     } else if(gameBoardModel.getWinloss().equals("loss")){
-                        Log.d(TAG, "onChanged: lose");
                         gameOver = true;
                         userViewModel.updateGameResult(tokenId, false,currentLine);
                     }
@@ -119,7 +118,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
                     gameBoardModel.tryWord((String) result.getData());
                     if (gameBoardModel.getEnterIsPressed()) {
                         gameBoardModel.resetEnterNotPressed();
-                        Log.d(TAG, "Flip animation + " + (currentLine - 1));
+
                         flipAnimation1.setTarget((TextView) getView().findViewById(getResources().getIdentifier("word_" + (currentLine - 1) + "1", "id", PACKAGE_NAME)));
                         flipAnimation2.setTarget((TextView) getView().findViewById(getResources().getIdentifier("word_" + (currentLine - 1) + "2", "id", PACKAGE_NAME)));
                         flipAnimation3.setTarget((TextView) getView().findViewById(getResources().getIdentifier("word_" + (currentLine - 1) + "3", "id", PACKAGE_NAME)));
@@ -138,7 +137,6 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
                     gameBoardModel.resetEnterNotPressed();
 
                     //shake animation
-                    Log.d(TAG, "shake animation -- " + "word_" + currentLine);
 
 
                     shakeAnimation1.setTarget((TextView) getView().findViewById(getResources().getIdentifier("word_" + currentLine + "1", "id", PACKAGE_NAME)));
@@ -152,6 +150,10 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
                     shakeAnimation3.start();
                     shakeAnimation4.start();
                     shakeAnimation5.start();
+
+                    Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                            "This word does not exist",
+                            Snackbar.LENGTH_SHORT).show();
                 }
 
                 currentLine = gameBoardModel.getCurrentLine();
@@ -165,7 +167,6 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
                 Log.d(TAG, "INIZIO dailyword OBSERVER");
 
                 if(result.isSuccess()){
-                    Log.d(TAG, "finisce la rotella");
                     Log.d(TAG, "La parola daily è: " + result.getData());
                     progressBar.setVisibility(View.GONE);
 
@@ -183,7 +184,6 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
                 Log.d(TAG, "INIZIO randomword OBSERVER");
                 if (result.isSuccess()){
                     gameBoardModel.pushWordOnFirebase();
-                    Log.d(TAG, "finisce la rotella");
                     progressBar.setVisibility(View.GONE);
                 }
 
@@ -222,11 +222,11 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onChanged(Boolean isToday) {
                 if (isToday) {
-                    Log.d(TAG, "onChanged: è oggi");
-                    //Mettere blocco dicendo che hai già giocato
+                    Log.d(TAG, "Hai già completato la daily di oggi");
+                    gameBoardModel.setBlockDaily(true);
                 } else {
-                    Log.d(TAG, "onChanged: non è oggi");
-                    //Puoi giocare
+                    Log.d(TAG, "Daily ancora da fare");
+                    gameBoardModel.setBlockDaily(false);
                 }
             }
         });
@@ -293,7 +293,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
 
-        if (gameBoardModel.getWinloss() == "") {
+        if (!(gameBoardModel.getBlockDaily())) {
             int id = v.getId();
             if (id == R.id.key_q) keyPressed("Q");
             else if (id == R.id.key_w) keyPressed("W");
@@ -326,6 +326,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
         }
         else {
             Log.d(TAG, "Gameover, tasti disattivati");
+
         }
     }
 

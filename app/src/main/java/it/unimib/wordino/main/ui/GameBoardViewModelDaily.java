@@ -31,7 +31,7 @@ public class GameBoardViewModelDaily extends ViewModel {
     public Boolean randomWordToBeFetched = false;
 
     private String winloss = "";
-    private String dailyWordString;
+    private Boolean blockDaily;
 
 
     public GameBoardViewModelDaily(IWordRepositoryLD wordRepositoryLD){
@@ -86,6 +86,8 @@ public class GameBoardViewModelDaily extends ViewModel {
     }
 
     public String getWinloss() {return winloss;}
+    public Boolean getBlockDaily() {return blockDaily;}
+    public void setBlockDaily(Boolean flag) { blockDaily = flag;}
 
 
 
