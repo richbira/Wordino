@@ -31,7 +31,6 @@ import it.unimib.wordino.main.repository.IWordRepositoryLD;
 import it.unimib.wordino.main.repository.user.IUserRepository;
 import it.unimib.wordino.main.ui.welcome.UserViewModel;
 import it.unimib.wordino.main.ui.welcome.UserViewModelFactory;
-import it.unimib.wordino.main.util.DataEncryptionUtil;
 import it.unimib.wordino.main.util.ServiceLocator;
 
 public class DailyFragment extends Fragment implements View.OnClickListener {
@@ -54,12 +53,13 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
 
     public Observer<GameBoard> gameBoardObserver;
     public Observer<Result> wordCheckObserver;
+    public Observer<Result> dailyWordObserver;
     public Observer<Result> randomWordObserver;
     private UserViewModel userViewModel;
     //private DataEncryptionUtil dataEncryptionUtil;
     private String tokenId;
     private boolean gameOver;
-
+    private boolean fetchingRandom = false;
 
 
     public DailyFragment() {
@@ -159,13 +159,34 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
             }
         };
 
+        dailyWordObserver = new Observer<Result>() {
+            @Override
+            public void onChanged(@Nullable Result result) {
+                Log.d(TAG, "INIZIO dailyword OBSERVER");
+
+                if(result.isSuccess()){
+                    Log.d(TAG, "finisce la rotella");
+                    progressBar.setVisibility(View.GONE);
+
+                } else {
+                    gameBoardModel.setRandomWordToBeFetched();
+                    gameBoardModel.getRandomWord();
+
+                }
+
+            }
+        };
+
         randomWordObserver = new Observer<Result>() {
             @Override
             public void onChanged(@Nullable Result result) {
+                gameBoardModel.pushWordOnFirebase("spark");
+
+
                 Log.d(TAG, "INIZIO randomword OBSERVER");
                 if (result.isSuccess()){
-                    Log.d(TAG, "finisce la rotella");
                     gameBoardModel.pushWordOnFirebase((String) result.getData());
+                    Log.d(TAG, "finisce la rotella");
                     progressBar.setVisibility(View.GONE);
                 }
 
@@ -195,7 +216,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
                 for (int i = 0, size = menu.size(); i < size; i++) {
                     MenuItem menuItem = menu.getItem(i);
                     if (menuItem.getTitle().equals("Social") || menuItem.getTitle().equals("Daily")){
-                        menuItem.setVisible(false);
+                        menuItem.setEnabled(false);
                     }
                 }
             }
@@ -265,6 +286,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
         //OBSERVERS
 
         gameBoardModel.getGameBoard().observe(getViewLifecycleOwner(), gameBoardObserver);
+        gameBoardModel.getDailyWord().observe(getViewLifecycleOwner(), dailyWordObserver);
         gameBoardModel.getRandomWord().observe(getViewLifecycleOwner(), randomWordObserver);
         gameBoardModel.getGuessedWord().observe(getViewLifecycleOwner(), wordCheckObserver);
 

@@ -17,6 +17,6 @@ public abstract class BaseWordRemoteDataSource {
 
     public abstract void setWordOfTheDay(String word);
 
-    public abstract void getWordFromFirebase(String word);
+    public abstract void getWordFromFirebase();
 
 }

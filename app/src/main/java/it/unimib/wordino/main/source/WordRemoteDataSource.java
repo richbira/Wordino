@@ -15,6 +15,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 
 import java.util.Date;
@@ -98,13 +99,13 @@ public class WordRemoteDataSource extends BaseWordRemoteDataSource{
                     wordCallback.onSuccessFromRemoteSpecificCheck(specificWord.get(0));
 
                 } else {
-                    wordCallback.onFailureFromRemoteSpecificCheck("La parola non esiste");
+                    wordCallback.onFailureFromRemoteSpecificCheck("La parola non esiste (specificwordcheck)");
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call<List<Word>> call, @NonNull Throwable t) {
-                Log.d(TAG, "OnFailure: + " + call.isExecuted());
+                Log.d(TAG, "OnFailure: + " + call.isExecuted() + t);
                 wordCallback.onFailureFromRemoteSpecificCheck("Error wordNotFound");
             }
         });
@@ -142,7 +143,7 @@ public class WordRemoteDataSource extends BaseWordRemoteDataSource{
         // Crea un oggetto HashMap per conservare i dati.
         Map<String, Object> dataMap = new HashMap<>();
         dataMap.put("word", word);
-        dataMap.put("date", new Date());  // Aggiunge la data odierna.
+        dataMap.put("date", LocalDate.now());  // Aggiunge la data odierna.
 
         // "push()" genera un ID univoco per ogni nuova parola, per evitare sovrascritture.
         databaseReference.child("WordOfTheDay").push().setValue(dataMap);
@@ -156,37 +157,42 @@ public class WordRemoteDataSource extends BaseWordRemoteDataSource{
         return dateLiveData;
     }
 
-    public void getWordFromFirebase(String word) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String todayDate = sdf.format(new Date()); // Ottiene la data odierna nel formato yyyy-MM-dd
-
+    public void getWordFromFirebase() {
+        LocalDate today = LocalDate.now();
         // Log initial access to method.
         Log.d(TAG, "getWord: Fetching word and date from Firebase");
-        // Access the Firebase database reference to "WordOfTheDay".
-        databaseReference.child("WordOfTheDay").orderByChild("word").equalTo(word)
+        Log.d(TAG, "" + today);
+        // Access the Firebase dat abase reference to "WordOfTheDay".
+        databaseReference.child("WordOfTheDay").orderByChild("date")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
+
                         if (dataSnapshot.exists()) {
                             boolean found = false;
                             for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                 DataSnapshot dateSnapshot = snapshot.child("date");
-                                int day = dateSnapshot.child("day").getValue(Integer.class);
-                                int month = dateSnapshot.child("month").getValue(Integer.class);
+                                DataSnapshot wordSnapshot = snapshot.child("word");
+                                int day = dateSnapshot.child("dayOfMonth").getValue(Integer.class);
+                                int month = dateSnapshot.child("monthValue").getValue(Integer.class);
                                 int year = dateSnapshot.child("year").getValue(Integer.class);
+                                String wordString = wordSnapshot.getValue(String.class);
                                 String dateStr = year + "-" + String.format("%02d", month) + "-" + String.format("%02d", day);
+                                Log.d(TAG, dateStr + " --- " + today);
 
-                                if (dateStr.equals(todayDate)) {
+
+                                if (year == today.getYear() && month == today.getMonthValue() && day == today.getDayOfMonth()) {
+                                    String word = snapshot.child("word").getValue(String.class);
+                                    Log.d(TAG, "Data Retrieved: Word = " + word + ", Date = " + day + "/" + month + "/" + year);
+                                    wordCallback.onSuccessFromRemoteFirebaseWord(wordString);
                                     found = true;
-                                    String entryId = snapshot.getKey();
-                                    // Logging the retrieved data.
-                                    Log.d(TAG, "Data Retrieved: Entry ID = " + entryId + ", word = " + word + ", Date = " + dateStr);
+
+                                }
+                                if (!found) {
+                                    Log.d(TAG, "No data found for the word with today's date.");
+                                    wordCallback.onFailureFromRemoteFirebaseWord("Parola di oggi non presente nel firebase");
                                 }
                             }
-                            if (!found) {
-                                Log.d(TAG, "No data found for the word with today's date.");
-                            }
-                        } else {
                         }
                     }
                     @Override

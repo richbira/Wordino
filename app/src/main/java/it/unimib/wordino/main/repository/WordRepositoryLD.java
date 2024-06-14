@@ -21,6 +21,7 @@ public class WordRepositoryLD implements IWordRepositoryLD, WordCallback {
 
     private final MutableLiveData<Result> guessedWord;
     private final MutableLiveData<Result> randomWord;
+    private final MutableLiveData<Result> fireBaseWord;
     private final MutableLiveData<List<Highscore>> highscores;
     private final BaseWordRemoteDataSource wordRemoteDataSource;
     private final BaseWordLocalDataSource wordLocalDataSource;
@@ -34,6 +35,7 @@ public class WordRepositoryLD implements IWordRepositoryLD, WordCallback {
         guessedWord = new MutableLiveData<>();
         randomWord = new MutableLiveData<>();
         highscores = new MutableLiveData<>();
+        fireBaseWord = new MutableLiveData<>();
         this.wordRemoteDataSource = wordRemoteDataSource;
         this.wordLocalDataSource = wordLocalDataSource;
         this.wordRemoteDataSource.setWordCallback(this);
@@ -83,7 +85,7 @@ public class WordRepositoryLD implements IWordRepositoryLD, WordCallback {
             wordRemoteDataSource.getRandomWord();
         } else {
             //saveWordInDatabase(word); TODO RISOLVERE QUESTO
-            randomWord.postValue(new Result.Success(wordString));
+            randomWord.setValue(new Result.Success(wordString));
             Log.d(TAG, "Postata la parola " + wordString + " come randomWord");
         }
     }
@@ -124,8 +126,19 @@ public class WordRepositoryLD implements IWordRepositoryLD, WordCallback {
     public void setWordOfTheDay(String word){
         wordRemoteDataSource.setWordOfTheDay(word);
     }
-    public  void getWordFromFirebase(String word){
-        wordRemoteDataSource.getWordFromFirebase(word);
+
+    public MutableLiveData<Result> getWordFromFirebase(){
+        wordRemoteDataSource.getWordFromFirebase();
+        return fireBaseWord;
+    }
+
+    @Override
+    public void onSuccessFromRemoteFirebaseWord(String word) {
+        fireBaseWord.postValue(new Result.Success(word));
+    }
+    @Override
+    public void onFailureFromRemoteFirebaseWord(String exception){
+        fireBaseWord.postValue(new Result.Error("NOTFOUND")); //
     }
 
 }

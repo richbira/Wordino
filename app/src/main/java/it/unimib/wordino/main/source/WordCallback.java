@@ -1,9 +1,12 @@
 
 package it.unimib.wordino.main.source;
 
+import android.util.Log;
+
 import java.util.List;
 
 import it.unimib.wordino.main.model.Highscore;
+import it.unimib.wordino.main.model.Result;
 import it.unimib.wordino.main.model.wordmodel.Word;
 
 public interface WordCallback {
@@ -15,4 +18,6 @@ public interface WordCallback {
     void onFailureFromRemoteRandom(String exception);
     void onSuccessFromLocal(List<Highscore> highscores);
     void onFailureFromLocal(String exception);
+    void onSuccessFromRemoteFirebaseWord(String word);
+    void onFailureFromRemoteFirebaseWord(String exception);
 }

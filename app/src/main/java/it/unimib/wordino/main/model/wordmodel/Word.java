@@ -90,7 +90,7 @@ public class Word implements Parcelable
 
     public void setDailyDate(int year, int month, int day, int hour, int minute, int second) {
         Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month - 1, day, hour, minute, second); // Mese meno uno perché Calendar usa 0-11 per i mesi
+        calendar.set(year+1990, month - 1, day, hour, minute, second); // Mese meno uno perché Calendar usa 0-11 per i mesi
         this.dailyDate = calendar.getTime();
     }
     public Word(Long wordId, Date date){

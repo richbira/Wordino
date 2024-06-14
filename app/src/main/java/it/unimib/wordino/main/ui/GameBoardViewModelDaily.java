@@ -21,12 +21,15 @@ public class GameBoardViewModelDaily extends ViewModel {
 
     private MutableLiveData<Result> guessedWord;
     private MutableLiveData<Result> dailyWord;
+    private MutableLiveData<Result> randomWord;
     private MutableLiveData<GameBoard> boardState;
 
     public int currentLine = 0;
     public int currentLetter = 0;
     public Boolean fiveLetterWord = false;
     public Boolean enterIsPressed = false;
+    public Boolean randomWordToBeFetched = false;
+
     private String winloss = "";
     private String dailyWordString;
 
@@ -51,23 +54,39 @@ public class GameBoardViewModelDaily extends ViewModel {
         return guessedWord;
     }
 
-    public MutableLiveData<Result> getRandomWord(){
-        //Pullo la parola del giorno e controllo se data è la stessa di oggi
-        //se data è la stessa ritorno &&  la parola, altrimenti la pusho la data oggi con data odierna
+    public MutableLiveData<Result> getDailyWord(){
 
         if (dailyWord == null) {
-            dailyWord = wordRepositoryLD.fetchRandomWord();//TODO mettere check se la daily è scaduta
 
-            wordRepositoryLD.getWordFromFirebase(dailyWordString);
-            //wordRepositoryLD.getWord();
-            Log.d(TAG, "fetch dailyWord: ");
+            Log.d(TAG, "fetch dailyWord");
+            dailyWord = wordRepositoryLD.getWordFromFirebase();
+
         }
         return dailyWord;
+    }
+
+    public MutableLiveData<Result> getRandomWord(){
+        Log.d(TAG, "CIAO");
+
+
+        if(randomWord == null){
+
+                randomWord = new MutableLiveData<Result>(new Result.Error("temp"));
+        }
+        if (randomWordToBeFetched) {
+            Log.d(TAG, "fetchrandomWord dal getrandomword");
+            randomWord = wordRepositoryLD.fetchRandomWord();
+        }
+        return randomWord;
     }
 
     public int getCurrentLine(){ return currentLine;}
     public Boolean getEnterIsPressed() {return enterIsPressed;}
     public void resetEnterNotPressed() {enterIsPressed = false;}
+    public void setRandomWordToBeFetched() {randomWordToBeFetched = true;}
+    public Boolean getRandomWordToBeFetched() {
+        return randomWordToBeFetched;
+    }
 
     public String getWinloss() {return winloss;}
 
@@ -79,10 +98,8 @@ public class GameBoardViewModelDaily extends ViewModel {
 
     public void pushWordOnFirebase(String word){
         //pusho la dailyword in boardstate se la data non è la stessa data di oggi, se è diversa la carico
-        dailyWordString = (String) dailyWord.getValue().getData();
-        Log.d(TAG, "pushWordOnFirebase: "+ (String) dailyWord.getValue().getData());
-        //wordRepositoryLD.setWordOfTheDay((String) dailyWord.getValue().getData());
-        wordRepositoryLD.setWordOfTheDay(dailyWordString);
+        Log.d(TAG, "pushWordOnFirebase: " + word);
+        wordRepositoryLD.setWordOfTheDay(word);
     }
 
 
@@ -170,6 +187,7 @@ public class GameBoardViewModelDaily extends ViewModel {
         if (enterIsPressed) {
             String dailyWordString = (String) dailyWord.getValue().getData();
             String color_code = "";
+            Log.d(TAG, dailyWordString);
             for (int i = 0; i < 5; i++) {
                 Log.d(TAG, "Check: " + guessedWordString.charAt(i) + " - " + dailyWordString.charAt(i));
                 if (guessedWordString.charAt(i) == dailyWordString.charAt(i)) {

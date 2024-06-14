@@ -57,6 +57,10 @@ public class SocialFragment extends Fragment {
     private TextView currentStreakText;
     private TextView maxStreakText;
     private TextView winrateText;
+    private TextView gamePlayedValue;
+    private TextView currentStreakValue;
+    private TextView maxStreakValue;
+    private TextView winrateValue;
     private HorizontalBarChart horizontalBarChart;
 
     LiveData<UserStat> userStatsLiveData;
@@ -126,6 +130,12 @@ public class SocialFragment extends Fragment {
         currentStreakText = view.findViewById(R.id.currentStreakText);
         maxStreakText = view.findViewById(R.id.maxStreakText);
         winrateText = view.findViewById(R.id.winrateText);
+
+        gamePlayedValue = view.findViewById(R.id.gamePlayedValue);
+        currentStreakValue = view.findViewById(R.id.currentStreakValue);
+        maxStreakValue = view.findViewById(R.id.maxStreakValue);
+        winrateValue = view.findViewById(R.id.winrateValue);
+
         horizontalBarChart = view.findViewById(R.id.horizontalBarChart);
         highscoresModel.getHighscores().observe(getViewLifecycleOwner(), highscoresObserver);
 
@@ -168,13 +178,19 @@ public class SocialFragment extends Fragment {
             @Override
             public void onChanged(UserStat userStat) {
                 if (userStat != null) {
-                    gamePlayedText.setText("Games Played:\n" + String.valueOf(userStat.getGamesPlayed()));
-                    currentStreakText.setText("Current Streak:\n" + String.valueOf(userStat.getCurrentStreak()));
-                    maxStreakText.setText("Max Streak:\n" + String.valueOf(userStat.getMaxStreak()));
+                    gamePlayedText.setText("Games Played");
+                    currentStreakText.setText("Current Streak");
+                    maxStreakText.setText("Max Streak");
+
+                    gamePlayedValue.setText(String.valueOf(userStat.getGamesPlayed()));
+                    currentStreakValue.setText(String.valueOf(userStat.getCurrentStreak()));
+                    maxStreakValue.setText(String.valueOf(userStat.getMaxStreak()));
+
                     int gamesPlayed = userStat.getGamesPlayed();
                     int gamesWon = userStat.getGamesWon();
                     double winrate = (gamesPlayed > 0) ? ((double) gamesWon / gamesPlayed) * 100 : 0;
-                    winrateText.setText(String.format("Win Rate:\n%.2f%%", winrate));
+                    winrateText.setText(String.format("Win Rate"));
+                    winrateValue.setText(String.format("%.2f%%", winrate));
                     setupHorizontalBarChart(userStat.getGuessDistribution());
                 }
             }
