@@ -3,6 +3,7 @@ package it.unimib.wordino.main.ui;
 import static it.unimib.wordino.main.util.Constants.PACKAGE_NAME;
 
 import android.app.AlertDialog;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -28,6 +29,7 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,13 +59,7 @@ public class SocialFragment extends Fragment {
     private TextView currentStreakText;
     private TextView maxStreakText;
     private TextView winrateText;
-    private TextView gamePlayedValue;
-    private TextView currentStreakValue;
-    private TextView maxStreakValue;
-    private TextView winrateValue;
     private HorizontalBarChart horizontalBarChart;
-
-    LiveData<UserStat> userStatsLiveData;
 
     public SocialFragment() {
         // Required empty public constructor
@@ -131,10 +127,6 @@ public class SocialFragment extends Fragment {
         maxStreakText = view.findViewById(R.id.maxStreakText);
         winrateText = view.findViewById(R.id.winrateText);
 
-        gamePlayedValue = view.findViewById(R.id.gamePlayedValue);
-        currentStreakValue = view.findViewById(R.id.currentStreakValue);
-        maxStreakValue = view.findViewById(R.id.maxStreakValue);
-        winrateValue = view.findViewById(R.id.winrateValue);
 
         horizontalBarChart = view.findViewById(R.id.horizontalBarChart);
         highscoresModel.getHighscores().observe(getViewLifecycleOwner(), highscoresObserver);
@@ -178,19 +170,13 @@ public class SocialFragment extends Fragment {
             @Override
             public void onChanged(UserStat userStat) {
                 if (userStat != null) {
-                    gamePlayedText.setText("Games Played");
-                    currentStreakText.setText("Current Streak");
-                    maxStreakText.setText("Max Streak");
-
-                    gamePlayedValue.setText(String.valueOf(userStat.getGamesPlayed()));
-                    currentStreakValue.setText(String.valueOf(userStat.getCurrentStreak()));
-                    maxStreakValue.setText(String.valueOf(userStat.getMaxStreak()));
-
+                    gamePlayedText.setText(String.valueOf(userStat.getGamesPlayed())); //"Games Played:\n"
+                    currentStreakText.setText(String.valueOf(userStat.getCurrentStreak())); //"Current Streak:\n" +
+                    maxStreakText.setText(String.valueOf(userStat.getMaxStreak())); // "Max Streak:\n" +
                     int gamesPlayed = userStat.getGamesPlayed();
                     int gamesWon = userStat.getGamesWon();
-                    double winrate = (gamesPlayed > 0) ? ((double) gamesWon / gamesPlayed) * 100 : 0;
-                    winrateText.setText(String.format("Win Rate"));
-                    winrateValue.setText(String.format("%.2f%%", winrate));
+                    int winrate = (gamesPlayed > 0) ? (int) Math.round(((double) gamesWon / gamesPlayed) * 100) : 0;
+                    winrateText.setText(String.format(String.valueOf(winrate)) + "%"); //"Win Rate:\n%.2f%%",
                     setupHorizontalBarChart(userStat.getGuessDistribution());
                 }
             }
@@ -200,48 +186,65 @@ public class SocialFragment extends Fragment {
         List<BarEntry> entries = new ArrayList<>();
         List<String> labels = new ArrayList<>();
 
-        for (int i = 1; i <= 6; i++) {
+        // Aggiungi dati in ordine inverso per far partire da 1 in alto e scendere fino a 6
+        for (int i = 6; i >= 1; i--) {
             String key = String.valueOf(i);
             Integer value = guessDistribution.get(key);
             if (value != null) {
-                entries.add(new BarEntry(i - 1, value));
+                entries.add(new BarEntry(6 - i, value)); // L'indice deve essere invertito
             } else {
-                entries.add(new BarEntry(i - 1, 0));
+                entries.add(new BarEntry(6 - i, 0));
             }
-            labels.add(key);
+            labels.add(key); // Aggiunto "Guess" per maggiore chiarezza
         }
 
         BarDataSet dataSet = new BarDataSet(entries, "Guess Distribution");
-        BarData barData = new BarData(dataSet);
-        horizontalBarChart.setData(barData); // Use HorizontalBarChart here
+        dataSet.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                if (value == 0)
+                    return "";
+                return String.valueOf((int) value);
+            }
+        });
+        dataSet.setValueTextSize(12f);
+        dataSet.setValueTextColor(Color.BLACK);
 
-        // Configure the x-axis as it now displays on the left/right
+        BarData barData = new BarData(dataSet);
+        horizontalBarChart.setData(barData);
+
         XAxis xAxis = horizontalBarChart.getXAxis();
         xAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM); // For horizontal bar chart, BOTTOM represents the side axis
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setGranularity(1f);
         xAxis.setGranularityEnabled(true);
-        xAxis.setDrawGridLines(false); // no grid lines
+        xAxis.setDrawGridLines(false);
+        xAxis.setTextSize(18f);
+        xAxis.setXOffset(0f);  // Rimuovi spaziatura orizzontale
+        xAxis.setYOffset(0f);  // Rimuovi spaziatura verticale
+        xAxis.setSpaceMin(0f);  // Riduce lo spazio minimo al bordo dell'asse
+        xAxis.setSpaceMax(0f);  // Riduce lo spazio massimo al bordo dell'asse
 
-        // Configure the y-axis (now acts as the x-axis in a vertical bar chart)
+
         YAxis leftAxis = horizontalBarChart.getAxisLeft();
-        leftAxis.setDrawGridLines(false); // no grid lines
-        leftAxis.setDrawLabels(false); // no axis labels
+        leftAxis.setDrawLabels(false);  // Assicurati che le label siano disabilitate
+        leftAxis.setDrawAxisLine(false);  // Assicurati che la linea dell'asse sia disabilitata
+        leftAxis.setDrawGridLines(false);  // Assicurati che le griglie siano disabilitate
 
         YAxis rightAxis = horizontalBarChart.getAxisRight();
-        rightAxis.setDrawGridLines(false); // no grid lines
-        rightAxis.setDrawLabels(false); // no axis labels
+        rightAxis.setDrawLabels(false);
+        rightAxis.setDrawAxisLine(false);
+        rightAxis.setDrawGridLines(false);
 
-        // Set chart interaction settings
+
+
         horizontalBarChart.setTouchEnabled(false);
         horizontalBarChart.setClickable(false);
         horizontalBarChart.setLongClickable(false);
-
-        // Disable legend and description
         horizontalBarChart.getLegend().setEnabled(false);
         horizontalBarChart.getDescription().setEnabled(false);
+        horizontalBarChart.setExtraOffsets(-10f, 0f, 0f, 0f);
 
-        horizontalBarChart.invalidate(); // Refresh the chart
+        horizontalBarChart.invalidate();
     }
-
 }

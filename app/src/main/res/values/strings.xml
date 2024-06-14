@@ -87,4 +87,9 @@
     <string name="error_user_collision_message">User already exists</string>
     <string name="check_login_data_message">Email or password incorrect</string>
     <string name="error_no_google_account_found_message">Google account not found</string>
+    <string name="Games_Played">Games Played</string>
+    <string name="Current_Streak">Current Streak</string>
+    <string name="Max_Streak">Max Streak</string>
+    <string name="Winrate">Winrate</string>
+    <string name="GUESS_DISTRIBUTION">GUESS DISTRIBUTION</string>
 </resources>

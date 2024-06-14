@@ -21,5 +21,5 @@ public interface IWordRepositoryLD {
     MutableLiveData<Date> getDate();
 
     void setWordOfTheDay(String word);
-     MutableLiveData<Result> getWordFromFirebase();
+    MutableLiveData<Result> getWordFromFirebase();
 }
