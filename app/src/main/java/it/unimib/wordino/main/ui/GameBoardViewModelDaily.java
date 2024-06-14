@@ -101,7 +101,6 @@ public class GameBoardViewModelDaily extends ViewModel {
             randomWordToBeFetched = false;
             dailyWord = randomWord;
         }
-        else randomWordToBeFetched = true;
     }
 
 

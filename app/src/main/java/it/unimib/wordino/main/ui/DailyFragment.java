@@ -170,7 +170,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
                     progressBar.setVisibility(View.GONE);
 
                 } else {
-                    gameBoardModel.pushWordOnFirebase();
+                    gameBoardModel.setRandomWordToBeFetched();
                 }
 
             }
