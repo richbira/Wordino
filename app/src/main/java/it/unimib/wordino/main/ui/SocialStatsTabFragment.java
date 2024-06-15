@@ -97,7 +97,7 @@ public class SocialStatsTabFragment extends Fragment {
             }
         });
 */
-        loadScores();
+
 
 
 
@@ -115,28 +115,33 @@ public class SocialStatsTabFragment extends Fragment {
     public void onResume() {
         super.onResume();
         Log.d(TAG, "onresume socialtab");
+
         loadScores();
     }
 
     public void loadScores() {
+        Log.d(TAG, "check1");
+        if(userViewModel != null) {
+            Log.d(TAG, "check2");
+            userViewModel.fetchUserStats(tokenId); // Fetch new data
 
-        userViewModel.fetchUserStats(tokenId); // Fetch new data
-        userViewModel.getUserStats(tokenId).observe(getViewLifecycleOwner(), new Observer<UserStat>() {
-            @Override
-            public void onChanged(UserStat userStat) {
-                Log.d(TAG, "Carica stats");
-                if (userStat != null) {
-                    gamePlayedText.setText(String.valueOf(userStat.getGamesPlayed())); //"Games Played:\n"
-                    currentStreakText.setText(String.valueOf(userStat.getCurrentStreak())); //"Current Streak:\n" +
-                    maxStreakText.setText(String.valueOf(userStat.getMaxStreak())); // "Max Streak:\n" +
-                    int gamesPlayed = userStat.getGamesPlayed();
-                    int gamesWon = userStat.getGamesWon();
-                    int winrate = (gamesPlayed > 0) ? (int) Math.round(((double) gamesWon / gamesPlayed) * 100) : 0;
-                    winrateText.setText(String.format(String.valueOf(winrate)) + "%"); //"Win Rate:\n%.2f%%",
-                    setupHorizontalBarChart(userStat.getGuessDistribution());
+            userViewModel.getUserStats(tokenId).observe(getViewLifecycleOwner(), new Observer<UserStat>() {
+                @Override
+                public void onChanged(UserStat userStat) {
+                    if (userStat != null) {
+                        Log.d(TAG, "Carica stats");
+                        gamePlayedText.setText(String.valueOf(userStat.getGamesPlayed())); //"Games Played:\n"
+                        currentStreakText.setText(String.valueOf(userStat.getCurrentStreak())); //"Current Streak:\n" +
+                        maxStreakText.setText(String.valueOf(userStat.getMaxStreak())); // "Max Streak:\n" +
+                        int gamesPlayed = userStat.getGamesPlayed();
+                        int gamesWon = userStat.getGamesWon();
+                        int winrate = (gamesPlayed > 0) ? (int) Math.round(((double) gamesWon / gamesPlayed) * 100) : 0;
+                        winrateText.setText(String.format(String.valueOf(winrate)) + "%"); //"Win Rate:\n%.2f%%",
+                        setupHorizontalBarChart(userStat.getGuessDistribution());
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
 

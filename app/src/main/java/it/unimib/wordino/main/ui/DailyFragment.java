@@ -6,12 +6,14 @@ import static it.unimib.wordino.main.util.Constants.PACKAGE_NAME;
 import android.animation.Animator;
 import android.animation.AnimatorInflater;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -225,7 +227,23 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
             public void onChanged(Boolean isToday) {
                 if (isToday) {
                     Log.d(TAG, "Hai già completato la daily di oggi");
-                    //gameBoardModel.setBlockDaily(true);
+                    gameBoardModel.setBlockDaily(true);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setTitle("Daily challenge");
+                    builder.setMessage("You completed today's challenge. Come back tomorrow!");
+                    //builder.setCancelable(false);
+                    /*
+                    builder.setPositiveButton("Vai alle statistiche", new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            NavHostFragment.findNavController(DailyFragment.this)
+                                    .navigate(R.id.action_dailyFragment_to_socialFragment);
+                        }
+                    });
+                    */
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
                 } else {
                     Log.d(TAG, "Daily ancora da fare");
                     gameBoardModel.setBlockDaily(false);
@@ -295,7 +313,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View v) {
 
-        if (!(gameBoardModel.getBlockDaily())) {
+        //if (!(gameBoardModel.getBlockDaily())) {
             int id = v.getId();
             if (id == R.id.key_q) keyPressed("Q");
             else if (id == R.id.key_w) keyPressed("W");
@@ -325,11 +343,11 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
             else if (id == R.id.key_m) keyPressed("M");
             else if (id == R.id.key_cancel) keyPressed("CANC");
             else if (id == R.id.key_enter) keyPressed("ENTER");
-        }
-        else {
-            Log.d(TAG, "Gameover, tasti disattivati");
+        //}
+        //else {
+        //    Log.d(TAG, "Gameover, tasti disattivati");
 
-        }
+        //}
     }
 
     /*  ----------------------------------------------------------------------------------------FUNZIONI DI LOGICA  ----------------------------------------------------------------------------------------*/

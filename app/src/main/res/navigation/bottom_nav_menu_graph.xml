@@ -9,7 +9,11 @@
         android:id="@+id/dailyFragment"
         android:name="it.unimib.wordino.main.ui.DailyFragment"
         android:label="fragment_daily"
-        tools:layout="@layout/fragment_daily" />
+        tools:layout="@layout/fragment_daily" >
+        <action
+            android:id="@+id/action_dailyFragment_to_socialFragment"
+            app:destination="@id/socialFragment" />
+    </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="it.unimib.wordino.main.ui.SettingsFragment"

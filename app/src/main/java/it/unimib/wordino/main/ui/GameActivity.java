@@ -28,9 +28,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        //Toolbar toolbar = findViewById(R.id.top_appbar);
-        //setSupportActionBar(toolbar);
-
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().
                 findFragmentById(R.id.fragmentContainerView);
         NavController navController = navHostFragment.getNavController();

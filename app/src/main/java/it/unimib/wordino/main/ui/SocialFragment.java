@@ -140,12 +140,17 @@ public class SocialFragment extends Fragment {
 
         if (currentFragment instanceof SocialStatsTabFragment) {
             Log.d(TAG, "If passato");
-            FragmentTransaction fragTransaction = getChildFragmentManager().beginTransaction();
-            fragTransaction.detach(currentFragment);
-            fragTransaction.attach(currentFragment);
-            fragTransaction.commitNow();
+            ((SocialStatsTabFragment) currentFragment).loadScores();
         }
     }
+    /*
+    FragmentTransaction fragTransaction = getChildFragmentManager().beginTransaction();
+            fragTransaction.detach(currentFragment);
+            fragTransaction.commitNow();
+            FragmentTransaction fragTransaction2 = getChildFragmentManager().beginTransaction();
+            fragTransaction2.attach(currentFragment);
+            fragTransaction2.commitNow();
+     */
 
 
 }
