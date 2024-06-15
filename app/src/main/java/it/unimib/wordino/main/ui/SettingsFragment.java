@@ -43,6 +43,7 @@ public class SettingsFragment extends Fragment {
     private UserViewModel userViewModel;
     //private DataEncryptionUtil dataEncryptionUtil;
     //private String idToken;
+    private String loggedUser;
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -85,13 +86,14 @@ public class SettingsFragment extends Fragment {
         View settingsView = view.findViewById(R.id.settingsLayout);
         TextView loggedUserView = view.findViewById(R.id.accountText);
 
-        String loggedUser = userViewModel.getLoggedUser().getEmail();
+
 
         //se utente non è loggato, nascondi il bottone di logout
         if (userViewModel.getLoggedUser() == null) {
             binding.logoutButton.setVisibility(View.GONE);
             loggedUserView.setText("Logged in as guest");
         } else {
+            loggedUser = userViewModel.getLoggedUser().getEmail();
             loggedUserView.setText("Logged in as:\n" + loggedUser);
         }
 
