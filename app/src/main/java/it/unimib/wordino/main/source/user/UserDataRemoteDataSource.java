@@ -18,9 +18,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.time.LocalDate;
 import java.util.Map;
 
 import it.unimib.wordino.main.model.User;
@@ -127,8 +131,9 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource {
         databaseReference.child(FIREBASE_USERS_COLLECTION).child(idToken).child(FIREBASE_STATS_COLLECTION).setValue(userStat)
                 .addOnSuccessListener(aVoid -> Log.d(TAG, "User stats updated successfully"))
                 .addOnFailureListener(e -> Log.e(TAG, "Failed to update user stats: " + e.getLocalizedMessage()));
-        Date today = new Date();
-        setCurrentDailyDate(today);
+        //Date today = new Date();
+        LocalDate today = LocalDate.now();
+        //setCurrentDailyDate(today);
         Log.d(TAG, "updateUserStats: "+today);
         databaseReference.child(FIREBASE_USERS_COLLECTION).child(idToken).child("dailyChallengeDate").setValue(today)
                 .addOnSuccessListener(aVoid -> Log.d(TAG, "Daily challenge date updated successfully"))
@@ -190,15 +195,20 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (dataSnapshot.exists()) {
                             Log.d(TAG, "Daily challenge date found: " + dataSnapshot.getValue());
-                            Map<String, Long> map = (Map<String, Long>) dataSnapshot.getValue();
-                            Date dailyChallengeDate = new Date(map.get("time"));
+                            // Assuming date is stored as map with year, month, dayOfMonth
+                            Map<String, Object> dateMap = (Map<String, Object>) dataSnapshot.getValue();
+                            if (dateMap != null) {
+                                int year = Integer.parseInt(String.valueOf(dateMap.get("year")));
+                                int month = Integer.parseInt(String.valueOf(dateMap.get("monthValue")));
+                                int dayOfMonth = Integer.parseInt(String.valueOf(dateMap.get("dayOfMonth")));
 
-                            // Verifica se dailyChallengeDate è uguale a oggi
-                            boolean isDateToday = isDateToday(dailyChallengeDate);
-                            isTodayLiveData.setValue(isDateToday);
-                        } else {
-                            Log.d(TAG, "No daily challenge date found for token ID: " + idToken);
-                            isTodayLiveData.setValue(false);
+                                LocalDate dailyChallengeDate = LocalDate.of(year, month, dayOfMonth);
+                                boolean isDateToday = isDateToday(dailyChallengeDate);
+                                isTodayLiveData.setValue(isDateToday);
+                            } else {
+                                Log.d(TAG, "No daily challenge date found for token ID: " + idToken);
+                                isTodayLiveData.setValue(false);
+                            }
                         }
                     }
 
@@ -210,33 +220,13 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource {
                 });
     }
 
-    private boolean isDateToday(Date date) {
-        Calendar calendar = Calendar.getInstance();
-
-        // Normalizza la data del challenge
-        calendar.setTime(date);
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-        Date normalizedChallengeDate = calendar.getTime();
-
-        // Normalizza la data odierna
-        calendar.setTime(new Date());
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-        Date todayDate = calendar.getTime();
-
-        // Confronta le date
-        return normalizedChallengeDate.equals(todayDate);
+    // Metodo per verificare se una data specifica è oggi
+    public static boolean isDateToday(LocalDate date) {
+        return date.equals(LocalDate.now());
     }
-    public void setCurrentDailyDate(Date data) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.MILLISECOND, 0);
-        data = calendar.getTime();
+    // Metodo per ottenere la data corrente come LocalDate
+    public static LocalDate getCurrentDailyDate() {
+        return LocalDate.now();
     }
-
 
 }

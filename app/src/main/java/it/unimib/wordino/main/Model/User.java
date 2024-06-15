@@ -4,6 +4,7 @@ import android.os.Parcelable;
 
 import com.google.firebase.database.Exclude;
 
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -13,22 +14,17 @@ public class User implements Parcelable {
     private String idToken;
     private UserStat userStat;
 
-    private Date dailyChallengeDate;
+    private LocalDate dailyChallengeDate;
 
     public User(String name, String email, String idToken) {
         //this.name = name; //name da togliere
         this.email = email;
         this.idToken = idToken;
         this.userStat = new UserStat();
-        setDefaultDailyChallengeDate(this);
     }
     //Default value calendar
-    public void setDefaultDailyChallengeDate(User user) {
-        // Imposta la data di default a 1-1-2000
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(2000, Calendar.JANUARY, 1, 0, 0, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-        this.dailyChallengeDate = calendar.getTime();
+    public void setDefaultDailyChallengeDate(LocalDate date) {
+        dailyChallengeDate = LocalDate.of(2000, 1, 1);
     }
 
 
@@ -39,13 +35,10 @@ public class User implements Parcelable {
     public void setName(String name) {
         this.name = name;
     }*/
-    public Date getDailyChallengeDate() {
+    public LocalDate getDailyChallengeDate() {
         return dailyChallengeDate;
     }
 
-    public void setDailyChallengeDate(Date dailyChallengeDate) {
-        this.dailyChallengeDate = dailyChallengeDate;
-    }
     public String getEmail() {
         return email;
     }
@@ -89,7 +82,6 @@ public class User implements Parcelable {
         this.email = in.readString();
         this.idToken = in.readString();
         long tmpDate = in.readLong();
-        this.dailyChallengeDate = tmpDate == -1 ? null : new Date(tmpDate);
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {
