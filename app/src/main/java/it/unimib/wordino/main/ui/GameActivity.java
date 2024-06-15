@@ -58,24 +58,6 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View view) {
     }
-    private void updateActiveBox(String text) {
-        if (activeBox instanceof TextView) {
-            ((TextView) activeBox).setText(text);
-            nextWordBox();
-        }
-    }
-    public void nextWordBox() {
-        String fullName = getResources().getResourceName(activeBox.getId());
-        String activeBoxName = fullName.substring(fullName.lastIndexOf("/") + 1);
-        int nextLetterNum = Integer.parseInt(activeBoxName.substring(activeBoxName.length() - 1)) + 1;
-        String nextActiveBoxName = activeBoxName.substring(0, activeBoxName.length() - 1) + nextLetterNum;
-        int nextActiveBoxId = getResources().getIdentifier(nextActiveBoxName, "id", getPackageName());
-        if (nextActiveBoxId != 0) { // Check if the next box exists
-            activeBox = findViewById(nextActiveBoxId);
-        } else {
-            // Handle the case when there's no next box (maybe reset to the first box or do nothing)
-            Log.d(TAG, "No next word box available.");
-        }
-    }
+
 
 }

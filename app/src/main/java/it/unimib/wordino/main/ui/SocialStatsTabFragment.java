@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,8 @@ import it.unimib.wordino.main.ui.welcome.UserViewModelFactory;
 import it.unimib.wordino.main.util.ServiceLocator;
 
 public class SocialStatsTabFragment extends Fragment {
+
+    private static final String TAG = SocialStatsTabFragment.class.getSimpleName();
 
     private UserViewModel userViewModel;
     private String tokenId;
@@ -73,6 +76,29 @@ public class SocialStatsTabFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Log.d(TAG, "onviewcreated socialtab");
+
+/*
+        userViewModel.fetchUserStats(tokenId); // Fetch new data
+        userViewModel.getUserStats(tokenId).observe(getViewLifecycleOwner(), new Observer<UserStat>() {
+            @Override
+            public void onChanged(UserStat userStat) {
+                Log.d(TAG, "Carica stats");
+                if (userStat != null) {
+                    gamePlayedText.setText(String.valueOf(userStat.getGamesPlayed())); //"Games Played:\n"
+                    currentStreakText.setText(String.valueOf(userStat.getCurrentStreak())); //"Current Streak:\n" +
+                    maxStreakText.setText(String.valueOf(userStat.getMaxStreak())); // "Max Streak:\n" +
+                    int gamesPlayed = userStat.getGamesPlayed();
+                    int gamesWon = userStat.getGamesWon();
+                    int winrate = (gamesPlayed > 0) ? (int) Math.round(((double) gamesWon / gamesPlayed) * 100) : 0;
+                    winrateText.setText(String.format(String.valueOf(winrate)) + "%"); //"Win Rate:\n%.2f%%",
+                    setupHorizontalBarChart(userStat.getGuessDistribution());
+                }
+            }
+        });
+*/
+        loadScores();
+
 
 
         gamePlayedText = view.findViewById(R.id.gamePlayedText);
@@ -88,14 +114,17 @@ public class SocialStatsTabFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        Log.d(TAG, "onresume socialtab");
         loadScores();
     }
 
     public void loadScores() {
+
         userViewModel.fetchUserStats(tokenId); // Fetch new data
         userViewModel.getUserStats(tokenId).observe(getViewLifecycleOwner(), new Observer<UserStat>() {
             @Override
             public void onChanged(UserStat userStat) {
+                Log.d(TAG, "Carica stats");
                 if (userStat != null) {
                     gamePlayedText.setText(String.valueOf(userStat.getGamesPlayed())); //"Games Played:\n"
                     currentStreakText.setText(String.valueOf(userStat.getCurrentStreak())); //"Current Streak:\n" +
@@ -109,6 +138,8 @@ public class SocialStatsTabFragment extends Fragment {
             }
         });
     }
+
+
     private void setupHorizontalBarChart(Map<String, Integer> guessDistribution) {
         List<BarEntry> entries = new ArrayList<>();
         List<String> labels = new ArrayList<>();

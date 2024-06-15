@@ -91,5 +91,5 @@
     <string name="Current_Streak">Current Streak</string>
     <string name="Max_Streak">Max Streak</string>
     <string name="Winrate">Winrate</string>
-    <string name="GUESS_DISTRIBUTION">GUESS DISTRIBUTION</string>
+    <string name="GUESS_DISTRIBUTION">Guess Distribution</string>
 </resources>

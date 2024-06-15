@@ -9,6 +9,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
@@ -99,6 +100,7 @@ public class SocialFragment extends Fragment {
         viewPagerAdapter = new ViewPagerAdapter(getActivity());
         viewPager.setAdapter(viewPagerAdapter);
 
+
         new TabLayoutMediator(tabLayout, viewPager, new TabLayoutMediator.TabConfigurationStrategy() {
             @Override
             public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
@@ -113,6 +115,9 @@ public class SocialFragment extends Fragment {
             }
         }).attach();
 
+
+
+
         return view;
 
     }
@@ -121,6 +126,25 @@ public class SocialFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateFragmentInViewPager();
+    }
+
+    private void updateFragmentInViewPager() {
+        Log.d(TAG, "updateFragmentInViewPager");  //todo questo è il codice che dovrebbe far refreshare il sottofragment
+        Fragment currentFragment = viewPagerAdapter.createFragment(viewPager.getCurrentItem());
+
+        if (currentFragment instanceof SocialStatsTabFragment) {
+            Log.d(TAG, "If passato");
+            FragmentTransaction fragTransaction = getChildFragmentManager().beginTransaction();
+            fragTransaction.detach(currentFragment);
+            fragTransaction.attach(currentFragment);
+            fragTransaction.commitNow();
+        }
     }
 
 
