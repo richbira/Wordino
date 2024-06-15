@@ -55,6 +55,8 @@ dependencies {
     implementation("androidx.gridlayout:gridlayout:1.0.0")
     implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
     implementation ("androidx.lifecycle:lifecycle-extensions:2.2.0-beta01")
+    implementation ("androidx.viewpager2:viewpager2:1.0.0")
+
     // Room
     implementation("androidx.room:room-common:2.6.1") // Should also be 2.6.0
     implementation("androidx.room:room-runtime:2.6.1")

@@ -14,6 +14,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+import androidx.viewpager.widget.ViewPager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,6 +32,8 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +65,12 @@ public class SocialFragment extends Fragment {
     private TextView winrateText;
     private HorizontalBarChart horizontalBarChart;
 
+    private TabLayout tabLayout;
+    private ViewPager2 viewPager;
+    private ViewPagerAdapter viewPagerAdapter;
+
+
+
     public SocialFragment() {
         // Required empty public constructor
     }
@@ -74,44 +84,36 @@ public class SocialFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        IWordRepositoryLD wordRepositoryLD =
-                ServiceLocator.getInstance().getWordRepositoryLD(requireActivity().getApplication());
 
-        highscoresModel = new ViewModelProvider(
-                requireActivity(),
-                new HighscoresViewModelFactory(wordRepositoryLD)).get(ScoresViewModel.class);
-
-        IUserRepository userRepository = ServiceLocator.getInstance().
-                getUserRepository(getActivity().getApplication());
-
-        userViewModel = new ViewModelProvider(
-                this, new UserViewModelFactory(userRepository)).get(UserViewModel.class);
-        tokenId = userViewModel.getLoggedUser().getIdToken();
-
-        highscoresObserver = new Observer<List<Highscore>>() {
-            @Override
-            public void onChanged(@Nullable List<Highscore> highscores) {
-                Log.d(TAG, "gameboard Onchanged");
-                if (highscores != null) {
-                    loadHighScores(highscores);
-                } else {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setTitle("Error");
-                    builder.setMessage("There are no recorded highscores");
-                    AlertDialog alertDialog = builder.create();
-                    alertDialog.show();
-                }
-            }
-        };
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        binding = FragmentSocialBinding.inflate(inflater, container, false);
+        View view = inflater.inflate(R.layout.fragment_social, container, false);
 
-        return binding.getRoot();
+        tabLayout = view.findViewById(R.id.socialTabLayout);
+        viewPager = view.findViewById(R.id.socialPager);
+
+        viewPagerAdapter = new ViewPagerAdapter(getActivity());
+        viewPager.setAdapter(viewPagerAdapter);
+
+        new TabLayoutMediator(tabLayout, viewPager, new TabLayoutMediator.TabConfigurationStrategy() {
+            @Override
+            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+                switch (position) {
+                    case 0:
+                        tab.setText("User statistics");
+                        break;
+                    case 1:
+                        tab.setText("Local leaderboard");
+                        break;
+                }
+            }
+        }).attach();
+
+        return view;
 
     }
 
@@ -119,132 +121,7 @@ public class SocialFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        View statsView = binding.userStatistics;
-        View leaderboardView = binding.localLeaderboard;
-
-        gamePlayedText = view.findViewById(R.id.gamePlayedText);
-        currentStreakText = view.findViewById(R.id.currentStreakText);
-        maxStreakText = view.findViewById(R.id.maxStreakText);
-        winrateText = view.findViewById(R.id.winrateText);
-
-
-        horizontalBarChart = view.findViewById(R.id.horizontalBarChart);
-        highscoresModel.getHighscores().observe(getViewLifecycleOwner(), highscoresObserver);
-
-        binding.userStatisticsButton.setOnClickListener(v -> {
-            statsView.setVisibility(View.VISIBLE);
-            binding.userStatisticsButton.setBackgroundColor(getResources().getColor(R.color.maincyandark));
-            leaderboardView.setVisibility(View.GONE);
-            binding.localLeaderboardButton.setBackgroundColor(getResources().getColor(R.color.mywhite));
-        });
-
-        binding.localLeaderboardButton.setOnClickListener(v -> {
-            statsView.setVisibility(View.GONE);
-            binding.userStatisticsButton.setBackgroundColor(getResources().getColor(R.color.mywhite));
-            leaderboardView.setVisibility(View.VISIBLE);
-            binding.localLeaderboardButton.setBackgroundColor(getResources().getColor(R.color.maincyandark));
-        });
-    }
-    @Override
-    public void onResume() {
-        super.onResume();
-        loadScores();
     }
 
-    private void loadHighScores(List<Highscore> highscoreList) {
-        for (int i = 0; i < highscoreList.size(); i++ ){
-            String scoreTextId = "scoreText" + (i + 1);
-            String dateTextId = "dateText" + (i + 1);
 
-            int scoreValue = highscoreList.get(i).getScore();
-            String dateValue = highscoreList.get(i).getDate();
-            dateValue = dateValue.substring(0,10);
-            ((TextView) getView().findViewById(getResources().getIdentifier(scoreTextId, "id", PACKAGE_NAME))).setText(""+scoreValue);
-            ((TextView) getView().findViewById(getResources().getIdentifier(dateTextId, "id", PACKAGE_NAME))).setText(""+dateValue);
-        }
-    }
-
-    public void loadScores() {
-        userViewModel.fetchUserStats(tokenId); // Fetch new data
-        userViewModel.getUserStats(tokenId).observe(getViewLifecycleOwner(), new Observer<UserStat>() {
-            @Override
-            public void onChanged(UserStat userStat) {
-                if (userStat != null) {
-                    gamePlayedText.setText(String.valueOf(userStat.getGamesPlayed())); //"Games Played:\n"
-                    currentStreakText.setText(String.valueOf(userStat.getCurrentStreak())); //"Current Streak:\n" +
-                    maxStreakText.setText(String.valueOf(userStat.getMaxStreak())); // "Max Streak:\n" +
-                    int gamesPlayed = userStat.getGamesPlayed();
-                    int gamesWon = userStat.getGamesWon();
-                    int winrate = (gamesPlayed > 0) ? (int) Math.round(((double) gamesWon / gamesPlayed) * 100) : 0;
-                    winrateText.setText(String.format(String.valueOf(winrate)) + "%"); //"Win Rate:\n%.2f%%",
-                    setupHorizontalBarChart(userStat.getGuessDistribution());
-                }
-            }
-        });
-    }
-    private void setupHorizontalBarChart(Map<String, Integer> guessDistribution) {
-        List<BarEntry> entries = new ArrayList<>();
-        List<String> labels = new ArrayList<>();
-
-        // Aggiungi dati in ordine inverso per far partire da 1 in alto e scendere fino a 6
-        for (int i = 6; i >= 1; i--) {
-            String key = String.valueOf(i);
-            Integer value = guessDistribution.get(key);
-            if (value != null) {
-                entries.add(new BarEntry(6 - i, value)); // L'indice deve essere invertito
-            } else {
-                entries.add(new BarEntry(6 - i, 0));
-            }
-            labels.add(key); // Aggiunto "Guess" per maggiore chiarezza
-        }
-
-        BarDataSet dataSet = new BarDataSet(entries, "Guess Distribution");
-        dataSet.setValueFormatter(new ValueFormatter() {
-            @Override
-            public String getFormattedValue(float value) {
-                if (value == 0)
-                    return "";
-                return String.valueOf((int) value);
-            }
-        });
-        dataSet.setValueTextSize(12f);
-        dataSet.setValueTextColor(Color.BLACK);
-
-        BarData barData = new BarData(dataSet);
-        horizontalBarChart.setData(barData);
-
-        XAxis xAxis = horizontalBarChart.getXAxis();
-        xAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setGranularity(1f);
-        xAxis.setGranularityEnabled(true);
-        xAxis.setDrawGridLines(false);
-        xAxis.setTextSize(18f);
-        xAxis.setXOffset(0f);  // Rimuovi spaziatura orizzontale
-        xAxis.setYOffset(0f);  // Rimuovi spaziatura verticale
-        xAxis.setSpaceMin(0f);  // Riduce lo spazio minimo al bordo dell'asse
-        xAxis.setSpaceMax(0f);  // Riduce lo spazio massimo al bordo dell'asse
-
-
-        YAxis leftAxis = horizontalBarChart.getAxisLeft();
-        leftAxis.setDrawLabels(false);  // Assicurati che le label siano disabilitate
-        leftAxis.setDrawAxisLine(false);  // Assicurati che la linea dell'asse sia disabilitata
-        leftAxis.setDrawGridLines(false);  // Assicurati che le griglie siano disabilitate
-
-        YAxis rightAxis = horizontalBarChart.getAxisRight();
-        rightAxis.setDrawLabels(false);
-        rightAxis.setDrawAxisLine(false);
-        rightAxis.setDrawGridLines(false);
-
-
-
-        horizontalBarChart.setTouchEnabled(false);
-        horizontalBarChart.setClickable(false);
-        horizontalBarChart.setLongClickable(false);
-        horizontalBarChart.getLegend().setEnabled(false);
-        horizontalBarChart.getDescription().setEnabled(false);
-        horizontalBarChart.setExtraOffsets(-10f, 0f, 0f, 0f);
-
-        horizontalBarChart.invalidate();
-    }
 }
