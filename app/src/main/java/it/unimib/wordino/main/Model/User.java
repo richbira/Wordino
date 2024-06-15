@@ -21,9 +21,10 @@ public class User implements Parcelable {
         this.email = email;
         this.idToken = idToken;
         this.userStat = new UserStat();
+        setDefaultDailyChallengeDate();
     }
     //Default value calendar
-    public void setDefaultDailyChallengeDate(LocalDate date) {
+    public void setDefaultDailyChallengeDate() {
         dailyChallengeDate = LocalDate.of(2000, 1, 1);
     }
 

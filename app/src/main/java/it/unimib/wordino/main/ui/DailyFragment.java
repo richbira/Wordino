@@ -225,7 +225,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
             public void onChanged(Boolean isToday) {
                 if (isToday) {
                     Log.d(TAG, "Hai già completato la daily di oggi");
-                    gameBoardModel.setBlockDaily(true);
+                    //gameBoardModel.setBlockDaily(true);
                 } else {
                     Log.d(TAG, "Daily ancora da fare");
                     gameBoardModel.setBlockDaily(false);
