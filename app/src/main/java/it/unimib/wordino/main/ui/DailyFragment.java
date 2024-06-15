@@ -201,19 +201,21 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        Log.d(TAG, "onViewCreated, DaylyFragment accesso");
+        Log.d(TAG, "utenza?"+userViewModel.getLoggedUser());
         //Nascondo tab Setting e Social se l'utente non è loggato
         if (userViewModel.getLoggedUser() != null) {
             tokenId = userViewModel.getLoggedUser().getIdToken();
         }else{
             // Safe access to BottomNavigationView
             BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.bottom_nav);
+            Log.d(TAG, "BottomNavigationView: " + bottomNavigationView);
             if (bottomNavigationView != null) {
                 Menu menu = bottomNavigationView.getMenu();
                 for (int i = 0, size = menu.size(); i < size; i++) {
                     MenuItem menuItem = menu.getItem(i);
                     if (menuItem.getTitle().equals("Social") || menuItem.getTitle().equals("Daily")){
-                        menuItem.setEnabled(false);
+                        menuItem.setVisible(false);
                     }
                 }
             }
