@@ -9,6 +9,7 @@ import static it.unimib.wordino.main.util.Constants.INVALID_USER_ERROR;
 import static it.unimib.wordino.main.util.Constants.PASSWORD;
 
 import android.app.Activity;
+import android.icu.util.LocaleData;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -74,7 +75,7 @@ public class LoginFragment extends Fragment {
                 requireActivity(),
                 new UserViewModelFactory(userRepository)).get(UserViewModel.class);
 
-
+        Log.d(TAG,"requireActivity() == " + requireActivity());
         oneTapClient = Identity.getSignInClient(requireActivity());
         signInRequest = BeginSignInRequest.builder()
                 .setPasswordRequestOptions(BeginSignInRequest.PasswordRequestOptions.builder()
@@ -94,28 +95,37 @@ public class LoginFragment extends Fragment {
 
         startIntentSenderForResult = new ActivityResultContracts.StartIntentSenderForResult();
 
+
         activityResultLauncher = registerForActivityResult(startIntentSenderForResult, activityResult -> {
-            if (activityResult.getResultCode() == Activity.RESULT_OK) {
+            Log.d(TAG, "activityResult.getResultCode() == " + activityResult.getResultCode());
+            if (true) {
+
                 Log.d(TAG, "result.getResultCode() == Activity.RESULT_OK");
                 try {
                     SignInCredential credential = oneTapClient.getSignInCredentialFromIntent(activityResult.getData());
+                    Log.d(TAG, "onCreate: " + credential);
                     String idToken = credential.getGoogleIdToken();
-                    if (idToken != null) {
+                    Log.d(TAG, "idToken: " + idToken);
+                    if (idToken !=  null) {
                         // Got an ID token from Google. Use it to authenticate with Firebase.
                         userViewModel.getGoogleUserMutableLiveData(idToken).observe(getViewLifecycleOwner(), authenticationResult -> {
                             if (authenticationResult.isSuccess()) {
-                                User user = ((UserResponseSuccess) authenticationResult).getData();
+                                Log.d(TAG, "Sto entrando con Google");
+                                User user = ((Result.UserResponseSuccess) authenticationResult).getData();
                                 saveLoginData(user.getEmail(), null, user.getIdToken());
                                 userViewModel.setAuthenticationError(false);
-                                Log.d(TAG, "login successful");
-                                Navigation.findNavController(requireView()).navigate(R.id.login_nav_graph);
+                                lockButtons(false);
+                                progressBar.setVisibility(View.VISIBLE);
+                                Navigation.findNavController(requireView()).navigate(R.id.action_loginFragment_to_gameActivity);
                                 requireActivity().finish();
-
                             } else {
                                 userViewModel.setAuthenticationError(true);
+                                lockButtons(true);
+                                progressBar.setVisibility(View.GONE);
                                 Snackbar.make(requireActivity().findViewById(android.R.id.content),
                                         getErrorMessage(((Result.Error) authenticationResult).getMessage()),
                                         Snackbar.LENGTH_SHORT).show();
+                                Log.d(TAG, "Errore nell'accesso con Google)" + ((Result.Error) authenticationResult).getMessage());
                             }
                         });
                     }
@@ -123,6 +133,8 @@ public class LoginFragment extends Fragment {
                     Snackbar.make(requireActivity().findViewById(android.R.id.content),
                             requireActivity().getString(R.string.unexpected_error),
                             Snackbar.LENGTH_SHORT).show();
+                    lockButtons(true);
+                    progressBar.setVisibility(View.GONE);
                 }
             }
         });
@@ -155,12 +167,11 @@ public class LoginFragment extends Fragment {
                     Log.d(TAG, "onSuccess from oneTapClient.beginSignIn(BeginSignInRequest)");
                     IntentSenderRequest intentSenderRequest =
                             new IntentSenderRequest.Builder(result.getPendingIntent()).build();
-                    lockButtons(false);
-                    progressBar.setVisibility(View.VISIBLE);
+                    //lockButtons(false);
+                    //progressBar.setVisibility(View.VISIBLE);
                     activityResultLauncher.launch(intentSenderRequest);
-
-                    // Se loggato correttamente vado al gioco
-                    Navigation.findNavController(requireView()).navigate(R.id.action_loginFragment_to_gameActivity); // Navigate to the GameFragment
+                    // Se loggato correttamente vado al giorno
+                    //Navigation.findNavController(requireView()).navigate(R.id.action_loginFragment_to_gameActivity); // Navigate to the GameFragment
 
                 })
                 .addOnFailureListener(requireActivity(), e -> {
@@ -172,7 +183,7 @@ public class LoginFragment extends Fragment {
                     Snackbar.make(requireActivity().findViewById(android.R.id.content),
                             requireActivity().getString(R.string.error_no_google_account_found_message),
                             Snackbar.LENGTH_SHORT).show();
-                })); // Listener for the login with Google button TODO fare test con account google
+                })); // Listener for the login with Google button
         registrationButton.setOnClickListener(v -> {
             lockButtons(false);
             progressBar.setVisibility(View.VISIBLE);
@@ -213,7 +224,6 @@ public class LoginFragment extends Fragment {
                 progressBar.setVisibility(View.GONE);
                 Snackbar.make(requireActivity().findViewById(android.R.id.content),
                         R.string.check_login_data_message, Snackbar.LENGTH_SHORT).show();
-
             }
         });// Listener for the login button
     }
@@ -272,4 +282,10 @@ public class LoginFragment extends Fragment {
         buttonGoogleLogin.setEnabled(lock);
         resetPassword.setEnabled(lock);
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        userViewModel.setAuthenticationError(false);
+    }
+
 }

@@ -1,9 +1,11 @@
 package it.unimib.wordino.main.ui.welcome;
 
+import static androidx.fragment.app.FragmentManager.TAG;
 import static it.unimib.wordino.main.util.Constants.MINIMUM_PASSWORD_LENGTH;
 import static it.unimib.wordino.main.util.Constants.USER_COLLISION_ERROR;
 import static it.unimib.wordino.main.util.Constants.WEAK_PASSWORD_ERROR;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,8 +25,11 @@ import java.util.Objects;
 import it.unimib.wordino.R;
 import it.unimib.wordino.databinding.FragmentRegistrationBinding;
 import it.unimib.wordino.main.model.Result;
+import it.unimib.wordino.main.ui.SocialFragment;
 
 public class RegistrationFragment extends Fragment {
+
+    private static final String TAG = RegistrationFragment.class.getSimpleName();
     private FragmentRegistrationBinding binding;
     private UserViewModel userViewModel;
     public View progressBar;
@@ -47,6 +52,7 @@ public class RegistrationFragment extends Fragment {
     }
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Log.d(TAG, "onViewCreated"+ userViewModel.isAuthenticationError());
         progressBar = binding.progressBar;
         binding.registerButton.setOnClickListener(v -> {
             String email = Objects.requireNonNull(binding.emailEditText.getText()).toString().trim();
@@ -54,16 +60,14 @@ public class RegistrationFragment extends Fragment {
             binding.registerButton.setEnabled(false);
             if (isEmailOk(email) && isPasswordOk(password)) {
                 progressBar.setVisibility(View.VISIBLE);
-
+                Log.d(TAG, "Email: " + email + " Password: " + password);
                 userViewModel.getUserMutableLiveData(email, password,false).observe(getViewLifecycleOwner(), result -> {
                     if (result.isSuccess()) {
-                        //User user = ((Result.UserResponseSuccess) result).getData();
                         userViewModel.setAuthenticationError(false);
                         progressBar.setVisibility(View.GONE);
-                        //freeze register buttom
-
                         Navigation.findNavController(view).navigate(R.id.action_registrationFragment_to_gameActivity);
                     } else {
+                        Log.d(TAG, "Error: " + ((Result.Error) result).getMessage());
                         userViewModel.setAuthenticationError(true);
                         progressBar.setVisibility(View.GONE);
                         binding.registerButton.setEnabled(true);
@@ -120,5 +124,10 @@ public class RegistrationFragment extends Fragment {
             binding.emailTextInputLayout.setError(null);
             return true;
         }
+    }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
 }

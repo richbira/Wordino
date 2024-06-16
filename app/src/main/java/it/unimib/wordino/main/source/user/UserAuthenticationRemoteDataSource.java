@@ -79,7 +79,7 @@ public class UserAuthenticationRemoteDataSource extends BaseUserAuthenticationRe
     }
 
     @Override
-    public void signInWithGoogle(String idToken) { // Login con Google
+    public void signInWithGoogle(String idToken) {
         if (idToken !=  null) {
             // Got an ID token from Google. Use it to authenticate with Firebase.
             AuthCredential firebaseCredential = GoogleAuthProvider.getCredential(idToken, null);
@@ -101,6 +101,7 @@ public class UserAuthenticationRemoteDataSource extends BaseUserAuthenticationRe
                     }
                 } else {
                     // If sign in fails, display a message to the user.
+                    Log.w(TAG, "signInWithCredential:failure", task.getException());
                     userResponseCallback.onFailureFromAuthentication(getErrorMessage(task.getException()));
                 }
             });
