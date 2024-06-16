@@ -38,6 +38,7 @@ public class WelcomeActivity extends AppCompatActivity {
         sharedPref = new SharedPreferencesUtil(this.getApplication());
 
         boolean isDarkMode = sharedPref.readBooleanData("dark_mode", "dark_mode");
+
         if (isDarkMode) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         } else {

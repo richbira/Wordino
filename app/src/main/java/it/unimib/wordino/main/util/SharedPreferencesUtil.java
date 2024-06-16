@@ -84,7 +84,11 @@ public class SharedPreferencesUtil {
     public boolean readBooleanData(String sharedPreferencesFileName, String key) {
         SharedPreferences sharedPref = application.getSharedPreferences(sharedPreferencesFileName,
                 MODE_PRIVATE);
-        return sharedPref.getBoolean(key, false);
+        if  (sharedPref.contains(key)) {
+            return sharedPref.getBoolean(key, false);
+        }else {
+            return false;
+        }
     }
 
     /**
