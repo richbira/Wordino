@@ -4,6 +4,7 @@ import static it.unimib.wordino.main.util.Constants.EMAIL_ADDRESS;
 import static it.unimib.wordino.main.util.Constants.ENCRYPTED_SHARED_PREFERENCES_FILE_NAME;
 import static it.unimib.wordino.main.util.Constants.PASSWORD;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,17 +21,28 @@ import it.unimib.wordino.main.ui.welcome.UserViewModel;
 import it.unimib.wordino.main.ui.welcome.UserViewModelFactory;
 import it.unimib.wordino.main.util.DataEncryptionUtil;
 import it.unimib.wordino.main.util.ServiceLocator;
+import it.unimib.wordino.main.util.SharedPreferencesUtil;
 
 public class WelcomeActivity extends AppCompatActivity {
 
     private static final String TAG = WelcomeActivity.class.getSimpleName();
     private UserViewModel userViewModel;
     private DataEncryptionUtil dataEncryptionUtil;
+    public SharedPreferencesUtil sharedPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+
+        sharedPref = new SharedPreferencesUtil(this.getApplication());
+
+        boolean isDarkMode = sharedPref.readBooleanData("dark_mode", "dark_mode");
+        if (isDarkMode) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
 
         Button loginButton = findViewById(R.id.loginButton);
         loginButton.setOnClickListener(view -> {

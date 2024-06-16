@@ -14,7 +14,8 @@
     <color name="myblack">#2C2C2C</color>
     <color name="darkthemeblack">#FF464646</color>
     <color name="mywhitedarktheme">#4E4A4A</color>
-    <color name="maincyan">#B4FFFF</color>
+    <color name="maincyan">#6ECECE</color>
+    <color name="maincyan2">#B4FFFF</color>
     <color name="maincyandark">#54BEBE</color>
     <color name="darkthemetext">#DCEAEA</color>
 

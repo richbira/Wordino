@@ -227,23 +227,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
             public void onChanged(Boolean isToday) {
                 if (isToday) {
                     Log.d(TAG, "Hai già completato la daily di oggi");
-                    gameBoardModel.setBlockDaily(true);
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                    builder.setTitle("Daily challenge");
-                    builder.setMessage("You completed today's challenge. Come back tomorrow!");
-                    //builder.setCancelable(false);
-                    /*
-                    builder.setPositiveButton("Vai alle statistiche", new DialogInterface.OnClickListener() {
-
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            NavHostFragment.findNavController(DailyFragment.this)
-                                    .navigate(R.id.action_dailyFragment_to_socialFragment);
-                        }
-                    });
-                    */
-                    AlertDialog alertDialog = builder.create();
-                    alertDialog.show();
+                    showDailyAlert();
                 } else {
                     Log.d(TAG, "Daily ancora da fare");
                     gameBoardModel.setBlockDaily(false);
@@ -301,19 +285,19 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
 
 
         //OBSERVERS
-
-        gameBoardModel.getGameBoard().observe(getViewLifecycleOwner(), gameBoardObserver);
         gameBoardModel.getDailyWord().observe(getViewLifecycleOwner(), dailyWordObserver);
+        gameBoardModel.getGameBoard().observe(getViewLifecycleOwner(), gameBoardObserver);
         gameBoardModel.getRandomWord().observe(getViewLifecycleOwner(), randomWordObserver);
         gameBoardModel.getGuessedWord().observe(getViewLifecycleOwner(), wordCheckObserver);
 
 
     }
 
+
     @Override
     public void onClick(View v) {
 
-        //if (!(gameBoardModel.getBlockDaily())) {
+        if (!(gameBoardModel.getBlockDaily())) {
             int id = v.getId();
             if (id == R.id.key_q) keyPressed("Q");
             else if (id == R.id.key_w) keyPressed("W");
@@ -343,11 +327,11 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
             else if (id == R.id.key_m) keyPressed("M");
             else if (id == R.id.key_cancel) keyPressed("CANC");
             else if (id == R.id.key_enter) keyPressed("ENTER");
-        //}
-        //else {
-        //    Log.d(TAG, "Gameover, tasti disattivati");
-
-        //}
+        }
+        else {
+            Log.d(TAG, "Gameover, tasti disattivati");
+            showDailyAlert();
+        }
     }
 
     /*  ----------------------------------------------------------------------------------------FUNZIONI DI LOGICA  ----------------------------------------------------------------------------------------*/
@@ -446,7 +430,23 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
         alertDialog.show();
     }
 
+    private void showDailyAlert() {
+        gameBoardModel.setBlockDaily(true);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Daily challenge");
+        builder.setMessage("You completed today's challenge. Come back tomorrow!");
+        //builder.setCancelable(false);
+                    /*
+                    builder.setPositiveButton("Vai alle statistiche", new DialogInterface.OnClickListener() {
 
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            NavHostFragment.findNavController(DailyFragment.this)
+                                    .navigate(R.id.action_dailyFragment_to_socialFragment);
+                        }
+                    });
+                    */
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
 }
-
-

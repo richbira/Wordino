@@ -68,18 +68,7 @@
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
-            android:id="@+id/registerButton"
-            style="@style/Theme.Wordino.ButtonBorderless"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="40dp"
-            android:text="@string/register"
-            app:layout_constraintBottom_toBottomOf="@+id/textview_new_account"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/logInWithGoogleButton"
-            app:layout_constraintVertical_bias="1.0"
-            tools:ignore="MissingConstraints" />
+
 
         <Button
             android:id="@+id/forgotPasswordButton"
@@ -87,7 +76,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:layout_marginEnd="24dp"
             android:text="@string/Forgot_psw"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -154,17 +142,35 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/relative_layout" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@+id/logInWithGoogleButton"
+
+            >
+
         <TextView
             android:id="@+id/textview_new_account"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
             android:text="@string/new_account"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/registerButton"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/logInWithGoogleButton" />
+            android:layout_weight="1"
+            android:paddingStart="20dp"
+            />
+
+        <Button
+            android:id="@+id/registerButton"
+            style="@style/Theme.Wordino.ButtonBorderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/register"
+            tools:ignore="MissingConstraints"
+            android:layout_weight="1" />
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

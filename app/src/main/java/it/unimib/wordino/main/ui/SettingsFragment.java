@@ -30,6 +30,7 @@ import it.unimib.wordino.main.ui.welcome.UserViewModel;
 import it.unimib.wordino.main.ui.welcome.UserViewModelFactory;
 import it.unimib.wordino.main.util.DataEncryptionUtil;
 import it.unimib.wordino.main.util.ServiceLocator;
+import it.unimib.wordino.main.util.SharedPreferencesUtil;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,6 +41,7 @@ public class SettingsFragment extends Fragment {
 
     private static final String TAG = SettingsFragment.class.getSimpleName();
     private FragmentSettingsBinding binding;
+    public SharedPreferencesUtil sharedPref;
     private UserViewModel userViewModel;
     //private DataEncryptionUtil dataEncryptionUtil;
     //private String idToken;
@@ -62,8 +64,15 @@ public class SettingsFragment extends Fragment {
         //dataEncryptionUtil = new DataEncryptionUtil(requireActivity().getApplication());
         IUserRepository userRepository = ServiceLocator.getInstance().
                 getUserRepository(getActivity().getApplication());
+
+        sharedPref = new SharedPreferencesUtil(this.getActivity().getApplication());
+
         userViewModel = new ViewModelProvider(
                 this, new UserViewModelFactory(userRepository)).get(UserViewModel.class);
+
+
+
+
         /*try {
             idToken = dataEncryptionUtil.readSecretDataWithEncryptedSharedPreferences(
                     ENCRYPTED_SHARED_PREFERENCES_FILE_NAME, ID_TOKEN);
@@ -76,6 +85,8 @@ public class SettingsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentSettingsBinding.inflate(inflater, container, false);
+
+
         return binding.getRoot();
     }
 
@@ -85,6 +96,11 @@ public class SettingsFragment extends Fragment {
         View htpView = view.findViewById(R.id.howToPlayConstraint);
         View settingsView = view.findViewById(R.id.settingsLayout);
         TextView loggedUserView = view.findViewById(R.id.accountText);
+
+        boolean isDarkMode = sharedPref.readBooleanData("dark_mode", "dark_mode");
+
+        SwitchMaterial darkModeSwitch = view.findViewById(R.id.dark_mode_switch);
+        darkModeSwitch.setChecked(isDarkMode);
 
 
 
@@ -118,25 +134,20 @@ public class SettingsFragment extends Fragment {
         });
 
 
-        SwitchMaterial darkModeSwitch = view.findViewById(R.id.dark_mode_switch); darkModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+
+        darkModeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) { //todo fare la darktheme bene
-
-                // checking if the switch is turned on
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-
-                    // setting theme to night mode
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                }
+                    sharedPref.writeBooleanData("dark_mode", "dark_mode", true);
 
-                // if the above condition turns false
-                // it means switch is turned off
-                // by-default the switch will be off
-                else {
-
-                    // setting theme to light theme
+                } else {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    sharedPref.writeBooleanData("dark_mode","dark_mode", false);
                 }
+
             }
         });
     }
