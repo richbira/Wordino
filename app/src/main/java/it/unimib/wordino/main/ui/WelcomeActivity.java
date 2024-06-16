@@ -29,6 +29,7 @@ public class WelcomeActivity extends AppCompatActivity {
     private UserViewModel userViewModel;
     private DataEncryptionUtil dataEncryptionUtil;
     public SharedPreferencesUtil sharedPref;
+    public Boolean isAutoLoginOn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,7 @@ public class WelcomeActivity extends AppCompatActivity {
         sharedPref = new SharedPreferencesUtil(this.getApplication());
 
         boolean isDarkMode = sharedPref.readBooleanData("dark_mode", "dark_mode");
+        isAutoLoginOn = sharedPref.readBooleanData("auto_login", "auto_login");
 
         if (isDarkMode) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
@@ -73,7 +75,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
     private void checkLoginStatus() {
         // Insert the logic you had planned for onViewCreated here
-        if (userViewModel.getLoggedUser() != null) {
+        if (userViewModel.getLoggedUser() != null && isAutoLoginOn) {
             Log.d(TAG, "User already logged in: " + userViewModel.getLoggedUser().getEmail());
             autoLogin();
         }else{

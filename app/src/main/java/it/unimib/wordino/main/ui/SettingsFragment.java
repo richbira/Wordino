@@ -98,9 +98,15 @@ public class SettingsFragment extends Fragment {
         TextView loggedUserView = view.findViewById(R.id.accountText);
 
         boolean isDarkMode = sharedPref.readBooleanData("dark_mode", "dark_mode");
+        boolean isAutoLogin = sharedPref.readBooleanData("auto_login", "auto_login");
+
 
         SwitchMaterial darkModeSwitch = view.findViewById(R.id.dark_mode_switch);
+        SwitchMaterial autoLoginSwitch = view.findViewById(R.id.keep_logged_in_switch);
+
         darkModeSwitch.setChecked(isDarkMode);
+        autoLoginSwitch.setChecked(isAutoLogin);
+
 
 
 
@@ -146,6 +152,19 @@ public class SettingsFragment extends Fragment {
                 } else {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                     sharedPref.writeBooleanData("dark_mode","dark_mode", false);
+                }
+
+            }
+        });
+
+        autoLoginSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    sharedPref.writeBooleanData("auto_login", "auto_login", true);
+
+                } else {
+                    sharedPref.writeBooleanData("auto_login","auto_login", false);
                 }
 
             }
