@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.HorizontalBarChart;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
@@ -171,7 +172,7 @@ public class SocialStatsTabFragment extends Fragment {
             }
         });
         dataSet.setValueTextSize(20f);
-        dataSet.setValueTextColor(R.color.maincyan); //todo here
+        dataSet.setValueTextColor(Color.GRAY); //todo here
 
         BarData barData = new BarData(dataSet);
         horizontalBarChart.setData(barData);
@@ -187,6 +188,8 @@ public class SocialStatsTabFragment extends Fragment {
         xAxis.setYOffset(0f);  // Rimuovi spaziatura verticale
         xAxis.setSpaceMin(0f);  // Riduce lo spazio minimo al bordo dell'asse
         xAxis.setSpaceMax(0f);  // Riduce lo spazio massimo al bordo dell'asse
+        xAxis.setTextColor(Color.GRAY);
+        xAxis.setTextSize(20f);
 
 
         YAxis leftAxis = horizontalBarChart.getAxisLeft();

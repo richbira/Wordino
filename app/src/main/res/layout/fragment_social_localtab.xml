@@ -32,7 +32,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="20dp"
+            android:paddingHorizontal="60dp"
             android:text="Date"
             android:textSize="20dp" />
 
@@ -52,6 +52,9 @@
             android:id="@+id/scoreCard1"
             android:layout_width="match_parent"
             android:layout_height="70dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
             app:contentPadding="10dp">
 
             <LinearLayout
@@ -79,7 +82,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="20dp"
-                    android:textSize="20dp" />
+                    android:textSize="17dp" />
 
 
             </LinearLayout>
@@ -91,6 +94,10 @@
             android:id="@+id/scoreCard2"
             android:layout_width="match_parent"
             android:layout_height="70dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+
             app:contentPadding="10dp">
 
             <LinearLayout
@@ -129,6 +136,10 @@
             android:id="@+id/scoreCard3"
             android:layout_width="match_parent"
             android:layout_height="70dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+
             app:contentPadding="10dp">
 
             <LinearLayout
@@ -167,6 +178,9 @@
             android:id="@+id/scoreCard4"
             android:layout_width="match_parent"
             android:layout_height="70dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
             app:contentPadding="10dp">
 
             <LinearLayout
@@ -205,6 +219,8 @@
             android:id="@+id/scoreCard5"
             android:layout_width="match_parent"
             android:layout_height="70dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
             app:contentPadding="10dp">
 
             <LinearLayout
