@@ -3,13 +3,13 @@
     <item
         android:id="@+id/socialFragment"
         android:enabled="true"
-        android:icon="@drawable/baseline_people_24"
-        android:title="@string/social"
+        android:icon="@drawable/baseline_assessment_24"
+        android:title="@string/Statistics"
         />
     <item
         android:id="@+id/dailyFragment"
         android:enabled="true"
-        android:icon="@drawable/baseline_menu_book_24"
+        android:icon="@drawable/baseline_today_24"
         android:title="@string/daily"
         />
     <item

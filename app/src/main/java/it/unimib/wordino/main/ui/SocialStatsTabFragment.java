@@ -202,12 +202,15 @@ public class SocialStatsTabFragment extends Fragment {
         rightAxis.setDrawAxisLine(false);
         rightAxis.setDrawGridLines(false);
 
+        Legend legend = horizontalBarChart.getLegend();
+        legend.setTextSize(15f);
+        legend.setTextColor(Color.GRAY);
+        legend.setEnabled(true);
 
 
         horizontalBarChart.setTouchEnabled(false);
         horizontalBarChart.setClickable(false);
         horizontalBarChart.setLongClickable(false);
-        horizontalBarChart.getLegend().setEnabled(false);
         horizontalBarChart.getDescription().setEnabled(false);
         horizontalBarChart.setExtraOffsets(-10f, 0f, 0f, 0f);
 

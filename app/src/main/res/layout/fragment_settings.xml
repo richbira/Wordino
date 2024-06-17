@@ -208,14 +208,14 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:background="@color/mygrey"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp">
+            app:cardCornerRadius="24dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp">
             <ImageButton
                 android:id="@+id/closeButton"
                 style="@style/Widget.Material3.Button"
-                android:layout_width="55dp"
-                android:layout_height="55dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:contentDescription="@string/image"
                 app:srcCompat="@drawable/baseline_close_24" />
 
