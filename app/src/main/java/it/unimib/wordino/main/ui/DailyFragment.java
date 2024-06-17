@@ -207,7 +207,7 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Log.d(TAG, "onViewCreated, DaylyFragment accesso");
-        Log.d(TAG, "utenza?"+userViewModel.getLoggedUser());
+        Log.d(TAG, "utenza"+userViewModel.getLoggedUser());
         //Nascondo tab Setting e Social se l'utente non è loggato
         if (userViewModel.getLoggedUser() != null) {
             tokenId = userViewModel.getLoggedUser().getIdToken();

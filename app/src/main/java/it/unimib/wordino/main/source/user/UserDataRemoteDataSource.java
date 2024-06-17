@@ -144,7 +144,6 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource {
             Log.e(TAG, "Token ID is null or empty");
             return;
         }
-        //Mi prendo i dati del idToken
         databaseReference.child(FIREBASE_USERS_COLLECTION).child(idToken).child(FIREBASE_STATS_COLLECTION)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -182,7 +181,6 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource {
     public MutableLiveData<Boolean> getIsTodayLiveData() {
         return isTodayLiveData;
     }
-    //Creare metodo che fetch data di daily challenge
     public void setIsTodayLiveData(String idToken) {
         if (idToken == null || idToken.isEmpty()) {
             Log.e(TAG, "Token ID is null or empty");
@@ -219,12 +217,9 @@ public class UserDataRemoteDataSource extends BaseUserDataRemoteDataSource {
                     }
                 });
     }
-
-    // Metodo per verificare se una data specifica è oggi
     public static boolean isDateToday(LocalDate date) {
         return date.equals(LocalDate.now());
     }
-    // Metodo per ottenere la data corrente come LocalDate
     public static LocalDate getCurrentDailyDate() {
         return LocalDate.now();
     }
