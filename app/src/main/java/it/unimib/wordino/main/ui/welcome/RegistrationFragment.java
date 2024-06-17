@@ -65,7 +65,7 @@ public class RegistrationFragment extends Fragment {
                     if (result.isSuccess()) {
                         userViewModel.setAuthenticationError(false);
                         progressBar.setVisibility(View.GONE);
-                        Navigation.findNavController(view).navigate(R.id.action_registrationFragment_to_gameActivity);
+                        Navigation.findNavController(view).navigate(R.id.action_registrationFragment_to_howToPlayFragment);
                     } else {
                         Log.d(TAG, "Error: " + ((Result.Error) result).getMessage());
                         userViewModel.setAuthenticationError(true);

@@ -31,10 +31,14 @@ import it.unimib.wordino.main.model.Highscore;
 import it.unimib.wordino.main.model.Result;
 import it.unimib.wordino.main.repository.IWordRepositoryLD;
 import it.unimib.wordino.main.util.ServiceLocator;
+import it.unimib.wordino.main.util.SharedPreferencesUtil;
 
 public class TrainingFragment extends Fragment implements View.OnClickListener {
 
     private static final String TAG = TrainingFragment.class.getSimpleName();
+
+    public SharedPreferencesUtil sharedPref;
+    public boolean isDarkMode;
     public View progressBar;
     public int currentLine;
     private GameBoardViewModelTraining gameBoardModel;
@@ -69,6 +73,9 @@ public class TrainingFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        sharedPref = new SharedPreferencesUtil(this.getActivity().getApplication());
+        isDarkMode = sharedPref.readBooleanData("dark_mode", "dark_mode");
 
         IWordRepositoryLD wordRepositoryLD =
                 ServiceLocator.getInstance().getWordRepositoryLD(requireActivity().getApplication());
@@ -341,9 +348,11 @@ public class TrainingFragment extends Fragment implements View.OnClickListener {
                 boxId = "word_" + i + j;
                 TextView currentBox = (TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", PACKAGE_NAME));
 
+                if (isDarkMode) {
+                    currentBox.setBackgroundResource(R.drawable.border_darkthemewhite);
+                }else {
                     currentBox.setBackgroundResource(R.drawable.border_white);
-                    //currentBox.setText("")
-
+                }
             }
 
 
@@ -375,7 +384,12 @@ public class TrainingFragment extends Fragment implements View.OnClickListener {
         for (int i = 0; i < childCount; i++) {
             View v = keyboardLayout.getChildAt(i);
             if (!(v.getId() == R.id.key_cancel) && !(v.getId() == R.id.key_enter)) {
-                v.setBackgroundColor(getResources().getColor(R.color.mywhite));  //TODO deprecated getcolor
+                if (isDarkMode) {
+                    v.setBackgroundColor(getResources().getColor(R.color.mywhitedarktheme));  //TODO deprecated getcolor
+                }else {
+                    v.setBackgroundColor(getResources().getColor(R.color.mywhite));  //TODO deprecated getcolor
+
+                }
             }
         }
     }

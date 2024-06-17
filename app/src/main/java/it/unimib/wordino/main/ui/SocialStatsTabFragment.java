@@ -170,8 +170,8 @@ public class SocialStatsTabFragment extends Fragment {
                 return String.valueOf((int) value);
             }
         });
-        dataSet.setValueTextSize(12f);
-        dataSet.setValueTextColor(Color.BLACK);
+        dataSet.setValueTextSize(20f);
+        dataSet.setValueTextColor(R.color.maincyan); //todo here
 
         BarData barData = new BarData(dataSet);
         horizontalBarChart.setData(barData);

@@ -35,6 +35,7 @@ import it.unimib.wordino.main.repository.user.IUserRepository;
 import it.unimib.wordino.main.ui.welcome.UserViewModel;
 import it.unimib.wordino.main.ui.welcome.UserViewModelFactory;
 import it.unimib.wordino.main.util.ServiceLocator;
+import it.unimib.wordino.main.util.SharedPreferencesUtil;
 
 public class DailyFragment extends Fragment implements View.OnClickListener {
 
@@ -77,6 +78,8 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
 
         IWordRepositoryLD wordRepositoryLD =
                 ServiceLocator.getInstance().getWordRepositoryLD(requireActivity().getApplication());
@@ -419,12 +422,12 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         switch(winloss){
             case "win":
-                builder.setTitle("You Win!");
-                builder.setMessage("You're a winner bro!");
+                builder.setTitle("You Win");
+                builder.setMessage("You won today's challenge!");
                 break;
             case "loss":
-                builder.setTitle("You Lose!");
-                builder.setMessage("You're a loser bro!");
+                builder.setTitle("You Lose");
+                builder.setMessage("You lost today's challenge. Better luck tommorow!");
         }
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
