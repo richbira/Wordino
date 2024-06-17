@@ -343,7 +343,7 @@ public class TrainingFragment extends Fragment implements View.OnClickListener {
                 }
             }
 
-        }else{ //questo ramo serve per il reset, a rendere bianche le caselle con valore null invece di w
+        }else{
             for (int j = 1; j < 6; j++) {
                 boxId = "word_" + i + j;
                 TextView currentBox = (TextView) getView().findViewById(getResources().getIdentifier(boxId, "id", PACKAGE_NAME));

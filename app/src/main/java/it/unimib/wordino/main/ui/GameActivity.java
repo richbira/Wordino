@@ -16,10 +16,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import it.unimib.wordino.R;
 public class GameActivity extends AppCompatActivity implements View.OnClickListener {
 
-
-    //Set il primo active box
-    public View activeBox;
-
     public static String lang;
     private static final String TAG = GameActivity.class.getSimpleName();
     @Override
@@ -41,17 +37,12 @@ public class GameActivity extends AppCompatActivity implements View.OnClickListe
         // For the BottomNavigationView
         NavigationUI.setupWithNavController(bottomNav, navController);
 
-
-        //Aggiungo flag "language" che gli passo dalla schermata home
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             lang = getIntent().getStringExtra("language");
             Log.d(TAG, "Language: " + lang);
         }
     }
-    /*
-    Gestione bottoni cliccati
-     */
     @Override
     public void onClick(View view) {
     }

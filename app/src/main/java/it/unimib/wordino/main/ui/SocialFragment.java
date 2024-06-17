@@ -52,20 +52,7 @@ import it.unimib.wordino.main.ui.welcome.UserViewModelFactory;
 import it.unimib.wordino.main.util.ServiceLocator;
 
 public class SocialFragment extends Fragment {
-
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String TAG = SocialFragment.class.getSimpleName();
-    private FragmentSocialBinding binding;
-    private ScoresViewModel highscoresModel;
-    private Observer<List<Highscore>> highscoresObserver;
-    private UserViewModel userViewModel;
-    private String tokenId;
-    private TextView gamePlayedText;
-    private TextView currentStreakText;
-    private TextView maxStreakText;
-    private TextView winrateText;
-    private HorizontalBarChart horizontalBarChart;
-
     private TabLayout tabLayout;
     private ViewPager2 viewPager;
     private ViewPagerAdapter viewPagerAdapter;
@@ -143,14 +130,5 @@ public class SocialFragment extends Fragment {
             ((SocialStatsTabFragment) currentFragment).loadScores();
         }
     }
-    /*
-    FragmentTransaction fragTransaction = getChildFragmentManager().beginTransaction();
-            fragTransaction.detach(currentFragment);
-            fragTransaction.commitNow();
-            FragmentTransaction fragTransaction2 = getChildFragmentManager().beginTransaction();
-            fragTransaction2.attach(currentFragment);
-            fragTransaction2.commitNow();
-     */
-
 
 }

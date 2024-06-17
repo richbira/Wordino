@@ -43,8 +43,6 @@ public class SettingsFragment extends Fragment {
     private FragmentSettingsBinding binding;
     public SharedPreferencesUtil sharedPref;
     private UserViewModel userViewModel;
-    //private DataEncryptionUtil dataEncryptionUtil;
-    //private String idToken;
     private String loggedUser;
 
     public SettingsFragment() {
@@ -61,7 +59,6 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //dataEncryptionUtil = new DataEncryptionUtil(requireActivity().getApplication());
         IUserRepository userRepository = ServiceLocator.getInstance().
                 getUserRepository(getActivity().getApplication());
 
@@ -69,16 +66,6 @@ public class SettingsFragment extends Fragment {
 
         userViewModel = new ViewModelProvider(
                 this, new UserViewModelFactory(userRepository)).get(UserViewModel.class);
-
-
-
-
-        /*try {
-            idToken = dataEncryptionUtil.readSecretDataWithEncryptedSharedPreferences(
-                    ENCRYPTED_SHARED_PREFERENCES_FILE_NAME, ID_TOKEN);
-        } catch (GeneralSecurityException | IOException e) {
-            e.printStackTrace();
-        }*/
     }
 
     @Override
@@ -100,17 +87,12 @@ public class SettingsFragment extends Fragment {
         boolean isDarkMode = sharedPref.readBooleanData("dark_mode", "dark_mode");
         boolean isAutoLogin = sharedPref.readBooleanData("auto_login", "auto_login");
 
-
         SwitchMaterial darkModeSwitch = view.findViewById(R.id.dark_mode_switch);
         SwitchMaterial autoLoginSwitch = view.findViewById(R.id.keep_logged_in_switch);
 
         darkModeSwitch.setChecked(isDarkMode);
         autoLoginSwitch.setChecked(isAutoLogin);
 
-
-
-
-        //se utente non è loggato, nascondi il bottone di logout
         if (userViewModel.getLoggedUser() == null) {
             binding.logoutButton.setVisibility(View.GONE);
             loggedUserView.setText("Logged in as guest");
