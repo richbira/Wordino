@@ -60,7 +60,6 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
     public Observer<Result> dailyWordObserver;
     public Observer<Result> randomWordObserver;
     private UserViewModel userViewModel;
-    //private DataEncryptionUtil dataEncryptionUtil;
     private String tokenId;
     private boolean gameOver;
     private boolean fetchingRandom = false;
@@ -88,8 +87,6 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
                 requireActivity(),
                 new GameBoardViewModelDailyFactory(wordRepositoryLD)).get(GameBoardViewModelDaily.class);
 
-        //Roba per user e statistiche
-        //dataEncryptionUtil = new DataEncryptionUtil(requireActivity().getApplication());
         IUserRepository userRepository = ServiceLocator.getInstance().
                 getUserRepository(getActivity().getApplication());
         userViewModel = new ViewModelProvider(
@@ -206,25 +203,6 @@ public class DailyFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Log.d(TAG, "onViewCreated, DaylyFragment accesso");
-        Log.d(TAG, "utenza"+userViewModel.getLoggedUser());
-        //Nascondo tab Setting e Social se l'utente non è loggato
-        if (userViewModel.getLoggedUser() != null) {
-            tokenId = userViewModel.getLoggedUser().getIdToken();
-        }else{
-            // Safe access to BottomNavigationView
-            BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.bottom_nav);
-            Log.d(TAG, "BottomNavigationView: " + bottomNavigationView);
-            if (bottomNavigationView != null) {
-                Menu menu = bottomNavigationView.getMenu();
-                for (int i = 0, size = menu.size(); i < size; i++) {
-                    MenuItem menuItem = menu.getItem(i);
-                    if (menuItem.getTitle().equals("Social") || menuItem.getTitle().equals("Daily")){
-                        menuItem.setVisible(false);
-                    }
-                }
-            }
-        }
         userViewModel.getIsTodayLiveData().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isToday) {

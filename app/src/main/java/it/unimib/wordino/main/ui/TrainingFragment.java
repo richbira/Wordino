@@ -15,12 +15,15 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
@@ -30,6 +33,9 @@ import it.unimib.wordino.main.model.GameBoard;
 import it.unimib.wordino.main.model.Highscore;
 import it.unimib.wordino.main.model.Result;
 import it.unimib.wordino.main.repository.IWordRepositoryLD;
+import it.unimib.wordino.main.repository.user.IUserRepository;
+import it.unimib.wordino.main.ui.welcome.UserViewModel;
+import it.unimib.wordino.main.ui.welcome.UserViewModelFactory;
 import it.unimib.wordino.main.util.ServiceLocator;
 import it.unimib.wordino.main.util.SharedPreferencesUtil;
 
@@ -59,6 +65,8 @@ public class TrainingFragment extends Fragment implements View.OnClickListener {
     public Observer<Result> randomWordObserver;
 
     public Observer<List<Highscore>> highscoreObserver;
+    private UserViewModel userViewModel;
+    private String tokenId;
 
 
     public TrainingFragment() {
@@ -83,6 +91,11 @@ public class TrainingFragment extends Fragment implements View.OnClickListener {
         gameBoardModel = new ViewModelProvider(
                 requireActivity(),
                 new GameBoardViewModelTrainingFactory(wordRepositoryLD)).get(GameBoardViewModelTraining.class);
+;
+        IUserRepository userRepository = ServiceLocator.getInstance().
+                getUserRepository(getActivity().getApplication());
+        userViewModel = new ViewModelProvider(
+                this, new UserViewModelFactory(userRepository)).get(UserViewModel.class);
 
         gameBoardObserver = new Observer<GameBoard>() {
             @Override
@@ -186,7 +199,25 @@ public class TrainingFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        Log.d(TAG, "onViewCreated, DaylyFragment accesso");
+        Log.d(TAG, "utenza"+userViewModel.getLoggedUser());
+        //Nascondo tab Setting e Social se l'utente non è loggato
+        if (userViewModel.getLoggedUser() != null) {
+            tokenId = userViewModel.getLoggedUser().getIdToken();
+        }else{
+            // Safe access to BottomNavigationView
+            BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.bottom_nav);
+            Log.d(TAG, "BottomNavigationView: " + bottomNavigationView);
+            if (bottomNavigationView != null) {
+                Menu menu = bottomNavigationView.getMenu();
+                for (int i = 0, size = menu.size(); i < size; i++) {
+                    MenuItem menuItem = menu.getItem(i);
+                    if (menuItem.getTitle().equals("Statistics") || menuItem.getTitle().equals("Daily")){
+                        menuItem.setVisible(false);
+                    }
+                }
+            }
+        }
 
         progressBar = view.findViewById(R.id.progress_bar);
 
