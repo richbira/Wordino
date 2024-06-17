@@ -1,0 +1,670 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".main.ui.DailyFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Text Boxes-->
+
+        <RelativeLayout
+            android:id="@+id/relativeLayoutWord"
+            android:layout_width="390dp"
+            android:layout_height="470dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="11dp"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toTopOf="@+id/relativeLayoutKeyboard"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                style="@style/Theme.Wordino.Wordbox"
+                android:id="@+id/word_01"
+                android:layout_alignParentTop="true"
+                />
+
+            <TextView
+                style="@style/Theme.Wordino.Wordbox"
+                android:id="@+id/word_02"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/word_01"
+                />
+
+            <TextView
+                style="@style/Theme.Wordino.Wordbox"
+                android:id="@+id/word_03"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/word_02"
+                />
+
+            <TextView
+                style="@style/Theme.Wordino.Wordbox"
+                android:id="@+id/word_04"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/word_03" />
+
+            <TextView
+                style="@style/Theme.Wordino.Wordbox"
+                android:id="@+id/word_05"
+                android:layout_marginLeft="10dp"
+                android:layout_toRightOf="@id/word_04"
+                />
+
+            <TextView
+                android:id="@+id/word_11"
+                style="@style/Theme.Wordino.Wordbox"
+                android:layout_below="@id/word_01"
+                android:layout_marginTop="10dp"
+                />
+
+            <TextView
+                android:id="@+id/word_12"
+                style="@style/Theme.Wordino.Wordbox"
+                android:layout_below="@id/word_01"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_11"
+                />
+
+            <TextView
+                android:id="@+id/word_13"
+                style="@style/Theme.Wordino.Wordbox"
+                android:layout_below="@id/word_01"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_12"
+                />
+
+            <TextView
+                android:id="@+id/word_14"
+                style="@style/Theme.Wordino.Wordbox"
+                android:layout_below="@id/word_01"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_13"
+                />
+
+            <TextView
+                android:id="@+id/word_15"
+                style="@style/Theme.Wordino.Wordbox"
+                android:layout_below="@id/word_01"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_14"
+                />
+
+            <TextView
+                android:id="@+id/word_21"
+                style="@style/Theme.Wordino.Wordbox"
+                android:layout_below="@id/word_11"
+                android:layout_marginTop="10dp"
+                />
+
+            <TextView
+                android:id="@+id/word_22"
+                style="@style/Theme.Wordino.Wordbox"
+                android:layout_below="@id/word_11"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_21"
+                />
+
+            <TextView
+                android:id="@+id/word_23"
+                style="@style/Theme.Wordino.Wordbox"
+                android:layout_below="@id/word_11"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_22"
+                />
+
+            <TextView
+                android:id="@+id/word_24"
+                style="@style/Theme.Wordino.Wordbox"
+                android:layout_below="@id/word_11"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_23"
+                />
+
+            <TextView
+                android:id="@+id/word_25"
+                style="@style/Theme.Wordino.Wordbox"
+                android:layout_below="@id/word_11"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_24"
+                />
+
+            <TextView
+                android:id="@+id/word_31"
+                style="@style/Theme.Wordino.Wordbox"
+                android:layout_below="@id/word_21"
+                android:layout_marginTop="10dp"
+                />
+
+            <TextView
+                android:id="@+id/word_32"
+                style="@style/Theme.Wordino.Wordbox"
+                android:layout_below="@id/word_21"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_31"
+                />
+
+            <TextView
+                android:id="@+id/word_33"
+                style="@style/Theme.Wordino.Wordbox"
+                android:layout_below="@id/word_21"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_32"
+                />
+
+            <TextView
+                android:id="@+id/word_34"
+                style="@style/Theme.Wordino.Wordbox"
+                android:layout_below="@id/word_21"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_33"
+                />
+
+            <TextView
+                android:id="@+id/word_35"
+                style="@style/Theme.Wordino.Wordbox"
+                android:layout_below="@id/word_21"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_34"
+                />
+
+            <TextView
+                android:id="@+id/word_41"
+                style="@style/Theme.Wordino.Wordbox"
+                android:layout_below="@id/word_31"
+                android:layout_marginTop="10dp"
+                />
+
+            <TextView
+                android:id="@+id/word_42"
+                style="@style/Theme.Wordino.Wordbox"
+                android:layout_below="@id/word_31"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_41"
+                />
+
+            <TextView
+                android:id="@+id/word_43"
+                style="@style/Theme.Wordino.Wordbox"
+                android:layout_below="@id/word_31"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_42"
+                />
+
+            <TextView
+                android:id="@+id/word_44"
+                style="@style/Theme.Wordino.Wordbox"
+                android:layout_below="@id/word_31"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_43"
+                />
+
+            <TextView
+                android:id="@+id/word_45"
+                style="@style/Theme.Wordino.Wordbox"
+                android:layout_below="@id/word_31"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_44"
+                />
+
+            <TextView
+                android:id="@+id/word_51"
+                style="@style/Theme.Wordino.Wordbox"
+                android:layout_below="@id/word_41"
+                android:layout_marginTop="10dp"
+                />
+
+            <TextView
+                android:id="@+id/word_52"
+                style="@style/Theme.Wordino.Wordbox"
+                android:layout_below="@id/word_41"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_51"
+                />
+
+            <TextView
+                android:id="@+id/word_53"
+                style="@style/Theme.Wordino.Wordbox"
+                android:layout_below="@id/word_41"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_52"
+                />
+
+            <TextView
+                android:id="@+id/word_54"
+                style="@style/Theme.Wordino.Wordbox"
+                android:layout_below="@id/word_41"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_53"
+                />
+
+            <TextView
+                android:id="@+id/word_55"
+                style="@style/Theme.Wordino.Wordbox"
+                android:layout_below="@id/word_41"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@id/word_54"
+                />
+
+        </RelativeLayout>
+
+        <!-- Keyboard -->
+        <RelativeLayout
+            android:id="@+id/relativeLayoutKeyboard"
+            android:layout_width="390dp"
+            android:layout_height="151dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="11dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <Button
+                android:id="@+id/key_q"
+                style="@style/Theme.Wordino.Buttons"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginBottom="0dp"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/q"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_w"
+                style="@style/Theme.Wordino.Buttons"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_toEndOf="@id/key_q"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/w"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+
+                android:id="@+id/key_e"
+                style="@style/Theme.Wordino.Buttons"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_toEndOf="@id/key_w"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/e"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_r"
+                style="@style/Theme.Wordino.Buttons"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_toEndOf="@id/key_e"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/r"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_t"
+                style="@style/Theme.Wordino.Buttons"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_toEndOf="@id/key_r"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/t"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_y"
+                style="@style/Theme.Wordino.Buttons"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_toEndOf="@id/key_t"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/y"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_u"
+                style="@style/Theme.Wordino.Buttons"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_toEndOf="@id/key_y"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/u"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_i"
+                style="@style/Theme.Wordino.Buttons"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_toEndOf="@id/key_u"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/i"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_o"
+                style="@style/Theme.Wordino.Buttons"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_toEndOf="@id/key_i"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/o"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_p"
+                style="@style/Theme.Wordino.Buttons"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_toEndOf="@id/key_o"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/p"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_a"
+                style="@style/Theme.Wordino.Buttons"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_q"
+                android:layout_marginStart="23dp"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/a"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_s"
+                style="@style/Theme.Wordino.Buttons"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_q"
+                android:layout_toEndOf="@id/key_a"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/s"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_d"
+                style="@style/Theme.Wordino.Buttons"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_q"
+                android:layout_toEndOf="@id/key_s"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/d"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_f"
+                style="@style/Theme.Wordino.Buttons"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_q"
+                android:layout_toEndOf="@id/key_d"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/f"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_g"
+                style="@style/Theme.Wordino.Buttons"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_q"
+                android:layout_toEndOf="@id/key_f"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/g"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_h"
+                style="@style/Theme.Wordino.Buttons"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_q"
+                android:layout_toEndOf="@id/key_g"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/h"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_j"
+                style="@style/Theme.Wordino.Buttons"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_q"
+                android:layout_toEndOf="@id/key_h"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/j"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_k"
+                style="@style/Theme.Wordino.Buttons"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_q"
+                android:layout_toEndOf="@id/key_j"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/k"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_l"
+                style="@style/Theme.Wordino.Buttons"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_q"
+                android:layout_toEndOf="@id/key_k"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/l"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_cancel"
+                style="@style/Theme.Wordino.ButtonsCyan"
+                android:layout_width="60dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_a"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/canc"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_z"
+                style="@style/Theme.Wordino.Buttons"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_a"
+                android:layout_toEndOf="@id/key_cancel"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/z"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_x"
+                style="@style/Theme.Wordino.Buttons"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_a"
+                android:layout_toEndOf="@id/key_z"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/x"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_c"
+                style="@style/Theme.Wordino.Buttons"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_a"
+                android:layout_toEndOf="@id/key_x"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/c"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_v"
+                style="@style/Theme.Wordino.Buttons"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_a"
+                android:layout_toEndOf="@id/key_c"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/v"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_b"
+                style="@style/Theme.Wordino.Buttons"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_a"
+                android:layout_toEndOf="@id/key_v"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/b"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_n"
+                style="@style/Theme.Wordino.Buttons"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_a"
+                android:layout_toEndOf="@id/key_b"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/n"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_m"
+                style="@style/Theme.Wordino.Buttons"
+                android:layout_width="38dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_a"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_toEndOf="@id/key_n"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/m"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+
+            <Button
+                android:id="@+id/key_enter"
+                style="@style/Theme.Wordino.ButtonsCyan"
+                android:layout_width="60dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/key_a"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_toEndOf="@id/key_m"
+                android:paddingLeft="0dp"
+                android:paddingRight="0dp"
+                android:text="@string/enter"
+                android:textAlignment="center"
+                app:shapeAppearance="@style/ShapeAppearance.Material3.Corner.Small" />
+        </RelativeLayout>
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="@android:style/Widget.Material.ProgressBar.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="1dp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_gravity="center" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</FrameLayout>

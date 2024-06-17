@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/login_nav_graph"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="it.unimib.wordino.main.ui.welcome.LoginFragment"
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_registrationFragment"
+            app:destination="@id/registrationFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_gameActivity"
+            app:destination="@id/gameActivity" />
+        <action
+            android:id="@+id/action_loginFragment_to_forgotPasswordFragment"
+            app:destination="@id/forgotPasswordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registrationFragment"
+        android:name="it.unimib.wordino.main.ui.welcome.RegistrationFragment"
+        android:label="RegistrationFragment"
+        tools:layout="@layout/fragment_registration">
+
+        <action
+            android:id="@+id/action_registrationFragment_to_howToPlayFragment"
+            app:destination="@id/howToPlayFragment" />
+    </fragment>
+    <activity
+        android:id="@+id/gameActivity"
+        android:name="it.unimib.wordino.main.ui.GameActivity"
+        android:label="activity_game"
+        tools:layout="@layout/activity_game" />
+    <fragment
+        android:id="@+id/forgotPasswordFragment"
+        android:name="it.unimib.wordino.main.ui.welcome.ForgotPasswordFragment"
+        android:label="fragment_forgot_password"
+        tools:layout="@layout/fragment_forgot_password" >
+        <action
+            android:id="@+id/action_forgotPasswordFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/howToPlayFragment"
+        android:name="it.unimib.wordino.main.ui.HowToPlayFragment"
+        android:label="fragment_how_to_play"
+        tools:layout="@layout/fragment_how_to_play" >
+        <action
+            android:id="@+id/action_howToPlayFragment_to_gameActivity"
+            app:destination="@id/gameActivity" />
+    </fragment>
+</navigation>

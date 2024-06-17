@@ -3,5 +3,27 @@
     <style name="Base.Theme.Wordino" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your dark theme here. -->
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="android:textColor">@color/darkthemetext</item>
+
+    </style>
+
+    <style name="Theme.Wordino.Buttons" parent="@style/Widget.Material3.Button.OutlinedButton">
+
+        <item name="android:textColor">@color/darkthemetext</item>
+        <item name="backgroundTint">@color/mywhitedarktheme</item>
+        <item name="android:colorForeground">@color/darkthemetext</item>
+    </style>
+
+    <style name ="Theme.Wordino.Wordbox" parent="Base.Theme.Wordino" >
+        <item name="android:layout_width">70dp</item>
+        <item name="android:layout_height">70dp</item>
+        <item name="android:background">@drawable/border_darkthemewhite</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textSize">48sp</item>
+
+    </style>
+
+    <style name="Theme.Wordino.LightBackground" parent="Base.Theme.Wordino">
+        <item name="backgroundTint">@color/mywhitedarktheme</item>
     </style>
 </resources>
