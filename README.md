@@ -6,5 +6,5 @@
 
 ## Membri del Gruppo
 
-- **Breznay Yoshiki** - Matricola: 844804 (Referente del Progetto)
-- **Rabi Richard** - Matricola: 869353
+- **Breznay Yoshiki** - 
+- **Rabi Richard** -
